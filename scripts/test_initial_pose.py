@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 """Closed-form conditioning and corruption controls for initial-prior evidence."""
 import copy
+import hashlib
 import json
+from pathlib import Path
+import tempfile
 import unittest
+from unittest.mock import patch
+import check_initial_pose
 from check_gnss_latency import Filter, verify_pose_covariance
 from check_initial_pose import BOUND_RAD, PRIOR, REPO, materialize, specifications, confirmation_specifications
 
@@ -49,6 +54,29 @@ class PriorEvidenceTests(unittest.TestCase):
                 self.assertLess(abs(spec['heading_offset_rad']), BOUND_RAD)
                 self.assertIn(spec['seed'], [101, 202, 303, 404, 505, 606, 707, 808, 909, 1001])
             if not spec['expected_quality_pass']: self.assertGreater(abs(spec['heading_offset_rad']), .1)
+
+    def test_native_input_and_frozen_hash_use_identical_utf8_lf_bytes(self):
+        spec = specifications()[0]
+        expected = (json.dumps(materialize(spec), indent=2) + '\n').encode('utf-8')
+        observed = []
+        with tempfile.TemporaryDirectory(prefix='initial-pose-bytes-') as directory:
+            folder = Path(directory) / 'case'
+
+            def execute(binary, arguments, output):
+                observed.append((folder / 'scenario.json').read_bytes())
+                return 0
+
+            with patch.object(check_initial_pose, 'execute', side_effect=execute), \
+                    patch.object(check_initial_pose, 'archive', return_value={}):
+                row = check_initial_pose.run_case(Path('unused-native-binary'), folder,
+                                                  spec, 'reference-2d')
+            self.assertEqual((folder / 'scenario.json').read_bytes(), expected)
+        self.assertNotIn(b'\r', expected)
+        self.assertEqual(observed, [expected, expected])
+        self.assertEqual(row['scenario_sha256'], hashlib.sha256(expected).hexdigest())
+        # No synthetic acceptance: absent native reports still fail the audit.
+        self.assertFalse(row['passed'])
+        self.assertIn('audit_error', row)
 
     def test_absent_or_null_prior_keeps_original_covariance(self):
         pose = {'position': {'x': 2., 'y': -1.}, 'yaw': .2}

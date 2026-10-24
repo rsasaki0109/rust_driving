@@ -16,6 +16,7 @@ import tarfile
 ROOT = Path(__file__).resolve().parent.parent
 REVISION = 'a2776053d88bcdcae4e39134c73d95412ff49125'
 LIBRARIES = ('core', 'localization', 'perception')
+ARCHIVE_TOP_LEVEL = ('Cargo.lock',)
 KERNELS = (
     'crates/localization/src/registration3d.rs',
     'crates/localization/src/submap3d.rs',
@@ -43,7 +44,7 @@ def prepare(output):
     if output.exists() or output.is_symlink():
         raise ValueError('regression workspace must be a new directory')
     archive = subprocess.check_output(
-        ['git', '-C', str(ROOT), 'archive', REVISION,
+        ['git', '-C', str(ROOT), 'archive', REVISION, *ARCHIVE_TOP_LEVEL,
          *(f'crates/{name}' for name in LIBRARIES)])
     with tarfile.open(fileobj=io.BytesIO(archive)) as source:
         kernels = {}
@@ -56,8 +57,16 @@ def prepare(output):
         common = vec3(original_core)
         if vec3((ROOT / 'crates/core/src/lib.rs').read_bytes()) != common:
             raise ValueError('active shared Vec3 changed; qualify a new protocol')
+        top_level = {}
+        for name in ARCHIVE_TOP_LEVEL:
+            try:
+                original = source.extractfile(name).read()
+            except KeyError as error:
+                raise ValueError('historical archive is missing required top-level file: ' + name) from error
+            top_level[name] = {'active_sha256': sha((ROOT / name).read_bytes()),
+                               'historical_sha256': sha(original)}
         output.mkdir(parents=True)
-        for name in ('Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml'):
+        for name in ('Cargo.toml', 'rust-toolchain.toml'):
             shutil.copyfile(ROOT / name, output / name)
         ignore = shutil.ignore_patterns('target', '__pycache__')
         for name in ('crates', 'scripts', 'integrations/rgbd'):
@@ -72,7 +81,7 @@ def prepare(output):
                           'historical_sha256': sha((output / path).read_bytes())}
     receipt = dict(historical_revision=REVISION, source_archive_sha256=sha(archive),
                    active_3d_kernels_identical=kernels, shared_vec3_sha256=sha(common),
-                   shared_libraries=bindings,
+                   shared_libraries=bindings, historical_top_level_files=top_level,
                    scope='Historical offline RGB-D reproduction; active shared crates '
                          'and the active RGB-D workspace are tested separately.')
     (output / 'regression-sources.json').write_text(json.dumps(receipt, indent=2) + '\n')

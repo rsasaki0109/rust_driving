@@ -145,7 +145,9 @@ def audit(run, scenario, spec, sensor_path):
 def run_case(binary, folder, spec, plant):
     folder.mkdir(parents=True, exist_ok=False)
     scenario = materialize(spec)
-    source = folder/'scenario.json';source.write_text(json.dumps(scenario, indent=2)+'\n')
+    source = folder/'scenario.json'
+    # Frozen hashes describe UTF-8 LF bytes, independent of host text newlines.
+    source.write_bytes((json.dumps(scenario, indent=2)+'\n').encode('utf-8'))
     args = ['run', '--scenario', source] if plant == 'reference-2d' else ['--scenario', source, '--plant', 'dynamic']
     row = {**spec, 'plant': plant, 'passed': False, 'scenario_sha256': hashlib.sha256(source.read_bytes()).hexdigest()}
     row['run_exit_code'] = execute(binary, args+['--seed', spec['seed'], '--output', folder/'run'], folder/'run-process')

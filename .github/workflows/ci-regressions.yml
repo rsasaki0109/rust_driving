@@ -47,6 +47,8 @@ jobs:
           python scripts/test_gnss_antenna.py
           python scripts/test_observed_detours.py
           python scripts/test_recorded_numeric.py
+          python scripts/test_initial_pose.py
+          python scripts/test-rgbd-regression-staging.py
       - uses: actions/cache/restore@v4
         if: matrix.os == 'ubuntu-24.04'
         id: workspace-cache

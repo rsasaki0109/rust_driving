@@ -644,6 +644,7 @@ jobs:
           git fetch --no-tags --depth=1 origin a2776053d88bcdcae4e39134c73d95412ff49125
           python scripts/test-rgbd-regression-staging.py
           python scripts/prepare-rgbd-regression.py --output "$RUNNER_TEMP/rustdriving-rgbd-regression"
+          python "$RUNNER_TEMP/rustdriving-rgbd-regression/scripts/check-rgbd-extension-sources.py"
           cargo build --release --locked --manifest-path "$RUNNER_TEMP/rustdriving-rgbd-regression/integrations/rgbd/Cargo.toml"
           cp "$RUNNER_TEMP/rustdriving-rgbd-regression/regression-sources.json" artifacts/rgbd/historical-shared-libraries.json
       - name: Reproduce recorded-depth odometry and fixed-map failure evidence
