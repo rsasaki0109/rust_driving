@@ -1,0 +1,7 @@
+{
+  "source_commit": "796cd0407988606b943651d554dc2f4031c2e195",
+  "path": "assets/contingency-v1/canaries/796cd0407988606b943651d554dc2f4031c2e195.json",
+  "sha256": "9215d6f7fe756c4227adefb7aef560a69c3d043244132a90161004f90ce4eab2",
+  "canary_contract_passed": true,
+  "original_mission_goal_improved": false
+}

@@ -1,0 +1,341 @@
+{
+  "preliminary": true,
+  "qualified": false,
+  "default_enabled": false,
+  "source_commit": "796cd0407988606b943651d554dc2f4031c2e195",
+  "baseline_source": "3633605f9bdb2e7a53e11c2cfb7d24b54f205889",
+  "protocol_sha256": "5f355353e166fa3ad3664fd8138be6f355625a013fa3f165f103171ee9d7fe75",
+  "binary_sha256": "6ba4a542952c2eba0743abbe55ff16589ab46afdbce717cc0cbd2a1b76eab47f",
+  "baseline_binary_sha256": "3b95c37d616d673bf76d9adbc9e20a169df1ce31fdac6decbb4fc713132d5395",
+  "selected": {
+    "plant": "reference-2d",
+    "world": "mission",
+    "mode": "heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops",
+    "seed": 7,
+    "cohort": "stop-search",
+    "family": "heading",
+    "heading": true,
+    "kind": "base",
+    "parent_mode": "heading-search",
+    "parent_scenario": "frozen/003.json",
+    "baseline_scenario": "frozen/001.json",
+    "sweep_mode": "recover",
+    "qualification_family": "missions",
+    "cold_baseline_scenario": "frozen/044.json",
+    "velocity_baseline_scenario": "frozen/044.json",
+    "approach_baseline_scenario": "frozen/044.json",
+    "later_baseline_scenario": "frozen/044.json"
+  },
+  "frozen_inputs": {
+    "baseline": {
+      "path": "/home/runner/work/rust_driving/rust_driving/artifacts/contingency-canary/baseline.json",
+      "sha256": "7e6f89f8a858cf5e760ecbc8504c5291eb09ef06fdcab762e16a3d5d42469ac8",
+      "input": {
+        "name": "Curved-road obstacle avoidance",
+        "duration": 65,
+        "road_length": 220,
+        "half_width": 5.5,
+        "curve_amplitude": 3,
+        "expected": "goal",
+        "objects": [
+          {
+            "s": 58,
+            "lateral": 0,
+            "radius": 1.0
+          },
+          {
+            "s": 98,
+            "lateral": 0,
+            "radius": 1.0,
+            "speed": 2.5
+          },
+          {
+            "s": 155,
+            "lateral": 9,
+            "radius": 0.75,
+            "lateral_speed": -1.0,
+            "active_from": 18
+          }
+        ],
+        "full_rate_recording": true,
+        "settle_obstruction_stops": true,
+        "forecast_envelope": {
+          "position_error_m": 0.2,
+          "velocity_error_m_s": 0.3,
+          "acceleration_error_m_s2": 0.1
+        },
+        "lateral_candidate_margin_m": 0.35,
+        "absolute_heading_fusion": true,
+        "heading_sensor": {
+          "period_ticks": 4,
+          "variance_rad2": 0.0001
+        },
+        "search_obstruction_stops": true,
+        "enclose_track_measurements": true,
+        "forecast_consistency_guard": true,
+        "record_planar_sweep": true,
+        "clear_sweep_recovery": {
+          "lidar": {
+            "ray_count": 720,
+            "first_angle_rad": -3.141592653589793,
+            "angular_step_rad": 0.008726646259971648,
+            "min_range_m": 0.2,
+            "max_range_m": 45.0,
+            "range_error_m": 0.05
+          },
+          "checked_center_radius_m": 40.0,
+          "minimum_resolved_disc_radius_m": 0.4
+        },
+        "fit_sparse_circles": true,
+        "fit_recent_track_motion": true,
+        "monitor_planning_progress": true,
+        "record_planning_diagnostics": true,
+        "forecast_pose_sigma": 3.0,
+        "forecast_cold_max_speed_m_s": 15.0,
+        "forecast_recent_velocity_hypotheses": true,
+        "replan_checked_approaches": true,
+        "search_later_obstruction_stops": true
+      }
+    },
+    "enabled": {
+      "path": "/home/runner/work/rust_driving/rust_driving/artifacts/contingency-canary/enabled.json",
+      "sha256": "2a318ddf9b87c14cca33c90deecaf5034a5b459c1616bd1aeb400628ce6b5df3",
+      "input": {
+        "name": "Curved-road obstacle avoidance",
+        "duration": 65,
+        "road_length": 220,
+        "half_width": 5.5,
+        "curve_amplitude": 3,
+        "expected": "goal",
+        "objects": [
+          {
+            "s": 58,
+            "lateral": 0,
+            "radius": 1.0
+          },
+          {
+            "s": 98,
+            "lateral": 0,
+            "radius": 1.0,
+            "speed": 2.5
+          },
+          {
+            "s": 155,
+            "lateral": 9,
+            "radius": 0.75,
+            "lateral_speed": -1.0,
+            "active_from": 18
+          }
+        ],
+        "full_rate_recording": true,
+        "settle_obstruction_stops": true,
+        "forecast_envelope": {
+          "position_error_m": 0.2,
+          "velocity_error_m_s": 0.3,
+          "acceleration_error_m_s2": 0.1
+        },
+        "lateral_candidate_margin_m": 0.35,
+        "absolute_heading_fusion": true,
+        "heading_sensor": {
+          "period_ticks": 4,
+          "variance_rad2": 0.0001
+        },
+        "search_obstruction_stops": true,
+        "enclose_track_measurements": true,
+        "forecast_consistency_guard": true,
+        "record_planar_sweep": true,
+        "clear_sweep_recovery": {
+          "lidar": {
+            "ray_count": 720,
+            "first_angle_rad": -3.141592653589793,
+            "angular_step_rad": 0.008726646259971648,
+            "min_range_m": 0.2,
+            "max_range_m": 45.0,
+            "range_error_m": 0.05
+          },
+          "checked_center_radius_m": 40.0,
+          "minimum_resolved_disc_radius_m": 0.4
+        },
+        "fit_sparse_circles": true,
+        "fit_recent_track_motion": true,
+        "monitor_planning_progress": true,
+        "record_planning_diagnostics": true,
+        "forecast_pose_sigma": 3.0,
+        "forecast_cold_max_speed_m_s": 15.0,
+        "forecast_recent_velocity_hypotheses": true,
+        "replan_checked_approaches": true,
+        "search_later_obstruction_stops": true,
+        "contingency_approaches": true
+      }
+    }
+  },
+  "executions": [
+    {
+      "name": "old",
+      "commands": [
+        {
+          "mode": "run",
+          "exit_code": 1
+        },
+        {
+          "mode": "replay",
+          "exit_code": 0
+        }
+      ],
+      "summary": {
+        "scenario": "Curved-road obstacle avoidance",
+        "seed": 7,
+        "simulated_seconds": 65.0,
+        "steps": 1301,
+        "reached_goal": false,
+        "collisions": 0,
+        "road_violations": 0,
+        "min_clearance": 10.958002170367918,
+        "localization_rmse": 0.05211377869643495,
+        "localization_max_error": 0.13833867833363642,
+        "final_speed": 0.0,
+        "progress": 45.51699352847071,
+        "emergency_steps": 7,
+        "avoidance_steps": 0,
+        "max_tracks": 1,
+        "passed": false,
+        "failures": [
+          "goal not reached within duration"
+        ]
+      },
+      "replay": {
+        "source": "reference-2d",
+        "ticks": 1301,
+        "verified": true
+      },
+      "stream_sha256": {
+        "run.json": "fd42661b68d6c8515ce3faa3ee2a9743d8ca82c0e6b20e376bc3efb17553aa1c",
+        "sensors.jsonl": "6d9e793c39a635a4445cfd4bf4c5fcc90782c6d24aee36038688f3ad1a92d4ff",
+        "summary.json": "4ffc96f20597411ac592ce56d88414e13db0073c16d39c11d465c9a8debcb8c3"
+      }
+    },
+    {
+      "name": "disabled",
+      "commands": [
+        {
+          "mode": "run",
+          "exit_code": 1
+        },
+        {
+          "mode": "replay",
+          "exit_code": 0
+        }
+      ],
+      "summary": {
+        "scenario": "Curved-road obstacle avoidance",
+        "seed": 7,
+        "simulated_seconds": 65.0,
+        "steps": 1301,
+        "reached_goal": false,
+        "collisions": 0,
+        "road_violations": 0,
+        "min_clearance": 10.958002170367918,
+        "localization_rmse": 0.05211377869643495,
+        "localization_max_error": 0.13833867833363642,
+        "final_speed": 0.0,
+        "progress": 45.51699352847071,
+        "emergency_steps": 7,
+        "avoidance_steps": 0,
+        "max_tracks": 1,
+        "passed": false,
+        "failures": [
+          "goal not reached within duration"
+        ]
+      },
+      "replay": {
+        "source": "reference-2d",
+        "ticks": 1301,
+        "verified": true
+      },
+      "stream_sha256": {
+        "run.json": "fd42661b68d6c8515ce3faa3ee2a9743d8ca82c0e6b20e376bc3efb17553aa1c",
+        "sensors.jsonl": "6d9e793c39a635a4445cfd4bf4c5fcc90782c6d24aee36038688f3ad1a92d4ff",
+        "summary.json": "4ffc96f20597411ac592ce56d88414e13db0073c16d39c11d465c9a8debcb8c3"
+      }
+    },
+    {
+      "name": "enabled",
+      "commands": [
+        {
+          "mode": "run",
+          "exit_code": 1
+        },
+        {
+          "mode": "replay",
+          "exit_code": 0
+        }
+      ],
+      "summary": {
+        "scenario": "Curved-road obstacle avoidance",
+        "seed": 7,
+        "simulated_seconds": 65.0,
+        "steps": 1301,
+        "reached_goal": false,
+        "collisions": 0,
+        "road_violations": 0,
+        "min_clearance": 6.659479623499365,
+        "localization_rmse": 0.05079380156801004,
+        "localization_max_error": 0.13833867833363642,
+        "final_speed": 0.0,
+        "progress": 50.07823435833541,
+        "emergency_steps": 790,
+        "avoidance_steps": 2,
+        "max_tracks": 1,
+        "passed": false,
+        "failures": [
+          "goal not reached within duration"
+        ]
+      },
+      "replay": {
+        "source": "reference-2d",
+        "ticks": 1301,
+        "verified": true
+      },
+      "stream_sha256": {
+        "run.json": "663ee442cfea508781cc2ad0aa90c040292f46748e59ce4474458d53ea54bad3",
+        "sensors.jsonl": "643daf5a02f853442cf8cb3c92a3669aaa11d075b1cb105a999d85f632aa7e2b",
+        "summary.json": "31062941db58a465a58d35a98167ba7d29414e5f0b91d3abe3e5789756569005"
+      },
+      "contingency": {
+        "passed": true,
+        "verified_ticks": 1301,
+        "verified_radius_knots": 50471,
+        "selected_contingency_ticks": 437,
+        "positive_prefix_ticks": 109,
+        "interval_bounds": 20093,
+        "maximum_removed_shared_pose_padding_m": 1.6732517073390412,
+        "actor_truth_used": false,
+        "confidence_calibrated": false
+      },
+      "planning": {
+        "capture_enabled": true,
+        "verified_control_ticks": 1301,
+        "maximum_candidate_records": 3,
+        "candidate_dispositions": {
+          "CompletePath": 212,
+          "NoCheckedStop": 1590,
+          "CheckedStop": 895,
+          "OppositeSideDuringPass": 1206
+        },
+        "selected_profiles": {
+          "CompletePath": 72,
+          "CheckedStop": 439
+        },
+        "nominal_forecast_conflicts": 2485,
+        "forecast_blockers": {
+          "1": 2485
+        },
+        "fault_braking_ticks": 0
+      }
+    }
+  ],
+  "errors": [],
+  "default_streams_identical": true,
+  "original_mission_goal_improved": false,
+  "canary_contract_passed": true
+}
