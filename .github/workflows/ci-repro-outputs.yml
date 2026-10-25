@@ -1,0 +1,60 @@
+name: Frozen reproduction output contracts
+on:
+  push:
+    branches: [codex/ci-real-repro-outputs-20261025]
+  pull_request:
+    paths: ['scripts/prepare-rgbd-regression.py','scripts/test-rgbd-regression-staging.py','.github/workflows/ci-repro-outputs.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  output-contracts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reproduce the exact native producer and unchanged strict output oracle
+        env:
+          OPENBLAS_NUM_THREADS: '1'
+        run: |
+          python -m pip install -r scripts/requirements-visual.txt
+          git fetch --no-tags --depth=1 origin a2776053d88bcdcae4e39134c73d95412ff49125
+          python scripts/test-rgbd-regression-staging.py
+          python scripts/prepare-rgbd-regression.py --output "$RUNNER_TEMP/repro-output-contract"
+          python "$RUNNER_TEMP/repro-output-contract/scripts/check-rgbd-extension-sources.py"
+          cargo build --release --locked --manifest-path "$RUNNER_TEMP/repro-output-contract/integrations/rgbd/Cargo.toml" --bin rustdriving-rgbd-multiscale-pairs
+          cd "$RUNNER_TEMP/repro-output-contract"
+          integrations/rgbd/target/release/rustdriving-rgbd-multiscale-pairs --control --output artifacts/multiscale-pairs/control.json
+          python scripts/check-multiscale-features.py --report artifacts/multiscale-pairs/control.json --output artifacts/multiscale-pairs/control-oracle.json
+          python - <<'PY'
+          import json, subprocess, sys
+          from pathlib import Path
+          root = Path.cwd()
+          assert (root/'artifacts').is_dir() and not (root/'artifacts').is_symlink()
+          alias = root/'output-alias'
+          alias.symlink_to(root/'artifacts', target_is_directory=True)
+          for target, reason in [(alias/'multiscale-pairs/rejected.json','output parent is a symlink'),
+                                 (root/'artifacts/multiscale-pairs/control-oracle.json','output already exists')]:
+              before = target.read_bytes() if target.exists() else None
+              result = subprocess.run([sys.executable,'scripts/check-multiscale-features.py',
+                  '--report','artifacts/multiscale-pairs/control.json','--output',str(target)],
+                  capture_output=True,text=True)
+              assert result.returncode != 0 and reason in result.stderr, result.stderr
+              assert (target.read_bytes() if target.exists() else None) == before
+          print(json.dumps({'original_native_control_passed': True, 'symlink_parent_rejected': True,
+                            'existing_output_preserved': True, 'output_parents_are_real': True}))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: frozen-reproduction-output-contracts
+          path: |
+            ${{ runner.temp }}/repro-output-contract/regression-sources.json
+            ${{ runner.temp }}/repro-output-contract/artifacts/multiscale-pairs/control-oracle.json
+          if-no-files-found: warn

@@ -72,7 +72,13 @@ def prepare(output):
         for name in ('crates', 'scripts', 'integrations/rgbd'):
             shutil.copytree(ROOT / name, output / name, ignore=ignore)
         source.extractall(output, filter='data')
-    for name in ('assets', 'data', 'artifacts', 'maps', 'scenarios'):
+    # New historical reports need real parents for create-only output guards.
+    # Copy prior active fixtures without sharing subsequent mutations.
+    if (ROOT / 'artifacts').exists():
+        shutil.copytree(ROOT / 'artifacts', output / 'artifacts', symlinks=True, ignore=ignore)
+    else:
+        (output / 'artifacts').mkdir()
+    for name in ('assets', 'data', 'maps', 'scenarios'):
         (output / name).symlink_to(ROOT / name, target_is_directory=True)
     bindings = {}
     for name in LIBRARIES:
