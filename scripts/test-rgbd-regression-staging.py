@@ -82,6 +82,7 @@ class SourceIntegrity(unittest.TestCase):
 
     def test_new_active_workspace_retains_original_historical_root_lock(self):
         self.complete_active_fixture()
+        (self.root / 'artifacts' / 'prior-fixture.json').write_bytes(b'{"active": true}\n')
         active = b'# A later active workspace lock must not enter the frozen workspace.\n'
         (self.root / 'Cargo.lock').write_bytes(active)
         with tarfile.open(fileobj=io.BytesIO(self.archive)) as source:
@@ -99,6 +100,14 @@ class SourceIntegrity(unittest.TestCase):
                          {'active_sha256': hashlib.sha256(active).hexdigest(),
                           'historical_sha256': hashlib.sha256(historical).hexdigest()})
         self.assertEqual(receipt['historical_revision'], staging.REVISION)
+        artifacts = self.output / 'artifacts'
+        self.assertTrue(artifacts.is_dir())
+        self.assertFalse(artifacts.is_symlink())
+        self.assertEqual((artifacts / 'prior-fixture.json').read_bytes(), b'{"active": true}\n')
+        (artifacts / 'prior-fixture.json').write_bytes(b'{"historical": true}\n')
+        (artifacts / 'new-report.json').write_bytes(b'{"new": true}\n')
+        self.assertEqual((self.root / 'artifacts' / 'prior-fixture.json').read_bytes(), b'{"active": true}\n')
+        self.assertFalse((self.root / 'artifacts' / 'new-report.json').exists())
 
     def test_missing_historical_root_lock_is_refused_before_output(self):
         self.complete_active_fixture()

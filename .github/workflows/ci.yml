@@ -1109,6 +1109,26 @@ jobs:
             artifacts/kitti-projection/**/*.log
             artifacts/pyramidal-tracking-synthetic-exercises.json
 
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: frozen-rgbd-research-evidence
+          path: |
+            ${{ runner.temp }}/rustdriving-rgbd-regression/artifacts/rgbd/
+            ${{ runner.temp }}/rustdriving-rgbd-regression/artifacts/recorded-motion/
+            ${{ runner.temp }}/rustdriving-rgbd-regression/artifacts/recorded-keyframes/
+            ${{ runner.temp }}/rustdriving-rgbd-regression/artifacts/recorded-submaps/
+            ${{ runner.temp }}/rustdriving-rgbd-regression/artifacts/recorded-visual/
+            ${{ runner.temp }}/rustdriving-rgbd-regression/artifacts/recorded-reprojection/
+            ${{ runner.temp }}/rustdriving-rgbd-regression/artifacts/recorded-qualified/
+            ${{ runner.temp }}/rustdriving-rgbd-regression/artifacts/recorded-temporal/
+            ${{ runner.temp }}/rustdriving-rgbd-regression/artifacts/recorded-supported/
+            ${{ runner.temp }}/rustdriving-rgbd-regression/artifacts/recorded-tracked/
+            ${{ runner.temp }}/rustdriving-rgbd-regression/artifacts/recorded-independent/
+            ${{ runner.temp }}/rustdriving-rgbd-regression/artifacts/multiscale-pairs/
+            ${{ runner.temp }}/rustdriving-rgbd-regression/artifacts/multiscale-temporal/
+            ${{ runner.temp }}/rustdriving-rgbd-regression/artifacts/registered-grid-temporal/
+            ${{ runner.temp }}/rustdriving-rgbd-regression/artifacts/pyramidal-tracking-synthetic-exercises.json
   visual:
     runs-on: ubuntu-latest
     steps:
