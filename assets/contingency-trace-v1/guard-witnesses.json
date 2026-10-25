@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "actor_truth_used": false,
+  "original_case_sha256": "9215d6f7fe756c4227adefb7aef560a69c3d043244132a90161004f90ce4eab2",
+  "original_source": "796cd0407988606b943651d554dc2f4031c2e195",
+  "failed_zero_speed_holds": 383,
+  "directional_only_rejections": 377,
+  "unclassified_failed_zero_speed_holds": 6,
+  "examples": [
+    {
+      "tick": 221,
+      "time_s": 11.05,
+      "position": {
+        "x": 49.49330760871131,
+        "y": 6.938657486115653
+      },
+      "proof": {
+        "zero_speed_hold": true,
+        "existing_reserve_contact_witness": true,
+        "without_directional_reserve_certified": true,
+        "without_directional_minimum_squared_separation": 10.316356162854788,
+        "witness": {
+          "prediction_id": 1,
+          "time_s": 7.99999998,
+          "actual_gap_m": -0.06801903805200449,
+          "gap_without_directional_reserve_m": 0.5662286815611122,
+          "directional_reserve_m": 0.6342477196131167,
+          "observed_speed_m_s": 0.005202356229601926,
+          "squared_separation_lower_bound": -1.282408563984168
+        }
+      }
+    },
+    {
+      "tick": 243,
+      "time_s": 12.15,
+      "position": {
+        "x": 49.499552167516285,
+        "y": 6.896034782697911
+      },
+      "proof": {
+        "zero_speed_hold": true,
+        "existing_reserve_contact_witness": true,
+        "without_directional_reserve_certified": true,
+        "without_directional_minimum_squared_separation": 10.395867658053778,
+        "witness": {
+          "prediction_id": 1,
+          "time_s": 7.99999998,
+          "actual_gap_m": -0.029563704230160526,
+          "gap_without_directional_reserve_m": 0.5703591215442678,
+          "directional_reserve_m": 0.5999228257744283,
+          "observed_speed_m_s": 0.0051001254155236195,
+          "squared_separation_lower_bound": -0.5565904820162242
+        }
+      }
+    },
+    {
+      "tick": 250,
+      "time_s": 12.5,
+      "position": {
+        "x": 49.52696338821568,
+        "y": 6.863325807389392
+      },
+      "proof": {
+        "zero_speed_hold": true,
+        "existing_reserve_contact_witness": true,
+        "without_directional_reserve_certified": true,
+        "without_directional_minimum_squared_separation": 9.476133441417979,
+        "witness": {
+          "prediction_id": 1,
+          "time_s": 7.99999998,
+          "actual_gap_m": -0.08378750538669266,
+          "gap_without_directional_reserve_m": 0.5245037574909404,
+          "directional_reserve_m": 0.608291262877633,
+          "observed_speed_m_s": 0.009465691877607858,
+          "squared_separation_lower_bound": -1.5647444086942714
+        }
+      }
+    },
+    {
+      "tick": 267,
+      "time_s": 13.350000000000001,
+      "position": {
+        "x": 49.74034665027385,
+        "y": 6.90692397133662
+      },
+      "proof": {
+        "zero_speed_hold": true,
+        "existing_reserve_contact_witness": true,
+        "without_directional_reserve_certified": true,
+        "without_directional_minimum_squared_separation": 5.416371558205203,
+        "witness": {
+          "prediction_id": 1,
+          "time_s": 7.99999998,
+          "actual_gap_m": -0.36293442346921556,
+          "gap_without_directional_reserve_m": 0.3015602353035618,
+          "directional_reserve_m": 0.6644946587727774,
+          "observed_speed_m_s": 0.006179010392499612,
+          "squared_separation_lower_bound": -6.759892026528237
+        }
+      }
+    },
+    {
+      "tick": 269,
+      "time_s": 13.450000000000001,
+      "position": {
+        "x": 49.76102733382677,
+        "y": 6.929202155081255
+      },
+      "proof": {
+        "zero_speed_hold": true,
+        "existing_reserve_contact_witness": true,
+        "without_directional_reserve_certified": true,
+        "without_directional_minimum_squared_separation": 5.532140883726826,
+        "witness": {
+          "prediction_id": 1,
+          "time_s": 7.99999998,
+          "actual_gap_m": -0.39202987625136543,
+          "gap_without_directional_reserve_m": 0.3079350103007066,
+          "directional_reserve_m": 0.699964886552072,
+          "observed_speed_m_s": 0.008242220062006133,
+          "squared_separation_lower_bound": -7.317337358905077
+        }
+      }
+    }
+  ],
+  "scope": "Independent stationary-envelope witnesses on the viewed rejected canary; the ablation does not authorize motion or remove a reserve.",
+  "first_rolling_emergency_cause_fully_localized": false
+}

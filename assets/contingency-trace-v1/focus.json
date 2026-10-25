@@ -1011,6 +1011,7 @@
           "speed": 0.0,
           "time": 6.41746959562172
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -1131,6 +1132,7 @@
           "speed": 0.0,
           "time": 6.374414308902662
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -1251,6 +1253,7 @@
           "speed": 0.0,
           "time": 6.277116413429261
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -1371,6 +1374,7 @@
           "speed": 0.0,
           "time": 6.304905044045153
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -1491,6 +1495,7 @@
           "speed": 0.0,
           "time": 6.201551522305415
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -1611,6 +1616,7 @@
           "speed": 0.0,
           "time": 6.1028335055499845
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -1731,6 +1737,7 @@
           "speed": 0.0,
           "time": 6.032672050093477
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -1853,6 +1860,7 @@
           "speed": 0.0,
           "time": 6.41746959562172
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -1973,6 +1981,7 @@
           "speed": 0.0,
           "time": 6.374414308902662
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -2093,6 +2102,7 @@
           "speed": 0.0,
           "time": 6.277116413429261
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -2213,6 +2223,7 @@
           "speed": 0.0,
           "time": 6.304905044045153
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -2333,6 +2344,7 @@
           "speed": 0.0,
           "time": 6.201551522305415
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -2453,6 +2465,7 @@
           "speed": 0.0,
           "time": 6.1028335055499845
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -2573,6 +2586,7 @@
           "speed": 0.0,
           "time": 6.032672050093477
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -2696,6 +2710,7 @@
           "speed": 0.0,
           "time": 1.554558110569101
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -2809,6 +2824,7 @@
           "speed": 8.0,
           "time": 5.5497774963428
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -2922,6 +2938,7 @@
           "speed": 8.0,
           "time": 5.524468132445055
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -3015,6 +3032,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -3108,6 +3126,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -3229,6 +3248,7 @@
           "speed": 0.0,
           "time": 1.3450098567256557
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -3350,6 +3370,7 @@
           "speed": 0.0,
           "time": 1.294442361500314
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -3446,6 +3467,21 @@
       },
       "trajectory_end": null,
       "trajectory_hold_start": null,
+      "stationary_guard": {
+        "zero_speed_hold": true,
+        "existing_reserve_contact_witness": true,
+        "without_directional_reserve_certified": true,
+        "without_directional_minimum_squared_separation": 10.316356162854788,
+        "witness": {
+          "prediction_id": 1,
+          "time_s": 7.99999998,
+          "actual_gap_m": -0.06801903805200449,
+          "gap_without_directional_reserve_m": 0.5662286815611122,
+          "directional_reserve_m": 0.6342477196131167,
+          "observed_speed_m_s": 0.005202356229601926,
+          "squared_separation_lower_bound": -1.282408563984168
+        }
+      },
       "forecasts": [
         {
           "id": 1,
@@ -3539,6 +3575,7 @@
       },
       "trajectory_end": null,
       "trajectory_hold_start": null,
+      "stationary_guard": null,
       "forecasts": [
         {
           "id": 1,
@@ -3632,6 +3669,7 @@
       },
       "trajectory_end": null,
       "trajectory_hold_start": null,
+      "stationary_guard": null,
       "forecasts": [
         {
           "id": 1,
@@ -3725,6 +3763,21 @@
       },
       "trajectory_end": null,
       "trajectory_hold_start": null,
+      "stationary_guard": {
+        "zero_speed_hold": true,
+        "existing_reserve_contact_witness": true,
+        "without_directional_reserve_certified": true,
+        "without_directional_minimum_squared_separation": 10.395867658053778,
+        "witness": {
+          "prediction_id": 1,
+          "time_s": 7.99999998,
+          "actual_gap_m": -0.029563704230160526,
+          "gap_without_directional_reserve_m": 0.5703591215442678,
+          "directional_reserve_m": 0.5999228257744283,
+          "observed_speed_m_s": 0.0051001254155236195,
+          "squared_separation_lower_bound": -0.5565904820162242
+        }
+      },
       "forecasts": [
         {
           "id": 1,
@@ -3818,6 +3871,7 @@
       },
       "trajectory_end": null,
       "trajectory_hold_start": null,
+      "stationary_guard": null,
       "forecasts": [
         {
           "id": 1,

@@ -189,6 +189,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -388,6 +389,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -1502,6 +1504,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -1608,6 +1611,7 @@
           "speed": 8.0,
           "time": 6.954919045164018
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 0
       },
@@ -1694,6 +1698,7 @@
           "speed": 8.0,
           "time": 6.90077857621073
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 1
       },
@@ -1780,6 +1785,7 @@
           "speed": 8.0,
           "time": 6.8548455141156035
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 2
       },
@@ -1866,6 +1872,7 @@
           "speed": 8.0,
           "time": 6.807098042819364
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 3
       },
@@ -1952,6 +1959,7 @@
           "speed": 8.0,
           "time": 6.7376661760137
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 4
       },
@@ -2038,6 +2046,7 @@
           "speed": 8.0,
           "time": 6.692980625879805
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 5
       },
@@ -2124,6 +2133,7 @@
           "speed": 8.0,
           "time": 6.648927750954783
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 6
       },
@@ -2210,6 +2220,7 @@
           "speed": 8.0,
           "time": 6.606163600461471
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 7
       },
@@ -2296,6 +2307,7 @@
           "speed": 8.0,
           "time": 6.557041733930483
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 8
       },
@@ -2382,6 +2394,7 @@
           "speed": 8.0,
           "time": 6.507145078312726
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 9
       },
@@ -2468,6 +2481,7 @@
           "speed": 8.0,
           "time": 6.4678741421365205
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 10
       },
@@ -2554,6 +2568,7 @@
           "speed": 8.0,
           "time": 6.422402775619345
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 11
       },
@@ -2640,6 +2655,7 @@
           "speed": 8.0,
           "time": 6.376523556966714
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 12
       },
@@ -2726,6 +2742,7 @@
           "speed": 8.0,
           "time": 6.345628486171999
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 13
       },
@@ -2812,6 +2829,7 @@
           "speed": 8.0,
           "time": 6.292732183458409
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 14
       },
@@ -2898,6 +2916,7 @@
           "speed": 8.0,
           "time": 6.253784549595458
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 15
       },
@@ -2984,6 +3003,7 @@
           "speed": 8.0,
           "time": 6.213497215836086
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 16
       },
@@ -3070,6 +3090,7 @@
           "speed": 8.0,
           "time": 6.183568613476351
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 17
       },
@@ -3156,6 +3177,7 @@
           "speed": 8.0,
           "time": 6.141512224061611
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 18
       },
@@ -3242,6 +3264,7 @@
           "speed": 8.0,
           "time": 6.106057782415038
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 19
       },
@@ -3328,6 +3351,7 @@
           "speed": 8.0,
           "time": 6.057732053142435
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 20
       },
@@ -3414,6 +3438,7 @@
           "speed": 8.0,
           "time": 6.030077325864533
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 21
       },
@@ -3500,6 +3525,7 @@
           "speed": 8.0,
           "time": 5.994190222279348
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 22
       },
@@ -3586,6 +3612,7 @@
           "speed": 8.0,
           "time": 5.951806669750898
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 23
       },
@@ -3672,6 +3699,7 @@
           "speed": 8.0,
           "time": 5.917866052829996
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 24
       },
@@ -3758,6 +3786,7 @@
           "speed": 8.0,
           "time": 5.886471262805229
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 25
       },
@@ -3844,6 +3873,7 @@
           "speed": 8.0,
           "time": 5.84640735804017
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 26
       },
@@ -3930,6 +3960,7 @@
           "speed": 8.0,
           "time": 5.811545553522332
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 27
       },
@@ -4016,6 +4047,7 @@
           "speed": 8.0,
           "time": 5.785121213591881
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 28
       },
@@ -4102,6 +4134,7 @@
           "speed": 8.0,
           "time": 5.749329840607321
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 29
       },
@@ -4188,6 +4221,7 @@
           "speed": 8.0,
           "time": 5.722186122814009
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 30
       },
@@ -4274,6 +4308,7 @@
           "speed": 8.0,
           "time": 5.687349581636886
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 31
       },
@@ -4360,6 +4395,7 @@
           "speed": 8.0,
           "time": 5.653294497044232
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 32
       },
@@ -4446,6 +4482,7 @@
           "speed": 8.0,
           "time": 5.624548097280278
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 33
       },
@@ -4532,6 +4569,7 @@
           "speed": 8.0,
           "time": 5.602781838377312
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 34
       },
@@ -4618,6 +4656,7 @@
           "speed": 8.0,
           "time": 5.568584767435455
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 35
       },
@@ -4704,6 +4743,7 @@
           "speed": 8.0,
           "time": 5.546329054702773
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 36
       },
@@ -4790,6 +4830,7 @@
           "speed": 8.0,
           "time": 5.519338125706732
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 37
       },
@@ -4876,6 +4917,7 @@
           "speed": 8.0,
           "time": 5.488357306716068
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 38
       },
@@ -4962,6 +5004,7 @@
           "speed": 8.0,
           "time": 5.461811053560219
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 39
       },
@@ -5048,6 +5091,7 @@
           "speed": 8.0,
           "time": 5.434639272939742
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 40
       },
@@ -5134,6 +5178,7 @@
           "speed": 8.0,
           "time": 5.415715445346763
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 41
       },
@@ -5220,6 +5265,7 @@
           "speed": 8.0,
           "time": 5.391524182162505
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 42
       },
@@ -5306,6 +5352,7 @@
           "speed": 8.0,
           "time": 5.366477037595297
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 43
       },
@@ -5392,6 +5439,7 @@
           "speed": 8.0,
           "time": 5.342607278121808
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 44
       },
@@ -5478,6 +5526,7 @@
           "speed": 8.0,
           "time": 5.321495012594855
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 45
       },
@@ -5564,6 +5613,7 @@
           "speed": 8.0,
           "time": 5.30185310067462
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 46
       },
@@ -5650,6 +5700,7 @@
           "speed": 8.0,
           "time": 5.27526521357355
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 47
       },
@@ -5736,6 +5787,7 @@
           "speed": 8.0,
           "time": 5.2555025231104
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 48
       },
@@ -5822,6 +5874,7 @@
           "speed": 8.0,
           "time": 5.238043016692111
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 49
       },
@@ -5908,6 +5961,7 @@
           "speed": 8.0,
           "time": 5.218577101016595
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 50
       },
@@ -5994,6 +6048,7 @@
           "speed": 8.0,
           "time": 5.199503037097954
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 51
       },
@@ -6080,6 +6135,7 @@
           "speed": 8.0,
           "time": 5.1826015015702
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 52
       },
@@ -6166,6 +6222,7 @@
           "speed": 8.0,
           "time": 5.165121977539165
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 53
       },
@@ -6252,6 +6309,7 @@
           "speed": 8.0,
           "time": 5.146969445833313
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 54
       },
@@ -6338,6 +6396,7 @@
           "speed": 8.0,
           "time": 5.131541573318687
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 55
       },
@@ -6424,6 +6483,7 @@
           "speed": 8.0,
           "time": 5.1162919089462235
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 56
       },
@@ -6510,6 +6570,7 @@
           "speed": 8.0,
           "time": 5.101329080081199
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 57
       },
@@ -6596,6 +6657,7 @@
           "speed": 8.0,
           "time": 5.090242536523954
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 58
       },
@@ -6682,6 +6744,7 @@
           "speed": 8.0,
           "time": 5.077382989645553
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 59
       },
@@ -6768,6 +6831,7 @@
           "speed": 8.0,
           "time": 5.060723049519706
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 60
       },
@@ -6854,6 +6918,7 @@
           "speed": 8.0,
           "time": 5.051465306228442
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 61
       },
@@ -6940,6 +7005,7 @@
           "speed": 8.0,
           "time": 5.040139845340939
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 62
       },
@@ -7026,6 +7092,7 @@
           "speed": 8.0,
           "time": 5.0269321292628835
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 63
       },
@@ -7112,6 +7179,7 @@
           "speed": 8.0,
           "time": 5.017526481256358
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 64
       },
@@ -7198,6 +7266,7 @@
           "speed": 8.0,
           "time": 5.007467147154994
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 65
       },
@@ -7284,6 +7353,7 @@
           "speed": 8.0,
           "time": 4.998119874938914
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 66
       },
@@ -7370,6 +7440,7 @@
           "speed": 8.0,
           "time": 4.991212961768962
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 67
       },
@@ -7456,6 +7527,7 @@
           "speed": 8.0,
           "time": 4.981622771448862
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 68
       },
@@ -7542,6 +7614,7 @@
           "speed": 8.0,
           "time": 4.97491615768177
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 69
       },
@@ -7614,6 +7687,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -7702,6 +7776,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -7790,6 +7865,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -7910,6 +7986,7 @@
           "speed": 0.0,
           "time": 2.175461586665121
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -8030,6 +8107,7 @@
           "speed": 0.0,
           "time": 2.197889613744939
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -8150,6 +8228,7 @@
           "speed": 0.0,
           "time": 2.129633309118114
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -8270,6 +8349,7 @@
           "speed": 0.0,
           "time": 2.030050553964264
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -8384,6 +8464,7 @@
           "speed": 0.0,
           "time": 2.3662094851299535
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -8504,6 +8585,7 @@
           "speed": 0.0,
           "time": 1.9395190248087903
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -8618,6 +8700,7 @@
           "speed": 0.0,
           "time": 2.2549991276349766
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -8738,6 +8821,7 @@
           "speed": 0.0,
           "time": 6.425596979820109
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -8858,6 +8942,7 @@
           "speed": 0.0,
           "time": 6.51541957190165
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -8978,6 +9063,7 @@
           "speed": 0.0,
           "time": 6.41746959562172
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -9098,6 +9184,7 @@
           "speed": 0.0,
           "time": 6.374414308902662
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -9218,6 +9305,7 @@
           "speed": 0.0,
           "time": 6.277116413429261
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -9338,6 +9426,7 @@
           "speed": 0.0,
           "time": 6.304905044045153
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -9458,6 +9547,7 @@
           "speed": 0.0,
           "time": 6.201551522305415
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -9578,6 +9668,7 @@
           "speed": 0.0,
           "time": 6.1028335055499845
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -9698,6 +9789,7 @@
           "speed": 0.0,
           "time": 6.032672050093477
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -9806,6 +9898,7 @@
           "speed": 0.0,
           "time": 0.005701158222555608
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -9914,6 +10007,7 @@
           "speed": 0.0,
           "time": 0.00336261870970432
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -10021,6 +10115,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 90.18576854821858,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.468713907882732,
+            "gap_without_directional_reserve_m": 4.032053947974971,
+            "directional_reserve_m": 0.5633400400922393,
+            "observed_speed_m_s": 0.001537155790283221,
+            "squared_separation_lower_bound": 79.53949295060187
+          }
         },
         "forecasts": [
           {
@@ -10130,6 +10239,21 @@
           "speed": 0.0,
           "time": 0.0
         },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 88.13257938926024,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.35741112806204,
+            "gap_without_directional_reserve_m": 3.920757895537358,
+            "directional_reserve_m": 0.5633467674753182,
+            "observed_speed_m_s": 0.001537155790288567,
+            "squared_separation_lower_bound": 77.36080112651167
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -10237,6 +10361,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 88.03446176300145,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.2443546447364264,
+            "gap_without_directional_reserve_m": 3.9189107220140222,
+            "directional_reserve_m": 0.6745560772775959,
+            "observed_speed_m_s": 0.0024007073000166636,
+            "squared_separation_lower_bound": 75.06972425554362
+          }
         },
         "forecasts": [
           {
@@ -10346,6 +10485,21 @@
           "speed": 0.0,
           "time": 0.0
         },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 86.15136539359452,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.143387663186421,
+            "gap_without_directional_reserve_m": 3.8179473905617556,
+            "directional_reserve_m": 0.6745597273753348,
+            "observed_speed_m_s": 0.0024007073000094424,
+            "squared_separation_lower_bound": 73.05043686443183
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -10454,6 +10608,7 @@
           "speed": 0.0,
           "time": 0.0037883498789866134
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -10562,6 +10717,7 @@
           "speed": 0.0,
           "time": 0.003090839523262189
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -10670,6 +10826,7 @@
           "speed": 0.0,
           "time": 0.0006076113782127772
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -10777,6 +10934,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 86.8074631181973,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.371583709176148,
+            "gap_without_directional_reserve_m": 3.8411443240361063,
+            "directional_reserve_m": 0.46956061485995837,
+            "observed_speed_m_s": 0.0036224999836508274,
+            "squared_separation_lower_bound": 77.77884928864161
+          }
         },
         "forecasts": [
           {
@@ -10886,6 +11058,7 @@
           "speed": 0.0,
           "time": 0.0019187203609998566
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -10994,6 +11167,7 @@
           "speed": 0.0,
           "time": 0.001894556959850055
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -11102,6 +11276,7 @@
           "speed": 0.0,
           "time": 0.0032180310305328047
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -11210,6 +11385,7 @@
           "speed": 0.0,
           "time": 0.0026246724157494186
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -11317,6 +11493,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 89.29223167857984,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.7700369439090107,
+            "gap_without_directional_reserve_m": 3.96411065500215,
+            "directional_reserve_m": 0.19407371109313945,
+            "observed_speed_m_s": 0.005801516534229612,
+            "squared_separation_lower_bound": 85.65235507607143
+          }
         },
         "forecasts": [
           {
@@ -11426,6 +11617,7 @@
           "speed": 0.0,
           "time": 0.005610592580863372
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -11534,6 +11726,7 @@
           "speed": 0.0,
           "time": 0.01981762605009304
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -11642,6 +11835,7 @@
           "speed": 0.0,
           "time": 0.0010020346427114823
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -11750,6 +11944,7 @@
           "speed": 0.0,
           "time": 0.0011910966557593062
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -11858,6 +12053,7 @@
           "speed": 0.0,
           "time": 0.005114538114459011
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -11966,6 +12162,7 @@
           "speed": 0.0,
           "time": 0.001117752826626592
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -12073,6 +12270,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 87.24387785744105,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.451349230039511,
+            "gap_without_directional_reserve_m": 3.8586888838285436,
+            "directional_reserve_m": 0.4073396537890325,
+            "observed_speed_m_s": 0.005949453645252765,
+            "squared_separation_lower_bound": 79.43991340252288
+          }
         },
         "forecasts": [
           {
@@ -12182,6 +12394,7 @@
           "speed": 0.0,
           "time": 0.002547228675170877
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -12290,6 +12503,7 @@
           "speed": 0.0,
           "time": 0.005692037222801624
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -12398,6 +12612,7 @@
           "speed": 0.0,
           "time": 0.002445222548847742
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -12505,6 +12720,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 86.80534594001983,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.6794442859545238,
+            "gap_without_directional_reserve_m": 3.84223146134771,
+            "directional_reserve_m": 0.1627871753931866,
+            "observed_speed_m_s": 0.00152055307555625,
+            "squared_separation_lower_bound": 83.7265543672207
+          }
         },
         "forecasts": [
           {
@@ -12614,6 +12844,7 @@
           "speed": 0.0,
           "time": 0.0015939606114348762
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -12722,6 +12953,7 @@
           "speed": 0.0,
           "time": 0.004277982392260769
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -12830,6 +13062,7 @@
           "speed": 0.0,
           "time": 0.003813700167968294
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -12937,6 +13170,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 89.7547631944889,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.496483502022661,
+            "gap_without_directional_reserve_m": 4.015328434632275,
+            "directional_reserve_m": 0.5188449326096145,
+            "observed_speed_m_s": 0.002761475603455185,
+            "squared_separation_lower_bound": 79.97113871735475
+          }
         },
         "forecasts": [
           {
@@ -13046,6 +13294,21 @@
           "speed": 0.0,
           "time": 0.0
         },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 87.69997590456454,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.3851501633491274,
+            "gap_without_directional_reserve_m": 3.9040034986621137,
+            "directional_reserve_m": 0.5188533353129865,
+            "observed_speed_m_s": 0.002761475603480959,
+            "squared_separation_lower_bound": 77.80079230451442
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -13154,6 +13417,7 @@
           "speed": 0.0,
           "time": 0.0057566347325510815
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -13262,6 +13526,7 @@
           "speed": 0.0,
           "time": 0.0021811130403455743
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -13370,6 +13635,7 @@
           "speed": 0.0,
           "time": 0.0024021066185470432
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -13478,6 +13744,7 @@
           "speed": 0.0,
           "time": 0.0023501778059393714
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -13585,6 +13852,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 90.01377904258331,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.968779702269748,
+            "gap_without_directional_reserve_m": 3.990049309743357,
+            "directional_reserve_m": 0.021269607473608797,
+            "observed_speed_m_s": 0.008072720063866348,
+            "squared_separation_lower_bound": 89.61836032140914
+          }
         },
         "forecasts": [
           {
@@ -13694,6 +13976,21 @@
           "speed": 0.0,
           "time": 0.0
         },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 87.74696898600595,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.6068641722021733,
+            "gap_without_directional_reserve_m": 3.9070121952921006,
+            "directional_reserve_m": 0.3001480230899275,
+            "observed_speed_m_s": 0.004278018469999416,
+            "squared_separation_lower_bound": 82.08858511148651
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -13802,6 +14099,7 @@
           "speed": 0.0,
           "time": 0.0011070846530576764
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -13909,6 +14207,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 88.16124366273621,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.823453202954047,
+            "gap_without_directional_reserve_m": 3.955325952819866,
+            "directional_reserve_m": 0.1318727498658187,
+            "observed_speed_m_s": 0.010118513804822893,
+            "squared_separation_lower_bound": 85.72610841914313
+          }
         },
         "forecasts": [
           {
@@ -14018,6 +14331,7 @@
           "speed": 0.0,
           "time": 0.005383832314864286
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -14125,6 +14439,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 88.50377530146605,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.8328378331070914,
+            "gap_without_directional_reserve_m": 3.9359763049048695,
+            "directional_reserve_m": 0.10313847179777824,
+            "observed_speed_m_s": 0.00047696522503921587,
+            "squared_separation_lower_bound": 86.57993205139759
+          }
         },
         "forecasts": [
           {
@@ -14234,6 +14563,7 @@
           "speed": 0.0,
           "time": 0.005314687925082576
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -14338,6 +14668,7 @@
           "speed": 8.0,
           "time": 6.954919045164018
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 0
       },
@@ -14424,6 +14755,7 @@
           "speed": 8.0,
           "time": 6.90077857621073
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 1
       },
@@ -14510,6 +14842,7 @@
           "speed": 8.0,
           "time": 6.8548455141156035
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 2
       },
@@ -14596,6 +14929,7 @@
           "speed": 8.0,
           "time": 6.807098042819364
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 3
       },
@@ -14682,6 +15016,7 @@
           "speed": 8.0,
           "time": 6.7376661760137
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 4
       },
@@ -14768,6 +15103,7 @@
           "speed": 8.0,
           "time": 6.692980625879805
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 5
       },
@@ -14854,6 +15190,7 @@
           "speed": 8.0,
           "time": 6.648927750954783
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 6
       },
@@ -14940,6 +15277,7 @@
           "speed": 8.0,
           "time": 6.606163600461471
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 7
       },
@@ -15026,6 +15364,7 @@
           "speed": 8.0,
           "time": 6.557041733930483
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 8
       },
@@ -15112,6 +15451,7 @@
           "speed": 8.0,
           "time": 6.507145078312726
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 9
       },
@@ -15198,6 +15538,7 @@
           "speed": 8.0,
           "time": 6.4678741421365205
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 10
       },
@@ -15284,6 +15625,7 @@
           "speed": 8.0,
           "time": 6.422402775619345
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 11
       },
@@ -15370,6 +15712,7 @@
           "speed": 8.0,
           "time": 6.376523556966714
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 12
       },
@@ -15456,6 +15799,7 @@
           "speed": 8.0,
           "time": 6.345628486171999
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 13
       },
@@ -15542,6 +15886,7 @@
           "speed": 8.0,
           "time": 6.292732183458409
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 14
       },
@@ -15628,6 +15973,7 @@
           "speed": 8.0,
           "time": 6.253784549595458
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 15
       },
@@ -15714,6 +16060,7 @@
           "speed": 8.0,
           "time": 6.213497215836086
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 16
       },
@@ -15800,6 +16147,7 @@
           "speed": 8.0,
           "time": 6.183568613476351
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 17
       },
@@ -15886,6 +16234,7 @@
           "speed": 8.0,
           "time": 6.141512224061611
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 18
       },
@@ -15972,6 +16321,7 @@
           "speed": 8.0,
           "time": 6.106057782415038
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 19
       },
@@ -16058,6 +16408,7 @@
           "speed": 8.0,
           "time": 6.057732053142435
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 20
       },
@@ -16144,6 +16495,7 @@
           "speed": 8.0,
           "time": 6.030077325864533
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 21
       },
@@ -16230,6 +16582,7 @@
           "speed": 8.0,
           "time": 5.994190222279348
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 22
       },
@@ -16316,6 +16669,7 @@
           "speed": 8.0,
           "time": 5.951806669750898
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 23
       },
@@ -16402,6 +16756,7 @@
           "speed": 8.0,
           "time": 5.917866052829996
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 24
       },
@@ -16488,6 +16843,7 @@
           "speed": 8.0,
           "time": 5.886471262805229
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 25
       },
@@ -16574,6 +16930,7 @@
           "speed": 8.0,
           "time": 5.84640735804017
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 26
       },
@@ -16660,6 +17017,7 @@
           "speed": 8.0,
           "time": 5.811545553522332
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 27
       },
@@ -16746,6 +17104,7 @@
           "speed": 8.0,
           "time": 5.785121213591881
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 28
       },
@@ -16832,6 +17191,7 @@
           "speed": 8.0,
           "time": 5.749329840607321
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 29
       },
@@ -16918,6 +17278,7 @@
           "speed": 8.0,
           "time": 5.722186122814009
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 30
       },
@@ -17004,6 +17365,7 @@
           "speed": 8.0,
           "time": 5.687349581636886
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 31
       },
@@ -17090,6 +17452,7 @@
           "speed": 8.0,
           "time": 5.653294497044232
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 32
       },
@@ -17176,6 +17539,7 @@
           "speed": 8.0,
           "time": 5.624548097280278
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 33
       },
@@ -17262,6 +17626,7 @@
           "speed": 8.0,
           "time": 5.602781838377312
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 34
       },
@@ -17348,6 +17713,7 @@
           "speed": 8.0,
           "time": 5.568584767435455
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 35
       },
@@ -17434,6 +17800,7 @@
           "speed": 8.0,
           "time": 5.546329054702773
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 36
       },
@@ -17520,6 +17887,7 @@
           "speed": 8.0,
           "time": 5.519338125706732
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 37
       },
@@ -17606,6 +17974,7 @@
           "speed": 8.0,
           "time": 5.488357306716068
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 38
       },
@@ -17692,6 +18061,7 @@
           "speed": 8.0,
           "time": 5.461811053560219
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 39
       },
@@ -17778,6 +18148,7 @@
           "speed": 8.0,
           "time": 5.434639272939742
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 40
       },
@@ -17864,6 +18235,7 @@
           "speed": 8.0,
           "time": 5.415715445346763
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 41
       },
@@ -17950,6 +18322,7 @@
           "speed": 8.0,
           "time": 5.391524182162505
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 42
       },
@@ -18036,6 +18409,7 @@
           "speed": 8.0,
           "time": 5.366477037595297
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 43
       },
@@ -18122,6 +18496,7 @@
           "speed": 8.0,
           "time": 5.342607278121808
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 44
       },
@@ -18208,6 +18583,7 @@
           "speed": 8.0,
           "time": 5.321495012594855
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 45
       },
@@ -18294,6 +18670,7 @@
           "speed": 8.0,
           "time": 5.30185310067462
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 46
       },
@@ -18380,6 +18757,7 @@
           "speed": 8.0,
           "time": 5.27526521357355
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 47
       },
@@ -18466,6 +18844,7 @@
           "speed": 8.0,
           "time": 5.2555025231104
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 48
       },
@@ -18552,6 +18931,7 @@
           "speed": 8.0,
           "time": 5.238043016692111
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 49
       },
@@ -18638,6 +19018,7 @@
           "speed": 8.0,
           "time": 5.218577101016595
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 50
       },
@@ -18724,6 +19105,7 @@
           "speed": 8.0,
           "time": 5.199503037097954
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 51
       },
@@ -18810,6 +19192,7 @@
           "speed": 8.0,
           "time": 5.1826015015702
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 52
       },
@@ -18896,6 +19279,7 @@
           "speed": 8.0,
           "time": 5.165121977539165
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 53
       },
@@ -18982,6 +19366,7 @@
           "speed": 8.0,
           "time": 5.146969445833313
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 54
       },
@@ -19068,6 +19453,7 @@
           "speed": 8.0,
           "time": 5.131541573318687
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 55
       },
@@ -19154,6 +19540,7 @@
           "speed": 8.0,
           "time": 5.1162919089462235
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 56
       },
@@ -19240,6 +19627,7 @@
           "speed": 8.0,
           "time": 5.101329080081199
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 57
       },
@@ -19326,6 +19714,7 @@
           "speed": 8.0,
           "time": 5.090242536523954
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 58
       },
@@ -19412,6 +19801,7 @@
           "speed": 8.0,
           "time": 5.077382989645553
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 59
       },
@@ -19498,6 +19888,7 @@
           "speed": 8.0,
           "time": 5.060723049519706
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 60
       },
@@ -19584,6 +19975,7 @@
           "speed": 8.0,
           "time": 5.051465306228442
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 61
       },
@@ -19670,6 +20062,7 @@
           "speed": 8.0,
           "time": 5.040139845340939
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 62
       },
@@ -19756,6 +20149,7 @@
           "speed": 8.0,
           "time": 5.0269321292628835
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 63
       },
@@ -19842,6 +20236,7 @@
           "speed": 8.0,
           "time": 5.017526481256358
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 64
       },
@@ -19928,6 +20323,7 @@
           "speed": 8.0,
           "time": 5.007467147154994
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 65
       },
@@ -20014,6 +20410,7 @@
           "speed": 8.0,
           "time": 4.998119874938914
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 66
       },
@@ -20100,6 +20497,7 @@
           "speed": 8.0,
           "time": 4.991212961768962
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 67
       },
@@ -20186,6 +20584,7 @@
           "speed": 8.0,
           "time": 4.981622771448862
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 68
       },
@@ -20272,6 +20671,7 @@
           "speed": 8.0,
           "time": 4.97491615768177
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 69
       },
@@ -20344,6 +20744,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -20432,6 +20833,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -20520,6 +20922,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -20640,6 +21043,7 @@
           "speed": 0.0,
           "time": 2.175461586665121
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -20760,6 +21164,7 @@
           "speed": 0.0,
           "time": 2.197889613744939
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -20880,6 +21285,7 @@
           "speed": 0.0,
           "time": 2.129633309118114
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -21000,6 +21406,7 @@
           "speed": 0.0,
           "time": 2.030050553964264
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -21114,6 +21521,7 @@
           "speed": 0.0,
           "time": 2.3662094851299535
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -21234,6 +21642,7 @@
           "speed": 0.0,
           "time": 1.9395190248087903
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -21348,6 +21757,7 @@
           "speed": 0.0,
           "time": 2.2549991276349766
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -21468,6 +21878,7 @@
           "speed": 0.0,
           "time": 6.425596979820109
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -21588,6 +21999,7 @@
           "speed": 0.0,
           "time": 6.51541957190165
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -21708,6 +22120,7 @@
           "speed": 0.0,
           "time": 6.41746959562172
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -21828,6 +22241,7 @@
           "speed": 0.0,
           "time": 6.374414308902662
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -21948,6 +22362,7 @@
           "speed": 0.0,
           "time": 6.277116413429261
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -22068,6 +22483,7 @@
           "speed": 0.0,
           "time": 6.304905044045153
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -22188,6 +22604,7 @@
           "speed": 0.0,
           "time": 6.201551522305415
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -22308,6 +22725,7 @@
           "speed": 0.0,
           "time": 6.1028335055499845
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -22428,6 +22846,7 @@
           "speed": 0.0,
           "time": 6.032672050093477
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -22536,6 +22955,7 @@
           "speed": 0.0,
           "time": 0.005701158222555608
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -22644,6 +23064,7 @@
           "speed": 0.0,
           "time": 0.00336261870970432
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -22751,6 +23172,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 90.18576854821858,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.468713907882732,
+            "gap_without_directional_reserve_m": 4.032053947974971,
+            "directional_reserve_m": 0.5633400400922393,
+            "observed_speed_m_s": 0.001537155790283221,
+            "squared_separation_lower_bound": 79.53949295060187
+          }
         },
         "forecasts": [
           {
@@ -22860,6 +23296,21 @@
           "speed": 0.0,
           "time": 0.0
         },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 88.13257938926024,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.35741112806204,
+            "gap_without_directional_reserve_m": 3.920757895537358,
+            "directional_reserve_m": 0.5633467674753182,
+            "observed_speed_m_s": 0.001537155790288567,
+            "squared_separation_lower_bound": 77.36080112651167
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -22967,6 +23418,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 88.03446176300145,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.2443546447364264,
+            "gap_without_directional_reserve_m": 3.9189107220140222,
+            "directional_reserve_m": 0.6745560772775959,
+            "observed_speed_m_s": 0.0024007073000166636,
+            "squared_separation_lower_bound": 75.06972425554362
+          }
         },
         "forecasts": [
           {
@@ -23076,6 +23542,21 @@
           "speed": 0.0,
           "time": 0.0
         },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 86.15136539359452,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.143387663186421,
+            "gap_without_directional_reserve_m": 3.8179473905617556,
+            "directional_reserve_m": 0.6745597273753348,
+            "observed_speed_m_s": 0.0024007073000094424,
+            "squared_separation_lower_bound": 73.05043686443183
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -23184,6 +23665,7 @@
           "speed": 0.0,
           "time": 0.0037883498789866134
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -23292,6 +23774,7 @@
           "speed": 0.0,
           "time": 0.003090839523262189
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -23400,6 +23883,7 @@
           "speed": 0.0,
           "time": 0.0006076113782127772
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -23507,6 +23991,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 86.8074631181973,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.371583709176148,
+            "gap_without_directional_reserve_m": 3.8411443240361063,
+            "directional_reserve_m": 0.46956061485995837,
+            "observed_speed_m_s": 0.0036224999836508274,
+            "squared_separation_lower_bound": 77.77884928864161
+          }
         },
         "forecasts": [
           {
@@ -23616,6 +24115,7 @@
           "speed": 0.0,
           "time": 0.0019187203609998566
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -23724,6 +24224,7 @@
           "speed": 0.0,
           "time": 0.001894556959850055
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -23832,6 +24333,7 @@
           "speed": 0.0,
           "time": 0.0032180310305328047
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -23940,6 +24442,7 @@
           "speed": 0.0,
           "time": 0.0026246724157494186
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -24047,6 +24550,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 89.29223167857984,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.7700369439090107,
+            "gap_without_directional_reserve_m": 3.96411065500215,
+            "directional_reserve_m": 0.19407371109313945,
+            "observed_speed_m_s": 0.005801516534229612,
+            "squared_separation_lower_bound": 85.65235507607143
+          }
         },
         "forecasts": [
           {
@@ -24156,6 +24674,7 @@
           "speed": 0.0,
           "time": 0.005610592580863372
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -24264,6 +24783,7 @@
           "speed": 0.0,
           "time": 0.01981762605009304
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -24372,6 +24892,7 @@
           "speed": 0.0,
           "time": 0.0010020346427114823
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -24480,6 +25001,7 @@
           "speed": 0.0,
           "time": 0.0011910966557593062
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -24588,6 +25110,7 @@
           "speed": 0.0,
           "time": 0.005114538114459011
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -24696,6 +25219,7 @@
           "speed": 0.0,
           "time": 0.001117752826626592
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -24803,6 +25327,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 87.24387785744105,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.451349230039511,
+            "gap_without_directional_reserve_m": 3.8586888838285436,
+            "directional_reserve_m": 0.4073396537890325,
+            "observed_speed_m_s": 0.005949453645252765,
+            "squared_separation_lower_bound": 79.43991340252288
+          }
         },
         "forecasts": [
           {
@@ -24912,6 +25451,7 @@
           "speed": 0.0,
           "time": 0.002547228675170877
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -25020,6 +25560,7 @@
           "speed": 0.0,
           "time": 0.005692037222801624
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -25128,6 +25669,7 @@
           "speed": 0.0,
           "time": 0.002445222548847742
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -25235,6 +25777,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 86.80534594001983,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.6794442859545238,
+            "gap_without_directional_reserve_m": 3.84223146134771,
+            "directional_reserve_m": 0.1627871753931866,
+            "observed_speed_m_s": 0.00152055307555625,
+            "squared_separation_lower_bound": 83.7265543672207
+          }
         },
         "forecasts": [
           {
@@ -25344,6 +25901,7 @@
           "speed": 0.0,
           "time": 0.0015939606114348762
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -25452,6 +26010,7 @@
           "speed": 0.0,
           "time": 0.004277982392260769
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -25560,6 +26119,7 @@
           "speed": 0.0,
           "time": 0.003813700167968294
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -25667,6 +26227,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 89.7547631944889,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.496483502022661,
+            "gap_without_directional_reserve_m": 4.015328434632275,
+            "directional_reserve_m": 0.5188449326096145,
+            "observed_speed_m_s": 0.002761475603455185,
+            "squared_separation_lower_bound": 79.97113871735475
+          }
         },
         "forecasts": [
           {
@@ -25776,6 +26351,21 @@
           "speed": 0.0,
           "time": 0.0
         },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 87.69997590456454,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.3851501633491274,
+            "gap_without_directional_reserve_m": 3.9040034986621137,
+            "directional_reserve_m": 0.5188533353129865,
+            "observed_speed_m_s": 0.002761475603480959,
+            "squared_separation_lower_bound": 77.80079230451442
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -25884,6 +26474,7 @@
           "speed": 0.0,
           "time": 0.0057566347325510815
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -25992,6 +26583,7 @@
           "speed": 0.0,
           "time": 0.0021811130403455743
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -26100,6 +26692,7 @@
           "speed": 0.0,
           "time": 0.0024021066185470432
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -26208,6 +26801,7 @@
           "speed": 0.0,
           "time": 0.0023501778059393714
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -26315,6 +26909,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 90.01377904258331,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.968779702269748,
+            "gap_without_directional_reserve_m": 3.990049309743357,
+            "directional_reserve_m": 0.021269607473608797,
+            "observed_speed_m_s": 0.008072720063866348,
+            "squared_separation_lower_bound": 89.61836032140914
+          }
         },
         "forecasts": [
           {
@@ -26424,6 +27033,21 @@
           "speed": 0.0,
           "time": 0.0
         },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 87.74696898600595,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.6068641722021733,
+            "gap_without_directional_reserve_m": 3.9070121952921006,
+            "directional_reserve_m": 0.3001480230899275,
+            "observed_speed_m_s": 0.004278018469999416,
+            "squared_separation_lower_bound": 82.08858511148651
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -26532,6 +27156,7 @@
           "speed": 0.0,
           "time": 0.0011070846530576764
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -26639,6 +27264,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 88.16124366273621,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.823453202954047,
+            "gap_without_directional_reserve_m": 3.955325952819866,
+            "directional_reserve_m": 0.1318727498658187,
+            "observed_speed_m_s": 0.010118513804822893,
+            "squared_separation_lower_bound": 85.72610841914313
+          }
         },
         "forecasts": [
           {
@@ -26748,6 +27388,7 @@
           "speed": 0.0,
           "time": 0.005383832314864286
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -26855,6 +27496,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 88.50377530146605,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 3.8328378331070914,
+            "gap_without_directional_reserve_m": 3.9359763049048695,
+            "directional_reserve_m": 0.10313847179777824,
+            "observed_speed_m_s": 0.00047696522503921587,
+            "squared_separation_lower_bound": 86.57993205139759
+          }
         },
         "forecasts": [
           {
@@ -26964,6 +27620,7 @@
           "speed": 0.0,
           "time": 0.005314687925082576
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -27079,6 +27736,7 @@
           "speed": 8.0,
           "time": 6.954919045164018
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 0
       },
@@ -27176,6 +27834,7 @@
           "speed": 8.0,
           "time": 6.90077857621073
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 1
       },
@@ -27273,6 +27932,7 @@
           "speed": 8.0,
           "time": 6.8548455141156035
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 2
       },
@@ -27370,6 +28030,7 @@
           "speed": 8.0,
           "time": 6.807098042819364
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 3
       },
@@ -27467,6 +28128,7 @@
           "speed": 8.0,
           "time": 6.7376661760137
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 4
       },
@@ -27564,6 +28226,7 @@
           "speed": 8.0,
           "time": 6.692980625879805
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 5
       },
@@ -27661,6 +28324,7 @@
           "speed": 8.0,
           "time": 6.648927750954783
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 6
       },
@@ -27758,6 +28422,7 @@
           "speed": 8.0,
           "time": 6.606163600461471
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 7
       },
@@ -27855,6 +28520,7 @@
           "speed": 8.0,
           "time": 6.557041733930483
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 8
       },
@@ -27952,6 +28618,7 @@
           "speed": 8.0,
           "time": 6.507145078312726
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 9
       },
@@ -28049,6 +28716,7 @@
           "speed": 8.0,
           "time": 6.4678741421365205
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 10
       },
@@ -28146,6 +28814,7 @@
           "speed": 8.0,
           "time": 6.422402775619345
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 11
       },
@@ -28243,6 +28912,7 @@
           "speed": 8.0,
           "time": 6.376523556966714
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 12
       },
@@ -28340,6 +29010,7 @@
           "speed": 8.0,
           "time": 6.345628486171999
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 13
       },
@@ -28437,6 +29108,7 @@
           "speed": 8.0,
           "time": 6.292732183458409
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 14
       },
@@ -28534,6 +29206,7 @@
           "speed": 8.0,
           "time": 6.253784549595458
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 15
       },
@@ -28631,6 +29304,7 @@
           "speed": 8.0,
           "time": 6.213497215836086
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 16
       },
@@ -28728,6 +29402,7 @@
           "speed": 8.0,
           "time": 6.183568613476351
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 17
       },
@@ -28825,6 +29500,7 @@
           "speed": 8.0,
           "time": 6.141512224061611
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 18
       },
@@ -28922,6 +29598,7 @@
           "speed": 8.0,
           "time": 6.106057782415038
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 19
       },
@@ -29019,6 +29696,7 @@
           "speed": 8.0,
           "time": 6.057732053142435
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 20
       },
@@ -29116,6 +29794,7 @@
           "speed": 8.0,
           "time": 6.030077325864533
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 21
       },
@@ -29213,6 +29892,7 @@
           "speed": 8.0,
           "time": 5.994190222279348
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 22
       },
@@ -29310,6 +29990,7 @@
           "speed": 8.0,
           "time": 5.951806669750898
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 23
       },
@@ -29407,6 +30088,7 @@
           "speed": 8.0,
           "time": 5.917866052829996
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 24
       },
@@ -29504,6 +30186,7 @@
           "speed": 8.0,
           "time": 5.886471262805229
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 25
       },
@@ -29601,6 +30284,7 @@
           "speed": 8.0,
           "time": 5.84640735804017
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 26
       },
@@ -29698,6 +30382,7 @@
           "speed": 8.0,
           "time": 5.811545553522332
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 27
       },
@@ -29795,6 +30480,7 @@
           "speed": 8.0,
           "time": 5.785121213591881
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 28
       },
@@ -29892,6 +30578,7 @@
           "speed": 8.0,
           "time": 5.749329840607321
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 29
       },
@@ -29989,6 +30676,7 @@
           "speed": 8.0,
           "time": 5.722186122814009
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 30
       },
@@ -30086,6 +30774,7 @@
           "speed": 8.0,
           "time": 5.687349581636886
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 31
       },
@@ -30183,6 +30872,7 @@
           "speed": 8.0,
           "time": 5.653294497044232
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 32
       },
@@ -30280,6 +30970,7 @@
           "speed": 8.0,
           "time": 5.624548097280278
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 33
       },
@@ -30377,6 +31068,7 @@
           "speed": 8.0,
           "time": 5.602781838377312
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 34
       },
@@ -30474,6 +31166,7 @@
           "speed": 8.0,
           "time": 5.568584767435455
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 35
       },
@@ -30571,6 +31264,7 @@
           "speed": 8.0,
           "time": 5.546329054702773
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 36
       },
@@ -30668,6 +31362,7 @@
           "speed": 8.0,
           "time": 5.519338125706732
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 37
       },
@@ -30765,6 +31460,7 @@
           "speed": 8.0,
           "time": 5.488357306716068
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 38
       },
@@ -30862,6 +31558,7 @@
           "speed": 8.0,
           "time": 5.461811053560219
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 39
       },
@@ -30959,6 +31656,7 @@
           "speed": 8.0,
           "time": 5.434639272939742
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 40
       },
@@ -31056,6 +31754,7 @@
           "speed": 8.0,
           "time": 5.415715445346763
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 41
       },
@@ -31153,6 +31852,7 @@
           "speed": 8.0,
           "time": 5.391524182162505
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 42
       },
@@ -31250,6 +31950,7 @@
           "speed": 8.0,
           "time": 5.366477037595297
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 43
       },
@@ -31347,6 +32048,7 @@
           "speed": 8.0,
           "time": 5.342607278121808
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 44
       },
@@ -31444,6 +32146,7 @@
           "speed": 8.0,
           "time": 5.321495012594855
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 45
       },
@@ -31541,6 +32244,7 @@
           "speed": 8.0,
           "time": 5.30185310067462
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 46
       },
@@ -31638,6 +32342,7 @@
           "speed": 8.0,
           "time": 5.27526521357355
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 47
       },
@@ -31735,6 +32440,7 @@
           "speed": 8.0,
           "time": 5.2555025231104
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 48
       },
@@ -31832,6 +32538,7 @@
           "speed": 8.0,
           "time": 5.238043016692111
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 49
       },
@@ -31929,6 +32636,7 @@
           "speed": 8.0,
           "time": 5.218577101016595
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 50
       },
@@ -32026,6 +32734,7 @@
           "speed": 8.0,
           "time": 5.199503037097954
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 51
       },
@@ -32123,6 +32832,7 @@
           "speed": 8.0,
           "time": 5.1826015015702
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 52
       },
@@ -32220,6 +32930,7 @@
           "speed": 8.0,
           "time": 5.165121977539165
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 53
       },
@@ -32317,6 +33028,7 @@
           "speed": 8.0,
           "time": 5.146969445833313
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 54
       },
@@ -32414,6 +33126,7 @@
           "speed": 8.0,
           "time": 5.131541573318687
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 55
       },
@@ -32511,6 +33224,7 @@
           "speed": 8.0,
           "time": 5.1162919089462235
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 56
       },
@@ -32608,6 +33322,7 @@
           "speed": 8.0,
           "time": 5.101329080081199
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 57
       },
@@ -32705,6 +33420,7 @@
           "speed": 8.0,
           "time": 5.090242536523954
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 58
       },
@@ -32802,6 +33518,7 @@
           "speed": 8.0,
           "time": 5.077382989645553
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 59
       },
@@ -32899,6 +33616,7 @@
           "speed": 8.0,
           "time": 5.060723049519706
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 60
       },
@@ -32996,6 +33714,7 @@
           "speed": 8.0,
           "time": 5.051465306228442
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 61
       },
@@ -33093,6 +33812,7 @@
           "speed": 8.0,
           "time": 5.040139845340939
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 62
       },
@@ -33190,6 +33910,7 @@
           "speed": 8.0,
           "time": 5.0269321292628835
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 63
       },
@@ -33287,6 +34008,7 @@
           "speed": 8.0,
           "time": 5.017526481256358
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 64
       },
@@ -33384,6 +34106,7 @@
           "speed": 8.0,
           "time": 5.007467147154994
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 65
       },
@@ -33481,6 +34204,7 @@
           "speed": 8.0,
           "time": 4.998119874938914
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 66
       },
@@ -33578,6 +34302,7 @@
           "speed": 8.0,
           "time": 4.991212961768962
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 67
       },
@@ -33675,6 +34400,7 @@
           "speed": 8.0,
           "time": 4.981622771448862
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 68
       },
@@ -33772,6 +34498,7 @@
           "speed": 8.0,
           "time": 4.97491615768177
         },
+        "stationary_guard": null,
         "forecasts": [],
         "tick": 69
       },
@@ -33855,6 +34582,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -33954,6 +34682,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -34053,6 +34782,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -34186,6 +34916,7 @@
           "speed": 0.0,
           "time": 2.173297942656165
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -34319,6 +35050,7 @@
           "speed": 0.0,
           "time": 2.1178225008612155
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -34452,6 +35184,7 @@
           "speed": 0.0,
           "time": 2.0734312996656588
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -34585,6 +35318,7 @@
           "speed": 0.0,
           "time": 2.204735824694775
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -34718,6 +35452,7 @@
           "speed": 0.0,
           "time": 2.1509505803439595
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -34851,6 +35586,7 @@
           "speed": 0.0,
           "time": 2.284059427463078
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -34984,6 +35720,7 @@
           "speed": 0.0,
           "time": 2.2334560737358427
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -35105,6 +35842,7 @@
           "speed": 0.0,
           "time": 1.6560983935952365
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -35226,6 +35964,7 @@
           "speed": 0.0,
           "time": 1.598202109559127
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -35347,6 +36086,7 @@
           "speed": 0.0,
           "time": 1.554558110569101
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -35460,6 +36200,7 @@
           "speed": 8.0,
           "time": 5.5497774963428
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -35573,6 +36314,7 @@
           "speed": 8.0,
           "time": 5.524468132445055
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -35666,6 +36408,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -35759,6 +36502,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -35880,6 +36624,7 @@
           "speed": 0.0,
           "time": 1.3450098567256557
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -36001,6 +36746,7 @@
           "speed": 0.0,
           "time": 1.294442361500314
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -36121,6 +36867,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 4.456624310182269,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 0.06918573077737614,
+            "gap_without_directional_reserve_m": 0.2502853445048956,
+            "directional_reserve_m": 0.18109961372751945,
+            "observed_speed_m_s": 0.01219603725077307,
+            "squared_separation_lower_bound": 1.244462364821811
+          }
         },
         "forecasts": [
           {
@@ -36243,6 +37004,7 @@
           "speed": 0.0,
           "time": 0.003945973510770417
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -36364,6 +37126,21 @@
           "speed": 0.0,
           "time": 0.0
         },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 4.675080482550197,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 0.039798543633196404,
+            "gap_without_directional_reserve_m": 0.2623945076741432,
+            "directional_reserve_m": 0.22259596404094678,
+            "observed_speed_m_s": 0.013321933607696616,
+            "squared_separation_lower_bound": 0.717948943577138
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -36457,6 +37234,21 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": true,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 3.7162814079704463,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": -0.014645898147556513,
+            "gap_without_directional_reserve_m": 0.20792973193131914,
+            "directional_reserve_m": 0.22257563007887565,
+            "observed_speed_m_s": 0.013321933607695815,
+            "squared_separation_lower_bound": -0.265023087594749
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -36550,6 +37342,21 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": true,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 2.4048082300884213,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": -0.5639575984517466,
+            "gap_without_directional_reserve_m": 0.1359708598396825,
+            "directional_reserve_m": 0.6999284582914291,
+            "observed_speed_m_s": 0.004350377348351951,
+            "squared_separation_lower_bound": -10.369000549060754
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -36643,6 +37450,21 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": true,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 1.432661291795997,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": -0.6191757057082765,
+            "gap_without_directional_reserve_m": 0.08075319581574547,
+            "directional_reserve_m": 0.699928901524022,
+            "observed_speed_m_s": 0.0043503773483541675,
+            "squared_separation_lower_bound": -11.418323048044764
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -36736,6 +37558,21 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": true,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 2.9310083280811465,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": -0.25813319895854064,
+            "gap_without_directional_reserve_m": 0.16546310248766183,
+            "directional_reserve_m": 0.4235963014462025,
+            "observed_speed_m_s": 0.0033058808006497828,
+            "squared_separation_lower_bound": -4.681908842622246
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -36829,6 +37666,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -36949,6 +37787,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 3.728859395142674,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 0.08242636083765323,
+            "gap_without_directional_reserve_m": 0.2099833365117032,
+            "directional_reserve_m": 0.12755697567404997,
+            "observed_speed_m_s": 0.007309061123567359,
+            "squared_separation_lower_bound": 1.4742314430808112
+          }
         },
         "forecasts": [
           {
@@ -37071,6 +37924,7 @@
           "speed": 0.0,
           "time": 0.0033424104165823603
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -37164,6 +38018,21 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 5.267913370019035,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 0.0007476655483942829,
+            "gap_without_directional_reserve_m": 0.2950196105669711,
+            "directional_reserve_m": 0.29427194501857684,
+            "observed_speed_m_s": 0.017626597189628473,
+            "squared_separation_lower_bound": 0.013570054206349269
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -37257,6 +38126,21 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": true,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 4.312810881878262,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": -0.05351850899796862,
+            "gap_without_directional_reserve_m": 0.24077569397678467,
+            "directional_reserve_m": 0.2942942029747533,
+            "observed_speed_m_s": 0.01762659718959795,
+            "squared_separation_lower_bound": -0.9743823449127103
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -37350,6 +38234,21 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": true,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 3.029417752446321,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": -0.38892815138311354,
+            "gap_without_directional_reserve_m": 0.17089115285231848,
+            "directional_reserve_m": 0.559819304235432,
+            "observed_speed_m_s": 0.0030760872209621465,
+            "squared_separation_lower_bound": -7.112329028622428
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -37443,6 +38342,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -37536,6 +38436,21 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": true,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 1.1491834894440038,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": -0.027165285077963355,
+            "gap_without_directional_reserve_m": 0.06484357987294764,
+            "directional_reserve_m": 0.092008864950911,
+            "observed_speed_m_s": 0.0022911309758307007,
+            "squared_separation_lower_bound": -0.4839338939259008
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -37656,6 +38571,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 3.0839303685321533,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 0.16117275277574067,
+            "gap_without_directional_reserve_m": 0.17404376135930377,
+            "directional_reserve_m": 0.012871008583563118,
+            "observed_speed_m_s": 0.004410947744317844,
+            "squared_separation_lower_bound": 2.8579397737837033
+          }
         },
         "forecasts": [
           {
@@ -37778,6 +38708,7 @@
           "speed": 0.0,
           "time": 0.003253692114419852
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -37871,6 +38802,21 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": true,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 3.7444853556133006,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": -0.033884526043669205,
+            "gap_without_directional_reserve_m": 0.21081192679802463,
+            "directional_reserve_m": 0.24469645284169383,
+            "observed_speed_m_s": 0.008613449339477762,
+            "squared_separation_lower_bound": -0.6101558842291182
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -37964,6 +38910,21 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": true,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 2.7816274628182702,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": -0.08855566409927668,
+            "gap_without_directional_reserve_m": 0.15611543112212445,
+            "directional_reserve_m": 0.24467109522140112,
+            "observed_speed_m_s": 0.00861344933947953,
+            "squared_separation_lower_bound": -1.5995312943842568
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -38057,6 +39018,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -38150,6 +39112,21 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": true,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 1.625355658540614,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": -0.5873336676280254,
+            "gap_without_directional_reserve_m": 0.09156595879111507,
+            "directional_reserve_m": 0.6788996264191405,
+            "observed_speed_m_s": 0.004220011974016449,
+            "squared_separation_lower_bound": -10.824300256460734
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -38270,6 +39247,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 2.3862491337169454,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 0.053442322708633985,
+            "gap_without_directional_reserve_m": 0.13405567722802836,
+            "directional_reserve_m": 0.08061335451939437,
+            "observed_speed_m_s": 0.0077668132966860785,
+            "squared_separation_lower_bound": 0.9556044280058615
+          }
         },
         "forecasts": [
           {
@@ -38392,6 +39384,21 @@
           "speed": 0.0,
           "time": 0.0
         },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 6.041205065640746,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 0.16283588433119175,
+            "gap_without_directional_reserve_m": 0.33733941296624437,
+            "directional_reserve_m": 0.1745035286350526,
+            "observed_speed_m_s": 0.0250561888243724,
+            "squared_separation_lower_bound": 2.944543417990791
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -38512,6 +39519,21 @@
           },
           "speed": 0.0,
           "time": 0.0
+        },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 5.091957947777567,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 0.10893233005767122,
+            "gap_without_directional_reserve_m": 0.2834417827208071,
+            "directional_reserve_m": 0.1745094526631359,
+            "observed_speed_m_s": 0.025056188824440603,
+            "squared_separation_lower_bound": 1.9759504740171923
+          }
         },
         "forecasts": [
           {
@@ -38634,6 +39656,7 @@
           "speed": 0.0,
           "time": 0.18321038030117576
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -38755,6 +39778,7 @@
           "speed": 0.0,
           "time": 0.0457836770274368
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -38848,6 +39872,21 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": true,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 2.343377187428105,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": -0.4703346077793863,
+            "gap_without_directional_reserve_m": 0.1324471693321012,
+            "directional_reserve_m": 0.6027817771114875,
+            "observed_speed_m_s": 0.004582385342018038,
+            "squared_separation_lower_bound": -8.60510354489058
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -38941,6 +39980,21 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": true,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 1.3726387100096962,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": -0.525425341140976,
+            "gap_without_directional_reserve_m": 0.07734020670678454,
+            "directional_reserve_m": 0.6027655478477606,
+            "observed_speed_m_s": 0.004582385341997126,
+            "squared_separation_lower_bound": -9.64199236521937
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -39062,6 +40116,7 @@
           "speed": 0.0,
           "time": 0.006036942538099833
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -39183,6 +40238,21 @@
           "speed": 0.0,
           "time": 0.0
         },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 3.984771340443562,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 0.2081864365014269,
+            "gap_without_directional_reserve_m": 0.2242514343552564,
+            "directional_reserve_m": 0.016064997853829498,
+            "observed_speed_m_s": 0.011566984810226418,
+            "squared_separation_lower_bound": 3.702653470177766
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -39298,6 +40368,7 @@
           "speed": 0.0,
           "time": 0.016896142713424205
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -39391,6 +40462,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -39484,6 +40556,21 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": true,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 1.474865625342893,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": -0.5300247849423321,
+            "gap_without_directional_reserve_m": 0.08315666413723655,
+            "directional_reserve_m": 0.6131814490795686,
+            "observed_speed_m_s": 0.00706168437557391,
+            "squared_separation_lower_bound": -9.725517646723084
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -39577,6 +40664,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -39670,6 +40758,21 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": true,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 1.6226901466770416,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": -0.251598922587694,
+            "gap_without_directional_reserve_m": 0.09145289856680883,
+            "directional_reserve_m": 0.34305182115450283,
+            "observed_speed_m_s": 0.00229252963003127,
+            "squared_separation_lower_bound": -4.550546422626702
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -39763,6 +40866,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -39884,6 +40988,7 @@
           "speed": 0.0,
           "time": 0.0052295005845058515
         },
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -40005,6 +41110,21 @@
           "speed": 0.0,
           "time": 0.0
         },
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": false,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 2.2959754236688545,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": 0.0030226024930853357,
+            "gap_without_directional_reserve_m": 0.12910156590730004,
+            "directional_reserve_m": 0.1260789634142147,
+            "observed_speed_m_s": 0.0074226181796992145,
+            "squared_separation_lower_bound": 0.054135445024379614
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -40098,6 +41218,21 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": true,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 3.629012022638507,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": -0.11379377747618752,
+            "gap_without_directional_reserve_m": 0.20446748821819227,
+            "directional_reserve_m": 0.3182612656943798,
+            "observed_speed_m_s": 0.008231645879068805,
+            "squared_separation_lower_bound": -2.0558971962027925
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -40191,6 +41326,21 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": {
+          "zero_speed_hold": true,
+          "existing_reserve_contact_witness": true,
+          "without_directional_reserve_certified": true,
+          "without_directional_minimum_squared_separation": 2.666241450115705,
+          "witness": {
+            "prediction_id": 1,
+            "time_s": 7.99999998,
+            "actual_gap_m": -0.1684939103844561,
+            "gap_without_directional_reserve_m": 0.14975403520678476,
+            "directional_reserve_m": 0.31824794559124087,
+            "observed_speed_m_s": 0.008231645879068805,
+            "squared_separation_lower_bound": -3.0535124366552866
+          }
+        },
         "forecasts": [
           {
             "id": 1,
@@ -40284,6 +41434,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
@@ -40377,6 +41528,7 @@
         },
         "trajectory_end": null,
         "trajectory_hold_start": null,
+        "stationary_guard": null,
         "forecasts": [
           {
             "id": 1,
