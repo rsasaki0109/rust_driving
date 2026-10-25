@@ -1,0 +1,58 @@
+name: Registered-grid wrapper provenance
+on:
+  push:
+    branches: [codex/ci-registered-wrapper-provenance-20261025]
+  pull_request:
+    paths: ['scripts/check-registered-grid-temporal-suite.py','scripts/test_registered_wrapper_provenance.py','assets/multiscale-temporal-v1/source/check-multiscale-temporal-suite.py','.github/workflows/registered-wrapper-provenance.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: registered-wrapper-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  registered-reproduction:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify exact first/reproducer identities and reject corrupted sources
+        run: |
+          python scripts/test_registered_wrapper_provenance.py
+          python scripts/test_recorded_numeric.py
+          python scripts/check-registered-grid-temporal-suite.py --self-test --output artifacts/registered-wrapper/controls
+      - name: Acquire the same two preregistered recorded sequences
+        run: |
+          python -m pip install -r scripts/requirements-visual.txt
+          python scripts/fetch-temporal-dataset.py tum-fr1-room-temporal
+          python scripts/fetch-independent-dataset.py tum-fr1-desk2-independent --archive "$RUNNER_TEMP/rustdriving-desk2-source.tgz" --preregistration assets/recorded-independent/desk2-v1/design.json --acquisition-log artifacts/registered-wrapper/official-acquisition.json
+      - name: Build unchanged registered-grid geometry with its original shared libraries
+        run: |
+          git fetch --no-tags --depth=1 origin a2776053d88bcdcae4e39134c73d95412ff49125
+          python scripts/prepare-rgbd-regression.py --output "$RUNNER_TEMP/registered-wrapper-regression"
+          python "$RUNNER_TEMP/registered-wrapper-regression/scripts/check-rgbd-extension-sources.py"
+          cargo build --release --locked --manifest-path "$RUNNER_TEMP/registered-wrapper-regression/integrations/rgbd/Cargo.toml" --bin rustdriving-rgbd-registered-grid-temporal
+      - name: Reproduce both complete viewed sequences with unchanged independent numerical audits
+        working-directory: ${{ runner.temp }}/registered-wrapper-regression
+        run: |
+          python scripts/test_registered_wrapper_provenance.py
+          integrations/rgbd/target/release/rustdriving-rgbd-registered-grid-temporal --control --output artifacts/registered-wrapper/native-control.json
+          python scripts/check-registered-grid-temporal.py --report artifacts/registered-wrapper/native-control.json --output artifacts/registered-wrapper/native-control-oracle.json
+          python scripts/check-registered-grid-temporal-suite.py --binary integrations/rgbd/target/release/rustdriving-rgbd-registered-grid-temporal --output artifacts/registered-wrapper/viewed-regression
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: registered-wrapper-provenance
+          path: |
+            artifacts/registered-wrapper
+            ${{ runner.temp }}/registered-wrapper-regression/regression-sources.json
+            ${{ runner.temp }}/registered-wrapper-regression/artifacts/registered-wrapper
+          if-no-files-found: warn
