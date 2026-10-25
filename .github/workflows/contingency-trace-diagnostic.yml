@@ -1,0 +1,55 @@
+name: Inspect rejected contingency trace
+on:
+  push:
+    branches: [codex/contingency-trace-diagnostic-20261025]
+    paths: ['scripts/inspect_contingency_failure.py','.github/workflows/contingency-trace-diagnostic.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify and download the exact original archive
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const crypto=require('node:crypto'),fs=require('node:fs'),path=require('node:path');
+            const {owner,repo}=context.repo, artifact_id=12582076166;
+            if(owner!=='rsasaki0109'||repo!=='rust_driving') throw new Error('Unexpected repository');
+            const artifact=(await github.rest.actions.getArtifact({owner,repo,artifact_id})).data;
+            const expected='0e9c3575924645859bad6b28e5808a4ef5b2179f9b1d88535fb859fe6355ef9d';
+            if(artifact.expired||artifact.workflow_run.id!==40148659302||artifact.digest!=='sha256:'+expected) throw new Error('Original archive identity changed');
+            const downloaded=await github.rest.actions.downloadArtifact({owner,repo,artifact_id,archive_format:'zip'});
+            const bytes=Buffer.from(downloaded.data);
+            if(crypto.createHash('sha256').update(bytes).digest('hex')!==expected) throw new Error('Original archive bytes changed');
+            fs.writeFileSync(path.join(process.env.RUNNER_TEMP,'contingency-original.zip'),bytes);
+      - name: Inspect original raw streams without rerunning the experiment
+        run: python scripts/inspect_contingency_failure.py --archive "$RUNNER_TEMP/contingency-original.zip" --output artifacts/contingency-trace
+      - name: Preserve the diagnosis without changing experiment evidence
+        env:
+          RUSTDRIVING_EXPECTED_HEAD: ${{ github.sha }}
+        run: |
+          test "$GITHUB_REF_NAME" = 'codex/contingency-trace-diagnostic-20261025'
+          mkdir -p assets/contingency-trace-v1
+          cp artifacts/contingency-trace/diagnosis.json assets/contingency-trace-v1/diagnosis.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/contingency-trace-v1/diagnosis.json
+          git commit -m 'Locate the first extra emergency in the unchanged rejected trial'
+          git push --force-with-lease="refs/heads/codex/contingency-trace-diagnostic-20261025:$RUSTDRIVING_EXPECTED_HEAD" origin HEAD:refs/heads/codex/contingency-trace-diagnostic-20261025
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rejected-contingency-trace
+          path: artifacts/contingency-trace
+          if-no-files-found: warn
