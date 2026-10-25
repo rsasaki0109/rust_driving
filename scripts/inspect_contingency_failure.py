@@ -127,16 +127,23 @@ def inspect(archive_path, output):
             first_extra_emergency_time_s=enabled[first]['time'] if first is not None else None,
             qualified=False, stats=stats, checkpoints=checkpoints)
         (output/'diagnosis.json').write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
+        focus = dict(first_extra_emergency_tick=first,
+            stats={n:dict(ticks=v['ticks'], emergency_segments=v['emergency_segments'],
+                modes=v['modes']) for n,v in stats.items()},
+            first_window={n:rows[max(0,first-3):first+4] for n,rows in all_rows.items()},
+            low_speed_no_candidate_examples=[r for r in enabled
+                if r['speed']<.05 and r['failure']=='NoSelectableCandidate'][:5])
+        (output/'focus.json').write_text(json.dumps(focus,indent=2,allow_nan=False)+'\n')
         for name, rows in all_rows.items():
             (output/(name+'-timeline.json')).write_text(json.dumps(rows, separators=(',',':'), allow_nan=False)+'\n')
         print(json.dumps(dict(first_extra_emergency_time_s=report['first_extra_emergency_time_s'],
-            stats={n:{k:v for k,v in s.items() if k not in ['first_no_candidate','positive_prefix_ticks','complete_path_ticks']} for n,s in stats.items()},
+            stats={n:{k:v for k,v in s.items() if k not in ['first_no_candidate','positive_prefix_ticks','complete_path_ticks','emergency_segments']} for n,s in stats.items()},
             enabled_complete_ticks=stats['enabled']['complete_path_ticks'],
             enabled_positive_range=([positive[0],positive[-1]] if positive else [])), allow_nan=False))
         if first is not None:
             for i in range(max(0,first-3), min(len(enabled),first+4)):
                 c=enabled[i]
-                print(json.dumps({k:c[k] for k in ['tick','time','emergency','speed','acceleration','mode','target','selected','failure','prefix','candidates','forecasts','trajectory_end']}, allow_nan=False))
+                print(json.dumps({k:c[k] for k in ['tick','time','emergency','speed','position','acceleration','mode','target','selected','failure','prefix','candidates','forecasts','trajectory_end']}, allow_nan=False))
 
 if __name__ == '__main__':
     parser=argparse.ArgumentParser(description=__doc__)
