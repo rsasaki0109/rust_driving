@@ -1,0 +1,55 @@
+name: Diagnose original mission lattice
+on:
+  push:
+    branches: [codex/mission-lattice-probe-20261025]
+permissions:
+  contents: write
+env:
+  CARGO_INCREMENTAL: '0'
+  RUSTDRIVING_SOURCE_COMMIT: '3633605f9bdb2e7a53e11c2cfb7d24b54f205889'
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prove unchanged product source
+        run: |
+          test "$(git rev-parse HEAD^)" = "$RUSTDRIVING_SOURCE_COMMIT"
+          python - <<'PY'
+          import os, subprocess
+          paths = set(subprocess.check_output(['git', 'diff', '--name-only', os.environ['RUSTDRIVING_SOURCE_COMMIT'], 'HEAD'], text=True).splitlines())
+          assert paths == {'.github/workflows/mission-lattice-probe.yml', 'scripts/probe_mission_lattice.py'}, paths
+          PY
+      - name: Build and reproduce the original incomplete mission
+        run: |
+          cargo build --release --locked --bin rustdriving
+          python scripts/probe_mission_lattice.py
+      - name: Publish only bounded numerical inspection
+        env:
+          RUSTDRIVING_EXPECTED_HEAD: ${{ github.sha }}
+        run: |
+          test "$GITHUB_REF_NAME" = 'codex/mission-lattice-probe-20261025'
+          git diff --exit-code
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/mission-lattice-probe/baseline.json
+          git commit -m 'Retain unchanged original-mission checkpoints and replay provenance'
+          git push --force-with-lease="refs/heads/codex/mission-lattice-probe-20261025:$RUSTDRIVING_EXPECTED_HEAD" origin HEAD:refs/heads/codex/mission-lattice-probe-20261025
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: original-mission-lattice-probe
+          path: |
+            assets/mission-lattice-probe/baseline.json
+            artifacts/mission-lattice-probe/*-process.log
+            artifacts/mission-lattice-probe/scenario.json
+          if-no-files-found: warn
