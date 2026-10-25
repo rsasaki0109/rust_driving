@@ -1,0 +1,3841 @@
+{
+  "first_extra_emergency_tick": 176,
+  "stats": {
+    "old": {
+      "ticks": 1301,
+      "emergency_segments": [
+        {
+          "first_tick": 70,
+          "last_tick": 73,
+          "steps": 4,
+          "start_s": 3.5,
+          "end_s": 3.6500000000000004
+        },
+        {
+          "first_tick": 110,
+          "last_tick": 110,
+          "steps": 1,
+          "start_s": 5.5,
+          "end_s": 5.5
+        },
+        {
+          "first_tick": 121,
+          "last_tick": 121,
+          "steps": 1,
+          "start_s": 6.050000000000001,
+          "end_s": 6.050000000000001
+        },
+        {
+          "first_tick": 300,
+          "last_tick": 300,
+          "steps": 1,
+          "start_s": 15.0,
+          "end_s": 15.0
+        }
+      ],
+      "modes": {
+        "Cruise": 70,
+        "Emergency": 7,
+        "Yield": 1224
+      }
+    },
+    "disabled": {
+      "ticks": 1301,
+      "emergency_segments": [
+        {
+          "first_tick": 70,
+          "last_tick": 73,
+          "steps": 4,
+          "start_s": 3.5,
+          "end_s": 3.6500000000000004
+        },
+        {
+          "first_tick": 110,
+          "last_tick": 110,
+          "steps": 1,
+          "start_s": 5.5,
+          "end_s": 5.5
+        },
+        {
+          "first_tick": 121,
+          "last_tick": 121,
+          "steps": 1,
+          "start_s": 6.050000000000001,
+          "end_s": 6.050000000000001
+        },
+        {
+          "first_tick": 300,
+          "last_tick": 300,
+          "steps": 1,
+          "start_s": 15.0,
+          "end_s": 15.0
+        }
+      ],
+      "modes": {
+        "Cruise": 70,
+        "Emergency": 7,
+        "Yield": 1224
+      }
+    },
+    "enabled": {
+      "ticks": 1301,
+      "emergency_segments": [
+        {
+          "first_tick": 70,
+          "last_tick": 73,
+          "steps": 4,
+          "start_s": 3.5,
+          "end_s": 3.6500000000000004
+        },
+        {
+          "first_tick": 176,
+          "last_tick": 177,
+          "steps": 2,
+          "start_s": 8.8,
+          "end_s": 8.85
+        },
+        {
+          "first_tick": 195,
+          "last_tick": 195,
+          "steps": 1,
+          "start_s": 9.75,
+          "end_s": 9.75
+        },
+        {
+          "first_tick": 202,
+          "last_tick": 203,
+          "steps": 2,
+          "start_s": 10.100000000000001,
+          "end_s": 10.15
+        },
+        {
+          "first_tick": 220,
+          "last_tick": 223,
+          "steps": 4,
+          "start_s": 11.0,
+          "end_s": 11.15
+        },
+        {
+          "first_tick": 232,
+          "last_tick": 233,
+          "steps": 2,
+          "start_s": 11.600000000000001,
+          "end_s": 11.65
+        },
+        {
+          "first_tick": 241,
+          "last_tick": 241,
+          "steps": 1,
+          "start_s": 12.05,
+          "end_s": 12.05
+        },
+        {
+          "first_tick": 243,
+          "last_tick": 243,
+          "steps": 1,
+          "start_s": 12.15,
+          "end_s": 12.15
+        },
+        {
+          "first_tick": 246,
+          "last_tick": 247,
+          "steps": 2,
+          "start_s": 12.3,
+          "end_s": 12.350000000000001
+        },
+        {
+          "first_tick": 250,
+          "last_tick": 251,
+          "steps": 2,
+          "start_s": 12.5,
+          "end_s": 12.55
+        },
+        {
+          "first_tick": 264,
+          "last_tick": 275,
+          "steps": 12,
+          "start_s": 13.200000000000001,
+          "end_s": 13.75
+        },
+        {
+          "first_tick": 280,
+          "last_tick": 283,
+          "steps": 4,
+          "start_s": 14.0,
+          "end_s": 14.15
+        },
+        {
+          "first_tick": 288,
+          "last_tick": 289,
+          "steps": 2,
+          "start_s": 14.4,
+          "end_s": 14.450000000000001
+        },
+        {
+          "first_tick": 300,
+          "last_tick": 301,
+          "steps": 2,
+          "start_s": 15.0,
+          "end_s": 15.05
+        },
+        {
+          "first_tick": 308,
+          "last_tick": 311,
+          "steps": 4,
+          "start_s": 15.4,
+          "end_s": 15.55
+        },
+        {
+          "first_tick": 314,
+          "last_tick": 315,
+          "steps": 2,
+          "start_s": 15.700000000000001,
+          "end_s": 15.75
+        },
+        {
+          "first_tick": 318,
+          "last_tick": 319,
+          "steps": 2,
+          "start_s": 15.9,
+          "end_s": 15.950000000000001
+        },
+        {
+          "first_tick": 327,
+          "last_tick": 335,
+          "steps": 9,
+          "start_s": 16.35,
+          "end_s": 16.75
+        },
+        {
+          "first_tick": 340,
+          "last_tick": 341,
+          "steps": 2,
+          "start_s": 17.0,
+          "end_s": 17.05
+        },
+        {
+          "first_tick": 344,
+          "last_tick": 347,
+          "steps": 4,
+          "start_s": 17.2,
+          "end_s": 17.35
+        },
+        {
+          "first_tick": 350,
+          "last_tick": 355,
+          "steps": 6,
+          "start_s": 17.5,
+          "end_s": 17.75
+        },
+        {
+          "first_tick": 358,
+          "last_tick": 369,
+          "steps": 12,
+          "start_s": 17.900000000000002,
+          "end_s": 18.45
+        },
+        {
+          "first_tick": 378,
+          "last_tick": 393,
+          "steps": 16,
+          "start_s": 18.900000000000002,
+          "end_s": 19.650000000000002
+        },
+        {
+          "first_tick": 396,
+          "last_tick": 399,
+          "steps": 4,
+          "start_s": 19.8,
+          "end_s": 19.950000000000003
+        },
+        {
+          "first_tick": 402,
+          "last_tick": 407,
+          "steps": 6,
+          "start_s": 20.1,
+          "end_s": 20.35
+        },
+        {
+          "first_tick": 412,
+          "last_tick": 425,
+          "steps": 14,
+          "start_s": 20.6,
+          "end_s": 21.25
+        },
+        {
+          "first_tick": 428,
+          "last_tick": 429,
+          "steps": 2,
+          "start_s": 21.400000000000002,
+          "end_s": 21.450000000000003
+        },
+        {
+          "first_tick": 432,
+          "last_tick": 433,
+          "steps": 2,
+          "start_s": 21.6,
+          "end_s": 21.650000000000002
+        },
+        {
+          "first_tick": 436,
+          "last_tick": 437,
+          "steps": 2,
+          "start_s": 21.8,
+          "end_s": 21.85
+        },
+        {
+          "first_tick": 439,
+          "last_tick": 439,
+          "steps": 1,
+          "start_s": 21.950000000000003,
+          "end_s": 21.950000000000003
+        },
+        {
+          "first_tick": 446,
+          "last_tick": 455,
+          "steps": 10,
+          "start_s": 22.3,
+          "end_s": 22.75
+        },
+        {
+          "first_tick": 459,
+          "last_tick": 461,
+          "steps": 3,
+          "start_s": 22.950000000000003,
+          "end_s": 23.05
+        },
+        {
+          "first_tick": 468,
+          "last_tick": 473,
+          "steps": 6,
+          "start_s": 23.400000000000002,
+          "end_s": 23.650000000000002
+        },
+        {
+          "first_tick": 476,
+          "last_tick": 477,
+          "steps": 2,
+          "start_s": 23.8,
+          "end_s": 23.85
+        },
+        {
+          "first_tick": 484,
+          "last_tick": 485,
+          "steps": 2,
+          "start_s": 24.200000000000003,
+          "end_s": 24.25
+        },
+        {
+          "first_tick": 488,
+          "last_tick": 497,
+          "steps": 10,
+          "start_s": 24.400000000000002,
+          "end_s": 24.85
+        },
+        {
+          "first_tick": 502,
+          "last_tick": 503,
+          "steps": 2,
+          "start_s": 25.1,
+          "end_s": 25.150000000000002
+        },
+        {
+          "first_tick": 506,
+          "last_tick": 507,
+          "steps": 2,
+          "start_s": 25.3,
+          "end_s": 25.35
+        },
+        {
+          "first_tick": 509,
+          "last_tick": 513,
+          "steps": 5,
+          "start_s": 25.450000000000003,
+          "end_s": 25.650000000000002
+        },
+        {
+          "first_tick": 520,
+          "last_tick": 523,
+          "steps": 4,
+          "start_s": 26.0,
+          "end_s": 26.150000000000002
+        },
+        {
+          "first_tick": 525,
+          "last_tick": 529,
+          "steps": 5,
+          "start_s": 26.25,
+          "end_s": 26.450000000000003
+        },
+        {
+          "first_tick": 533,
+          "last_tick": 539,
+          "steps": 7,
+          "start_s": 26.650000000000002,
+          "end_s": 26.950000000000003
+        },
+        {
+          "first_tick": 543,
+          "last_tick": 543,
+          "steps": 1,
+          "start_s": 27.150000000000002,
+          "end_s": 27.150000000000002
+        },
+        {
+          "first_tick": 547,
+          "last_tick": 551,
+          "steps": 5,
+          "start_s": 27.35,
+          "end_s": 27.55
+        },
+        {
+          "first_tick": 554,
+          "last_tick": 557,
+          "steps": 4,
+          "start_s": 27.700000000000003,
+          "end_s": 27.85
+        },
+        {
+          "first_tick": 559,
+          "last_tick": 563,
+          "steps": 5,
+          "start_s": 27.950000000000003,
+          "end_s": 28.150000000000002
+        },
+        {
+          "first_tick": 568,
+          "last_tick": 571,
+          "steps": 4,
+          "start_s": 28.400000000000002,
+          "end_s": 28.55
+        },
+        {
+          "first_tick": 576,
+          "last_tick": 577,
+          "steps": 2,
+          "start_s": 28.8,
+          "end_s": 28.85
+        },
+        {
+          "first_tick": 581,
+          "last_tick": 585,
+          "steps": 5,
+          "start_s": 29.05,
+          "end_s": 29.25
+        },
+        {
+          "first_tick": 587,
+          "last_tick": 589,
+          "steps": 3,
+          "start_s": 29.35,
+          "end_s": 29.450000000000003
+        },
+        {
+          "first_tick": 593,
+          "last_tick": 615,
+          "steps": 23,
+          "start_s": 29.650000000000002,
+          "end_s": 30.75
+        },
+        {
+          "first_tick": 618,
+          "last_tick": 625,
+          "steps": 8,
+          "start_s": 30.900000000000002,
+          "end_s": 31.25
+        },
+        {
+          "first_tick": 628,
+          "last_tick": 633,
+          "steps": 6,
+          "start_s": 31.400000000000002,
+          "end_s": 31.650000000000002
+        },
+        {
+          "first_tick": 637,
+          "last_tick": 637,
+          "steps": 1,
+          "start_s": 31.85,
+          "end_s": 31.85
+        },
+        {
+          "first_tick": 640,
+          "last_tick": 641,
+          "steps": 2,
+          "start_s": 32.0,
+          "end_s": 32.050000000000004
+        },
+        {
+          "first_tick": 643,
+          "last_tick": 643,
+          "steps": 1,
+          "start_s": 32.15,
+          "end_s": 32.15
+        },
+        {
+          "first_tick": 648,
+          "last_tick": 661,
+          "steps": 14,
+          "start_s": 32.4,
+          "end_s": 33.050000000000004
+        },
+        {
+          "first_tick": 663,
+          "last_tick": 667,
+          "steps": 5,
+          "start_s": 33.15,
+          "end_s": 33.35
+        },
+        {
+          "first_tick": 670,
+          "last_tick": 671,
+          "steps": 2,
+          "start_s": 33.5,
+          "end_s": 33.550000000000004
+        },
+        {
+          "first_tick": 673,
+          "last_tick": 675,
+          "steps": 3,
+          "start_s": 33.65,
+          "end_s": 33.75
+        },
+        {
+          "first_tick": 679,
+          "last_tick": 693,
+          "steps": 15,
+          "start_s": 33.95,
+          "end_s": 34.65
+        },
+        {
+          "first_tick": 696,
+          "last_tick": 703,
+          "steps": 8,
+          "start_s": 34.800000000000004,
+          "end_s": 35.15
+        },
+        {
+          "first_tick": 706,
+          "last_tick": 713,
+          "steps": 8,
+          "start_s": 35.300000000000004,
+          "end_s": 35.65
+        },
+        {
+          "first_tick": 715,
+          "last_tick": 731,
+          "steps": 17,
+          "start_s": 35.75,
+          "end_s": 36.550000000000004
+        },
+        {
+          "first_tick": 733,
+          "last_tick": 737,
+          "steps": 5,
+          "start_s": 36.65,
+          "end_s": 36.85
+        },
+        {
+          "first_tick": 740,
+          "last_tick": 769,
+          "steps": 30,
+          "start_s": 37.0,
+          "end_s": 38.45
+        },
+        {
+          "first_tick": 771,
+          "last_tick": 771,
+          "steps": 1,
+          "start_s": 38.550000000000004,
+          "end_s": 38.550000000000004
+        },
+        {
+          "first_tick": 776,
+          "last_tick": 793,
+          "steps": 18,
+          "start_s": 38.800000000000004,
+          "end_s": 39.650000000000006
+        },
+        {
+          "first_tick": 795,
+          "last_tick": 797,
+          "steps": 3,
+          "start_s": 39.75,
+          "end_s": 39.85
+        },
+        {
+          "first_tick": 800,
+          "last_tick": 801,
+          "steps": 2,
+          "start_s": 40.0,
+          "end_s": 40.050000000000004
+        },
+        {
+          "first_tick": 807,
+          "last_tick": 817,
+          "steps": 11,
+          "start_s": 40.35,
+          "end_s": 40.85
+        },
+        {
+          "first_tick": 819,
+          "last_tick": 819,
+          "steps": 1,
+          "start_s": 40.95,
+          "end_s": 40.95
+        },
+        {
+          "first_tick": 823,
+          "last_tick": 823,
+          "steps": 1,
+          "start_s": 41.150000000000006,
+          "end_s": 41.150000000000006
+        },
+        {
+          "first_tick": 826,
+          "last_tick": 829,
+          "steps": 4,
+          "start_s": 41.300000000000004,
+          "end_s": 41.45
+        },
+        {
+          "first_tick": 832,
+          "last_tick": 847,
+          "steps": 16,
+          "start_s": 41.6,
+          "end_s": 42.35
+        },
+        {
+          "first_tick": 851,
+          "last_tick": 851,
+          "steps": 1,
+          "start_s": 42.550000000000004,
+          "end_s": 42.550000000000004
+        },
+        {
+          "first_tick": 853,
+          "last_tick": 853,
+          "steps": 1,
+          "start_s": 42.650000000000006,
+          "end_s": 42.650000000000006
+        },
+        {
+          "first_tick": 855,
+          "last_tick": 867,
+          "steps": 13,
+          "start_s": 42.75,
+          "end_s": 43.35
+        },
+        {
+          "first_tick": 869,
+          "last_tick": 879,
+          "steps": 11,
+          "start_s": 43.45,
+          "end_s": 43.95
+        },
+        {
+          "first_tick": 886,
+          "last_tick": 893,
+          "steps": 8,
+          "start_s": 44.300000000000004,
+          "end_s": 44.650000000000006
+        },
+        {
+          "first_tick": 895,
+          "last_tick": 895,
+          "steps": 1,
+          "start_s": 44.75,
+          "end_s": 44.75
+        },
+        {
+          "first_tick": 898,
+          "last_tick": 899,
+          "steps": 2,
+          "start_s": 44.900000000000006,
+          "end_s": 44.95
+        },
+        {
+          "first_tick": 901,
+          "last_tick": 903,
+          "steps": 3,
+          "start_s": 45.050000000000004,
+          "end_s": 45.150000000000006
+        },
+        {
+          "first_tick": 906,
+          "last_tick": 909,
+          "steps": 4,
+          "start_s": 45.300000000000004,
+          "end_s": 45.45
+        },
+        {
+          "first_tick": 911,
+          "last_tick": 917,
+          "steps": 7,
+          "start_s": 45.550000000000004,
+          "end_s": 45.85
+        },
+        {
+          "first_tick": 919,
+          "last_tick": 919,
+          "steps": 1,
+          "start_s": 45.95,
+          "end_s": 45.95
+        },
+        {
+          "first_tick": 922,
+          "last_tick": 937,
+          "steps": 16,
+          "start_s": 46.1,
+          "end_s": 46.85
+        },
+        {
+          "first_tick": 939,
+          "last_tick": 943,
+          "steps": 5,
+          "start_s": 46.95,
+          "end_s": 47.150000000000006
+        },
+        {
+          "first_tick": 948,
+          "last_tick": 951,
+          "steps": 4,
+          "start_s": 47.400000000000006,
+          "end_s": 47.550000000000004
+        },
+        {
+          "first_tick": 953,
+          "last_tick": 953,
+          "steps": 1,
+          "start_s": 47.650000000000006,
+          "end_s": 47.650000000000006
+        },
+        {
+          "first_tick": 955,
+          "last_tick": 955,
+          "steps": 1,
+          "start_s": 47.75,
+          "end_s": 47.75
+        },
+        {
+          "first_tick": 957,
+          "last_tick": 973,
+          "steps": 17,
+          "start_s": 47.85,
+          "end_s": 48.650000000000006
+        },
+        {
+          "first_tick": 975,
+          "last_tick": 987,
+          "steps": 13,
+          "start_s": 48.75,
+          "end_s": 49.35
+        },
+        {
+          "first_tick": 990,
+          "last_tick": 993,
+          "steps": 4,
+          "start_s": 49.5,
+          "end_s": 49.650000000000006
+        },
+        {
+          "first_tick": 996,
+          "last_tick": 997,
+          "steps": 2,
+          "start_s": 49.800000000000004,
+          "end_s": 49.85
+        },
+        {
+          "first_tick": 999,
+          "last_tick": 1015,
+          "steps": 17,
+          "start_s": 49.95,
+          "end_s": 50.75
+        },
+        {
+          "first_tick": 1018,
+          "last_tick": 1035,
+          "steps": 18,
+          "start_s": 50.900000000000006,
+          "end_s": 51.75
+        },
+        {
+          "first_tick": 1037,
+          "last_tick": 1037,
+          "steps": 1,
+          "start_s": 51.85,
+          "end_s": 51.85
+        },
+        {
+          "first_tick": 1040,
+          "last_tick": 1061,
+          "steps": 22,
+          "start_s": 52.0,
+          "end_s": 53.050000000000004
+        },
+        {
+          "first_tick": 1063,
+          "last_tick": 1077,
+          "steps": 15,
+          "start_s": 53.150000000000006,
+          "end_s": 53.85
+        },
+        {
+          "first_tick": 1084,
+          "last_tick": 1101,
+          "steps": 18,
+          "start_s": 54.2,
+          "end_s": 55.050000000000004
+        },
+        {
+          "first_tick": 1106,
+          "last_tick": 1147,
+          "steps": 42,
+          "start_s": 55.300000000000004,
+          "end_s": 57.35
+        },
+        {
+          "first_tick": 1150,
+          "last_tick": 1151,
+          "steps": 2,
+          "start_s": 57.5,
+          "end_s": 57.550000000000004
+        },
+        {
+          "first_tick": 1156,
+          "last_tick": 1171,
+          "steps": 16,
+          "start_s": 57.800000000000004,
+          "end_s": 58.550000000000004
+        },
+        {
+          "first_tick": 1176,
+          "last_tick": 1187,
+          "steps": 12,
+          "start_s": 58.800000000000004,
+          "end_s": 59.35
+        },
+        {
+          "first_tick": 1191,
+          "last_tick": 1205,
+          "steps": 15,
+          "start_s": 59.550000000000004,
+          "end_s": 60.25
+        },
+        {
+          "first_tick": 1207,
+          "last_tick": 1213,
+          "steps": 7,
+          "start_s": 60.35,
+          "end_s": 60.650000000000006
+        },
+        {
+          "first_tick": 1216,
+          "last_tick": 1241,
+          "steps": 26,
+          "start_s": 60.800000000000004,
+          "end_s": 62.050000000000004
+        },
+        {
+          "first_tick": 1243,
+          "last_tick": 1243,
+          "steps": 1,
+          "start_s": 62.150000000000006,
+          "end_s": 62.150000000000006
+        },
+        {
+          "first_tick": 1246,
+          "last_tick": 1247,
+          "steps": 2,
+          "start_s": 62.300000000000004,
+          "end_s": 62.35
+        },
+        {
+          "first_tick": 1249,
+          "last_tick": 1259,
+          "steps": 11,
+          "start_s": 62.45,
+          "end_s": 62.95
+        },
+        {
+          "first_tick": 1261,
+          "last_tick": 1261,
+          "steps": 1,
+          "start_s": 63.050000000000004,
+          "end_s": 63.050000000000004
+        },
+        {
+          "first_tick": 1264,
+          "last_tick": 1267,
+          "steps": 4,
+          "start_s": 63.2,
+          "end_s": 63.35
+        },
+        {
+          "first_tick": 1269,
+          "last_tick": 1271,
+          "steps": 3,
+          "start_s": 63.45,
+          "end_s": 63.550000000000004
+        },
+        {
+          "first_tick": 1274,
+          "last_tick": 1277,
+          "steps": 4,
+          "start_s": 63.7,
+          "end_s": 63.85
+        },
+        {
+          "first_tick": 1282,
+          "last_tick": 1285,
+          "steps": 4,
+          "start_s": 64.10000000000001,
+          "end_s": 64.25
+        },
+        {
+          "first_tick": 1288,
+          "last_tick": 1300,
+          "steps": 13,
+          "start_s": 64.4,
+          "end_s": 65.0
+        }
+      ],
+      "modes": {
+        "Cruise": 70,
+        "Emergency": 790,
+        "Yield": 439,
+        "Avoid": 2
+      }
+    }
+  },
+  "first_window": {
+    "old": [
+      {
+        "time": 8.65,
+        "emergency": false,
+        "position": {
+          "x": 21.927468299285724,
+          "y": 2.322730975446088
+        },
+        "speed": 2.48662212710259,
+        "acceleration": 2.0,
+        "health": [],
+        "mode": "Yield",
+        "target": 3.9,
+        "selected": 1,
+        "failure": null,
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.590925470525842,
+              "forecast_radius_m": 4.86131714313163,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 53,
+              "end_progress_m": 47.54617274047643,
+              "end_time_s": 14.113126211943566,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.886194162209649,
+              "forecast_radius_m": 5.091796780226861,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 55,
+              "end_progress_m": 48.545010166684776,
+              "end_time_s": 14.41746959562172,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.793448422323383,
+              "forecast_radius_m": 5.018162278515049,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 54,
+              "end_progress_m": 48.039969185822756,
+              "end_time_s": 14.291884523162537,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          }
+        ],
+        "route_progress": 22.04617295291693,
+        "prefix": null,
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": {
+          "position": {
+            "x": 48.48597407637216,
+            "y": 6.861842552897373
+          },
+          "speed": 0.0,
+          "time": 14.41746959562172
+        },
+        "trajectory_hold_start": {
+          "position": {
+            "x": 48.48597407637216,
+            "y": 6.861842552897373
+          },
+          "speed": 0.0,
+          "time": 6.41746959562172
+        },
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.1321931321872656,
+            "first": {
+              "x": 57.911083381535704,
+              "y": 2.484866514677158
+            },
+            "last": {
+              "x": 58.013737888007725,
+              "y": 2.4414017810528867
+            },
+            "horizon": 8.0,
+            "first_padding": 1.2733584667573397,
+            "last_padding": 6.91617628494301
+          }
+        ],
+        "tick": 173
+      },
+      {
+        "time": 8.700000000000001,
+        "emergency": false,
+        "position": {
+          "x": 22.05683016807094,
+          "y": 2.3386824952950107
+        },
+        "speed": 2.606832873898444,
+        "acceleration": 1.9999999999999998,
+        "health": [],
+        "mode": "Yield",
+        "target": 3.9,
+        "selected": 1,
+        "failure": null,
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.5241988611022546,
+              "forecast_radius_m": 4.9080075676658055,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 53,
+              "end_progress_m": 47.675808353117816,
+              "end_time_s": 14.074180385036584,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.820436033436165,
+              "forecast_radius_m": 5.1351108302393005,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 55,
+              "end_progress_m": 48.67655490599524,
+              "end_time_s": 14.374414308902661,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.724022766526029,
+              "forecast_radius_m": 5.060428763030859,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 54,
+              "end_progress_m": 48.18245600006119,
+              "end_time_s": 14.253284810407013,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          }
+        ],
+        "route_progress": 22.175808224680967,
+        "prefix": null,
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": {
+          "position": {
+            "x": 48.6174994566403,
+            "y": 6.859585821974006
+          },
+          "speed": 0.0,
+          "time": 14.374414308902661
+        },
+        "trajectory_hold_start": {
+          "position": {
+            "x": 48.6174994566403,
+            "y": 6.859585821974006
+          },
+          "speed": 0.0,
+          "time": 6.374414308902662
+        },
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.129760597485436,
+            "first": {
+              "x": 57.9109724463964,
+              "y": 2.4845529328190366
+            },
+            "last": {
+              "x": 58.00399462256751,
+              "y": 2.4405515301007505
+            },
+            "horizon": 8.0,
+            "first_padding": 1.395449664958664,
+            "last_padding": 6.998364506838282
+          }
+        ],
+        "tick": 174
+      },
+      {
+        "time": 8.75,
+        "emergency": false,
+        "position": {
+          "x": 22.190315391289655,
+          "y": 2.356430586918537
+        },
+        "speed": 2.6931988098933672,
+        "acceleration": 1.9999999999999993,
+        "health": [],
+        "mode": "Yield",
+        "target": 3.9,
+        "selected": 1,
+        "failure": null,
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.4616800471300575,
+              "forecast_radius_m": 5.021472907860536,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 52,
+              "end_progress_m": 47.310241655398364,
+              "end_time_s": 13.978900700220962,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.751155860395285,
+              "forecast_radius_m": 5.243167452233642,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 54,
+              "end_progress_m": 48.30558601194807,
+              "end_time_s": 14.277116413429262,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.667285000331093,
+              "forecast_radius_m": 5.178133582057746,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 53,
+              "end_progress_m": 47.807510583333546,
+              "end_time_s": 14.161776938400278,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          }
+        ],
+        "route_progress": 22.31024210231619,
+        "prefix": null,
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": {
+          "position": {
+            "x": 48.24658230408481,
+            "y": 6.865784265336851
+          },
+          "speed": 0.0,
+          "time": 14.277116413429262
+        },
+        "trajectory_hold_start": {
+          "position": {
+            "x": 48.24658230408481,
+            "y": 6.865784265336851
+          },
+          "speed": 0.0,
+          "time": 6.277116413429261
+        },
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.129760597485436,
+            "first": {
+              "x": 57.91155383499746,
+              "y": 2.4842779240520474
+            },
+            "last": {
+              "x": 58.00457601116858,
+              "y": 2.4402765213337614
+            },
+            "horizon": 8.0,
+            "first_padding": 1.533338035623753,
+            "last_padding": 7.176576493206048
+          }
+        ],
+        "tick": 175
+      },
+      {
+        "time": 8.8,
+        "emergency": false,
+        "position": {
+          "x": 22.276600489518607,
+          "y": 2.371931884316698
+        },
+        "speed": 2.8043046549135418,
+        "acceleration": 1.9999999999999987,
+        "health": [],
+        "mode": "Yield",
+        "target": 3.9,
+        "selected": 1,
+        "failure": null,
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.467116898839361,
+              "forecast_radius_m": 4.5585446481944585,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 53,
+              "end_progress_m": 47.89743967256485,
+              "end_time_s": 14.012549466946506,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.758453004324886,
+              "forecast_radius_m": 4.7803478688690895,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 55,
+              "end_progress_m": 48.901431941513806,
+              "end_time_s": 14.304905044045153,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.678443675589546,
+              "forecast_radius_m": 4.718704411529215,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 54,
+              "end_progress_m": 48.40080153635658,
+              "end_time_s": 14.19363907435439,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          }
+        ],
+        "route_progress": 22.397439209365054,
+        "prefix": null,
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": {
+          "position": {
+            "x": 48.842340839377655,
+            "y": 6.855579277049713
+          },
+          "speed": 0.0,
+          "time": 14.304905044045153
+        },
+        "trajectory_hold_start": {
+          "position": {
+            "x": 48.842340839377655,
+            "y": 6.855579277049713
+          },
+          "speed": 0.0,
+          "time": 6.304905044045153
+        },
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.1290401141691524,
+            "first": {
+              "x": 57.864458868005656,
+              "y": 2.541070079719524
+            },
+            "last": {
+              "x": 58.02278037262822,
+              "y": 2.4448070372861253
+            },
+            "horizon": 8.0,
+            "first_padding": 1.0891428174675926,
+            "last_padding": 6.692769185040841
+          }
+        ],
+        "tick": 176
+      },
+      {
+        "time": 8.85,
+        "emergency": false,
+        "position": {
+          "x": 22.420490930020122,
+          "y": 2.394399567525772
+        },
+        "speed": 2.91267956744329,
+        "acceleration": 2.0,
+        "health": [],
+        "mode": "Yield",
+        "target": 3.9,
+        "selected": 1,
+        "failure": null,
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.3978055428556075,
+              "forecast_radius_m": 4.6995795433762035,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 52,
+              "end_progress_m": 47.54259944935808,
+              "end_time_s": 13.91206349161573,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.682832553079394,
+              "forecast_radius_m": 4.916542363628948,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 54,
+              "end_progress_m": 48.541384128900226,
+              "end_time_s": 14.201551522305415,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.603192457358268,
+              "forecast_radius_m": 4.854778072459967,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 53,
+              "end_progress_m": 48.03644853168228,
+              "end_time_s": 14.096766326753688,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          }
+        ],
+        "route_progress": 22.542599670418365,
+        "prefix": null,
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": {
+          "position": {
+            "x": 48.48234855651415,
+            "y": 6.861903847237359
+          },
+          "speed": 0.0,
+          "time": 14.201551522305415
+        },
+        "trajectory_hold_start": {
+          "position": {
+            "x": 48.48234855651415,
+            "y": 6.861903847237359
+          },
+          "speed": 0.0,
+          "time": 6.201551522305415
+        },
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.1290401141691524,
+            "first": {
+              "x": 57.865448377409535,
+              "y": 2.540468435704315
+            },
+            "last": {
+              "x": 58.02376988203211,
+              "y": 2.444205393270917
+            },
+            "horizon": 8.0,
+            "first_padding": 1.2597673048551017,
+            "last_padding": 6.904107800329971
+          }
+        ],
+        "tick": 177
+      },
+      {
+        "time": 8.9,
+        "emergency": false,
+        "position": {
+          "x": 22.568922893628567,
+          "y": 2.419272501709949
+        },
+        "speed": 3.010030609518043,
+        "acceleration": 2.0,
+        "health": [],
+        "mode": "Yield",
+        "target": 3.9,
+        "selected": 1,
+        "failure": null,
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.331505526820032,
+              "forecast_radius_m": 4.744737012524105,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 51,
+              "end_progress_m": 47.192467310587475,
+              "end_time_s": 13.815641685997452,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.612288986762471,
+              "forecast_radius_m": 4.954237687570491,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 54,
+              "end_progress_m": 48.19056995540957,
+              "end_time_s": 14.102833505549984,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": false
+            }
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.545375707822255,
+              "forecast_radius_m": 4.903798085917845,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 53,
+              "end_progress_m": 48.1988686828833,
+              "end_time_s": 14.069535953478455,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          }
+        ],
+        "route_progress": 22.692467529320275,
+        "prefix": null,
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": {
+          "position": {
+            "x": 48.13158041718196,
+            "y": 6.86759725518472
+          },
+          "speed": 0.0,
+          "time": 14.102833505549984
+        },
+        "trajectory_hold_start": {
+          "position": {
+            "x": 48.13158041718196,
+            "y": 6.86759725518472
+          },
+          "speed": 0.0,
+          "time": 6.1028335055499845
+        },
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.1269525582467932,
+            "first": {
+              "x": 57.85671536404128,
+              "y": 2.5457192270614253
+            },
+            "last": {
+              "x": 57.89058857718025,
+              "y": 2.524367357393702
+            },
+            "horizon": 8.0,
+            "first_padding": 1.3792117823303158,
+            "last_padding": 6.980271357266249
+          }
+        ],
+        "tick": 178
+      },
+      {
+        "time": 8.950000000000001,
+        "emergency": false,
+        "position": {
+          "x": 22.72111109325368,
+          "y": 2.446624635798253
+        },
+        "speed": 3.0925321239603587,
+        "acceleration": 1.9999999999999993,
+        "health": [],
+        "mode": "Yield",
+        "target": 3.9,
+        "selected": 1,
+        "failure": null,
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.270229791754687,
+              "forecast_radius_m": 4.857046631155805,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 51,
+              "end_progress_m": 47.34626467826193,
+              "end_time_s": 13.792202601112617,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.54378199670122,
+              "forecast_radius_m": 5.061023404109276,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 53,
+              "end_progress_m": 48.041935019407894,
+              "end_time_s": 14.032672050093478,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": false
+            }
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.48881265287714,
+              "forecast_radius_m": 5.019513458897938,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 52,
+              "end_progress_m": 47.84300320565991,
+              "end_time_s": 13.982399894718586,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          }
+        ],
+        "route_progress": 22.846265145886658,
+        "prefix": null,
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": {
+          "position": {
+            "x": 47.96819782720601,
+            "y": 6.869985233724132
+          },
+          "speed": 0.0,
+          "time": 14.032672050093478
+        },
+        "trajectory_hold_start": {
+          "position": {
+            "x": 47.96819782720601,
+            "y": 6.869985233724132
+          },
+          "speed": 0.0,
+          "time": 6.032672050093477
+        },
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.1269525582467932,
+            "first": {
+              "x": 57.8569270716234,
+              "y": 2.5455857778760014
+            },
+            "last": {
+              "x": 57.89080028476236,
+              "y": 2.524233908208278
+            },
+            "horizon": 8.0,
+            "first_padding": 1.5148467449280634,
+            "last_padding": 7.156024187658085
+          }
+        ],
+        "tick": 179
+      }
+    ],
+    "disabled": [
+      {
+        "time": 8.65,
+        "emergency": false,
+        "position": {
+          "x": 21.927468299285724,
+          "y": 2.322730975446088
+        },
+        "speed": 2.48662212710259,
+        "acceleration": 2.0,
+        "health": [],
+        "mode": "Yield",
+        "target": 3.9,
+        "selected": 1,
+        "failure": null,
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.590925470525842,
+              "forecast_radius_m": 4.86131714313163,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 53,
+              "end_progress_m": 47.54617274047643,
+              "end_time_s": 14.113126211943566,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.886194162209649,
+              "forecast_radius_m": 5.091796780226861,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 55,
+              "end_progress_m": 48.545010166684776,
+              "end_time_s": 14.41746959562172,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.793448422323383,
+              "forecast_radius_m": 5.018162278515049,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 54,
+              "end_progress_m": 48.039969185822756,
+              "end_time_s": 14.291884523162537,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          }
+        ],
+        "route_progress": 22.04617295291693,
+        "prefix": null,
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": {
+          "position": {
+            "x": 48.48597407637216,
+            "y": 6.861842552897373
+          },
+          "speed": 0.0,
+          "time": 14.41746959562172
+        },
+        "trajectory_hold_start": {
+          "position": {
+            "x": 48.48597407637216,
+            "y": 6.861842552897373
+          },
+          "speed": 0.0,
+          "time": 6.41746959562172
+        },
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.1321931321872656,
+            "first": {
+              "x": 57.911083381535704,
+              "y": 2.484866514677158
+            },
+            "last": {
+              "x": 58.013737888007725,
+              "y": 2.4414017810528867
+            },
+            "horizon": 8.0,
+            "first_padding": 1.2733584667573397,
+            "last_padding": 6.91617628494301
+          }
+        ],
+        "tick": 173
+      },
+      {
+        "time": 8.700000000000001,
+        "emergency": false,
+        "position": {
+          "x": 22.05683016807094,
+          "y": 2.3386824952950107
+        },
+        "speed": 2.606832873898444,
+        "acceleration": 1.9999999999999998,
+        "health": [],
+        "mode": "Yield",
+        "target": 3.9,
+        "selected": 1,
+        "failure": null,
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.5241988611022546,
+              "forecast_radius_m": 4.9080075676658055,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 53,
+              "end_progress_m": 47.675808353117816,
+              "end_time_s": 14.074180385036584,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.820436033436165,
+              "forecast_radius_m": 5.1351108302393005,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 55,
+              "end_progress_m": 48.67655490599524,
+              "end_time_s": 14.374414308902661,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.724022766526029,
+              "forecast_radius_m": 5.060428763030859,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 54,
+              "end_progress_m": 48.18245600006119,
+              "end_time_s": 14.253284810407013,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          }
+        ],
+        "route_progress": 22.175808224680967,
+        "prefix": null,
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": {
+          "position": {
+            "x": 48.6174994566403,
+            "y": 6.859585821974006
+          },
+          "speed": 0.0,
+          "time": 14.374414308902661
+        },
+        "trajectory_hold_start": {
+          "position": {
+            "x": 48.6174994566403,
+            "y": 6.859585821974006
+          },
+          "speed": 0.0,
+          "time": 6.374414308902662
+        },
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.129760597485436,
+            "first": {
+              "x": 57.9109724463964,
+              "y": 2.4845529328190366
+            },
+            "last": {
+              "x": 58.00399462256751,
+              "y": 2.4405515301007505
+            },
+            "horizon": 8.0,
+            "first_padding": 1.395449664958664,
+            "last_padding": 6.998364506838282
+          }
+        ],
+        "tick": 174
+      },
+      {
+        "time": 8.75,
+        "emergency": false,
+        "position": {
+          "x": 22.190315391289655,
+          "y": 2.356430586918537
+        },
+        "speed": 2.6931988098933672,
+        "acceleration": 1.9999999999999993,
+        "health": [],
+        "mode": "Yield",
+        "target": 3.9,
+        "selected": 1,
+        "failure": null,
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.4616800471300575,
+              "forecast_radius_m": 5.021472907860536,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 52,
+              "end_progress_m": 47.310241655398364,
+              "end_time_s": 13.978900700220962,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.751155860395285,
+              "forecast_radius_m": 5.243167452233642,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 54,
+              "end_progress_m": 48.30558601194807,
+              "end_time_s": 14.277116413429262,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.667285000331093,
+              "forecast_radius_m": 5.178133582057746,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 53,
+              "end_progress_m": 47.807510583333546,
+              "end_time_s": 14.161776938400278,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          }
+        ],
+        "route_progress": 22.31024210231619,
+        "prefix": null,
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": {
+          "position": {
+            "x": 48.24658230408481,
+            "y": 6.865784265336851
+          },
+          "speed": 0.0,
+          "time": 14.277116413429262
+        },
+        "trajectory_hold_start": {
+          "position": {
+            "x": 48.24658230408481,
+            "y": 6.865784265336851
+          },
+          "speed": 0.0,
+          "time": 6.277116413429261
+        },
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.129760597485436,
+            "first": {
+              "x": 57.91155383499746,
+              "y": 2.4842779240520474
+            },
+            "last": {
+              "x": 58.00457601116858,
+              "y": 2.4402765213337614
+            },
+            "horizon": 8.0,
+            "first_padding": 1.533338035623753,
+            "last_padding": 7.176576493206048
+          }
+        ],
+        "tick": 175
+      },
+      {
+        "time": 8.8,
+        "emergency": false,
+        "position": {
+          "x": 22.276600489518607,
+          "y": 2.371931884316698
+        },
+        "speed": 2.8043046549135418,
+        "acceleration": 1.9999999999999987,
+        "health": [],
+        "mode": "Yield",
+        "target": 3.9,
+        "selected": 1,
+        "failure": null,
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.467116898839361,
+              "forecast_radius_m": 4.5585446481944585,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 53,
+              "end_progress_m": 47.89743967256485,
+              "end_time_s": 14.012549466946506,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.758453004324886,
+              "forecast_radius_m": 4.7803478688690895,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 55,
+              "end_progress_m": 48.901431941513806,
+              "end_time_s": 14.304905044045153,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.678443675589546,
+              "forecast_radius_m": 4.718704411529215,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 54,
+              "end_progress_m": 48.40080153635658,
+              "end_time_s": 14.19363907435439,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          }
+        ],
+        "route_progress": 22.397439209365054,
+        "prefix": null,
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": {
+          "position": {
+            "x": 48.842340839377655,
+            "y": 6.855579277049713
+          },
+          "speed": 0.0,
+          "time": 14.304905044045153
+        },
+        "trajectory_hold_start": {
+          "position": {
+            "x": 48.842340839377655,
+            "y": 6.855579277049713
+          },
+          "speed": 0.0,
+          "time": 6.304905044045153
+        },
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.1290401141691524,
+            "first": {
+              "x": 57.864458868005656,
+              "y": 2.541070079719524
+            },
+            "last": {
+              "x": 58.02278037262822,
+              "y": 2.4448070372861253
+            },
+            "horizon": 8.0,
+            "first_padding": 1.0891428174675926,
+            "last_padding": 6.692769185040841
+          }
+        ],
+        "tick": 176
+      },
+      {
+        "time": 8.85,
+        "emergency": false,
+        "position": {
+          "x": 22.420490930020122,
+          "y": 2.394399567525772
+        },
+        "speed": 2.91267956744329,
+        "acceleration": 2.0,
+        "health": [],
+        "mode": "Yield",
+        "target": 3.9,
+        "selected": 1,
+        "failure": null,
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.3978055428556075,
+              "forecast_radius_m": 4.6995795433762035,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 52,
+              "end_progress_m": 47.54259944935808,
+              "end_time_s": 13.91206349161573,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.682832553079394,
+              "forecast_radius_m": 4.916542363628948,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 54,
+              "end_progress_m": 48.541384128900226,
+              "end_time_s": 14.201551522305415,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.603192457358268,
+              "forecast_radius_m": 4.854778072459967,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 53,
+              "end_progress_m": 48.03644853168228,
+              "end_time_s": 14.096766326753688,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          }
+        ],
+        "route_progress": 22.542599670418365,
+        "prefix": null,
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": {
+          "position": {
+            "x": 48.48234855651415,
+            "y": 6.861903847237359
+          },
+          "speed": 0.0,
+          "time": 14.201551522305415
+        },
+        "trajectory_hold_start": {
+          "position": {
+            "x": 48.48234855651415,
+            "y": 6.861903847237359
+          },
+          "speed": 0.0,
+          "time": 6.201551522305415
+        },
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.1290401141691524,
+            "first": {
+              "x": 57.865448377409535,
+              "y": 2.540468435704315
+            },
+            "last": {
+              "x": 58.02376988203211,
+              "y": 2.444205393270917
+            },
+            "horizon": 8.0,
+            "first_padding": 1.2597673048551017,
+            "last_padding": 6.904107800329971
+          }
+        ],
+        "tick": 177
+      },
+      {
+        "time": 8.9,
+        "emergency": false,
+        "position": {
+          "x": 22.568922893628567,
+          "y": 2.419272501709949
+        },
+        "speed": 3.010030609518043,
+        "acceleration": 2.0,
+        "health": [],
+        "mode": "Yield",
+        "target": 3.9,
+        "selected": 1,
+        "failure": null,
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.331505526820032,
+              "forecast_radius_m": 4.744737012524105,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 51,
+              "end_progress_m": 47.192467310587475,
+              "end_time_s": 13.815641685997452,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.612288986762471,
+              "forecast_radius_m": 4.954237687570491,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 54,
+              "end_progress_m": 48.19056995540957,
+              "end_time_s": 14.102833505549984,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": false
+            }
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.545375707822255,
+              "forecast_radius_m": 4.903798085917845,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 53,
+              "end_progress_m": 48.1988686828833,
+              "end_time_s": 14.069535953478455,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          }
+        ],
+        "route_progress": 22.692467529320275,
+        "prefix": null,
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": {
+          "position": {
+            "x": 48.13158041718196,
+            "y": 6.86759725518472
+          },
+          "speed": 0.0,
+          "time": 14.102833505549984
+        },
+        "trajectory_hold_start": {
+          "position": {
+            "x": 48.13158041718196,
+            "y": 6.86759725518472
+          },
+          "speed": 0.0,
+          "time": 6.1028335055499845
+        },
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.1269525582467932,
+            "first": {
+              "x": 57.85671536404128,
+              "y": 2.5457192270614253
+            },
+            "last": {
+              "x": 57.89058857718025,
+              "y": 2.524367357393702
+            },
+            "horizon": 8.0,
+            "first_padding": 1.3792117823303158,
+            "last_padding": 6.980271357266249
+          }
+        ],
+        "tick": 178
+      },
+      {
+        "time": 8.950000000000001,
+        "emergency": false,
+        "position": {
+          "x": 22.72111109325368,
+          "y": 2.446624635798253
+        },
+        "speed": 3.0925321239603587,
+        "acceleration": 1.9999999999999993,
+        "health": [],
+        "mode": "Yield",
+        "target": 3.9,
+        "selected": 1,
+        "failure": null,
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.270229791754687,
+              "forecast_radius_m": 4.857046631155805,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 51,
+              "end_progress_m": 47.34626467826193,
+              "end_time_s": 13.792202601112617,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.54378199670122,
+              "forecast_radius_m": 5.061023404109276,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 53,
+              "end_progress_m": 48.041935019407894,
+              "end_time_s": 14.032672050093478,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": false
+            }
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 4.48881265287714,
+              "forecast_radius_m": 5.019513458897938,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 52,
+              "end_progress_m": 47.84300320565991,
+              "end_time_s": 13.982399894718586,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          }
+        ],
+        "route_progress": 22.846265145886658,
+        "prefix": null,
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": {
+          "position": {
+            "x": 47.96819782720601,
+            "y": 6.869985233724132
+          },
+          "speed": 0.0,
+          "time": 14.032672050093478
+        },
+        "trajectory_hold_start": {
+          "position": {
+            "x": 47.96819782720601,
+            "y": 6.869985233724132
+          },
+          "speed": 0.0,
+          "time": 6.032672050093477
+        },
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.1269525582467932,
+            "first": {
+              "x": 57.8569270716234,
+              "y": 2.5455857778760014
+            },
+            "last": {
+              "x": 57.89080028476236,
+              "y": 2.524233908208278
+            },
+            "horizon": 8.0,
+            "first_padding": 1.5148467449280634,
+            "last_padding": 7.156024187658085
+          }
+        ],
+        "tick": 179
+      }
+    ],
+    "enabled": [
+      {
+        "time": 8.65,
+        "emergency": false,
+        "position": {
+          "x": 46.006751839262066,
+          "y": 7.007363677968993
+        },
+        "speed": 3.886392058054722,
+        "acceleration": -2.5000000000000013,
+        "health": [],
+        "mode": "Yield",
+        "target": 3.9,
+        "selected": 1,
+        "failure": null,
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 1.5853163799125394,
+              "forecast_radius_m": 1.9478303648644244,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 8,
+              "end_progress_m": 48.98828876335577,
+              "end_time_s": 9.554556823226024,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 1.77623201101772,
+              "forecast_radius_m": 2.0382216172376357,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 8,
+              "end_progress_m": 49.08428951721936,
+              "end_time_s": 9.5545581105691,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": false
+            }
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "OppositeSideDuringPass",
+            "conflict": null,
+            "profile": null
+          }
+        ],
+        "route_progress": 46.109406391378755,
+        "prefix": {
+          "selected": true,
+          "acquisition_count": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "authorized_until_s": null,
+          "prefix_duration_s": 0.0,
+          "control_interval_s": 0.0,
+          "lateral_target_m": 3.9,
+          "blocking_prediction_ids": [
+            1
+          ],
+          "shared_pose_cancellation": true
+        },
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": {
+          "position": {
+            "x": 49.026452178418715,
+            "y": 6.9268511189867885
+          },
+          "speed": 0.0,
+          "time": 9.5545581105691
+        },
+        "trajectory_hold_start": {
+          "position": {
+            "x": 49.026452178418715,
+            "y": 6.9268511189867885
+          },
+          "speed": 0.0,
+          "time": 1.554558110569101
+        },
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.1233864120042185,
+            "first": {
+              "x": 57.85447738223094,
+              "y": 2.618462832095865
+            },
+            "last": {
+              "x": 57.862483659401526,
+              "y": 2.650545315291197
+            },
+            "horizon": 8.0,
+            "first_padding": 0.21512500000000023,
+            "last_padding": 5.855125000000001
+          }
+        ],
+        "tick": 173
+      },
+      {
+        "time": 8.700000000000001,
+        "emergency": false,
+        "position": {
+          "x": 46.19417095596122,
+          "y": 7.003853782124413
+        },
+        "speed": 3.7490395929160676,
+        "acceleration": 2.0,
+        "health": [],
+        "mode": "Avoid",
+        "target": 3.9,
+        "selected": 1,
+        "failure": null,
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 1.6522258676856647,
+              "forecast_radius_m": 1.9580441020262884,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 8,
+              "end_progress_m": 48.985714263314755,
+              "end_time_s": 9.499615837171804,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "CompletePath",
+            "conflict": null,
+            "profile": {
+              "point_count": 81,
+              "end_progress_m": 86.28105764506569,
+              "end_time_s": 5.612328860802853,
+              "terminal_speed_m_s": 8.0,
+              "searched_stop": false
+            }
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "OppositeSideDuringPass",
+            "conflict": null,
+            "profile": null
+          }
+        ],
+        "route_progress": 46.281529207490436,
+        "prefix": {
+          "selected": false,
+          "acquisition_count": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "authorized_until_s": null,
+          "prefix_duration_s": 0.0,
+          "control_interval_s": 0.0,
+          "lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "shared_pose_cancellation": true
+        },
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": {
+          "position": {
+            "x": 86.45506840262972,
+            "y": 4.08389483707125
+          },
+          "speed": 8.0,
+          "time": 5.612328860802853
+        },
+        "trajectory_hold_start": {
+          "position": {
+            "x": 85.95748802227241,
+            "y": 4.1370441514186025
+          },
+          "speed": 8.0,
+          "time": 5.5497774963428
+        },
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.1254979442140263,
+            "first": {
+              "x": 57.860555229434645,
+              "y": 2.616256445164291
+            },
+            "last": {
+              "x": 57.94571744863895,
+              "y": 2.6175305769798456
+            },
+            "horizon": 8.0,
+            "first_padding": 0.2,
+            "last_padding": 5.800000000000001
+          }
+        ],
+        "tick": 174
+      },
+      {
+        "time": 8.75,
+        "emergency": false,
+        "position": {
+          "x": 46.386403647010404,
+          "y": 7.000067843657538
+        },
+        "speed": 3.8453993726576194,
+        "acceleration": 1.9999999999999982,
+        "health": [],
+        "mode": "Avoid",
+        "target": 3.9,
+        "selected": 1,
+        "failure": null,
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 1.6003805140426874,
+              "forecast_radius_m": 1.9568036883843023,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 8,
+              "end_progress_m": 49.296904906405075,
+              "end_time_s": 9.538159749067429,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "CompletePath",
+            "conflict": null,
+            "profile": {
+              "point_count": 81,
+              "end_progress_m": 86.47358131830102,
+              "end_time_s": 5.5870309130205005,
+              "terminal_speed_m_s": 8.0,
+              "searched_stop": false
+            }
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "OppositeSideDuringPass",
+            "conflict": null,
+            "profile": null
+          }
+        ],
+        "route_progress": 46.47378942429083,
+        "prefix": {
+          "selected": false,
+          "acquisition_count": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "authorized_until_s": null,
+          "prefix_duration_s": 0.0,
+          "control_interval_s": 0.0,
+          "lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "shared_pose_cancellation": true
+        },
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": {
+          "position": {
+            "x": 86.64650133978152,
+            "y": 4.063430340587186
+          },
+          "speed": 8.0,
+          "time": 5.5870309130205005
+        },
+        "trajectory_hold_start": {
+          "position": {
+            "x": 86.14883248438065,
+            "y": 4.116611232053895
+          },
+          "speed": 8.0,
+          "time": 5.524468132445055
+        },
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.1254979442140263,
+            "first": {
+              "x": 57.861087493304666,
+              "y": 2.6162644084881372
+            },
+            "last": {
+              "x": 57.94624971250897,
+              "y": 2.6175385403036926
+            },
+            "horizon": 8.0,
+            "first_padding": 0.21512499999999968,
+            "last_padding": 5.855124999999999
+          }
+        ],
+        "tick": 175
+      },
+      {
+        "time": 8.8,
+        "emergency": true,
+        "position": {
+          "x": 46.56334013872073,
+          "y": 7.020785060545279
+        },
+        "speed": 3.959710979203048,
+        "acceleration": -6.0,
+        "health": [],
+        "mode": "Emergency",
+        "target": 0.0,
+        "selected": null,
+        "failure": "NoSelectableCandidate",
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "NoCheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 1.5259146783494952,
+              "forecast_radius_m": 1.8978468369698618,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": null
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "NoCheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 1.6979902420098114,
+              "forecast_radius_m": 1.9772406454572002,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": null
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "OppositeSideDuringPass",
+            "conflict": null,
+            "profile": null
+          }
+        ],
+        "route_progress": 46.650518425951994,
+        "prefix": {
+          "selected": false,
+          "acquisition_count": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "authorized_until_s": null,
+          "prefix_duration_s": 0.0,
+          "control_interval_s": 0.0,
+          "lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "shared_pose_cancellation": true
+        },
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": null,
+        "trajectory_hold_start": null,
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.123185231712589,
+            "first": {
+              "x": 57.83884657971193,
+              "y": 2.669883805402065
+            },
+            "last": {
+              "x": 57.79816258734358,
+              "y": 2.7735027437983804
+            },
+            "horizon": 8.0,
+            "first_padding": 0.2,
+            "last_padding": 5.800000000000001
+          }
+        ],
+        "tick": 176
+      },
+      {
+        "time": 8.85,
+        "emergency": true,
+        "position": {
+          "x": 46.746010865164145,
+          "y": 7.017180775436469
+        },
+        "speed": 3.654125622937019,
+        "acceleration": -6.0,
+        "health": [],
+        "mode": "Emergency",
+        "target": 0.0,
+        "selected": null,
+        "failure": "NoSelectableCandidate",
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "NoCheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 1.5597918381940077,
+              "forecast_radius_m": 1.936015518090862,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": null
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "NoCheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 1.7252166634346984,
+              "forecast_radius_m": 2.01378814684407,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": null
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "OppositeSideDuringPass",
+            "conflict": null,
+            "profile": null
+          }
+        ],
+        "route_progress": 46.83321537309272,
+        "prefix": {
+          "selected": false,
+          "acquisition_count": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "authorized_until_s": null,
+          "prefix_duration_s": 0.0,
+          "control_interval_s": 0.0,
+          "lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "shared_pose_cancellation": true
+        },
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": null,
+        "trajectory_hold_start": null,
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.123185231712589,
+            "first": {
+              "x": 57.83859230475963,
+              "y": 2.6705314237670406
+            },
+            "last": {
+              "x": 57.797908312391286,
+              "y": 2.774150362163356
+            },
+            "horizon": 8.0,
+            "first_padding": 0.21512499999999968,
+            "last_padding": 5.855124999999999
+          }
+        ],
+        "tick": 177
+      },
+      {
+        "time": 8.9,
+        "emergency": false,
+        "position": {
+          "x": 46.91410409376549,
+          "y": 7.013861401328074
+        },
+        "speed": 3.3625199922732385,
+        "acceleration": -2.5000000000000004,
+        "health": [],
+        "mode": "Yield",
+        "target": 3.9,
+        "selected": 1,
+        "failure": null,
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 1.6107686628577864,
+              "forecast_radius_m": 1.9355157602435025,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 7,
+              "end_progress_m": 49.1824820352475,
+              "end_time_s": 9.345007996909295,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": false
+            }
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 1.7809391162527108,
+              "forecast_radius_m": 2.015495873339117,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 7,
+              "end_progress_m": 49.21687292273896,
+              "end_time_s": 9.345009856725655,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": false
+            }
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "OppositeSideDuringPass",
+            "conflict": null,
+            "profile": null
+          }
+        ],
+        "route_progress": 47.00133275607674,
+        "prefix": {
+          "selected": true,
+          "acquisition_count": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "authorized_until_s": null,
+          "prefix_duration_s": 0.0,
+          "control_interval_s": 0.0,
+          "lateral_target_m": 3.9,
+          "blocking_prediction_ids": [
+            1
+          ],
+          "shared_pose_cancellation": true
+        },
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": {
+          "position": {
+            "x": 49.17459095183489,
+            "y": 6.953754648034995
+          },
+          "speed": 0.0,
+          "time": 9.345009856725655
+        },
+        "trajectory_hold_start": {
+          "position": {
+            "x": 49.17459095183489,
+            "y": 6.953754648034995
+          },
+          "speed": 0.0,
+          "time": 1.3450098567256557
+        },
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.1224544887003431,
+            "first": {
+              "x": 57.84050311521622,
+              "y": 2.6660088823061785
+            },
+            "last": {
+              "x": 57.82753221608162,
+              "y": 2.703449774931752
+            },
+            "horizon": 8.0,
+            "first_padding": 0.2,
+            "last_padding": 5.800000000000001
+          }
+        ],
+        "tick": 178
+      },
+      {
+        "time": 8.950000000000001,
+        "emergency": false,
+        "position": {
+          "x": 47.07587747490751,
+          "y": 7.0106700010198075
+        },
+        "speed": 3.236097148235678,
+        "acceleration": -2.499999999999999,
+        "health": [],
+        "mode": "Yield",
+        "target": 3.9,
+        "selected": 1,
+        "failure": null,
+        "candidates": [
+          {
+            "index": 0,
+            "target": 0.0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 1.6099011452969703,
+              "forecast_radius_m": 1.9582825327164046,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 7,
+              "end_progress_m": 49.18726501925798,
+              "end_time_s": 9.29443885930343,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": true
+            }
+          },
+          {
+            "index": 1,
+            "target": 3.9,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "prediction_id": 1,
+              "relative_time_s": 1.7823833749010407,
+              "forecast_radius_m": 2.0402115917783377,
+              "forecast_horizon_s": 8.0,
+              "minimum_clearance_floor_m": 0.0
+            },
+            "profile": {
+              "point_count": 7,
+              "end_progress_m": 49.21184182524693,
+              "end_time_s": 9.294442361500314,
+              "terminal_speed_m_s": 0.0,
+              "searched_stop": false
+            }
+          },
+          {
+            "index": 2,
+            "target": -3.9,
+            "disposition": "OppositeSideDuringPass",
+            "conflict": null,
+            "profile": null
+          }
+        ],
+        "route_progress": 47.14780660910122,
+        "prefix": {
+          "selected": true,
+          "acquisition_count": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "authorized_until_s": null,
+          "prefix_duration_s": 0.0,
+          "control_interval_s": 0.0,
+          "lateral_target_m": 3.9,
+          "blocking_prediction_ids": [
+            1
+          ],
+          "shared_pose_cancellation": true
+        },
+        "checked_approach": {
+          "supporting_acquisitions": 0,
+          "first_acquisition_s": null,
+          "last_acquisition_s": null,
+          "proposal_end_progress_m": null,
+          "proposal_endpoint": null,
+          "proposal_lateral_target_m": null,
+          "blocking_prediction_ids": [],
+          "adopted": false
+        },
+        "trajectory_end": {
+          "position": {
+            "x": 49.16957707037966,
+            "y": 6.954628151869318
+          },
+          "speed": 0.0,
+          "time": 9.294442361500314
+        },
+        "trajectory_hold_start": {
+          "position": {
+            "x": 49.16957707037966,
+            "y": 6.954628151869318
+          },
+          "speed": 0.0,
+          "time": 1.294442361500314
+        },
+        "forecasts": [
+          {
+            "id": 1,
+            "radius": 1.1224544887003431,
+            "first": {
+              "x": 57.840422047096624,
+              "y": 2.6662428878850886
+            },
+            "last": {
+              "x": 57.82745114796202,
+              "y": 2.7036837805106617
+            },
+            "horizon": 8.0,
+            "first_padding": 0.21512500000000023,
+            "last_padding": 5.855125000000001
+          }
+        ],
+        "tick": 179
+      }
+    ]
+  },
+  "low_speed_no_candidate_examples": [
+    {
+      "time": 11.05,
+      "emergency": true,
+      "position": {
+        "x": 49.49330760871131,
+        "y": 6.938657486115653
+      },
+      "speed": 0.0,
+      "acceleration": -6.0,
+      "health": [],
+      "mode": "Emergency",
+      "target": 0.0,
+      "selected": null,
+      "failure": "NoSelectableCandidate",
+      "candidates": [
+        {
+          "index": 0,
+          "target": 0.0,
+          "disposition": "NoCheckedStop",
+          "conflict": {
+            "prediction_id": 1,
+            "relative_time_s": 2.281698944090015,
+            "forecast_radius_m": 2.2933031905899757,
+            "forecast_horizon_s": 8.0,
+            "minimum_clearance_floor_m": 0.0
+          },
+          "profile": null
+        },
+        {
+          "index": 1,
+          "target": 3.9,
+          "disposition": "NoCheckedStop",
+          "conflict": {
+            "prediction_id": 1,
+            "relative_time_s": 2.4231002705825566,
+            "forecast_radius_m": 2.369414905675136,
+            "forecast_horizon_s": 8.0,
+            "minimum_clearance_floor_m": 0.0
+          },
+          "profile": null
+        },
+        {
+          "index": 2,
+          "target": -3.9,
+          "disposition": "OppositeSideDuringPass",
+          "conflict": null,
+          "profile": null
+        }
+      ],
+      "route_progress": 49.53583609601597,
+      "prefix": {
+        "selected": false,
+        "acquisition_count": 0,
+        "first_acquisition_s": null,
+        "last_acquisition_s": null,
+        "authorized_until_s": null,
+        "prefix_duration_s": 0.0,
+        "control_interval_s": 0.0,
+        "lateral_target_m": null,
+        "blocking_prediction_ids": [],
+        "shared_pose_cancellation": true
+      },
+      "checked_approach": {
+        "supporting_acquisitions": 0,
+        "first_acquisition_s": null,
+        "last_acquisition_s": null,
+        "proposal_end_progress_m": null,
+        "proposal_endpoint": null,
+        "proposal_lateral_target_m": null,
+        "blocking_prediction_ids": [],
+        "adopted": false
+      },
+      "trajectory_end": null,
+      "trajectory_hold_start": null,
+      "forecasts": [
+        {
+          "id": 1,
+          "radius": 1.121469255501817,
+          "first": {
+            "x": 57.907609240369965,
+            "y": 2.693034240961969
+          },
+          "last": {
+            "x": 57.89108720504658,
+            "y": 2.7312330761603683
+          },
+          "horizon": 8.0,
+          "first_padding": 0.21512500000000023,
+          "last_padding": 5.855125000000001
+        }
+      ],
+      "tick": 221
+    },
+    {
+      "time": 11.100000000000001,
+      "emergency": true,
+      "position": {
+        "x": 49.49340829270587,
+        "y": 6.938654598713577
+      },
+      "speed": 0.0020145077663692255,
+      "acceleration": -6.0,
+      "health": [],
+      "mode": "Emergency",
+      "target": 0.0,
+      "selected": null,
+      "failure": "NoSelectableCandidate",
+      "candidates": [
+        {
+          "index": 0,
+          "target": 0.0,
+          "disposition": "NoCheckedStop",
+          "conflict": {
+            "prediction_id": 1,
+            "relative_time_s": 2.2623939876337924,
+            "forecast_radius_m": 2.255376059765656,
+            "forecast_horizon_s": 8.0,
+            "minimum_clearance_floor_m": 0.0
+          },
+          "profile": null
+        },
+        {
+          "index": 1,
+          "target": 3.9,
+          "disposition": "NoCheckedStop",
+          "conflict": {
+            "prediction_id": 1,
+            "relative_time_s": 2.4174506992056912,
+            "forecast_radius_m": 2.3379051308828767,
+            "forecast_horizon_s": 8.0,
+            "minimum_clearance_floor_m": 0.0
+          },
+          "profile": null
+        },
+        {
+          "index": 2,
+          "target": -3.9,
+          "disposition": "OppositeSideDuringPass",
+          "conflict": null,
+          "profile": null
+        }
+      ],
+      "route_progress": 49.53593681842068,
+      "prefix": {
+        "selected": false,
+        "acquisition_count": 0,
+        "first_acquisition_s": null,
+        "last_acquisition_s": null,
+        "authorized_until_s": null,
+        "prefix_duration_s": 0.0,
+        "control_interval_s": 0.0,
+        "lateral_target_m": null,
+        "blocking_prediction_ids": [],
+        "shared_pose_cancellation": true
+      },
+      "checked_approach": {
+        "supporting_acquisitions": 0,
+        "first_acquisition_s": null,
+        "last_acquisition_s": null,
+        "proposal_end_progress_m": null,
+        "proposal_endpoint": null,
+        "proposal_lateral_target_m": null,
+        "blocking_prediction_ids": [],
+        "adopted": false
+      },
+      "trajectory_end": null,
+      "trajectory_hold_start": null,
+      "forecasts": [
+        {
+          "id": 1,
+          "radius": 1.120307246319746,
+          "first": {
+            "x": 57.908485072271056,
+            "y": 2.691808060388808
+          },
+          "last": {
+            "x": 57.90449544810744,
+            "y": 2.7112558774348656
+          },
+          "horizon": 8.0,
+          "first_padding": 0.2,
+          "last_padding": 5.800000000000001
+        }
+      ],
+      "tick": 222
+    },
+    {
+      "time": 11.15,
+      "emergency": true,
+      "position": {
+        "x": 49.494014509098974,
+        "y": 6.938637217080143
+      },
+      "speed": 0.012129310556631768,
+      "acceleration": -6.0,
+      "health": [],
+      "mode": "Emergency",
+      "target": 0.0,
+      "selected": null,
+      "failure": "NoSelectableCandidate",
+      "candidates": [
+        {
+          "index": 0,
+          "target": 0.0,
+          "disposition": "NoCheckedStop",
+          "conflict": {
+            "prediction_id": 1,
+            "relative_time_s": 2.251966334302407,
+            "forecast_radius_m": 2.2762342351715334,
+            "forecast_horizon_s": 8.0,
+            "minimum_clearance_floor_m": 0.0
+          },
+          "profile": null
+        },
+        {
+          "index": 1,
+          "target": 3.9,
+          "disposition": "NoCheckedStop",
+          "conflict": {
+            "prediction_id": 1,
+            "relative_time_s": 2.403691792728334,
+            "forecast_radius_m": 2.357481191283971,
+            "forecast_horizon_s": 8.0,
+            "minimum_clearance_floor_m": 0.0
+          },
+          "profile": null
+        },
+        {
+          "index": 2,
+          "target": -3.9,
+          "disposition": "OppositeSideDuringPass",
+          "conflict": null,
+          "profile": null
+        }
+      ],
+      "route_progress": 49.53654326601011,
+      "prefix": {
+        "selected": false,
+        "acquisition_count": 0,
+        "first_acquisition_s": null,
+        "last_acquisition_s": null,
+        "authorized_until_s": null,
+        "prefix_duration_s": 0.0,
+        "control_interval_s": 0.0,
+        "lateral_target_m": null,
+        "blocking_prediction_ids": [],
+        "shared_pose_cancellation": true
+      },
+      "checked_approach": {
+        "supporting_acquisitions": 0,
+        "first_acquisition_s": null,
+        "last_acquisition_s": null,
+        "proposal_end_progress_m": null,
+        "proposal_endpoint": null,
+        "proposal_lateral_target_m": null,
+        "blocking_prediction_ids": [],
+        "adopted": false
+      },
+      "trajectory_end": null,
+      "trajectory_hold_start": null,
+      "forecasts": [
+        {
+          "id": 1,
+          "radius": 1.120307246319746,
+          "first": {
+            "x": 57.90846013712003,
+            "y": 2.6919296092453453
+          },
+          "last": {
+            "x": 57.90447051295642,
+            "y": 2.7113774262914028
+          },
+          "horizon": 8.0,
+          "first_padding": 0.21512499999999968,
+          "last_padding": 5.855124999999999
+        }
+      ],
+      "tick": 223
+    },
+    {
+      "time": 12.15,
+      "emergency": true,
+      "position": {
+        "x": 49.499552167516285,
+        "y": 6.896034782697911
+      },
+      "speed": 0.0,
+      "acceleration": -6.0,
+      "health": [],
+      "mode": "Emergency",
+      "target": 0.0,
+      "selected": null,
+      "failure": "NoSelectableCandidate",
+      "candidates": [
+        {
+          "index": 0,
+          "target": 0.0,
+          "disposition": "NoCheckedStop",
+          "conflict": {
+            "prediction_id": 1,
+            "relative_time_s": 2.2872960549200587,
+            "forecast_radius_m": 2.2979645323976907,
+            "forecast_horizon_s": 8.0,
+            "minimum_clearance_floor_m": 0.0
+          },
+          "profile": null
+        },
+        {
+          "index": 1,
+          "target": 3.9,
+          "disposition": "NoCheckedStop",
+          "conflict": {
+            "prediction_id": 1,
+            "relative_time_s": 2.437269550643975,
+            "forecast_radius_m": 2.378945743622865,
+            "forecast_horizon_s": 8.0,
+            "minimum_clearance_floor_m": 0.0
+          },
+          "profile": null
+        },
+        {
+          "index": 2,
+          "target": -3.9,
+          "disposition": "OppositeSideDuringPass",
+          "conflict": null,
+          "profile": null
+        }
+      ],
+      "route_progress": 49.542973145411295,
+      "prefix": {
+        "selected": false,
+        "acquisition_count": 0,
+        "first_acquisition_s": null,
+        "last_acquisition_s": null,
+        "authorized_until_s": null,
+        "prefix_duration_s": 0.0,
+        "control_interval_s": 0.0,
+        "lateral_target_m": null,
+        "blocking_prediction_ids": [],
+        "shared_pose_cancellation": true
+      },
+      "checked_approach": {
+        "supporting_acquisitions": 0,
+        "first_acquisition_s": null,
+        "last_acquisition_s": null,
+        "proposal_end_progress_m": null,
+        "proposal_endpoint": null,
+        "proposal_lateral_target_m": null,
+        "blocking_prediction_ids": [],
+        "adopted": false
+      },
+      "trajectory_end": null,
+      "trajectory_hold_start": null,
+      "forecasts": [
+        {
+          "id": 1,
+          "radius": 1.1231361430154596,
+          "first": {
+            "x": 57.85055006267006,
+            "y": 2.6583857457810125
+          },
+          "last": {
+            "x": 57.87055980002909,
+            "y": 2.6228282953230324
+          },
+          "horizon": 8.0,
+          "first_padding": 0.21512499999999968,
+          "last_padding": 5.855124999999999
+        }
+      ],
+      "tick": 243
+    },
+    {
+      "time": 12.3,
+      "emergency": true,
+      "position": {
+        "x": 49.54617060319013,
+        "y": 6.854588159390207
+      },
+      "speed": 0.0011315453795045394,
+      "acceleration": -6.0,
+      "health": [],
+      "mode": "Emergency",
+      "target": 0.0,
+      "selected": null,
+      "failure": "NoSelectableCandidate",
+      "candidates": [
+        {
+          "index": 0,
+          "target": 0.0,
+          "disposition": "NoCheckedStop",
+          "conflict": {
+            "prediction_id": 1,
+            "relative_time_s": 2.235013192746268,
+            "forecast_radius_m": 2.242128642935798,
+            "forecast_horizon_s": 8.0,
+            "minimum_clearance_floor_m": 0.0
+          },
+          "profile": null
+        },
+        {
+          "index": 1,
+          "target": 3.9,
+          "disposition": "NoCheckedStop",
+          "conflict": {
+            "prediction_id": 1,
+            "relative_time_s": 2.41008248184704,
+            "forecast_radius_m": 2.3351170157961483,
+            "forecast_horizon_s": 8.0,
+            "minimum_clearance_floor_m": 0.0
+          },
+          "profile": null
+        },
+        {
+          "index": 2,
+          "target": -3.9,
+          "disposition": "OppositeSideDuringPass",
+          "conflict": null,
+          "profile": null
+        }
+      ],
+      "route_progress": 49.590450528151806,
+      "prefix": {
+        "selected": false,
+        "acquisition_count": 0,
+        "first_acquisition_s": null,
+        "last_acquisition_s": null,
+        "authorized_until_s": null,
+        "prefix_duration_s": 0.0,
+        "control_interval_s": 0.0,
+        "lateral_target_m": null,
+        "blocking_prediction_ids": [],
+        "shared_pose_cancellation": true
+      },
+      "checked_approach": {
+        "supporting_acquisitions": 0,
+        "first_acquisition_s": null,
+        "last_acquisition_s": null,
+        "proposal_end_progress_m": null,
+        "proposal_endpoint": null,
+        "proposal_lateral_target_m": null,
+        "blocking_prediction_ids": [],
+        "adopted": false
+      },
+      "trajectory_end": null,
+      "trajectory_hold_start": null,
+      "forecasts": [
+        {
+          "id": 1,
+          "radius": 1.121571650780276,
+          "first": {
+            "x": 57.903943778192094,
+            "y": 2.6349545946246815
+          },
+          "last": {
+            "x": 57.90451143289053,
+            "y": 2.62633493808818
+          },
+          "horizon": 8.0,
+          "first_padding": 0.2,
+          "last_padding": 5.800000000000001
+        }
+      ],
+      "tick": 246
+    }
+  ]
+}
