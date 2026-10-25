@@ -4,6 +4,7 @@ import argparse
 from collections import Counter
 import hashlib
 import json
+import math
 from pathlib import Path
 import zipfile
 
@@ -24,7 +25,7 @@ def digest_member(archive, name):
     with archive.open(name) as stream:
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
-def compact(tick):
+def compact(tick, vehicle_radius):
     out = tick['expected']
     plan = out.get('planning_diagnostics') or {}
     trajectory = out['trajectory']
@@ -41,6 +42,7 @@ def compact(tick):
         prefix=out.get('motion_prefix'), checked_approach=out.get('checked_approach'),
         trajectory_end=points[-1] if points else None,
         trajectory_hold_start=points[-2] if len(points)>1 else None,
+        stationary_guard=stationary_guard(out['estimate'],out.get('planning_predictions',out['predictions']),vehicle_radius),
         forecasts=[dict(id=p['id'], radius=p['radius'], first=p['positions'][0],
             last=p['positions'][-1], horizon=p['dt']*(len(p['positions'])-1),
             first_padding=p.get('additional_radius_m', [0.])[0],
@@ -58,6 +60,66 @@ def segments(rows, field):
                 start_s=rows[start]['time'], end_s=rows[i-1]['time']))
             start = None
     return result
+
+def stationary_guard(estimate, predictions, vehicle_radius):
+    """Exact quadratic interval checks for the declared eight-second zero-speed hold.
+
+    A negative witness uses the existing directional reserve. The separate
+    no-direction certificate is an explanatory ablation, never an admissibility
+    rule or a recommendation to remove that reserve.
+    """
+    if abs(estimate['speed']) > 1e-12 or not predictions:
+        return None
+    origin=estimate['pose']['position']
+    heading=(math.cos(estimate['pose']['yaw']),math.sin(estimate['pose']['yaw']))
+    minimum_without=math.inf
+    worst=None
+    for obj in predictions:
+        points=obj['positions']; dt=obj['dt']
+        extra=obj.get('additional_radius_m') or [0.]*len(points)
+        def at(t):
+            step=t/dt; i=min(int(step),len(points)-1); j=min(i+1,len(points)-1)
+            u=max(0.,min(1.,step-i))
+            return ((points[i]['x']+(points[j]['x']-points[i]['x'])*u,
+                     points[i]['y']+(points[j]['y']-points[i]['y'])*u),
+                    obj['radius']+extra[i]+(extra[j]-extra[i])*u)
+        cuts=sorted({0.,5.,8.,*[i*dt for i in range(len(points)) if 0.<i*dt<8.]})
+        for lo,hi in zip(cuts,cuts[1:]):
+            a,ra=at(lo); b,rb=at(hi)
+            mid=(lo+hi)/2.; i=min(int(mid/dt),len(points)-1); j=min(i+1,len(points)-1)
+            velocity=((points[j]['x']-points[i]['x'])/dt,(points[j]['y']-points[i]['y'])/dt)
+            speed=math.hypot(*velocity)
+            transverse=abs(velocity[0]*heading[1]-velocity[1]*heading[0])
+            reserve=max(.4*min(transverse,1.),.7*transverse/speed) if speed else 0.
+            q=(origin['x']-a[0],origin['y']-a[1]); delta=(a[0]-b[0],a[1]-b[1])
+            start=vehicle_radius+ra+.3+.06*min(lo,5.)
+            end=vehicle_radius+rb+.3+.06*min(hi,5.); change=end-start
+            def minimum(extra_reserve):
+                r=start+extra_reserve
+                aa=delta[0]**2+delta[1]**2-change**2
+                bb=2.*(q[0]*delta[0]+q[1]*delta[1]-r*change)
+                cc=q[0]**2+q[1]**2-r*r
+                choices=[0.,1.]
+                if aa>0.:
+                    choices.append(max(0.,min(1.,-bb/(2.*aa))))
+                return min(((aa*u+bb)*u+cc,u) for u in choices)
+            minimum_without=min(minimum_without,minimum(0.)[0])
+            squared,u=minimum(reserve)
+            if u==1.:
+                u=1.-1e-7
+            distance=math.hypot(q[0]+delta[0]*u,q[1]+delta[1]*u)
+            radius=start+change*u
+            witness=dict(prediction_id=obj['id'],time_s=lo+(hi-lo)*u,
+                actual_gap_m=distance-radius-reserve,
+                gap_without_directional_reserve_m=distance-radius,
+                directional_reserve_m=reserve,observed_speed_m_s=speed,
+                squared_separation_lower_bound=squared)
+            if worst is None or witness['actual_gap_m']<worst['actual_gap_m']:
+                worst=witness
+    return dict(zero_speed_hold=True,existing_reserve_contact_witness=worst['actual_gap_m']<-1e-8,
+        without_directional_reserve_certified=minimum_without>1e-9,
+        without_directional_minimum_squared_separation=minimum_without,witness=worst)
+
 
 def inspect(archive_path, output):
     output = Path(output).absolute()
@@ -87,7 +149,7 @@ def inspect(archive_path, output):
                     if 'tick' not in item:
                         continue
                     tick = item['tick']
-                    c = compact(tick)
+                    c = compact(tick,header['config']['vehicle']['radius'])
                     if rows and c['time'] <= rows[-1]['time']:
                         raise ValueError('non-increasing control clock')
                     c['tick'] = len(rows)
@@ -134,6 +196,21 @@ def inspect(archive_path, output):
             low_speed_no_candidate_examples=[r for r in enabled
                 if r['speed']<.05 and r['failure']=='NoSelectableCandidate'][:5])
         (output/'focus.json').write_text(json.dumps(focus,indent=2,allow_nan=False)+'\n')
+        witnesses=[r for r in enabled if r['failure']=='NoSelectableCandidate' and r['stationary_guard']]
+        directional=[r for r in witnesses if r['stationary_guard']['existing_reserve_contact_witness']
+            and r['stationary_guard']['without_directional_reserve_certified']]
+        witness_summary=dict(schema_version=1,actor_truth_used=False,
+            original_case_sha256=CASE_SHA,original_source=SOURCE,
+            failed_zero_speed_holds=len(witnesses),
+            directional_only_rejections=len(directional),
+            unclassified_failed_zero_speed_holds=len(witnesses)-len(directional),
+            examples=[dict(tick=r['tick'],time_s=r['time'],position=r['position'],
+                proof=r['stationary_guard']) for r in directional[:5]],
+            scope='Independent stationary-envelope witnesses on the viewed rejected canary; the ablation does not authorize motion or remove a reserve.',
+            first_rolling_emergency_cause_fully_localized=False)
+        (output/'guard-witnesses.json').write_text(json.dumps(witness_summary,indent=2,allow_nan=False)+'\n')
+        print(json.dumps(witness_summary,allow_nan=False))
+
         for name, rows in all_rows.items():
             (output/(name+'-timeline.json')).write_text(json.dumps(rows, separators=(',',':'), allow_nan=False)+'\n')
         print(json.dumps(dict(first_extra_emergency_time_s=report['first_extra_emergency_time_s'],
