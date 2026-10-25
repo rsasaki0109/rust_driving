@@ -1524,7 +1524,10 @@ impl DrivingPipeline {
             .into_iter()
             .map(|prediction| tracking_frame::prediction_to_world(tracking_to_world, prediction))
             .collect();
-        let mut planning_predictions = self.config.contingency_approaches.then(|| predictions.clone());
+        let mut planning_predictions = self
+            .config
+            .contingency_approaches
+            .then(|| predictions.clone());
         if let Some(sigma) = self.config.forecast_pose_sigma {
             let covariance = self.ekf.pose_covariance();
             let mut failed = false;
@@ -1759,11 +1762,14 @@ impl DrivingPipeline {
             },
         );
         let shared_pose_cancellation = self.config.contingency_approaches
-            && self.config.forecast_pose_sigma.is_some() && stop_route.is_none() && health.is_empty();
+            && self.config.forecast_pose_sigma.is_some()
+            && stop_route.is_none()
+            && health.is_empty();
         if self.config.contingency_approaches && !shared_pose_cancellation {
             planning_predictions = Some(predictions.clone());
         }
-        self.planner.observe_contingency_step(dt.max(self.config.nominal_dt));
+        self.planner
+            .observe_contingency_step(dt.max(self.config.nominal_dt));
         let mut trajectory = self.planner.plan(
             motion_estimate,
             stop_route.as_ref().unwrap_or(&self.config.route),
