@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "role": "viewed rejected-trial diagnosis",
+  "qualified": false,
+  "default_enabled": false,
+  "adopted": false,
+  "original_canary": {
+    "source_commit": "796cd0407988606b943651d554dc2f4031c2e195",
+    "case_sha256": "9215d6f7fe756c4227adefb7aef560a69c3d043244132a90161004f90ce4eab2",
+    "artifact_id": 12582076166,
+    "archive_sha256": "0e9c3575924645859bad6b28e5808a4ef5b2179f9b1d88535fb859fe6355ef9d"
+  },
+  "diagnostic": {
+    "tested_source_commit": "1a229b6c62f2196423e3bb53271c302a270a28d7",
+    "evidence_commit": "47b796d4e4c56afd06fc07e4921ead852180c949",
+    "run": "https://github.com/rsasaki0109/rust_driving/actions/runs/40180423941",
+    "code_paths": [
+      "scripts/inspect_contingency_failure.py",
+      "scripts/test_contingency_trace_witnesses.py"
+    ],
+    "original_recordings_rerun": false,
+    "actor_truth_used": false,
+    "analytic_controls": 5,
+    "required_check": {
+      "command": "bash scripts/check.sh",
+      "conclusion": "success",
+      "job_id": 121130104467
+    },
+    "analytic_check": {
+      "conclusion": "success",
+      "job_id": 121130104358
+    }
+  },
+  "observations": {
+    "first_additional_emergency_s": 8.8,
+    "preceding_complete_side_paths_s": [
+      8.7,
+      8.75
+    ],
+    "failed_zero_speed_holds": 383,
+    "directional_only_rejections": 377,
+    "unclassified_zero_speed_holds": 6,
+    "first_rolling_emergency_cause_fully_localized": false
+  },
+  "evidence": {
+    "guard_witnesses": "guard-witnesses.json",
+    "full_focus_at_evidence_commit": "assets/contingency-trace-v1/focus.json",
+    "complete_diagnosis_at_evidence_commit": "assets/contingency-trace-v1/diagnosis.json"
+  },
+  "limits": [
+    "Ablating the directional reserve explains stationary rejections; it is not an admissibility rule and does not authorize its removal.",
+    "Slow transverse traffic still requires the existing reserve; analytical static/parallel/crossing, rigid-rotation and radius-peak controls are retained.",
+    "This one viewed mission is not a fresh holdout, a calibrated confidence bound or a physical safety result.",
+    "The rejected runtime is not merged into main, and the required original mission-arrival gate remains unmet."
+  ],
+  "comparative_maturity": {
+    "estimate_percent": 29,
+    "subjective": true,
+    "changed_by_this_diagnosis": false
+  }
+}
