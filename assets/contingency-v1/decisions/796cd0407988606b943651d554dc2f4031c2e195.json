@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "decision": "reject_this_canary",
+  "adopted": false,
+  "qualified": false,
+  "production_source_changed": false,
+  "tested_source": "796cd0407988606b943651d554dc2f4031c2e195",
+  "baseline_source": "3633605f9bdb2e7a53e11c2cfb7d24b54f205889",
+  "canary": {
+    "path": "assets/contingency-v1/canaries/796cd0407988606b943651d554dc2f4031c2e195.json",
+    "sha256": "9215d6f7fe756c4227adefb7aef560a69c3d043244132a90161004f90ce4eab2",
+    "run": "https://github.com/rsasaki0109/rust_driving/actions/runs/40148659302"
+  },
+  "diagnostic_probe": {
+    "source": "c521ae4e99e219730538c9a2841368d18cb3c069",
+    "path": "assets/mission-lattice-probe/baseline.json",
+    "run": "https://github.com/rsasaki0109/rust_driving/actions/runs/40145156016",
+    "history_preserved_as_parent": true
+  },
+  "acceptance": {
+    "original_goal_improved": false,
+    "emergency_control_steps_regressed": true,
+    "default_output_streams_identical": true,
+    "kinematic_and_conditional_collision_contracts_passed": true,
+    "full_48_case_qualification_run": false
+  },
+  "comparison": {
+    "baseline": {
+      "scenario": "Curved-road obstacle avoidance",
+      "seed": 7,
+      "simulated_seconds": 65,
+      "steps": 1301,
+      "reached_goal": false,
+      "collisions": 0,
+      "road_violations": 0,
+      "min_clearance": 10.958002170367918,
+      "localization_rmse": 0.05211377869643495,
+      "localization_max_error": 0.13833867833363642,
+      "final_speed": 0,
+      "progress": 45.51699352847071,
+      "emergency_steps": 7,
+      "avoidance_steps": 0,
+      "max_tracks": 1,
+      "passed": false,
+      "failures": [
+        "goal not reached within duration"
+      ]
+    },
+    "enabled": {
+      "scenario": "Curved-road obstacle avoidance",
+      "seed": 7,
+      "simulated_seconds": 65,
+      "steps": 1301,
+      "reached_goal": false,
+      "collisions": 0,
+      "road_violations": 0,
+      "min_clearance": 6.659479623499365,
+      "localization_rmse": 0.05079380156801004,
+      "localization_max_error": 0.13833867833363642,
+      "final_speed": 0,
+      "progress": 50.07823435833541,
+      "emergency_steps": 790,
+      "avoidance_steps": 2,
+      "max_tracks": 1,
+      "passed": false,
+      "failures": [
+        "goal not reached within duration"
+      ]
+    },
+    "emergency_steps_unit": "control ticks, not distinct braking incidents"
+  },
+  "limits": [
+    "This one viewed seed-7 mission is diagnostic evidence, not held-out validation or a confidence estimate.",
+    "Both runs failed to reach the goal by the unchanged 65-second deadline.",
+    "Passing conditional collision and serialization contracts does not qualify this planner.",
+    "The first lost feasible fallback and the long emergency interval have not yet been independently localized from the complete trace.",
+    "Do not reduce uncertainty, safety thresholds or road margins, or lengthen the mission deadline to turn this trial green."
+  ],
+  "next_investigation": "Locate the first loss of a complete brake-and-hold certificate in the retained raw trace before designing another runtime change.",
+  "source_note": "This branch preserves the rejected implementation and diagnostic history; it is not proposed for merging into main.",
+  "comparative_maturity": {
+    "estimate_percent": 29,
+    "subjective": true,
+    "changed_by_this_trial": false
+  }
+}
