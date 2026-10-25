@@ -74,6 +74,34 @@ def digest(path):
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
+# The immutable first packet names the original wrapper. The active replay
+# wrapper was separately revised in ff1ffeab to account for host roundoff.
+# Keep both exact byte identities; neither may replace the other.
+ORIGINAL_WRAPPER_SHA = 'e0221d6d5dcfbd8905e73586076c4e1d1b1588e0da318af7df1103ff67063e65'
+REPLAY_WRAPPER_SHA = 'a40ef6e3b2d41ccd8a4ae14830f686c525f7c7f7b7390ddcbe902f3bc29872bc'
+REPLAY_COMPARATOR_SHA = '83b4e6b9d8770c187e2107079dc1c1d70e48504c2befe60d9b92ebc9ab5e4430'
+ORIGINAL_WRAPPER_PATH = 'assets/multiscale-temporal-v1/source/check-multiscale-temporal-suite.py'
+
+
+def multiscale_wrapper_bindings(packet, root=None):
+    root = ROOT if root is None else Path(root)
+    require(packet['wrapper_sha256'] == ORIGINAL_WRAPPER_SHA,
+            'immutable original multiscale wrapper binding changed')
+    expected = {
+        'original_wrapper': (ORIGINAL_WRAPPER_PATH, ORIGINAL_WRAPPER_SHA),
+        'replay_wrapper': ('scripts/check-multiscale-temporal-suite.py', REPLAY_WRAPPER_SHA),
+        'replay_comparator': ('scripts/recorded_numeric.py', REPLAY_COMPARATOR_SHA),
+    }
+    actual = {}
+    for name, (relative, pin) in expected.items():
+        path = root/relative
+        require(path.is_file() and not path.is_symlink(),
+                'unsafe/missing multiscale wrapper source: '+relative)
+        require(digest(path) == pin, 'multiscale wrapper source changed: '+relative)
+        actual[name] = dict(path=relative, sha256=pin)
+    return actual
+
+
 def new_directory(path):
     path = Path(path).absolute()
     require(not path.exists() and not path.is_symlink(),
@@ -242,8 +270,7 @@ def run_suite(binary, output):
                 'immutable historical multiscale evidence packet changed')
         prior_packet = read_json(prior_packet_path, 512*1024)
         exact(prior_packet['source_bindings'], prior_source_hashes, 'historical original sources')
-        require(digest(ROOT/'scripts/check-multiscale-temporal-suite.py') == prior_packet['wrapper_sha256'],
-                'original multiscale replay wrapper changed')
+        wrapper_bindings = multiscale_wrapper_bindings(prior_packet)
         prior_assets_hashes = {'evidence.json':digest(prior_packet_path)}
         source_hashes = {key:digest(ROOT/path) for key,path in SOURCES.items()}
         auditor = ROOT/'scripts/check-registered-grid-temporal.py'
@@ -312,6 +339,7 @@ def run_suite(binary, output):
         status.update(first_asset_sha256=asset_hashes, original_source_sha256=source_hashes,
                       prior_source_sha256=prior_source_hashes,
                       prior_asset_sha256=prior_assets_hashes,
+                      multiscale_wrapper_bindings=wrapper_bindings,
                       binary_sha256=digest(binary), auditor_sha256=auditor_sha,
                       wrapper_sha256=digest(Path(__file__)))
         receipt_path = folder/'executable-receipt.json'
@@ -377,7 +405,7 @@ def run_suite(binary, output):
                 and prior_source_hashes == {key:digest(ROOT/path) for key,path in PRIOR_SOURCES.items()}
                 and all(digest(PRIOR_ASSETS/name) == expected
                         for name,expected in prior_assets_hashes.items())
-                and digest(ROOT/'scripts/check-multiscale-temporal-suite.py') == prior_packet['wrapper_sha256']
+                and multiscale_wrapper_bindings(prior_packet) == wrapper_bindings
                 and all(digest(ROOT/'data'/dataset/'manifest.json') ==
                         design['datasets'][dataset]['manifest_sha256'] for dataset in DATASETS),
                 'first evidence, source or auditor changed during reproduction')
