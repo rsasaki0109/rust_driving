@@ -149,6 +149,8 @@ pub struct PipelineConfig {
     /// Check farther existing stopping endpoints without withdrawing a retained stop.
     #[serde(default, skip_serializing_if = "is_false")]
     pub search_later_obstruction_stops: bool,
+    #[serde(default, skip_serializing_if = "is_false")]
+    pub contingency_approaches: bool,
     /// Optional extra road-edge reserve for width-fitted lateral candidates.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub lateral_candidate_margin_m: Option<f64>,
@@ -239,6 +241,7 @@ impl PipelineConfig {
             search_obstruction_stops: false,
             replan_checked_approaches: false,
             search_later_obstruction_stops: false,
+            contingency_approaches: false,
             lateral_candidate_margin_m: None,
             refine_lateral_candidates: false,
             record_planning_diagnostics: false,
@@ -260,6 +263,9 @@ impl PipelineConfig {
         }
     }
     pub fn validate(&self) -> Result<(), String> {
+        if self.contingency_approaches && !self.replan_checked_approaches {
+            return Err("contingency approaches require supported checked-approach context".into());
+        }
         if self.search_later_obstruction_stops && !self.replan_checked_approaches {
             return Err("later stop search requires acquired checked approach replanning".into());
         }
@@ -713,6 +719,11 @@ pub struct PipelineOutput {
     pub checked_approach: Option<CheckedApproachDiagnostics>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub planning_progress: Option<PlanningProgress>,
+    /// World-coordinate conditional occupancy sharing the current rigid pose error with ego.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub planning_predictions: Option<Vec<Prediction>>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub motion_prefix: Option<rustdriving_core::MotionPrefixDiagnostics>,
     /// Planner proposal only; final faults and mapped duties can override it.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub planning_diagnostics: Option<rustdriving_core::PlanningDiagnostics>,
@@ -788,6 +799,7 @@ impl DrivingPipeline {
         planner.search_obstruction_stops = config.search_obstruction_stops;
         planner.replan_checked_approaches = config.replan_checked_approaches;
         planner.search_later_obstruction_stops = config.search_later_obstruction_stops;
+        planner.contingency_approaches = config.contingency_approaches;
         planner.lateral_candidate_margin_m = config.lateral_candidate_margin_m;
         planner.refine_lateral_candidates = config.refine_lateral_candidates;
         planner.set_diagnostics_enabled(
@@ -1512,6 +1524,7 @@ impl DrivingPipeline {
             .into_iter()
             .map(|prediction| tracking_frame::prediction_to_world(tracking_to_world, prediction))
             .collect();
+        let mut planning_predictions = self.config.contingency_approaches.then(|| predictions.clone());
         if let Some(sigma) = self.config.forecast_pose_sigma {
             let covariance = self.ekf.pose_covariance();
             let mut failed = false;
@@ -1745,10 +1758,16 @@ impl DrivingPipeline {
                 None
             },
         );
+        let shared_pose_cancellation = self.config.contingency_approaches
+            && self.config.forecast_pose_sigma.is_some() && stop_route.is_none() && health.is_empty();
+        if self.config.contingency_approaches && !shared_pose_cancellation {
+            planning_predictions = Some(predictions.clone());
+        }
+        self.planner.observe_contingency_step(dt.max(self.config.nominal_dt));
         let mut trajectory = self.planner.plan(
             motion_estimate,
             stop_route.as_ref().unwrap_or(&self.config.route),
-            &predictions,
+            planning_predictions.as_deref().unwrap_or(&predictions),
         );
         self.planner.cruise_speed = configured_cruise;
         if self.navigator.as_ref().is_some_and(|nav| {
@@ -1923,6 +1942,12 @@ impl DrivingPipeline {
                 .replan_checked_approaches
                 .then(|| self.planner.checked_approach_diagnostics().clone()),
             planning_progress,
+            planning_predictions,
+            motion_prefix: self.config.contingency_approaches.then(|| {
+                let mut evidence = self.planner.motion_prefix_diagnostics().clone();
+                evidence.shared_pose_cancellation = shared_pose_cancellation;
+                evidence
+            }),
             planning_diagnostics: self
                 .config
                 .record_planning_diagnostics

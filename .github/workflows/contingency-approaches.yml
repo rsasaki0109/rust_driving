@@ -1,0 +1,117 @@
+name: Checked contingency approaches
+on:
+  push:
+    branches: [feat/checked-contingency-approaches]
+    paths: ['crates/**','scripts/*contingency*','integrations/planning/contingency-v1.json','.github/workflows/contingency-approaches.yml']
+  pull_request:
+    paths: ['crates/planning/src/contingency.rs','scripts/*contingency*','.github/workflows/contingency-approaches.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: contingency-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  CARGO_INCREMENTAL: '0'
+  RUSTDRIVING_BASE_SOURCE: '3633605f9bdb2e7a53e11c2cfb7d24b54f205889'
+jobs:
+  canary:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+          components: rustfmt,clippy
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Format only authored Rust and bind the actual tested commit
+        env:
+          RUSTDRIVING_EXPECTED_HEAD: ${{ github.sha }}
+        run: |
+          cargo fmt --all
+          python - <<'PY'
+          import subprocess
+          changed=set(subprocess.check_output(['git','diff','--name-only'],text=True).splitlines())
+          assert changed <= set(["crates/core/src/lib.rs","crates/planning/src/lib.rs","crates/planning/src/contingency.rs","crates/pipeline/src/lib.rs","crates/sim/src/lib.rs"]), changed
+          PY
+          if ! git diff --quiet; then
+            test "$GITHUB_REF_NAME" = 'feat/checked-contingency-approaches'
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add crates/core/src/lib.rs crates/planning/src/lib.rs crates/planning/src/contingency.rs crates/pipeline/src/lib.rs crates/sim/src/lib.rs
+            git commit -m 'Format checked contingency implementation'
+            git push --force-with-lease="refs/heads/feat/checked-contingency-approaches:$RUSTDRIVING_EXPECTED_HEAD" origin HEAD:refs/heads/feat/checked-contingency-approaches
+          fi
+          echo "RUSTDRIVING_TESTED_SOURCE=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+      - name: Check the typed implementation and acquisition/kinematic controls
+        run: |
+          cargo fmt --all --check
+          cargo clippy --workspace --all-targets --locked -- -D warnings
+          cargo test --locked -p rustdriving-planning contingency
+          cargo build --release --locked --bin rustdriving
+      - name: Build the unchanged baseline separately
+        run: |
+          git fetch --no-tags --depth=1 origin "$RUSTDRIVING_BASE_SOURCE"
+          python - <<'PY'
+          import io, os, subprocess, tarfile
+          from pathlib import Path
+          output=Path(os.environ['RUNNER_TEMP'])/'contingency-baseline'
+          output.mkdir()
+          paths=['Cargo.toml','Cargo.lock','rust-toolchain.toml','crates']
+          exists=subprocess.run(['git','cat-file','-e',os.environ['RUSTDRIVING_BASE_SOURCE']+':.cargo'],capture_output=True)
+          if exists.returncode==0: paths.append('.cargo')
+          raw=subprocess.check_output(['git','archive',os.environ['RUSTDRIVING_BASE_SOURCE'],*paths])
+          with tarfile.open(fileobj=io.BytesIO(raw)) as archive:
+              archive.extractall(output,filter='data')
+          PY
+          CARGO_TARGET_DIR="$RUNNER_TEMP/contingency-baseline-target" cargo build --release --locked --manifest-path "$RUNNER_TEMP/contingency-baseline/Cargo.toml" --bin rustdriving
+          echo "RUSTDRIVING_BASELINE_BINARY=$RUNNER_TEMP/contingency-baseline-target/release/rustdriving" >> "$GITHUB_ENV"
+      - name: Run immutable-input byte controls and the first viewed mission canary
+        run: python scripts/probe_contingency.py
+      - name: Preserve every completed canary, including failed criteria
+        if: always()
+        env:
+          RUSTDRIVING_EXPECTED_HEAD: ${{ github.sha }}
+        run: |
+          if test -f assets/contingency-v1/latest-canary.json; then
+            test "$GITHUB_REF_NAME" = 'feat/checked-contingency-approaches'
+            python -c "import subprocess; p=subprocess.check_output(['git','diff','--name-only'],text=True).splitlines(); assert all(n.startswith('assets/contingency-v1/') for n in p),p"
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add assets/contingency-v1
+            git commit -m 'Record original/disabled/enabled contingency canary and all failed criteria'
+            git push --force-with-lease="refs/heads/feat/checked-contingency-approaches:$RUSTDRIVING_TESTED_SOURCE" origin HEAD:refs/heads/feat/checked-contingency-approaches
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: contingency-original-canary
+          path: |
+            artifacts/contingency-canary
+            assets/contingency-v1
+          if-no-files-found: warn
+  contracts:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+          components: rustfmt,clippy
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: |
+          cargo fmt --all --check
+          cargo clippy --workspace --all-targets --locked -- -D warnings
+          cargo test --locked -p rustdriving-planning contingency

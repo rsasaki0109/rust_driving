@@ -255,6 +255,24 @@ pub struct Prediction {
     pub additional_radius_m: Vec<f64>,
 }
 
+/// Conditional planning evidence. A current common rigid registration error
+/// rotates/translates both ego trajectories and acquired forecasts together;
+/// this is separate from absolute world occupancy and is not a probability.
+#[derive(Clone, Debug, Default, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct MotionPrefixDiagnostics {
+    pub selected: bool,
+    pub acquisition_count: u8,
+    pub first_acquisition_s: Option<f64>,
+    pub last_acquisition_s: Option<f64>,
+    pub authorized_until_s: Option<f64>,
+    pub prefix_duration_s: f64,
+    pub control_interval_s: f64,
+    pub lateral_target_m: Option<f64>,
+    pub blocking_prediction_ids: Vec<u64>,
+    pub shared_pose_cancellation: bool,
+}
+
 /// Surveyed speed interval on a fixed route, in arc-length meters and m/s.
 #[derive(Clone, Copy, Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]

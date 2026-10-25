@@ -1,5 +1,6 @@
 //! Receding-horizon lateral lattice with time-indexed collision envelopes.
 mod checked_approach;
+mod contingency;
 mod collision;
 mod corners;
 mod diagnostics;
@@ -8,7 +9,7 @@ mod speed;
 mod speed_zones;
 mod stopping;
 use rustdriving_core::{
-    CandidateDisposition, DrivingMode, EgoState, Planner, PlanningDiagnostics, PlanningFailure,
+    CandidateDisposition, DrivingMode, EgoState, MotionPrefixDiagnostics, Planner, PlanningDiagnostics, PlanningFailure,
     PlanningForecastConflict, Prediction, RefinementConfirmationDiagnostic, Route, Trajectory,
     VehicleConfig,
 };
@@ -41,6 +42,8 @@ pub struct LatticePlanner {
     pub replan_checked_approaches: bool,
     /// Search up to eighty existing farther geometry knots, retaining stop commitments.
     pub search_later_obstruction_stops: bool,
+    /// An acquisition-owned nominal prefix followed by a checked hard-braking backup.
+    pub contingency_approaches: bool,
     /// Optional additional road-edge reserve for width-fitted side candidates.
     /// None preserves the original fixed +/-3.5 m offsets.
     pub lateral_candidate_margin_m: Option<f64>,
@@ -67,6 +70,9 @@ pub struct LatticePlanner {
     approach_clock: Option<(f64, Option<f64>)>,
     approach_confirmation: checked_approach::Confirmation,
     prefer_stop_progress: bool,
+    prefix_support: Option<Box<[contingency::Support; 9]>>,
+    prefix_diagnostics: MotionPrefixDiagnostics,
+    prefix_control_interval_s: f64,
 }
 #[derive(Clone)]
 struct RefinementSupport {
@@ -77,11 +83,12 @@ struct RefinementSupport {
 }
 struct Selection {
     index: u8,
-    cost: (bool, bool, bool, f64, f64),
+    cost: (bool, bool, bool, bool, bool, f64, f64),
     trajectory: Trajectory,
     blocked: bool,
     searched: bool,
     stop_s: Option<f64>,
+    prefix: Option<MotionPrefixDiagnostics>,
 }
 impl Default for LatticePlanner {
     fn default() -> Self {
@@ -96,6 +103,7 @@ impl Default for LatticePlanner {
             search_obstruction_stops: false,
             replan_checked_approaches: false,
             search_later_obstruction_stops: false,
+            contingency_approaches: false,
             lateral_candidate_margin_m: None,
             refine_lateral_candidates: false,
             vehicle: VehicleConfig::default(),
@@ -116,6 +124,9 @@ impl Default for LatticePlanner {
             approach_clock: None,
             approach_confirmation: checked_approach::Confirmation::default(),
             prefer_stop_progress: false,
+            prefix_support: None,
+            prefix_diagnostics: MotionPrefixDiagnostics::default(),
+            prefix_control_interval_s: 0.05,
         }
     }
 }
@@ -143,6 +154,10 @@ impl LatticePlanner {
     /// Clear route-dependent maneuver history without withdrawing an unfinished
     /// collision brake. The new route must still offer a completely clear path.
     pub fn reset_route_state(&mut self) {
+        if let Some(states) = &mut self.prefix_support {
+            for state in states.iter_mut() { state.withdraw(self.approach_clock.map(|c| c.0)); }
+        }
+        self.prefix_diagnostics = MotionPrefixDiagnostics::default();
         self.previous_lateral = 0.0;
         self.maneuver_start = None;
         self.yield_stop_s = None;
@@ -201,8 +216,14 @@ impl LatticePlanner {
         self.search_obstruction_stops && self.obstruction_stop_requested
     }
 }
+impl LatticePlanner {
+    pub fn motion_prefix_diagnostics(&self) -> &MotionPrefixDiagnostics { &self.prefix_diagnostics }
+    /// Upper bound on command hold time; a prefix may not end before this interval.
+    pub fn observe_contingency_step(&mut self, interval_s: f64) { self.prefix_control_interval_s = interval_s; }
+}
 impl Planner for LatticePlanner {
     fn plan(&mut self, ego: EgoState, route: &Route, objects: &[Prediction]) -> Trajectory {
+        if !self.contingency_approaches { self.prefix_support = None; }
         if !self.replan_checked_approaches {
             return self.plan_inner(ego, route, objects);
         }
@@ -273,12 +294,20 @@ impl Planner for LatticePlanner {
         if !capture {
             self.diagnostics = None;
         }
+        if result.mode == DrivingMode::Emergency {
+            if let Some(states) = &mut self.prefix_support {
+                for state in states.iter_mut() { state.withdraw(self.approach_clock.map(|c| c.0)); }
+            }
+            self.prefix_diagnostics = MotionPrefixDiagnostics::default();
+        }
         result
     }
 }
 impl LatticePlanner {
     fn plan_inner(&mut self, ego: EgoState, route: &Route, objects: &[Prediction]) -> Trajectory {
         self.diagnostics = None;
+        self.prefix_diagnostics = MotionPrefixDiagnostics::default();
+        let mut prefix_seen = [false; 9];
         let mut diagnostics = self.diagnostics_enabled.then(|| PlanningDiagnostics {
             scene_acquisition_s: self.refinement_stamp,
             obstruction_stop_requested: self.obstruction_stop_requested,
@@ -292,6 +321,7 @@ impl LatticePlanner {
             || self.cruise_speed <= 0.0
             || (self.search_obstruction_stops && !self.settle_obstruction_stops)
             || (self.search_later_obstruction_stops && !self.replan_checked_approaches)
+            || (self.contingency_approaches && !self.replan_checked_approaches)
             || (self.replan_checked_approaches
                 && !(self.search_obstruction_stops
                     && self.settle_obstruction_stops
@@ -644,9 +674,46 @@ impl LatticePlanner {
                 trace.reject(CandidateDisposition::RefinementForecastConflict);
                 continue;
             }
+            let mut prefix_record = None;
+            let mut certified_prefix = None;
+            if self.contingency_approaches && blocked && !refined
+                && self.previous_lateral.abs() > 0.1
+                && (target - self.previous_lateral).abs() < 0.01 {
+                prefix_seen[index] = true;
+                let heading = rustdriving_core::Vec2::new(ego.pose.yaw.cos(), ego.pose.yaw.sin());
+                let mut ids: Vec<_> = objects.iter().filter_map(|object| {
+                    collision::first_contact_time(&points, object, self.vehicle.radius, heading).map(|_| object.id)
+                }).take(129).collect();
+                ids.sort_unstable(); ids.dedup();
+                let support = &mut self.prefix_support.get_or_insert_with(||
+                    Box::new(std::array::from_fn(|_| contingency::Support::default())))[index];
+                let span = support.span(self.approach_clock).filter(|span|
+                    self.prefix_control_interval_s.is_finite() && self.prefix_control_interval_s > 0.
+                        && *span + 1e-9 >= self.prefix_control_interval_s);
+                let proposed = span.and_then(|span|
+                    contingency::profile(&geometry, &points, &candidate_limits, span))
+                    .filter(|path| !contact(path).is_finite());
+                if let Some(span) = support.observe(self.approach_clock, target, &ids, proposed.is_some()) {
+                    prefix_record = Some(support.diagnostics(span, self.prefix_control_interval_s));
+                    certified_prefix = proposed;
+                } else {
+                    // No renewed positive authority: check the immediate backup too.
+                    certified_prefix = contingency::profile(&geometry, &points, &candidate_limits, 0.)
+                        .filter(|path| !contact(path).is_finite());
+                    if certified_prefix.is_some() {
+                        prefix_record = Some(MotionPrefixDiagnostics {
+                            selected: true, lateral_target_m: Some(target),
+                            blocking_prediction_ids: ids, ..MotionPrefixDiagnostics::default()
+                        });
+                    }
+                }
+            }
             let mut searched = false;
             let mut used_stop_search = false;
-            if blocked {
+            if let Some(prefix) = certified_prefix {
+                collision_seen = true;
+                points = prefix;
+            } else if blocked {
                 collision_seen = true;
                 let settled_yield =
                     ego.speed < 0.15 && self.yield_stop_s.is_some_and(|stop_s| s >= stop_s - 0.2);
@@ -796,6 +863,8 @@ impl LatticePlanner {
             // safe lateral escape. A retimed approach to the same obstruction
             // cannot restart a completed emergency stop for a speed reward.
             let cost = (
+                self.contingency_approaches && blocked,
+                self.contingency_approaches && blocked && prefix_record.is_none(),
                 (hold_requested || self.prefer_stop_progress) && blocked,
                 !settling_goal,
                 !(refined && legacy_needs_refinement),
@@ -824,7 +893,13 @@ impl LatticePlanner {
                     blocked,
                     searched,
                     stop_s,
+                    prefix: prefix_record,
                 });
+            }
+        }
+        if let Some(states) = &mut self.prefix_support {
+            for (i, state) in states.iter_mut().enumerate() {
+                if !prefix_seen[i] { state.withdraw(self.approach_clock.map(|c| c.0)); }
             }
         }
         if let Some(choice) = best_refined
@@ -854,6 +929,7 @@ impl LatticePlanner {
         }
         let (blocked, searched, stop_s, trajectory) = best
             .map(|choice| {
+                self.prefix_diagnostics = choice.prefix.unwrap_or_default();
                 (
                     choice.blocked,
                     choice.searched,
@@ -877,6 +953,7 @@ impl LatticePlanner {
             } else {
                 blocked && (searched || self.obstruction_stop_requested)
             };
+        if self.prefix_diagnostics.selected { self.obstruction_stop_requested = false; }
         self.obstruction_stop_active = self.obstruction_stop_requested && hold_requested;
         if self.search_obstruction_stops {
             self.searched_stop_s = if !self.obstruction_stop_requested {

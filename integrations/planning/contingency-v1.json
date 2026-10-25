@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "baseline_source": "3633605f9bdb2e7a53e11c2cfb7d24b54f205889",
+  "policy": "contingency_approaches",
+  "default_enabled": false,
+  "planning_basis": "Current common rigid-pose registration rotates/translates the ego candidate and acquired obstacle forecasts together; preserve complete world occupancy for physical forecast scoring. Future process/motion uncertainty is not removed.",
+  "prefix": {
+    "maximum_s": 0.1,
+    "minimum_acquisitions": 3,
+    "minimum_span_s": 0.2,
+    "maximum_gap_s": 0.35,
+    "only_established_side": true,
+    "requires_checked_approach_context": true,
+    "expired_budget": "checked immediate braking, never renewed from cached sensing",
+    "backup": "full supplied calibrated braking authority, complete eight-second stationary tail; no greater acceleration/deceleration authority"
+  },
+  "evaluation": {
+    "canary": "original reference mission seed 7; old/disabled full-stream byte control and one enabled execution",
+    "qualification": "all 48 frozen later-stop conditions on reference/native; add only the new Boolean",
+    "gates": {
+      "physical_clearance_m": 1,
+      "road_reserve_m": 0.1,
+      "position_rmse_m": 0.3,
+      "position_max_m": 0.6,
+      "heading_max_rad": 0.1,
+      "forecast_coverage_fraction": 0.99,
+      "forecast_horizons_s": [
+        0.2,
+        1,
+        2,
+        4,
+        8
+      ]
+    },
+    "comparison": "retain inherited failures; require no newly failed gates plus at least one original mission goal improvement",
+    "adoption": "research only; original eight mission and measured uncertainty qualifications remain open; no automatic default promotion"
+  }
+}
