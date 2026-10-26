@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "baseline_source": "6fd7e8a1e8f87e8effce36ce27449bafed393aa3",
+  "recorded_baseline_source": "8550e1a2b1d06703d05036a625609e21b9fa0cf6",
+  "baseline_artifact_id": 12624662660,
+  "baseline_run": 40258418216,
+  "scope": "Dynamic RNE acquired-motion fitting without local road geometry, measurement-history replay, map localization or relocalization. All preceding default, kinematic, reference and existing local/history paths retain their original sampling semantics.",
+  "model": "Record chassis-to-rear-axle distance 1.5 m and instantaneous_odometry=true in pipeline metadata. Integrate adjacent synchronous measured wheel/gyro endpoints with trapezoidal rates and midpoint body displacement. Keep latest measured course speed for control. No-slip low-speed approximation; dynamic lateral slip remains unmeasured.",
+  "unchanged": [
+    "all frozen world inputs and seeds",
+    "physics and noise",
+    "goals and deadlines",
+    "road width and reserves",
+    "motion/pose/cold error budgets",
+    "tracked-motion fitting algorithm",
+    "forecast model and collision checks"
+  ],
+  "new_scenario_flag": false,
+  "new_sensor_measurement": false,
+  "truth_operational_input": false,
+  "canary": {
+    "fixed_inputs": "Replay both original native mission sensor recordings with only rear_axle_offset_m and instantaneous_odometry changed; require exact legacy replay first. Raw acquired sensor bytes are unchanged and counterfactual commands are never applied.",
+    "fixed_input_acceptance": {
+      "seed_7_maximum_required_8s_extra_radius_ratio_at_most": 0.5,
+      "seed_42_maximum_required_8s_extra_radius_must_not_increase": true,
+      "unchanged_from_version_1": true
+    },
+    "closed_loop": "Run the original native seed-7 mission with every preceding audit and directional certificate; retain original goal failure if still present.",
+    "adoption": false
+  },
+  "full_qualification": {
+    "cases": 48,
+    "no_new_failed_original_gates": true,
+    "no_lost_original_arrivals": true,
+    "minimum_strict_passes": 36,
+    "minimum_arrivals": 20,
+    "reference_case_bytes_identical": true,
+    "all_48_historical_sensor_logs_replay": true,
+    "default_native_and_kinematic_and_existing_local_byte_controls": true
+  },
+  "full_adoption": "Original all-case strict/mission gate remains separate. Conditional no-slip calibration does not qualify measured uncertainty, general dynamic slip or physical safety.",
+  "preceding_version": {
+    "source": "70afaff1b89e511c38fdaed625c56c95656f3851",
+    "run": 40289551873,
+    "artifact": 12636041234,
+    "passed": false,
+    "adopted": false,
+    "reason": "Body-reference calibration alone reduced seed-7 worst required 8 s radius by 22%, below the predeclared 50% requirement; seed 42 improved. Original goal failure retained."
+  },
+  "failure_policy": "A missing, cached or noncontiguous endpoint cannot cover an instantaneous interval; latch the existing motion discontinuity and brake. Instantaneous sampling is rejected with measurement-history or map/relocalization configuration. Missing metadata preserves legacy held-rate replay."
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compare declared native body-reference calibration with original recorded gates."""
+"""Qualify chassis reference and synchronous endpoint integration against frozen inputs."""
 import argparse
 from concurrent.futures import ThreadPoolExecutor
 import copy
@@ -54,9 +54,9 @@ def fixed_inputs(evidence, rows, output, example):
             header, footer = records[0], records[-1]
             if footer != dict(kind='end', ticks=len(ticks), legacy_verified=True, closed_loop=False):
                 raise ValueError('counterfactual lost original replay or full tick coverage')
-            expected = dict(config, rear_axle_offset_m=1.5)
+            expected = dict(config, rear_axle_offset_m=1.5, instantaneous_odometry=True)
             if header['original_config'] != config or header['counterfactual_config'] != expected:
-                raise ValueError('counterfactual changed more than body-reference calibration')
+                raise ValueError('counterfactual changed more than chassis reference and sampling semantics')
             actual = [r['counterfactual'] for r in records[1:-1]]
             if len(actual) != len(ticks) or source.read_bytes() != raw:
                 raise ValueError('counterfactual changed the source observations')
@@ -107,6 +107,84 @@ def contract(row):
         and row.get('replay_exit_code') == 0 and row.get('replay',{}).get('verified') is True
         and row['replay']['ticks'] == row['summary']['steps'])
 
+def historical_replays(evidence, old_rows, current, output, binary):
+    by_scenario = {row['scenario']: row for row in current}
+    receipts = []
+    with tempfile.TemporaryDirectory(prefix='rustdriving-legacy-sensors-') as temporary:
+        root = Path(temporary)
+        for index, old in enumerate(old_rows):
+            receipt = dict(scenario=old['scenario'], plant=old['plant'], world=old['world'], seed=old['seed'],
+                           input_sha256=old['storage']['run/sensors.jsonl']['sha256'], passed=False)
+            if old['plant'] == 'reference-2d':
+                new = by_scenario[old['scenario']]
+                identical = all(new['storage'][k]['sha256'] == old['storage'][k]['sha256']
+                                for k in ['run/sensors.jsonl', 'replay/outputs.jsonl'])
+                receipt.update(method='identical_fresh_sensor_replay', passed=contract(new) and identical,
+                               ticks=new.get('replay',{}).get('ticks'))
+            else:
+                raw = read_retained(evidence/'new', old, 'run/sensors.jsonl')
+                path = root/(str(index)+'.jsonl')
+                path.write_bytes(raw)
+                folder = output/'historical-replays'/f'{index:03d}'
+                process = subprocess.run([str(binary), 'replay', '--log', str(path), '--output', str(folder)],
+                                         capture_output=True, text=True)
+                result_path = folder/'replay.json'
+                result = json.loads(result_path.read_text()) if result_path.is_file() else {}
+                outputs = folder/'outputs.jsonl'
+                digest = sha(outputs.read_bytes()) if outputs.is_file() else None
+                receipt.update(method='retained_native_sensor_replay', exit_code=process.returncode,
+                               replay=result, output_sha256=digest,
+                               passed=process.returncode==0 and result.get('verified') is True
+                                   and result.get('ticks')==old['summary']['steps']
+                                   and digest==old['storage']['replay/outputs.jsonl']['sha256'])
+                if process.returncode:
+                    receipt['error'] = process.stderr[-2000:]
+                if folder.is_dir():
+                    receipt['storage'] = archive(folder)
+            receipts.append(receipt)
+            print('historical', old['plant'], old['world'], old['seed'], receipt['passed'], flush=True)
+    return dict(passed=len(receipts)==48 and all(r['passed'] for r in receipts), cases=receipts)
+
+def byte_controls(output, old_native, new_native, replay_binary, mission):
+    folder = output/'byte-controls'
+    folder.mkdir()
+    local = copy.deepcopy(mission)
+    local['local_route_geometry'] = True
+    local['motion_limits'] = dict(max_acceleration_m_s2=2., max_deceleration_m_s2=2.5, max_lateral_acceleration_m_s2=2.5)
+    sources = [('dynamic-default', 'dynamic', json.loads((ROOT/'scenarios/mission.json').read_text())),
+               ('kinematic-acquired', 'kinematic', copy.deepcopy(mission)),
+               ('dynamic-existing-local', 'dynamic', local)]
+    prepared = []
+    for name, plant, value in sources:
+        path = folder/(name+'.json')
+        path.write_bytes((json.dumps(value, indent=2, allow_nan=False)+'\n').encode())
+        prepared.append((name, plant, path, sha(path.read_bytes())))
+    def streams(root):
+        return {str(p.relative_to(root)):sha(p.read_bytes()) for p in sorted(root.rglob('*')) if p.is_file()}
+    cases = []
+    for name, plant, source, digest in prepared:
+        executions = []
+        for label, binary in [('old', old_native), ('new', new_native)]:
+            work = folder/'work'
+            run = subprocess.run([str(binary), '--scenario', str(source), '--plant', plant, '--seed', '7',
+                                  '--output', str(work/'run')], capture_output=True, text=True)
+            if run.returncode not in [0, 1]:
+                raise ValueError('byte-control execution failed: '+run.stderr)
+            replay = subprocess.run([str(replay_binary), 'replay', '--log', str(work/'run/sensors.jsonl'),
+                                     '--output', str(work/'replay')], capture_output=True, text=True)
+            replay_report = json.loads((work/'replay/replay.json').read_text())
+            if replay.returncode or replay_report.get('verified') is not True:
+                raise ValueError('byte-control sensor replay failed')
+            executions.append(dict(label=label, exit_code=run.returncode,
+                                   run_streams=streams(work/'run'), replay_streams=streams(work/'replay')))
+            work.rename(folder/(name+'-'+label))
+        cases.append(dict(name=name, input_sha256=digest, executions=executions,
+                          identical=executions[0]['exit_code']==executions[1]['exit_code']
+                            and executions[0]['run_streams']==executions[1]['run_streams']
+                            and executions[0]['replay_streams']==executions[1]['replay_streams']))
+        print('byte control', name, cases[-1]['identical'], flush=True)
+    return dict(passed=all(c['identical'] for c in cases), cases=cases)
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--evidence', required=True, type=Path)
@@ -114,8 +192,11 @@ def main():
     parser.add_argument('--binary', required=True, type=Path)
     parser.add_argument('--native-binary', required=True, type=Path)
     parser.add_argument('--example-binary', required=True, type=Path)
+    parser.add_argument('--baseline-native', type=Path)
     parser.add_argument('--stage', choices=['canary', 'full'], default='canary')
     args = parser.parse_args()
+    if args.stage=='full' and args.baseline_native is None:
+        parser.error('full qualification requires the unchanged baseline native binary')
     output = args.output.absolute()
     if output.exists() or output.is_symlink() or any(p.is_symlink() for p in output.parents):
         raise ValueError('new evidence needs a real create-only destination')
@@ -151,6 +232,7 @@ def main():
         save()
         raise
     save()
+    print('fixed input comparison', json.dumps(report['fixed_inputs'], allow_nan=False), flush=True)
     selected = [(index, spec) for index, spec in enumerate(manifest['episodes'])
                 if args.stage == 'full' or (spec['plant']=='rne-dynamic' and spec['world']=='mission' and spec['seed']==7)]
     def one(item):
@@ -161,11 +243,15 @@ def main():
         def audit(run, config, ticks, s, frozen):
             result = parent.audit(run, config, ticks, dict(s, _folder=str(folder)), frozen, verify_directions=True)
             if s['plant']=='rne-dynamic':
-                if config.get('rear_axle_offset_m') != 1.5:
-                    raise ValueError('native chassis calibration was not recorded')
+                eligible = (previous_config.get('fit_recent_track_motion') and not previous_config.get('local_route_geometry')
+                    and not any(previous_config.get(k) for k in ['gnss_latency_compensation',
+                        'heading_latency_compensation','localization_map','relocalization']))
                 old_config, new_config = dict(previous_config), dict(config)
-                old_config.pop('rear_axle_offset_m', None)
-                new_config.pop('rear_axle_offset_m', None)
+                if eligible:
+                    if config.get('rear_axle_offset_m') != 1.5 or config.get('instantaneous_odometry') is not True:
+                        raise ValueError('native chassis reference and endpoint sampling were not recorded')
+                    for key in ['rear_axle_offset_m','instantaneous_odometry']:
+                        old_config.pop(key, None); new_config.pop(key, None)
                 if old_config != new_config:
                     raise ValueError('calibration changed road geometry, limits or another driver setting')
             result['forecast_radius_use'] = case_scores(run, config, ticks)
@@ -197,9 +283,23 @@ def main():
                 for r in report['cases']))
     report['full_qualification_complete'] = False
     if args.stage == 'full':
-        report['passed'] = False  # Historical replay and default controls must also qualify.
+        report['historical_replays'] = historical_replays(evidence, old_rows, report['cases'], output, binaries['reference-2d'])
+        save()
+        mission = next(json.loads((output/'new'/spec['scenario']).read_text()) for spec in manifest['episodes']
+                       if spec['plant']=='rne-dynamic' and spec['world']=='mission' and spec['seed']==7)
+        baseline_native = args.baseline_native.resolve()
+        report['baseline_native_sha256'] = sha(baseline_native.read_bytes())
+        report['byte_controls'] = byte_controls(output, baseline_native, binaries['rne-dynamic'], binaries['reference-2d'], mission)
+        report['full_qualification_complete'] = (report['historical_replays']['passed'] and report['byte_controls']['passed'])
+        report['passed'] = report['passed'] and report['full_qualification_complete']
+        if report['baseline_native_sha256'] != sha(baseline_native.read_bytes()):
+            raise ValueError('baseline native binary changed during controls')
+        save()
     report['strict_passes'] = sum(r.get('passed',False) for r in report['cases'])
     report['arrivals'] = sum(r.get('summary',{}).get('reached_goal',False) for r in report['cases'])
+    if args.stage=='full':
+        report['cohort_gate_passed'] = report['strict_passes'] >= 36 and report['arrivals'] >= 20
+        report['passed'] = report['passed'] and report['cohort_gate_passed']
     report['original_full_adoption_gate_passed'] = (args.stage=='full' and report['passed']
                                                     and report['strict_passes']==48)
     if fingerprints != {key:sha(path.read_bytes()) for key,path in binaries.items()}:

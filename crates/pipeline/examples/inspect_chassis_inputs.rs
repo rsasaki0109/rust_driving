@@ -41,6 +41,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 header.config.validate()?;
                 let mut calibrated = header.config.clone();
                 calibrated.rear_axle_offset_m = Some(offset);
+                calibrated.instantaneous_odometry = true;
                 calibrated.validate()?;
                 baseline = Some(DrivingPipeline::new(header.config.clone())?);
                 corrected = Some(DrivingPipeline::new(calibrated.clone())?);

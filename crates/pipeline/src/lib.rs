@@ -169,6 +169,10 @@ pub struct PipelineConfig {
     /// Optional chassis-to-rear-axle distance for low-speed no-slip motion.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub rear_axle_offset_m: Option<f64>,
+    /// Adjacent synchronous endpoint rates, rather than interval-held odometry.
+    /// Missing endpoints break the motion epoch; old logs retain held-rate motion.
+    #[serde(default, skip_serializing_if = "is_false")]
+    pub instantaneous_odometry: bool,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub motion_limits: Option<MotionLimits>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -246,6 +250,7 @@ impl PipelineConfig {
             gnss_latency_compensation: false,
             local_route_geometry: false,
             rear_axle_offset_m: None,
+            instantaneous_odometry: false,
             motion_limits: None,
             multi_height_lidar: None,
             lidar3d: None,
@@ -501,6 +506,13 @@ impl PipelineConfig {
                 "chassis reference requires a finite positive rear-axle offset below wheelbase"
                     .into(),
             );
+        }
+        if self.instantaneous_odometry
+            && (self.rear_axle_offset_m.is_none()
+                || self.gnss_latency_compensation || self.heading_latency_compensation
+                || self.localization_map.is_some() || self.relocalization.is_some())
+        {
+            return Err("instantaneous odometry requires an explicit chassis reference and a synchronous single localization epoch".into());
         }
         if self.local_route_geometry {
             if self.motion_limits.is_none() {
@@ -962,6 +974,7 @@ impl DrivingPipeline {
         if dt > 0.25 {
             health.push(HealthIssue::ClockGap);
         }
+        let previous_odometry = self.last_odom;
         if let Some(odom) = input.odometry {
             if !stamp_valid(odom.stamp, input.time)
                 || !odom.speed.is_finite()
@@ -990,6 +1003,13 @@ impl DrivingPipeline {
             Some(odom) if input.time - odom.stamp > MAX_ODOMETRY_AGE_S + 1e-9 => {
                 health.push(HealthIssue::StaleOdometry)
             }
+            Some(odom) if self.config.instantaneous_odometry
+                && ((odom.stamp - input.time).abs() > 1e-9
+                    || (!first && previous_odometry.is_none_or(|previous| {
+                        (previous.stamp - self.previous_time.unwrap()).abs() > 1e-9
+                    }))) => {
+                health.push(HealthIssue::StaleOdometry);
+            }
             Some(odom) if !first && dt <= 0.25 && motion_allowed => {
                 let before = self.ekf.state().pose;
                 if let Some(history) = &mut self.gnss_history {
@@ -1004,6 +1024,15 @@ impl DrivingPipeline {
                         .is_ok();
                     motion_covered = recorded_motion;
                     if !recorded_motion {
+                        self.odometry_fault = Some(input.time);
+                        health.push(HealthIssue::InvalidOdometry);
+                    }
+                } else if self.config.instantaneous_odometry {
+                    motion_covered = self.ekf.predict_chassis_instantaneous(
+                        previous_odometry.unwrap(), odom, dt,
+                        self.config.rear_axle_offset_m.unwrap(),
+                    ).is_ok();
+                    if !motion_covered {
                         self.odometry_fault = Some(input.time);
                         health.push(HealthIssue::InvalidOdometry);
                     }

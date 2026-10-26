@@ -40,6 +40,7 @@ python3 scripts/test_lane_change_speeds.py
 python3 scripts/test_lane_return_speeds.py
 python3 scripts/test_lane_resume_speeds.py
 python3 scripts/test_navigation_speeds.py
+python3 scripts/test_instantaneous_odometry.py
 python3 scripts/test_gnss_latency.py
 python3 scripts/test_gnss_covariance.py
 python3 scripts/test_gnss_recovery.py

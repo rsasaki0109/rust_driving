@@ -335,6 +335,12 @@ impl RneBackend {
                 || scenario.fit_recent_track_motion)
         {
             config.rear_axle_offset_m = Some(VehicleDynamics::default().rear_axle_m);
+            // The 20 Hz observations are endpoint rates after ten physics
+            // substeps, not rates held over the preceding sensor interval.
+            config.instantaneous_odometry = scenario.fit_recent_track_motion
+                && !config.local_route_geometry && !config.gnss_latency_compensation
+                && !config.heading_latency_compensation
+                && config.localization_map.is_none() && config.relocalization.is_none();
         }
         if (scenario.local_route_geometry || scenario.gnss_latency_compensation)
             && plant == Plant::Dynamic
@@ -2340,6 +2346,7 @@ mod tests {
                 let backend = RneBackend::new(input, 7, plant).unwrap();
                 assert!(!backend.config.local_route_geometry);
                 assert!(backend.config.motion_limits.is_none());
+                assert_eq!(backend.config.instantaneous_odometry, fitting && plant == Plant::Dynamic);
                 assert_eq!(
                     backend.config.rear_axle_offset_m,
                     (fitting && plant == Plant::Dynamic)

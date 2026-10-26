@@ -121,6 +121,8 @@ def reconstruct(config, ticks):
     oracle=HeadingFilter(config); previous=None; maximum=0.; health_counts={}
     for tick in ticks:
         inp,out=tick['input'],tick['expected']; now=inp['time']
+        if previous is None:
+            oracle.seed_motion(inp.get('odometry'), now)
         if previous is not None:
             if inp.get('odometry') is None: raise ValueError('uncovered motion in physical heading oracle')
             oracle.predict(inp['odometry'],now-previous)

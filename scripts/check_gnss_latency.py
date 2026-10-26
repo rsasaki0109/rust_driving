@@ -37,20 +37,43 @@ class Filter:
         self.p = [list(row) for row in (initial if initial is not None else [[1., 0., 0.], [0., 1., 0.], [0., 0., .03]])]
         self.speed = 0.
         self.offset = config.get('rear_axle_offset_m') or 0.
+        self.instantaneous = config.get('instantaneous_odometry', False)
+        self.previous_motion = None
+        if self.instantaneous and (self.offset <= 0. or any(config.get(k) for k in [
+                'gnss_latency_compensation', 'heading_latency_compensation', 'localization_map', 'relocalization'])):
+            raise ValueError('instantaneous oracle requires a synchronous calibrated chassis epoch')
         self.gnss_shape = config.get('gnss_covariance_shape') or [[1., 0.], [0., 1.]]
         self.antenna = config.get('gnss_antenna_offset_m') or {'x': 0., 'y': 0.}
         self.accepted, self.rejected = 0, 0
         self.observed, self.accepted_stamp, self.nis, self.decision = None, None, None, None
 
+    def seed_motion(self, motion, now):
+        if not self.instantaneous:
+            return
+        if (motion is None or any(not math.isfinite(motion[k]) for k in ['stamp', 'speed', 'yaw_rate'])
+                or motion['stamp'] < 0. or abs(motion['stamp']-now) > 1e-9):
+            raise ValueError('instantaneous oracle requires an acquired initial endpoint')
+        self.previous_motion = dict(motion)
+
     def predict(self, motion, dt):
         if dt <= 1e-12:
             return
         yaw, speed, rate = self.x[2], max(0., motion['speed']), motion['yaw_rate']
+        endpoint_speed = math.hypot(speed, self.offset*rate)
+        if self.instantaneous:
+            prior = self.previous_motion
+            if (prior is None or not math.isfinite(dt)
+                    or any(not math.isfinite(motion[k]) for k in ['stamp', 'speed', 'yaw_rate'])
+                    or motion['stamp'] <= prior['stamp']
+                    or abs(motion['stamp']-prior['stamp']-dt) > 1e-9):
+                raise ValueError('instantaneous oracle cannot bridge a missing endpoint')
+            speed, rate = (max(0., prior['speed'])+speed)/2., (prior['yaw_rate']+rate)/2.
+            self.previous_motion = dict(motion)
         if self.offset:
             middle, lateral = yaw+rate*dt/2, self.offset*rate
             dx = (speed*math.cos(middle)-lateral*math.sin(middle))*dt
             dy = (speed*math.sin(middle)+lateral*math.cos(middle))*dt
-            self.speed = math.hypot(speed, lateral)
+            self.speed = endpoint_speed if self.instantaneous else math.hypot(speed, lateral)
         else:
             dx, dy = speed*math.cos(yaw)*dt, speed*math.sin(yaw)*dt
             self.speed = speed
@@ -93,6 +116,8 @@ class Filter:
 
 def chronological(config, motions, delivered):
     """Rebuild the complete past in time order; no bounded producer snapshots."""
+    if config.get('instantaneous_odometry'):
+        raise ValueError('interval splitting is outside the synchronous endpoint oracle')
     result = Filter(config)
     fixes = sorted(delivered, key=lambda event: event[0])
     cursor, index = 0., 0
@@ -125,6 +150,8 @@ def verify_ticks(config, ticks):
         now = inp['time']
         if inp.get('odometry') is not None:
             wheel = inp['odometry']
+        if previous is None:
+            oracle.seed_motion(wheel, now)
         if previous is not None:
             if wheel is None or now-wheel['stamp'] > .15+1e-9 or now-previous > .25+1e-9:
                 raise ValueError('this physical audit requires covered healthy motion intervals')
@@ -135,7 +162,10 @@ def verify_ticks(config, ticks):
             if not 0. <= now-fix['stamp'] <= .5+1e-9:
                 raise ValueError('physical positive received an unsupported acquisition age')
             delivered.append((fix['stamp'] if enabled else now, fix))
-            oracle = chronological(config, motions, delivered)
+            if oracle.instantaneous:
+                oracle.correct(fix)
+            else:
+                oracle = chronological(config, motions, delivered)
             if oracle.decision == 'Accepted' and enabled and now-fix['stamp'] > 1e-9:
                 compensated += 1
         expected = out['estimate']
