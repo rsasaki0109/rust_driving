@@ -38,7 +38,10 @@ pub fn stopped_profile(
     {
         return None;
     }
-    let available = geometry.windows(2).map(|p| p[0].distance(p[1])).sum::<f64>();
+    let available = geometry
+        .windows(2)
+        .map(|p| p[0].distance(p[1]))
+        .sum::<f64>();
     if !available.is_finite() || bounds.maximum_distance_m > available {
         return None;
     }
@@ -57,16 +60,23 @@ pub fn stopped_profile(
         lateral: None,
         cruise: bounds.cruise_m_s,
     };
-    for i in 0..if minimum == bounds.maximum_distance_m { 1 } else { 16 } {
-        let distance = bounds.maximum_distance_m
-            + (minimum - bounds.maximum_distance_m) * (i as f64 / 15.);
+    for i in 0..if minimum == bounds.maximum_distance_m {
+        1
+    } else {
+        16
+    } {
+        let distance =
+            bounds.maximum_distance_m + (minimum - bounds.maximum_distance_m) * (i as f64 / 15.);
         let Some(path) = speed::profile(geometry, initial_speed, &limits, Some(distance)) else {
             continue;
         };
         let Some(tail) = path.windows(2).next_back() else {
             continue;
         };
-        let travelled = path.windows(2).map(|p| p[0].position.distance(p[1].position)).sum::<f64>();
+        let travelled = path
+            .windows(2)
+            .map(|p| p[0].position.distance(p[1].position))
+            .sum::<f64>();
         if tail[0].position != tail[1].position
             || tail[0].speed != 0.
             || tail[1].speed != 0.
@@ -109,12 +119,12 @@ mod tests {
             let ds = pair[0].position.distance(pair[1].position);
             assert!((ds - (pair[0].speed + pair[1].speed) * dt / 2.).abs() < 1e-8);
         }
-        let tail = &path[path.len()-2..];
+        let tail = &path[path.len() - 2..];
         assert_eq!(tail[0].position, tail[1].position);
         assert_eq!(tail[0].speed, 0.);
         assert_eq!(tail[1].speed, 0.);
-        assert!(tail[1].time-tail[0].time >= 8.-1e-9);
-        assert!(tail[1].position.x <= b.maximum_distance_m+1e-8);
+        assert!(tail[1].time - tail[0].time >= 8. - 1e-9);
+        assert!(tail[1].position.x <= b.maximum_distance_m + 1e-8);
     }
 
     #[test]
@@ -124,8 +134,9 @@ mod tests {
             let path = stopped_profile(&geometry(), initial, &b, |p| {
                 verify(p, initial, &b);
                 true
-            }).unwrap();
-            assert!(path.iter().any(|p| p.speed > initial+0.5));
+            })
+            .unwrap();
+            assert!(path.iter().any(|p| p.speed > initial + 0.5));
         }
     }
 
@@ -133,11 +144,14 @@ mod tests {
     fn rejection_never_returns_an_uncertified_path_or_shortens_the_hold() {
         let b = bounds();
         let mut count = 0;
-        assert!(stopped_profile(&geometry(), 0.31, &b, |p| {
-            count += 1;
-            verify(p, 0.31, &b);
-            false
-        }).is_none());
+        assert!(
+            stopped_profile(&geometry(), 0.31, &b, |p| {
+                count += 1;
+                verify(p, 0.31, &b);
+                false
+            })
+            .is_none()
+        );
         assert!((1..=16).contains(&count));
     }
 
@@ -146,7 +160,9 @@ mod tests {
         use rustdriving_core::Prediction;
         let moving = Prediction {
             id: 1,
-            positions: (0..=40).map(|i| Vec2::new(0.75, 6.-i as f64*0.2)).collect(),
+            positions: (0..=40)
+                .map(|i| Vec2::new(0.75, 6. - i as f64 * 0.2))
+                .collect(),
             radius: 2.,
             additional_radius_m: vec![],
             dt: 0.2,
@@ -154,10 +170,13 @@ mod tests {
         // The crossing obstacle reaches every allowed stopped endpoint during
         // the hold; an endpoint-at-arrival-only test would miss that interval.
         let mut checked = 0;
-        assert!(stopped_profile(&geometry(), 0.21, &bounds(), |p| {
-            checked += 1;
-            crate::collision::first_contact_time(p, &moving, 1.25, Vec2::new(1.,0.)).is_none()
-        }).is_none());
+        assert!(
+            stopped_profile(&geometry(), 0.21, &bounds(), |p| {
+                checked += 1;
+                crate::collision::first_contact_time(p, &moving, 1.25, Vec2::new(1., 0.)).is_none()
+            })
+            .is_none()
+        );
         assert!(checked > 0);
     }
 
@@ -167,11 +186,23 @@ mod tests {
         for value in [f64::NAN, f64::INFINITY, -1., 0., 5.] {
             let mut b = bounds();
             b.maximum_distance_m = value;
-            assert!(stopped_profile(&geometry(), 0.31, &b, |_| {calls+=1;true}).is_none());
+            assert!(
+                stopped_profile(&geometry(), 0.31, &b, |_| {
+                    calls += 1;
+                    true
+                })
+                .is_none()
+            );
         }
         let mut b = bounds();
         b.maximum_distance_m = 0.001;
-        assert!(stopped_profile(&geometry(), 2., &b, |_| {calls+=1;true}).is_none());
+        assert!(
+            stopped_profile(&geometry(), 2., &b, |_| {
+                calls += 1;
+                true
+            })
+            .is_none()
+        );
         assert_eq!(calls, 0);
     }
 }
