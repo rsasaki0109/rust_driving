@@ -32,11 +32,31 @@ def trace(out):
         steering_rad=finite(out['command']['steering']),emergency=out['emergency'],
         health=out['health'],mode=path['mode'],lateral_target_m=path['lateral_target'],
         selected_disposition=None if chosen is None else chosen['disposition'],
+        obstruction_stop_requested=report['obstruction_stop_requested'],
+        obstruction_stop_active=report['obstruction_stop_active'],
+        selected_searched_stop=None if chosen is None or chosen['profile'] is None else chosen['profile']['searched_stop'],
         endpoint=None if not points else points[-1]['position'],
         initial_speed_m_s=None if first is None else first['speed'],
         initial_feedforward_m_s2=feedforward,
         peak_planned_speed_m_s=max((p['speed'] for p in points),default=None),
         adopted=out['checked_approach']['adopted'])
+
+ADDED_FIELDS = {'obstruction_stop_requested', 'obstruction_stop_active',
+    'selected_searched_stop', 'first_new_stop_request'}
+
+def original_projection(value):
+    if isinstance(value,dict):
+        return {k:original_projection(v) for k,v in value.items() if k not in ADDED_FIELDS}
+    if isinstance(value,list):
+        return [original_projection(v) for v in value]
+    return value
+
+def first_new_request(segment):
+    # Recorded flags describe state AFTER planning, not entry-state arguments.
+    for before,after in zip(segment,segment[1:]):
+        if not before['obstruction_stop_requested'] and after['obstruction_stop_requested']:
+            return dict(before=before,after=after)
+    return None
 
 def events(ticks):
     rows = [trace(t['expected']) for t in ticks]
@@ -58,6 +78,7 @@ def events(ticks):
             maximum_estimated_speed_m_s=max(r['estimated_speed_m_s'] for r in segment),
             positive_acceleration_ticks=sum(r['acceleration_m_s2']>0 for r in segment),
             emergency_ticks=sum(bool(r['emergency']) for r in segment),
+            first_new_stop_request=first_new_request(segment),
             first_nonpositive_acceleration=first_where(lambda r:r['acceleration_m_s2']<=0),
             first_endpoint_change=first_where(lambda r:r['endpoint']!=initial['endpoint']),
             first_stationary_profile=first_where(lambda r:r['peak_planned_speed_m_s'] is not None
@@ -103,6 +124,10 @@ def main():
             pair[variant]=dict(sensor_sha256=hashlib.sha256(sensors).hexdigest(),
                 verified_ticks=planning['verified_control_ticks'],summary=row['summary'],events=inspected)
         result['cases'].append(pair)
+    control_path=ROOT/'assets/approach-execution/f0d117cd39e37a94d779376c7d40926f103ece9a.json'
+    if original_projection(result)!=json.loads(control_path.read_bytes()):
+        raise ValueError('existing execution trace changed after adding state fields')
+    result['original_trace_projection_verified']=True
     if args.output.exists() or args.output.is_symlink():
         raise ValueError('new output required')
     args.output.parent.mkdir(parents=True,exist_ok=True)

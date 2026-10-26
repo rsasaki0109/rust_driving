@@ -88,3 +88,22 @@ Do not simply raise the 0.2 m/s boundary or bypass complete stopping checks.
 
 PR #58 remains unadopted and default behavior remains unchanged. These traces
 identify a planner-speed limitation to investigate, not a completed mission fix.
+
+## Stop-request transition follow-up (validation pending)
+
+The inspector now retains the existing post-planning stop-request and active-hold
+flags, plus the selected candidate's searched-stop flag, on every snapshot.
+Each event also exposes the adjacent before/after snapshots of its first new
+stop request. An already-present request, or one first seen at the next
+authorization, is not counted as a new request in the preceding event.
+
+These are recorded **exit-state** flags. They are not entry-state instrumentation
+or a direct log of the requested/effective cruise limits. A searched profile
+alone cannot distinguish later search from earlier fallback. The paired snapshots
+allow the source transition rules to be checked without treating a zero-speed
+command alone as proof of the selected branch.
+
+Removing only these added fields must reproduce the entire original archived
+inspection report exactly before the new report can be saved. New tests cover
+request-versus-active-hold distinction, snapshot preservation, existing requests
+and the next-authorization boundary. The original driving code is unchanged.
