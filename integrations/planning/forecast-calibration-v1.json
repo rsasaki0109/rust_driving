@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "recorded_driver_source": "8550e1a2b1d06703d05036a625609e21b9fa0cf6",
+  "cohort": "All 48 new-source executions from directional-reserve-comparison",
+  "artifact": {
+    "run_id": 40258418216,
+    "artifact_id": 12624662660,
+    "sha256": "bf73eb359a2ba1206a84f7707e034602e8a09e1cbb67d658b582f8c079d81226"
+  },
+  "target_coverage": "0.99",
+  "calibration_seeds": [
+    7
+  ],
+  "evaluation_seeds": [
+    42
+  ],
+  "dependence_group": "seed shared across both plants, worlds and policy variants",
+  "unit": "Worst required/published additional physical-disc radius over all eligible acquisitions and all five horizons within each seed group",
+  "horizons_s": [
+    0.2,
+    1,
+    2,
+    4,
+    8
+  ],
+  "scoring_domain": "First published forecast for each track acquisition; require eight seconds of complete recorded follow-up before scoring any horizon",
+  "unmatched_and_absent": "Infinite score; include eligible origins in coverage denominators",
+  "right_censoring": "Count and report late origins; never label them covered",
+  "prior_evidence_seen": true,
+  "fresh_holdout": false,
+  "simulation_rerun": false,
+  "operational_change": false,
+  "acceptance": "All 48 retained cases and original per-horizon coverage must be reproduced byte/provenance-wise. No finite calibrated confidence claim is authorized by this retrospective cohort.",
+  "limits": "Order-statistic calculation alone does not establish exchangeability. A 99% finite rank needs at least 99 independent calibration groups; physical safety and measured-data calibration remain unverified."
+}
