@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "baseline_source": "6fd7e8a1e8f87e8effce36ce27449bafed393aa3",
+  "recorded_baseline_source": "8550e1a2b1d06703d05036a625609e21b9fa0cf6",
+  "baseline_artifact_id": 12624662660,
+  "baseline_run": 40258418216,
+  "scope": "Dynamic RNE runs requesting existing acquired-motion fitting, in addition to previously calibrated local/history configurations. Reference, kinematic and default native paths keep preceding behavior.",
+  "model": "Use the existing declared 1.5 m rear-axle offset for chassis odometry, acquisition pose, temporary planning/control course and pursuit. Body yaw stays the sensing pose. Calibration no longer requires local road fitting.",
+  "unchanged": [
+    "all frozen world inputs and seeds",
+    "physics and noise",
+    "goals and deadlines",
+    "road width and reserves",
+    "motion/pose/cold error budgets",
+    "tracked-motion fitting algorithm",
+    "forecast model and collision checks"
+  ],
+  "new_scenario_flag": false,
+  "new_sensor_measurement": false,
+  "truth_operational_input": false,
+  "canary": {
+    "fixed_inputs": "Replay both original native mission recordings with only rear_axle_offset_m changed; require exact legacy replay first. Counterfactual commands are not applied.",
+    "fixed_input_acceptance": {
+      "seed_7_maximum_required_8s_extra_radius_ratio_at_most": 0.5,
+      "seed_42_maximum_required_8s_extra_radius_must_not_increase": true
+    },
+    "closed_loop": "Run the original native seed-7 mission with every preceding audit and directional certificate; retain original goal failure if still present.",
+    "adoption": false
+  },
+  "full_qualification": {
+    "cases": 48,
+    "no_new_failed_original_gates": true,
+    "no_lost_original_arrivals": true,
+    "minimum_strict_passes": 36,
+    "minimum_arrivals": 20,
+    "reference_case_bytes_identical": true,
+    "all_48_historical_sensor_logs_replay": true,
+    "default_native_and_kinematic_byte_controls": true
+  },
+  "full_adoption": "Original all-case strict/mission gate remains separate. Conditional no-slip calibration does not qualify measured uncertainty, general dynamic slip or physical safety."
+}

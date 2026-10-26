@@ -1,0 +1,198 @@
+name: Chassis acquisition qualification
+on:
+  push:
+    branches: [fix/acquired-motion-support]
+    paths: ['crates/**','integrations/rne/src/lib.rs','scripts/check_chassis_acquisition.py','integrations/planning/chassis-acquisition-v1.json','.github/workflows/chassis-acquisition.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: chassis-acquisition-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  CARGO_INCREMENTAL: '0'
+jobs:
+  format:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    outputs:
+      source: ${{ steps.source.outputs.commit }}
+    defaults:
+      run:
+        working-directory: rust_drive
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: rust_drive
+      - uses: actions/checkout@v4
+        with:
+          repository: rsasaki0109/RobotNativeEngine
+          ref: df6007aa40315e81d12ae00fc1f60369e393a178
+          path: RobotNativeEngine
+          sparse-checkout: |
+            crates
+            third_party
+      - name: Install pinned formatters
+        run: |
+          rustup toolchain install 1.90.0 --profile minimal --component rustfmt
+          rustup toolchain install 1.95.0 --profile minimal --component rustfmt
+      - id: source
+        name: Format only authored Rust and identify the exact tested source
+        env:
+          RUSTDRIVING_EXPECTED_SOURCE: ${{ github.sha }}
+        run: |
+          cargo +1.90.0 fmt --all
+          cargo +1.95.0 fmt --manifest-path integrations/rne/Cargo.toml
+          git -C ../RobotNativeEngine diff --exit-code
+          python - <<'PY'
+          import subprocess
+          changes=set(subprocess.check_output(['git','diff','--name-only'],text=True).splitlines())
+          allowed={'crates/pipeline/src/lib.rs','integrations/rne/src/lib.rs','crates/pipeline/tests/chassis_acquisition.rs','crates/pipeline/examples/inspect_chassis_inputs.rs'}
+          assert changes<=allowed,changes
+          PY
+          if ! git diff --quiet; then
+            test "$GITHUB_REF_NAME" = 'fix/acquired-motion-support'
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add crates/pipeline/src/lib.rs integrations/rne/src/lib.rs crates/pipeline/tests/chassis_acquisition.rs crates/pipeline/examples/inspect_chassis_inputs.rs
+            git commit -m 'Format chassis acquisition calibration and independent controls'
+            git push --force-with-lease="refs/heads/fix/acquired-motion-support:$RUSTDRIVING_EXPECTED_SOURCE" origin HEAD:refs/heads/fix/acquired-motion-support
+          fi
+          echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+  contracts:
+    needs: format
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.format.outputs.source }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: workspace-ubuntu24-rust190-v1-${{ hashFiles('Cargo.lock', 'rust-toolchain.toml', '.cargo/config.toml') }}
+      - name: Install the unchanged pinned workspace toolchain
+        run: rustup toolchain install 1.90.0 --profile minimal --component rustfmt --component clippy
+      - name: Verify workspace, analytical controls and original scenario replays
+        run: bash scripts/check.sh
+  canary:
+    needs: format
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash
+        working-directory: rust_drive
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.format.outputs.source }}
+          path: rust_drive
+      - uses: actions/checkout@v4
+        with:
+          repository: rsasaki0109/RobotNativeEngine
+          ref: df6007aa40315e81d12ae00fc1f60369e393a178
+          path: RobotNativeEngine
+          sparse-checkout: |
+            crates
+            third_party
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache/restore@v4
+        id: native-cache
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            rust_drive/target
+            rust_drive/integrations/rne/target
+          key: native-city-ubuntu-24.04-rust190-195-df6007a-v1-${{ hashFiles('rust_drive/Cargo.lock', 'rust_drive/integrations/rne/Cargo.lock') }}
+      - name: Build actual pipeline, fixed-input inspector and unchanged native engine
+        run: |
+          rustup toolchain install 1.90.0 --profile minimal
+          rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy
+          test "$(git -C ../RobotNativeEngine rev-parse HEAD)" = "$(cat integrations/rne/rne-revision.txt)"
+          cargo +1.90.0 build --release --locked --bin rustdriving
+          cargo +1.90.0 build --release --locked -p rustdriving-pipeline --example inspect_chassis_inputs
+          cargo +1.95.0 fmt --manifest-path integrations/rne/Cargo.toml --check
+          cargo +1.95.0 clippy --release --locked --manifest-path integrations/rne/Cargo.toml --all-targets -- -D warnings
+          cargo +1.95.0 build --release --locked --manifest-path integrations/rne/Cargo.toml
+          cargo +1.95.0 test --release --locked --manifest-path integrations/rne/Cargo.toml acquired_motion_records_chassis_calibration_without_changing_road_geometry
+      - uses: actions/cache/save@v4
+        if: steps.native-cache.outputs.cache-hit != 'true'
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            rust_drive/target
+            rust_drive/integrations/rne/target
+          key: ${{ steps.native-cache.outputs.cache-primary-key }}
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '12624662660'
+          run-id: '40258418216'
+          github-token: ${{ github.token }}
+          path: rust_drive/retained-evidence
+          merge-multiple: true
+      - name: Verify fixed-input error and the original first native closed-loop mission
+        env:
+          RUSTDRIVING_TESTED_SOURCE: ${{ needs.format.outputs.source }}
+        run: |
+          python scripts/check_chassis_acquisition.py --stage canary --evidence retained-evidence --output artifacts/chassis-acquisition --binary target/release/rustdriving --native-binary integrations/rne/target/release/rustdriving-rne --example-binary target/release/examples/inspect_chassis_inputs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: chassis-acquisition-canary
+          path: rust_drive/artifacts/chassis-acquisition
+          if-no-files-found: warn
+          compression-level: 1
+  preserve:
+    if: always() && needs.format.result == 'success'
+    needs: [format,contracts,canary]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.format.outputs.source }}
+      - uses: actions/download-artifact@v4
+        if: needs.canary.result != 'skipped'
+        with:
+          name: chassis-acquisition-canary
+          path: retained-chassis
+      - name: Retain first complete or failed comparison with an exact branch lease
+        env:
+          RUSTDRIVING_TESTED_SOURCE: ${{ needs.format.outputs.source }}
+          RUSTDRIVING_CONTRACT_RESULT: ${{ needs.contracts.result }}
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          path=Path('retained-chassis/report.json')
+          if not path.is_file():raise SystemExit('No comparison report; preserve build/parser failure in job logs.')
+          raw=path.read_bytes();report=json.loads(raw);source=os.environ['RUSTDRIVING_TESTED_SOURCE']
+          assert report['source']==source
+          folder=Path('assets/chassis-acquisition-v1/canaries');folder.mkdir(parents=True,exist_ok=True)
+          target=folder/(source+'.json')
+          with target.open('xb') as stream:stream.write(raw)
+          pointer=dict(source=source,path=str(target),complete=report['complete'],passed=report['passed'],
+                       contracts_passed=os.environ['RUSTDRIVING_CONTRACT_RESULT']=='success',adopted=False)
+          Path('assets/chassis-acquisition-v1/latest.json').write_text(json.dumps(pointer,indent=2)+'\n')
+          PY
+          test "$GITHUB_REF_NAME" = 'fix/acquired-motion-support'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/chassis-acquisition-v1
+          git commit -m 'Retain first chassis calibration canary and failed adoption gates'
+          git push --force-with-lease="refs/heads/fix/acquired-motion-support:$RUSTDRIVING_TESTED_SOURCE" origin HEAD:refs/heads/fix/acquired-motion-support

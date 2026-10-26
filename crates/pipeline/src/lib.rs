@@ -498,11 +498,9 @@ impl PipelineConfig {
             !offset.is_finite()
                 || offset <= 0.0
                 || offset >= self.vehicle.wheelbase
-                || !self.local_route_geometry
         }) {
             return Err(
-                "chassis reference requires a bounded rear-axle offset and local route geometry"
-                    .into(),
+                "chassis reference requires a finite positive rear-axle offset below wheelbase".into(),
             );
         }
         if self.local_route_geometry {
@@ -2133,7 +2131,9 @@ mod tests {
                 .is_none()
         );
         config.rear_axle_offset_m = Some(1.5);
-        assert!(config.validate().unwrap_err().contains("chassis reference"));
+        assert!(config.validate().is_ok());
+        assert!(!config.local_route_geometry);
+        assert!(config.motion_limits.is_none());
         config.local_route_geometry = true;
         config.motion_limits = Some(MotionLimits {
             max_acceleration_m_s2: 1.0,
