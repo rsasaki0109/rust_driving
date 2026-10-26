@@ -1,0 +1,5281 @@
+{
+  "analysis_source": "2380eb7fc25f4bb86924af4952e3292d342829d5",
+  "recorded_source": "92c72b1c473f0b6209f09c4ce1ff9508026b2d40",
+  "simulation_rerun": false,
+  "operational_policy_changed": false,
+  "complete": true,
+  "cases": [
+    {
+      "plant": "reference-2d",
+      "seed": 7,
+      "verified_legacy_ticks": 1301,
+      "sensor_sha256": "5d8a2f721af5b8e8757cf170dac52a96af52207a87bcb3ab127b78b79ae155a0",
+      "probe": {
+        "attempts": [
+          {
+            "candidate_index": 0,
+            "end_progress_m": 84.5422244136265,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 17.144458836534447,
+            "hold_start_s": 9.144458836534445,
+            "progress_gain_m": 39.99999999015618
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 84.04222443179373,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 17.08195883767576,
+            "hold_start_s": 9.08195883767576,
+            "progress_gain_m": 39.500000008323404
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 83.5422244086692,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 17.019458834980806,
+            "hold_start_s": 9.019458834980806,
+            "progress_gain_m": 38.999999985198876
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 83.0422244365636,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 16.956958836760805,
+            "hold_start_s": 8.956958836760807,
+            "progress_gain_m": 38.50000001309328
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 82.54222440289813,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 16.8944588327095,
+            "hold_start_s": 8.8944588327095,
+            "progress_gain_m": 37.999999979427805
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 82.04222444226187,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 16.83195883522845,
+            "hold_start_s": 8.831958835228448,
+            "progress_gain_m": 37.500000018791546
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 81.54222439640851,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 16.76945882959648,
+            "hold_start_s": 8.76945882959648,
+            "progress_gain_m": 36.99999997293819
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 81.04222444880136,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 16.70695883293823,
+            "hold_start_s": 8.70695883293823,
+            "progress_gain_m": 36.50000002533104
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 80.54222438929989,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 16.644458825521795,
+            "hold_start_s": 8.644458825521795,
+            "progress_gain_m": 35.999999965829566
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 80.04222445608784,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 16.581958829753027,
+            "hold_start_s": 8.581958829753027,
+            "progress_gain_m": 35.500000032617514
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 79.54222438167403,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 16.519458820370005,
+            "hold_start_s": 8.519458820370005,
+            "progress_gain_m": 34.99999995820371
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 79.04222446402215,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 16.456958825539864,
+            "hold_start_s": 8.456958825539866,
+            "progress_gain_m": 34.50000004055183
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 78.54222437363303,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 16.3944588140306,
+            "hold_start_s": 8.394458814030601,
+            "progress_gain_m": 33.99999995016271
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 78.04222447250245,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 16.33195882017072,
+            "hold_start_s": 8.33195882017072,
+            "progress_gain_m": 33.50000004903213
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 77.5422243652772,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 16.26945880639837,
+            "hold_start_s": 8.269458806398369,
+            "progress_gain_m": 32.999999941806884
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 77.04222448142632,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 16.206958813523354,
+            "hold_start_s": 8.206958813523354,
+            "progress_gain_m": 32.500000057955994
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 76.54222435670341,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 16.144458797373797,
+            "hold_start_s": 8.144458797373797,
+            "progress_gain_m": 31.99999993323309
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 76.04222449069289,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 16.08195880548204,
+            "hold_start_s": 8.081958805482039,
+            "progress_gain_m": 31.500000067222565
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 75.54222434800339,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 16.019458786863446,
+            "hold_start_s": 8.019458786863447,
+            "progress_gain_m": 30.999999924533064
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 75.0422245002049,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 15.956964241782991,
+            "hold_start_s": 7.956964241782991,
+            "progress_gain_m": 30.500000076734572
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 74.54222433926233,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 15.893781499787327,
+            "hold_start_s": 7.893781499787328,
+            "progress_gain_m": 29.99999991579201
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 74.0422245098703,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 15.830287355755711,
+            "hold_start_s": 7.830287355755712,
+            "progress_gain_m": 29.50000008639997
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 73.5422243305578,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 15.766070956854541,
+            "hold_start_s": 7.766070956854541,
+            "progress_gain_m": 28.999999907087478
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 73.04222451960393,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 15.701527667124308,
+            "hold_start_s": 7.701527667124308,
+            "progress_gain_m": 28.50000009613361
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 72.54222432195884,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 15.63622517117365,
+            "hold_start_s": 7.636225171173651,
+            "progress_gain_m": 27.999999898488518
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 72.04222452932868,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 15.57057896506973,
+            "hold_start_s": 7.57057896506973,
+            "progress_gain_m": 27.500000105858355
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 71.54222431352534,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 15.50413333713929,
+            "hold_start_s": 7.50413333713929,
+            "progress_gain_m": 26.999999890055015
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 71.04222453897637,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 15.437325689664505,
+            "hold_start_s": 7.437325689664504,
+            "progress_gain_m": 26.500000115506047
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 70.54222430530778,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 15.369674728770617,
+            "hold_start_s": 7.369674728770617,
+            "progress_gain_m": 25.99999988183746
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 70.04222454848842,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 15.301641750946068,
+            "hold_start_s": 7.301641750946068,
+            "progress_gain_m": 25.500000125018097
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 69.54222429734726,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 15.232717396711628,
+            "hold_start_s": 7.232717396711629,
+            "progress_gain_m": 24.999999873876938
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 69.04222455781606,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 15.1633891211083,
+            "hold_start_s": 7.163389121108301,
+            "progress_gain_m": 24.500000134345733
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 68.54222428967569,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 15.093116665547148,
+            "hold_start_s": 7.093116665547148,
+            "progress_gain_m": 23.999999866205364
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 68.04222456692014,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 15.022416205233267,
+            "hold_start_s": 7.022416205233266,
+            "progress_gain_m": 23.500000143449817
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 67.54222428231627,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 14.950713331116445,
+            "hold_start_s": 6.950713331116445,
+            "progress_gain_m": 22.999999858845946
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 67.04222457577089,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 14.878555882271904,
+            "hold_start_s": 6.878555882271904,
+            "progress_gain_m": 22.500000152300565
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 66.54222427528427,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 14.805331549199401,
+            "hold_start_s": 6.805331549199401,
+            "progress_gain_m": 21.999999851813946
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 66.04222458434711,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 14.731623201733669,
+            "hold_start_s": 6.731623201733669,
+            "progress_gain_m": 21.500000160876787
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 65.54222426858789,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 14.656776291354024,
+            "hold_start_s": 6.656776291354024,
+            "progress_gain_m": 20.999999845117564
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 65.04222459263525,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 14.58141264823503,
+            "hold_start_s": 6.581412648235031,
+            "progress_gain_m": 20.500000169164927
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 64.54222426222927,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 14.50483071670084,
+            "hold_start_s": 6.504830716700839,
+            "progress_gain_m": 19.999999838758946
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 64.04222460062833,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 14.427696950031912,
+            "hold_start_s": 6.427696950031912,
+            "progress_gain_m": 19.500000177158007
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 63.54222425620573,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 14.349250867951206,
+            "hold_start_s": 6.349250867951205,
+            "progress_gain_m": 18.999999832735405
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 63.04222460832456,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 14.270227818136021,
+            "hold_start_s": 6.270227818136022,
+            "progress_gain_m": 18.500000184854237
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 62.54222425051081,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 14.189752439428137,
+            "hold_start_s": 6.189752439428136,
+            "progress_gain_m": 17.99999982704049
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 62.042224615726,
+            "first_contact_s": 3.021011255675979,
+            "hold_end_s": 14.108729198527804,
+            "hold_start_s": 6.108729198527804,
+            "progress_gain_m": 17.500000192255676
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 61.54222424513573,
+            "first_contact_s": 3.0213198494327074,
+            "hold_end_s": 14.025994043724022,
+            "hold_start_s": 6.025994043724023,
+            "progress_gain_m": 16.999999821665405
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 61.0422246228371,
+            "first_contact_s": 3.0226912531330163,
+            "hold_end_s": 13.942880574789893,
+            "hold_start_s": 5.942880574789894,
+            "progress_gain_m": 16.500000199366774
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 60.54222424007045,
+            "first_contact_s": 3.0237451368166197,
+            "hold_end_s": 13.857553100867754,
+            "hold_start_s": 5.857553100867754,
+            "progress_gain_m": 15.99999981660013
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 60.042224629663245,
+            "first_contact_s": 3.027543024535013,
+            "hold_end_s": 13.772286312219837,
+            "hold_start_s": 5.772286312219837,
+            "progress_gain_m": 15.500000206192922
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 59.54222423530495,
+            "first_contact_s": 3.03163586967477,
+            "hold_end_s": 13.684378383870573,
+            "hold_start_s": 5.684378383870572,
+            "progress_gain_m": 14.999999811834627
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 59.042224636209404,
+            "first_contact_s": 3.03855330432145,
+            "hold_end_s": 13.596433469644957,
+            "hold_start_s": 5.596433469644956,
+            "progress_gain_m": 14.500000212739081
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 58.542224230830286,
+            "first_contact_s": 3.0465556580975903,
+            "hold_end_s": 13.50611065160722,
+            "hold_start_s": 5.5061106516072185,
+            "progress_gain_m": 13.999999807359963
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 58.04222464247882,
+            "first_contact_s": 3.057068466948904,
+            "hold_end_s": 13.414650414622978,
+            "hold_start_s": 5.414650414622978,
+            "progress_gain_m": 13.500000219008498
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 57.54222422663959,
+            "first_contact_s": 3.0703406523330528,
+            "hold_end_s": 13.321866004527305,
+            "hold_start_s": 5.321866004527305,
+            "progress_gain_m": 12.999999803169267
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 57.04222464847189,
+            "first_contact_s": 3.085453798621088,
+            "hold_end_s": 13.226083783503435,
+            "hold_start_s": 5.2260837835034355,
+            "progress_gain_m": 12.500000225001564
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 56.54222422272893,
+            "first_contact_s": 3.1059362560513377,
+            "hold_end_s": 13.130777968397485,
+            "hold_start_s": 5.130777968397486,
+            "progress_gain_m": 11.99999979925861
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 56.04222465418517,
+            "first_contact_s": 3.128974728862686,
+            "hold_end_s": 13.03171105854404,
+            "hold_start_s": 5.031711058544039,
+            "progress_gain_m": 11.500000230714846
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 55.542224219097996,
+            "first_contact_s": 3.1578776096963423,
+            "hold_end_s": 12.9317697754922,
+            "hold_start_s": 4.931769775492199,
+            "progress_gain_m": 10.999999795627673
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 55.04222465961069,
+            "first_contact_s": 3.2,
+            "hold_end_s": 12.829737126057184,
+            "hold_start_s": 4.829737126057184,
+            "progress_gain_m": 10.500000236140366
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 54.542224215750615,
+            "first_contact_s": 3.2326322575450455,
+            "hold_end_s": 12.723570953616782,
+            "hold_start_s": 4.7235709536167825,
+            "progress_gain_m": 9.999999792280292
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 54.04223155675308,
+            "first_contact_s": 3.2834559391391425,
+            "hold_end_s": 12.618345638376706,
+            "hold_start_s": 4.618345638376707,
+            "progress_gain_m": 9.500007133282757
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 53.54221312924054,
+            "first_contact_s": 3.3712324526525514,
+            "hold_end_s": 12.507742790495712,
+            "hold_start_s": 4.507742790495711,
+            "progress_gain_m": 8.999988705770214
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 53.042389866248925,
+            "first_contact_s": 3.422887323423241,
+            "hold_end_s": 12.394504237703728,
+            "hold_start_s": 4.394504237703729,
+            "progress_gain_m": 8.500165442778602
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 52.54215857556811,
+            "first_contact_s": 3.544940585073489,
+            "hold_end_s": 12.276012221931785,
+            "hold_start_s": 4.276012221931785,
+            "progress_gain_m": 7.9999341520977865
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 52.04289295541354,
+            "first_contact_s": 3.8000000000000003,
+            "hold_end_s": 12.1473742277981,
+            "hold_start_s": 4.147374227798099,
+            "progress_gain_m": 7.500668531943219
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 51.542065991767736,
+            "first_contact_s": 4.4,
+            "hold_end_s": 12.012994156463863,
+            "hold_start_s": 4.012994156463863,
+            "progress_gain_m": 6.999841568297413
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 51.04379910035607,
+            "first_contact_s": 5.0,
+            "hold_end_s": 11.862165373415586,
+            "hold_start_s": 3.862165373415585,
+            "progress_gain_m": 6.501574676885745
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 50.54196821829608,
+            "first_contact_s": 5.6000000000000005,
+            "hold_end_s": 11.705720870791733,
+            "hold_start_s": 3.705720870791734,
+            "progress_gain_m": 5.999743794825754
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 50.045041626818055,
+            "first_contact_s": 6.2,
+            "hold_end_s": 11.530937572418189,
+            "hold_start_s": 3.53093757241819,
+            "progress_gain_m": 5.502817203347732
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 49.54190268558776,
+            "first_contact_s": 6.800000000000001,
+            "hold_end_s": 11.350638595314535,
+            "hold_start_s": 3.3506385953145355,
+            "progress_gain_m": 4.999678262117435
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 49.16484241714105,
+            "first_contact_s": 7.4,
+            "hold_end_s": 11.202979811856007,
+            "hold_start_s": 3.202979811856008,
+            "progress_gain_m": 4.62261799367073
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 45.651486386659506,
+            "first_contact_s": null,
+            "hold_end_s": 9.53137758065653,
+            "hold_start_s": 1.53137758065653,
+            "progress_gain_m": 1.1092619631891836
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 84.54192595069343,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 17.051600120183565,
+            "hold_start_s": 9.051600120183565,
+            "progress_gain_m": 39.9997015272231
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 84.042928820426,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 16.9889676003627,
+            "hold_start_s": 8.988967600362697,
+            "progress_gain_m": 39.500704396955676
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 83.54184307259999,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 16.92633411174706,
+            "hold_start_s": 8.926334111747058,
+            "progress_gain_m": 38.999618649129665
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 83.0431041676551,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 16.863668645177363,
+            "hold_start_s": 8.863668645177361,
+            "progress_gain_m": 38.50087974418478
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 82.54176612946013,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 16.80100347818735,
+            "hold_start_s": 8.80100347818735,
+            "progress_gain_m": 37.999541705989806
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 82.04328404550026,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 16.738305279651144,
+            "hold_start_s": 8.738305279651142,
+            "progress_gain_m": 37.501059622029935
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 81.54169502205416,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 16.675608600106248,
+            "hold_start_s": 8.675608600106248,
+            "progress_gain_m": 36.999470598583834
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 81.0434680535403,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 16.61287792490555,
+            "hold_start_s": 8.61287792490555,
+            "progress_gain_m": 36.50124363006997
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 80.54162961474542,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 16.550149932158043,
+            "hold_start_s": 8.55014993215804,
+            "progress_gain_m": 35.999405191275095
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 80.04365575414803,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 16.48738707575302,
+            "hold_start_s": 8.48738707575302,
+            "progress_gain_m": 35.50143133067771
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 79.54156973778143,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 16.42462800305264,
+            "hold_start_s": 8.424628003052637,
+            "progress_gain_m": 34.99934531431111
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 79.04384667495026,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 16.361833300669417,
+            "hold_start_s": 8.361833300669417,
+            "progress_gain_m": 34.50162225147994
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 78.54151518988444,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 16.299043415542222,
+            "hold_start_s": 8.299043415542222,
+            "progress_gain_m": 33.99929076641411
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 78.04404031163754,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 16.236217241753742,
+            "hold_start_s": 8.236217241753742,
+            "progress_gain_m": 33.50181588816722
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 77.54146574110726,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 16.173396846384453,
+            "hold_start_s": 8.173396846384453,
+            "progress_gain_m": 32.99924131763694
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 77.04423613110097,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 16.11053961466764,
+            "hold_start_s": 8.11053961466764,
+            "progress_gain_m": 32.50201170763065
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 76.54142113592854,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 16.04768904627451,
+            "hold_start_s": 8.04768904627451,
+            "progress_gain_m": 31.99919671245822
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 76.04443357486925,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 15.984804303427687,
+            "hold_start_s": 7.984804303427686,
+            "progress_gain_m": 31.502209151398922
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 75.54138109655884,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 15.921370435966772,
+            "hold_start_s": 7.9213704359667725,
+            "progress_gain_m": 30.999156673088514
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 75.0446320628151,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 15.85776264690572,
+            "hold_start_s": 7.85776264690572,
+            "progress_gain_m": 30.502407639344774
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 74.54134532642689,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 15.793252373891342,
+            "hold_start_s": 7.793252373891343,
+            "progress_gain_m": 29.99912090295657
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 74.04483099709691,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 15.728573020021301,
+            "hold_start_s": 7.728573020021302,
+            "progress_gain_m": 29.502606573626586
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 73.54131351381365,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 15.662931405617217,
+            "hold_start_s": 7.662931405617217,
+            "progress_gain_m": 28.999089090343325
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 73.0450297662975,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 15.597126304742407,
+            "hold_start_s": 7.597126304742406,
+            "progress_gain_m": 28.50280534282718
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 72.54128533559941,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 15.530294936023882,
+            "hold_start_s": 7.530294936023883,
+            "progress_gain_m": 27.99906091212909
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 72.04522774971925,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 15.46330515385439,
+            "hold_start_s": 7.463305153854391,
+            "progress_gain_m": 27.503003326248923
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 71.54126046108762,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 15.395218900312482,
+            "hold_start_s": 7.395218900312482,
+            "progress_gain_m": 26.999036037617294
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 71.04542432179174,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 15.326980111245492,
+            "hold_start_s": 7.326980111245492,
+            "progress_gain_m": 26.50319989832142
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 70.54123855586789,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 15.257569100565432,
+            "hold_start_s": 7.257569100565432,
+            "progress_gain_m": 25.99901413239757
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 70.0456188565468,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 15.188010897794445,
+            "hold_start_s": 7.188010897794446,
+            "progress_gain_m": 25.503394433076473
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 69.54121928567893,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 15.11719689766384,
+            "hold_start_s": 7.11719689766384,
+            "progress_gain_m": 24.998994862208612
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 69.04581073211288,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 15.04624191818834,
+            "hold_start_s": 7.04624191818834,
+            "progress_gain_m": 24.50358630864256
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 68.54120232023149,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 14.973940176081317,
+            "hold_start_s": 6.9739401760813164,
+            "progress_gain_m": 23.99897789676117
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 68.04599933518087,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 14.901503130494394,
+            "hold_start_s": 6.901503130494393,
+            "progress_gain_m": 23.503774911710543
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 67.54118733695029,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 14.827618245284416,
+            "hold_start_s": 6.827618245284415,
+            "progress_gain_m": 22.998962913479964
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 67.04618406539252,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 14.75360468896903,
+            "hold_start_s": 6.75360468896903,
+            "progress_gain_m": 22.5039596419222
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 66.54117402459482,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 14.678032178301923,
+            "hold_start_s": 6.678032178301922,
+            "progress_gain_m": 21.9989496011245
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 66.04636433960299,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 14.60233711161812,
+            "hold_start_s": 6.602337111618119,
+            "progress_gain_m": 21.504139916132665
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 65.54116208671736,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 14.524958559189296,
+            "hold_start_s": 6.524958559189296,
+            "progress_gain_m": 20.99893766324704
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 65.04653959596969,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 14.44746464980306,
+            "hold_start_s": 6.44746464980306,
+            "progress_gain_m": 20.504315172499368
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 64.54115124491898,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 14.368148763572542,
+            "hold_start_s": 6.368148763572543,
+            "progress_gain_m": 19.998926821448656
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 64.04670929782226,
+            "first_contact_s": 3.1053857465911596,
+            "hold_end_s": 14.288724280771882,
+            "hold_start_s": 6.288724280771882,
+            "progress_gain_m": 19.504484874351938
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 63.54114124186442,
+            "first_contact_s": 3.1054329982185753,
+            "hold_end_s": 14.207320906086137,
+            "hold_start_s": 6.207320906086137,
+            "progress_gain_m": 18.9989168183941
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 63.046872937268915,
+            "first_contact_s": 3.1065652262076626,
+            "hold_end_s": 14.125817135799,
+            "hold_start_s": 6.125817135799,
+            "progress_gain_m": 18.504648513798593
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 62.54113184401862,
+            "first_contact_s": 3.1078530297365154,
+            "hold_end_s": 14.042157197029347,
+            "hold_start_s": 6.042157197029347,
+            "progress_gain_m": 17.9989074205483
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 62.04703003849932,
+            "first_contact_s": 3.1116263575135803,
+            "hold_end_s": 13.958405312027642,
+            "hold_start_s": 5.958405312027642,
+            "progress_gain_m": 17.504805615029
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 61.54112284407067,
+            "first_contact_s": 3.1158020412116523,
+            "hold_end_s": 13.872293137305336,
+            "hold_start_s": 5.872293137305336,
+            "progress_gain_m": 16.998898420600348
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 61.047180160746095,
+            "first_contact_s": 3.1230010810785656,
+            "hold_end_s": 13.786100071227334,
+            "hold_start_s": 5.786100071227335,
+            "progress_gain_m": 16.504955737275772
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 60.54111406301261,
+            "first_contact_s": 3.130225408176442,
+            "hold_end_s": 13.697311726177244,
+            "hold_start_s": 5.697311726177245,
+            "progress_gain_m": 15.998889639542284
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 60.0473229008715,
+            "first_contact_s": 3.13974848059461,
+            "hold_end_s": 13.608455025577811,
+            "hold_start_s": 5.60845502557781,
+            "progress_gain_m": 15.505098477401177
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 59.541105351845204,
+            "first_contact_s": 3.150204093923019,
+            "hold_end_s": 13.516727625332372,
+            "hold_start_s": 5.516727625332373,
+            "progress_gain_m": 14.99888092837488
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 59.04745789555071,
+            "first_contact_s": 3.164300428759,
+            "hold_end_s": 13.42494864256345,
+            "hold_start_s": 5.424948642563451,
+            "progress_gain_m": 14.505233472080384
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 58.541096592885744,
+            "first_contact_s": 3.1798886948310767,
+            "hold_end_s": 13.329975248197442,
+            "hold_start_s": 5.329975248197442,
+            "progress_gain_m": 13.99887216941542
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 58.04758482302716,
+            "first_contact_s": 3.2,
+            "hold_end_s": 13.234970344660265,
+            "hold_start_s": 5.2349703446602645,
+            "progress_gain_m": 13.505360399556835
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 57.54108770065804,
+            "first_contact_s": 3.222144439139132,
+            "hold_end_s": 13.136383746414861,
+            "hold_start_s": 5.136383746414861,
+            "progress_gain_m": 12.998863277187716
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 57.047703404421156,
+            "first_contact_s": 3.2501019056458773,
+            "hold_end_s": 13.03779234925247,
+            "hold_start_s": 5.03779234925247,
+            "progress_gain_m": 12.505478980950834
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 56.541078622349566,
+            "first_contact_s": 3.2813812766544697,
+            "hold_end_s": 12.935152826523087,
+            "hold_start_s": 4.935152826523086,
+            "progress_gain_m": 11.998854198879243
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 56.04781340457828,
+            "first_contact_s": 3.322233138063445,
+            "hold_end_s": 12.832541356495073,
+            "hold_start_s": 4.8325413564950725,
+            "progress_gain_m": 11.505588981107955
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 55.541069337825746,
+            "first_contact_s": 3.39331030103324,
+            "hold_end_s": 12.725308986237327,
+            "hold_start_s": 4.7253089862373265,
+            "progress_gain_m": 10.998844914355423
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 55.047914632449555,
+            "first_contact_s": 3.4072006447927907,
+            "hold_end_s": 12.618148245692,
+            "hold_start_s": 4.618148245692,
+            "progress_gain_m": 10.505690208979232
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 54.541059859197574,
+            "first_contact_s": 3.5215690703779905,
+            "hold_end_s": 12.505654262040892,
+            "hold_start_s": 4.505654262040891,
+            "progress_gain_m": 9.998835435727251
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 54.047999987806925,
+            "first_contact_s": 3.6596177544287354,
+            "hold_end_s": 12.393285688481722,
+            "hold_start_s": 4.393285688481721,
+            "progress_gain_m": 9.505775564336602
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 53.540999012206676,
+            "first_contact_s": 3.8000000000000003,
+            "hold_end_s": 12.27467985224501,
+            "hold_start_s": 4.27467985224501,
+            "progress_gain_m": 8.998774588736353
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 53.04795172250643,
+            "first_contact_s": 4.0,
+            "hold_end_s": 12.156233244141625,
+            "hold_start_s": 4.156233244141625,
+            "progress_gain_m": 8.50572729903611
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 52.54074038055352,
+            "first_contact_s": 4.6000000000000005,
+            "hold_end_s": 12.030387230554393,
+            "hold_start_s": 4.030387230554393,
+            "progress_gain_m": 7.9985159570832
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 52.04770927524076,
+            "first_contact_s": 5.2,
+            "hold_end_s": 11.904747117311217,
+            "hold_start_s": 3.9047471173112176,
+            "progress_gain_m": 7.50548485177044
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 51.54031786148719,
+            "first_contact_s": 5.6000000000000005,
+            "hold_end_s": 11.77014693496489,
+            "hold_start_s": 3.77014693496489,
+            "progress_gain_m": 6.998093438016866
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 51.04738702515853,
+            "first_contact_s": 6.2,
+            "hold_end_s": 11.63585881821239,
+            "hold_start_s": 3.635858818212389,
+            "progress_gain_m": 6.505162601688205
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 50.539892866993526,
+            "first_contact_s": 6.6000000000000005,
+            "hold_end_s": 11.490409519209413,
+            "hold_start_s": 3.4904095192094133,
+            "progress_gain_m": 5.997668443523203
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 50.10705735107616,
+            "first_contact_s": 7.0,
+            "hold_end_s": 11.363264710701909,
+            "hold_start_s": 3.363264710701909,
+            "progress_gain_m": 5.564832927605835
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 46.154451294102905,
+            "first_contact_s": null,
+            "hold_end_s": 9.842287971423278,
+            "hold_start_s": 1.842287971423279,
+            "progress_gain_m": 1.6122268706325826
+          }
+        ],
+        "initial_progress_m": 44.54222442347032,
+        "planning_diagnostics": {
+          "candidates": [
+            {
+              "disposition": "CheckedStop",
+              "index": 0,
+              "lateral_target_m": 0.0,
+              "nominal_forecast_conflict": {
+                "forecast_horizon_s": 8.0,
+                "forecast_radius_m": 3.100421813639765,
+                "minimum_clearance_floor_m": 0.0,
+                "prediction_id": 1,
+                "relative_time_s": 3.021011255675979
+              },
+              "profile": {
+                "end_progress_m": 45.651486386659506,
+                "end_time_s": 9.53137758065653,
+                "point_count": 5,
+                "searched_stop": true,
+                "terminal_speed_m_s": 0.0
+              }
+            },
+            {
+              "disposition": "CheckedStop",
+              "index": 1,
+              "lateral_target_m": 3.9,
+              "nominal_forecast_conflict": {
+                "forecast_horizon_s": 8.0,
+                "forecast_radius_m": 3.151906849132542,
+                "minimum_clearance_floor_m": 0.0,
+                "prediction_id": 1,
+                "relative_time_s": 3.1053857465911596
+              },
+              "profile": {
+                "end_progress_m": 46.154451294102905,
+                "end_time_s": 9.842287971423278,
+                "point_count": 6,
+                "searched_stop": true,
+                "terminal_speed_m_s": 0.0
+              }
+            },
+            {
+              "disposition": "OppositeSideDuringPass",
+              "index": 2,
+              "lateral_target_m": -3.9,
+              "nominal_forecast_conflict": null,
+              "profile": null
+            }
+          ],
+          "failure": null,
+          "obstruction_stop_active": false,
+          "obstruction_stop_requested": false,
+          "planning_span_m": 40.0,
+          "refinement_confirmation": null,
+          "route_progress_m": 44.54222442347032,
+          "scene_acquisition_s": 65.0,
+          "selected_candidate": 1
+        },
+        "trajectory": {
+          "lateral_target": 3.9,
+          "mode": "Yield",
+          "points": [
+            {
+              "position": {
+                "x": 44.42435201907312,
+                "y": 7.072983472671572
+              },
+              "speed": 0.0,
+              "time": 0.0
+            },
+            {
+              "position": {
+                "x": 44.93179078352307,
+                "y": 7.076005608587767
+              },
+              "speed": 1.4247073577216736,
+              "time": 0.7123536788608368
+            },
+            {
+              "position": {
+                "x": 45.43922342655509,
+                "y": 7.076621702474754
+              },
+              "speed": 1.5856101088239858,
+              "time": 1.049482917011286
+            },
+            {
+              "position": {
+                "x": 45.94661243654058,
+                "y": 7.073806473562488
+              },
+              "speed": 0.6961121584335206,
+              "time": 1.4942318922065188
+            },
+            {
+              "position": {
+                "x": 46.067744369609784,
+                "y": 7.072166490202224
+              },
+              "speed": 0.0,
+              "time": 1.842287971423279
+            },
+            {
+              "position": {
+                "x": 46.067744369609784,
+                "y": 7.072166490202224
+              },
+              "speed": 0.0,
+              "time": 9.842287971423278
+            }
+          ]
+        }
+      },
+      "search": {
+        "sweep_counts": {
+          "moving_conflict": 130,
+          "stationary_tail_conflict": 12,
+          "clear_below_2m": 2
+        },
+        "maximum_clear_progress_gain_m": 1.6122268706325826,
+        "global_infeasibility_proven": false,
+        "confirmation_authorized": false
+      },
+      "planning_validation": {
+        "capture_enabled": true,
+        "verified_control_ticks": 1301,
+        "maximum_candidate_records": 3,
+        "candidate_dispositions": {
+          "CompletePath": 210,
+          "NoCheckedStop": 60,
+          "CheckedStop": 2515,
+          "OppositeSideDuringPass": 1118
+        },
+        "selected_profiles": {
+          "CompletePath": 70,
+          "CheckedStop": 1225
+        },
+        "nominal_forecast_conflicts": 2575,
+        "forecast_blockers": {
+          "1": 2575
+        },
+        "fault_braking_ticks": 0
+      },
+      "selected_path_certificate": {
+        "passed": true,
+        "active": true,
+        "certified_paths": 1295,
+        "interval_bounds": 54520,
+        "actor_truth_used": false,
+        "uncertainty_calibrated": false
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "seed": 42,
+      "verified_legacy_ticks": 1301,
+      "sensor_sha256": "34a21b462b1c3dc137c875a38b3d7e758f7536641ed60e4e1410fafa7e126240",
+      "probe": {
+        "attempts": [
+          {
+            "candidate_index": 0,
+            "end_progress_m": 84.41847453807593,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 17.139727090648233,
+            "hold_start_s": 9.139727090648233,
+            "progress_gain_m": 39.9999999906403
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 83.9184745538138,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 17.07722709126808,
+            "hold_start_s": 9.077227091268082,
+            "progress_gain_m": 39.500000006378166
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 83.41847453275871,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 17.014727089017505,
+            "hold_start_s": 9.014727089017503,
+            "progress_gain_m": 38.99999998532308
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 82.91847455838325,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 16.952227090232988,
+            "hold_start_s": 8.95222709023299,
+            "progress_gain_m": 38.50000001094762
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 82.41847452626006,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 16.889727086616162,
+            "hold_start_s": 8.88972708661616,
+            "progress_gain_m": 37.99999997882443
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 81.91847456415188,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 16.82722708859175,
+            "hold_start_s": 8.827227088591751,
+            "progress_gain_m": 37.50000001671625
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 81.41847451860833,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 16.76472708331363,
+            "hold_start_s": 8.764727083313632,
+            "progress_gain_m": 36.999999971172706
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 80.91847457111079,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 16.702227086212183,
+            "hold_start_s": 8.702227086212183,
+            "progress_gain_m": 36.50000002367516
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 80.41847450984547,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 16.63972707898447,
+            "hold_start_s": 8.639727078984473,
+            "progress_gain_m": 35.99999996240984
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 79.918474579237,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 16.577227082964754,
+            "hold_start_s": 8.577227082964754,
+            "progress_gain_m": 35.50000003180137
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 79.41847450002568,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 16.514727073508844,
+            "hold_start_s": 8.514727073508844,
+            "progress_gain_m": 34.99999995259005
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 78.91847458849409,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 16.45222707872326,
+            "hold_start_s": 8.452227078723261,
+            "progress_gain_m": 34.50000004105846
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 78.41847448921409,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 16.389727066772956,
+            "hold_start_s": 8.389727066772958,
+            "progress_gain_m": 33.99999994177846
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 77.91847459883333,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 16.327227073365556,
+            "hold_start_s": 8.327227073365554,
+            "progress_gain_m": 33.5000000513977
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 77.41847447748506,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 16.26472705866955,
+            "hold_start_s": 8.26472705866955,
+            "progress_gain_m": 32.999999930049434
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 76.91847461019482,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 16.202227066774228,
+            "hold_start_s": 8.20222706677423,
+            "progress_gain_m": 32.50000006275919
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 76.41847446492048,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 16.139727049098237,
+            "hold_start_s": 8.139727049098237,
+            "progress_gain_m": 31.99999991748485
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 75.91847462250894,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 16.077227058837323,
+            "hold_start_s": 8.077227058837325,
+            "progress_gain_m": 31.50000007507331
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 75.41847445160813,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 16.01472703796591,
+            "hold_start_s": 8.014727037965908,
+            "progress_gain_m": 30.999999904172505
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 74.91847463569788,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 15.952233099467552,
+            "hold_start_s": 7.952233099467551,
+            "progress_gain_m": 30.500000088262247
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 74.41847443763992,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 15.888973481722346,
+            "hold_start_s": 7.888973481722346,
+            "progress_gain_m": 29.999999890204286
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 73.91847464967708,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 15.825479996470648,
+            "hold_start_s": 7.825479996470648,
+            "progress_gain_m": 29.50000010224145
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 73.41847442311023,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 15.761182857881952,
+            "hold_start_s": 7.761182857881951,
+            "progress_gain_m": 28.999999875674597
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 72.91847466435695,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 15.696640285207629,
+            "hold_start_s": 7.696640285207629,
+            "progress_gain_m": 28.50000011692132
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 72.41847440811448,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 15.631252852855312,
+            "hold_start_s": 7.631252852855311,
+            "progress_gain_m": 27.999999860678848
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 71.91847467964422,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 15.565607429529557,
+            "hold_start_s": 7.565607429529557,
+            "progress_gain_m": 27.50000013220859
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 71.41847439274777,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 15.49907228963772,
+            "hold_start_s": 7.499072289637721,
+            "progress_gain_m": 26.99999984531214
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 70.91847469544341,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 15.432265499238056,
+            "hold_start_s": 7.4322654992380555,
+            "progress_gain_m": 26.50000014800778
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 70.41847437710373,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 15.364520027274706,
+            "hold_start_s": 7.364520027274706,
+            "progress_gain_m": 25.999999829668106
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 69.91847471165819,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 15.296487990987595,
+            "hold_start_s": 7.296487990987595,
+            "progress_gain_m": 25.500000164222563
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 69.41847436127354,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 15.227463640683746,
+            "hold_start_s": 7.227463640683746,
+            "progress_gain_m": 24.99999981383791
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 68.91847472819238,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 15.158136402945003,
+            "hold_start_s": 7.1581364029450025,
+            "progress_gain_m": 24.50000018075675
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 68.41847434534519,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 15.087757917517964,
+            "hold_start_s": 7.087757917517964,
+            "progress_gain_m": 23.99999979790956
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 67.918474744951,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 15.017058605623635,
+            "hold_start_s": 7.017058605623635,
+            "progress_gain_m": 23.50000019751537
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 67.41847432940295,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 14.945243032614632,
+            "hold_start_s": 6.945243032614632,
+            "progress_gain_m": 22.999999781967325
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 66.91847476184098,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 14.873086859609828,
+            "hold_start_s": 6.873086859609828,
+            "progress_gain_m": 22.500000214405354
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 66.41847431352713,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 14.799742432654973,
+            "hold_start_s": 6.799742432654974,
+            "progress_gain_m": 21.9999997660915
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 65.91847477877178,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 14.726035508952906,
+            "hold_start_s": 6.726035508952906,
+            "progress_gain_m": 21.500000231336152
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 65.41847429779376,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 14.651060261475035,
+            "hold_start_s": 6.651060261475035,
+            "progress_gain_m": 20.999999750358135
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 64.91847479565574,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 14.57569823506265,
+            "hold_start_s": 6.575698235062649,
+            "progress_gain_m": 20.50000024822011
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 64.4184742822748,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 14.498978575019315,
+            "hold_start_s": 6.498978575019314,
+            "progress_gain_m": 19.99999973483917
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 63.91847481240837,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 14.421846805554388,
+            "hold_start_s": 6.421846805554387,
+            "progress_gain_m": 19.50000026497274
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 63.41847426703821,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 14.343251365639164,
+            "hold_start_s": 6.343251365639164,
+            "progress_gain_m": 18.999999719602577
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 62.9184748289484,
+            "first_contact_s": 3.0176996775812532,
+            "hold_end_s": 14.264231184113513,
+            "hold_start_s": 6.2642311841135125,
+            "progress_gain_m": 18.50000028151277
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 62.41847425214826,
+            "first_contact_s": 3.0177381761645434,
+            "hold_end_s": 14.183590738858673,
+            "hold_start_s": 6.183590738858672,
+            "progress_gain_m": 17.99999970471263
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 61.91847484519776,
+            "first_contact_s": 3.0178286167903368,
+            "hold_end_s": 14.102572103620702,
+            "hold_start_s": 6.102572103620702,
+            "progress_gain_m": 17.500000297762128
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 61.41847423766588,
+            "first_contact_s": 3.017584403208331,
+            "hold_end_s": 14.019649829831145,
+            "hold_start_s": 6.0196498298311445,
+            "progress_gain_m": 16.999999690230254
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 60.91847486108151,
+            "first_contact_s": 3.0184563623866767,
+            "hold_end_s": 13.936543812855462,
+            "hold_start_s": 5.9365438128554615,
+            "progress_gain_m": 16.500000313645884
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 60.418474223649056,
+            "first_contact_s": 3.0193386467426895,
+            "hold_end_s": 13.851002200707608,
+            "hold_start_s": 5.851002200707607,
+            "progress_gain_m": 15.999999676213427
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 59.91847487652763,
+            "first_contact_s": 3.022792730899475,
+            "hold_end_s": 13.76574343905958,
+            "hold_start_s": 5.765743439059581,
+            "progress_gain_m": 15.500000329092003
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 59.41847421015326,
+            "first_contact_s": 3.0275938500736457,
+            "hold_end_s": 13.677847726735326,
+            "hold_start_s": 5.677847726735325,
+            "progress_gain_m": 14.999999662717634
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 58.918474891466865,
+            "first_contact_s": 3.035467056456418,
+            "hold_end_s": 13.589649109448567,
+            "hold_start_s": 5.589649109448567,
+            "progress_gain_m": 14.500000344031235
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 58.41847419723181,
+            "first_contact_s": 3.0449908274711763,
+            "hold_end_s": 13.499343137475183,
+            "hold_start_s": 5.499343137475183,
+            "progress_gain_m": 13.99999964979618
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 57.91847490583249,
+            "first_contact_s": 3.0572941624124192,
+            "hold_end_s": 13.40758044799814,
+            "hold_start_s": 5.40758044799814,
+            "progress_gain_m": 13.50000035839686
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 57.418474184936265,
+            "first_contact_s": 3.0734229242848854,
+            "hold_end_s": 13.31481644148355,
+            "hold_start_s": 5.314816441483551,
+            "progress_gain_m": 12.999999637500636
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 56.918474919560225,
+            "first_contact_s": 3.091744349855433,
+            "hold_end_s": 13.218677652615103,
+            "hold_start_s": 5.218677652615103,
+            "progress_gain_m": 12.500000372124596
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 56.418474173316696,
+            "first_contact_s": 3.1169123927318676,
+            "hold_end_s": 13.12339243752798,
+            "hold_start_s": 5.12339243752798,
+            "progress_gain_m": 11.999999625881067
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 55.91847493258807,
+            "first_contact_s": 3.140990953673594,
+            "hold_end_s": 13.024348755547534,
+            "hold_start_s": 5.024348755547534,
+            "progress_gain_m": 11.50000038515244
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 55.41847416242187,
+            "first_contact_s": 3.1707754897414486,
+            "hold_end_s": 12.923991227315842,
+            "hold_start_s": 4.923991227315841,
+            "progress_gain_m": 10.999999614986244
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 54.918474944856285,
+            "first_contact_s": 3.2069601292456533,
+            "hold_end_s": 12.821975200146367,
+            "hold_start_s": 4.821975200146367,
+            "progress_gain_m": 10.500000397420656
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 54.418474152299375,
+            "first_contact_s": 3.248723504547322,
+            "hold_end_s": 12.715346827735821,
+            "hold_start_s": 4.715346827735821,
+            "progress_gain_m": 9.999999604863746
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 53.918469089735794,
+            "first_contact_s": 3.3022592161455493,
+            "hold_end_s": 12.610117768549367,
+            "hold_start_s": 4.610117768549367,
+            "progress_gain_m": 9.499994542300165
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 53.4183718214293,
+            "first_contact_s": 3.391311237870049,
+            "hold_end_s": 12.49949596126982,
+            "hold_start_s": 4.499495961269821,
+            "progress_gain_m": 8.999897273993668
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 52.91837088346996,
+            "first_contact_s": 3.4499534308421755,
+            "hold_end_s": 12.385694122523526,
+            "hold_start_s": 4.385694122523526,
+            "progress_gain_m": 8.499896336034332
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 52.41784499023666,
+            "first_contact_s": 3.5902497642337527,
+            "hold_end_s": 12.26706433372551,
+            "hold_start_s": 4.26706433372551,
+            "progress_gain_m": 7.99937044280103
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 51.91819266056695,
+            "first_contact_s": 3.8000000000000003,
+            "hold_end_s": 12.137780499867958,
+            "hold_start_s": 4.137780499867959,
+            "progress_gain_m": 7.499718113131323
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 51.41688796704046,
+            "first_contact_s": 4.4,
+            "hold_end_s": 12.00311304443829,
+            "hold_start_s": 4.00311304443829,
+            "progress_gain_m": 6.99841341960483
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 50.91812021357543,
+            "first_contact_s": 5.0,
+            "hold_end_s": 11.851668779758672,
+            "hold_start_s": 3.851668779758673,
+            "progress_gain_m": 6.4996456661397985
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 50.41576382919223,
+            "first_contact_s": 5.6000000000000005,
+            "hold_end_s": 11.694885470845902,
+            "hold_start_s": 3.6948854708459016,
+            "progress_gain_m": 5.997289281756601
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 49.91837412672026,
+            "first_contact_s": 6.2,
+            "hold_end_s": 11.519749876945882,
+            "hold_start_s": 3.519749876945882,
+            "progress_gain_m": 5.49989957928463
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 49.414830296812696,
+            "first_contact_s": 6.800000000000001,
+            "hold_end_s": 11.339269383192752,
+            "hold_start_s": 3.3392693831927516,
+            "progress_gain_m": 4.9963557493770665
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 49.05902918517985,
+            "first_contact_s": 7.2,
+            "hold_end_s": 11.19654550627204,
+            "hold_start_s": 3.1965455062720394,
+            "progress_gain_m": 4.6405546377442235
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 45.50893832084996,
+            "first_contact_s": null,
+            "hold_end_s": 9.514957339036059,
+            "hold_start_s": 1.5149573390360578,
+            "progress_gain_m": 1.0904637734143279
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 84.41787672124374,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 17.051561765958894,
+            "hold_start_s": 9.051561765958894,
+            "progress_gain_m": 39.999402173808114
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 83.91896586203407,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 16.9889400007251,
+            "hold_start_s": 8.988940000725101,
+            "progress_gain_m": 39.50049131459844
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 83.41773075312604,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 16.926287835888516,
+            "hold_start_s": 8.926287835888516,
+            "progress_gain_m": 38.99925620569041
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 82.91907758452491,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 16.863633056561227,
+            "hold_start_s": 8.863633056561225,
+            "progress_gain_m": 38.500603037089284
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 82.41759117610911,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 16.800949338285335,
+            "hold_start_s": 8.800949338285335,
+            "progress_gain_m": 37.999116628673484
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 81.919194078548,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 16.738261732791933,
+            "hold_start_s": 8.738261732791933,
+            "progress_gain_m": 37.500719531112374
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 81.41745795583331,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 16.67554666195806,
+            "hold_start_s": 8.675546661958057,
+            "progress_gain_m": 36.998983408397685
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 80.91931501697758,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 16.61282645981437,
+            "hold_start_s": 8.612826459814372,
+            "progress_gain_m": 36.50084046954195
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 80.4173310210176,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 16.550080269699556,
+            "hold_start_s": 8.550080269699555,
+            "progress_gain_m": 35.998856473581974
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 79.91944003660002,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 16.487327741851317,
+            "hold_start_s": 8.487327741851315,
+            "progress_gain_m": 35.50096548916439
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 79.41721026589104,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 16.424550698305907,
+            "hold_start_s": 8.424550698305907,
+            "progress_gain_m": 34.998735718455414
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 78.91956874050501,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 16.361766156914552,
+            "hold_start_s": 8.361766156914552,
+            "progress_gain_m": 34.501094193069385
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 78.41709555290863,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 16.298958558578427,
+            "hold_start_s": 8.298958558578425,
+            "progress_gain_m": 33.998621005473005
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 77.91970070080049,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 16.23614235675198,
+            "hold_start_s": 8.23614235675198,
+            "progress_gain_m": 33.50122615336486
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 77.41698671572426,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 16.17330453530112,
+            "hold_start_s": 8.173304535301119,
+            "progress_gain_m": 32.998512168288634
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 76.91983546162952,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 16.110457066771563,
+            "hold_start_s": 8.110457066771563,
+            "progress_gain_m": 32.50136091419389
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 76.41688356239092,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 16.04758938718544,
+            "hold_start_s": 8.047589387185441,
+            "progress_gain_m": 31.998409014955293
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 75.919972542464,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 15.984714190300293,
+            "hold_start_s": 7.984714190300293,
+            "progress_gain_m": 31.501497995028366
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 75.41678587875673,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 15.92126039260731,
+            "hold_start_s": 7.92126039260731,
+            "progress_gain_m": 30.998311331321098
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 74.92011144164658,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 15.857663590224224,
+            "hold_start_s": 7.857663590224223,
+            "progress_gain_m": 30.501636894210954
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 74.4166934320234,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 15.793133052168827,
+            "hold_start_s": 7.793133052168827,
+            "progress_gain_m": 29.998218884587764
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 73.92025164014885,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 15.728464566856783,
+            "hold_start_s": 7.728464566856783,
+            "progress_gain_m": 29.50177709271322
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 73.41660597443204,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 15.662802830521052,
+            "hold_start_s": 7.662802830521052,
+            "progress_gain_m": 28.998131426996416
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 72.92039260551103,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 15.597008469011783,
+            "hold_start_s": 7.597008469011782,
+            "progress_gain_m": 28.501918058075397
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 72.4165232470398,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 15.530156640541794,
+            "hold_start_s": 7.530156640541795,
+            "progress_gain_m": 27.998048699604176
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 71.92053379592517,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 15.46317745091211,
+            "hold_start_s": 7.463177450912109,
+            "progress_gain_m": 27.502059248489537
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 71.41644498354948,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 15.395070890148327,
+            "hold_start_s": 7.395070890148327,
+            "progress_gain_m": 26.997970436113853
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 70.92067466442208,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 15.326842538836775,
+            "hold_start_s": 7.326842538836776,
+            "progress_gain_m": 26.50220011698645
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 70.41637091415303,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 15.25741086500839,
+            "hold_start_s": 7.25741086500839,
+            "progress_gain_m": 25.997896366717406
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 69.92081466311943,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 15.18786292955928,
+            "hold_start_s": 7.187862929559281,
+            "progress_gain_m": 25.5023401156838
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 69.4163007693494,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 15.117028413732783,
+            "hold_start_s": 7.117028413732782,
+            "progress_gain_m": 24.997826221913776
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 68.92095324748693,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 15.046083526366147,
+            "hold_start_s": 7.0460835263661465,
+            "progress_gain_m": 24.502478700051306
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 68.4162342836962,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 14.973760875503771,
+            "hold_start_s": 6.973760875503772,
+            "progress_gain_m": 23.99775973626057
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 67.92108988058413,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 14.901333732903993,
+            "hold_start_s": 6.901333732903994,
+            "progress_gain_m": 23.502615333148505
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 67.41617119945472,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 14.827428062679235,
+            "hold_start_s": 6.8274280626792345,
+            "progress_gain_m": 22.997696652019094
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 66.92122403722442,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 14.753424218571283,
+            "hold_start_s": 6.753424218571283,
+            "progress_gain_m": 22.50274948978879
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 66.41611127008827,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 14.677830467981186,
+            "hold_start_s": 6.677830467981186,
+            "progress_gain_m": 21.997636722652636
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 65.92135520801976,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 14.60214491014074,
+            "hold_start_s": 6.6021449101407415,
+            "progress_gain_m": 21.502880660584132
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 65.41605426357341,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 14.524745192832835,
+            "hold_start_s": 6.524745192832836,
+            "progress_gain_m": 20.997579716137786
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 64.92148290326112,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 14.447260590279415,
+            "hold_start_s": 6.447260590279415,
+            "progress_gain_m": 20.503008355825493
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 64.41599996548636,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 14.36792298916145,
+            "hold_start_s": 6.36792298916145,
+            "progress_gain_m": 19.997525418050735
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 63.921606656590214,
+            "first_contact_s": 3.105107855159771,
+            "hold_end_s": 14.288507610179437,
+            "hold_start_s": 6.288507610179437,
+            "progress_gain_m": 19.503132109154585
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 63.415948181826614,
+            "first_contact_s": 3.105150773496908,
+            "hold_end_s": 14.207082480704564,
+            "hold_start_s": 6.207082480704564,
+            "progress_gain_m": 18.997473634390985
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 62.921726028420245,
+            "first_contact_s": 3.1062831463730594,
+            "hold_end_s": 14.125587688179492,
+            "hold_start_s": 6.1255876881794915,
+            "progress_gain_m": 18.503251480984616
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 62.41589874154332,
+            "first_contact_s": 3.1075614474542554,
+            "hold_end_s": 14.041905092458709,
+            "hold_start_s": 6.041905092458709,
+            "progress_gain_m": 17.997424194107694
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 61.92184060906586,
+            "first_contact_s": 3.111334919098675,
+            "hold_end_s": 13.958162225743994,
+            "hold_start_s": 5.958162225743994,
+            "progress_gain_m": 17.50336606163023
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 61.41585149873162,
+            "first_contact_s": 3.115500561261418,
+            "hold_end_s": 13.872026744847137,
+            "hold_start_s": 5.872026744847138,
+            "progress_gain_m": 16.99737695129599
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 60.921950021545236,
+            "first_contact_s": 3.12269998997587,
+            "hold_end_s": 13.785843023235383,
+            "hold_start_s": 5.785843023235384,
+            "progress_gain_m": 16.503475474109607
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 60.41580633446971,
+            "first_contact_s": 3.130672796374078,
+            "hold_end_s": 13.697029576980164,
+            "hold_start_s": 5.697029576980164,
+            "progress_gain_m": 15.997331787034078
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 59.92205392402063,
+            "first_contact_s": 3.1424314123981882,
+            "hold_end_s": 13.608182886664602,
+            "hold_start_s": 5.608182886664602,
+            "progress_gain_m": 15.503579376585002
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 59.41576315827113,
+            "first_contact_s": 3.155573025896837,
+            "hold_end_s": 13.516428710496653,
+            "hold_start_s": 5.516428710496653,
+            "progress_gain_m": 14.997288610835504
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 58.9221520118481,
+            "first_contact_s": 3.1716242771170906,
+            "hold_end_s": 13.424660796196093,
+            "hold_start_s": 5.424660796196093,
+            "progress_gain_m": 14.503677464412469
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 58.41572190913038,
+            "first_contact_s": 3.187542956185593,
+            "hold_end_s": 13.329657668665426,
+            "hold_start_s": 5.329657668665427,
+            "progress_gain_m": 13.997247361694754
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 57.92224401921115,
+            "first_contact_s": 3.207950341004782,
+            "hold_end_s": 13.234665224608753,
+            "hold_start_s": 5.234665224608753,
+            "progress_gain_m": 13.50376947177552
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 57.41568255614529,
+            "first_contact_s": 3.2306495484812734,
+            "hold_end_s": 13.136046160267473,
+            "hold_start_s": 5.136046160267473,
+            "progress_gain_m": 12.997208008709663
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 56.92232972031849,
+            "first_contact_s": 3.2591699991788636,
+            "hold_end_s": 13.037468853775206,
+            "hold_start_s": 5.037468853775206,
+            "progress_gain_m": 12.503855172882858
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 56.41564509870421,
+            "first_contact_s": 3.2911434650271207,
+            "hold_end_s": 12.934793004615283,
+            "hold_start_s": 4.934793004615282,
+            "progress_gain_m": 11.997170551268582
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 55.92240893015072,
+            "first_contact_s": 3.332774479187805,
+            "hold_end_s": 12.832197238813595,
+            "hold_start_s": 4.832197238813595,
+            "progress_gain_m": 11.503934382715094
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 55.41560956623138,
+            "first_contact_s": 3.4000000000000004,
+            "hold_end_s": 12.724936448463708,
+            "hold_start_s": 4.724936448463708,
+            "progress_gain_m": 10.997135018795753
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 54.92248150474692,
+            "first_contact_s": 3.4212505876708703,
+            "hold_end_s": 12.617781637657941,
+            "hold_start_s": 4.617781637657942,
+            "progress_gain_m": 10.50400695731129
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 54.4155760174901,
+            "first_contact_s": 3.5383854330659212,
+            "hold_end_s": 12.50527994756331,
+            "hold_start_s": 4.50527994756331,
+            "progress_gain_m": 9.997101470054474
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 53.92253526778445,
+            "first_contact_s": 3.6749811551716394,
+            "hold_end_s": 12.392892109683658,
+            "hold_start_s": 4.392892109683658,
+            "progress_gain_m": 9.504060720348818
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 53.415456836711705,
+            "first_contact_s": 3.8000000000000003,
+            "hold_end_s": 12.274281986139531,
+            "hold_start_s": 4.274281986139532,
+            "progress_gain_m": 8.996982289276076
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 52.92236157789945,
+            "first_contact_s": 4.024537256532071,
+            "hold_end_s": 12.155785463802388,
+            "hold_start_s": 4.155785463802389,
+            "progress_gain_m": 8.503887030463822
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 52.41499432515229,
+            "first_contact_s": 4.6000000000000005,
+            "hold_end_s": 12.029910206652186,
+            "hold_start_s": 4.029910206652187,
+            "progress_gain_m": 7.996519777716664
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 51.921837193085466,
+            "first_contact_s": 5.2,
+            "hold_end_s": 11.904191606451274,
+            "hold_start_s": 3.9041916064512736,
+            "progress_gain_m": 7.503362645649837
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 51.41423290266267,
+            "first_contact_s": 5.6000000000000005,
+            "hold_end_s": 11.76953359890295,
+            "hold_start_s": 3.769533598902949,
+            "progress_gain_m": 6.995758355227039
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 50.921145267154316,
+            "first_contact_s": 6.2,
+            "hold_end_s": 11.63515545905356,
+            "hold_start_s": 3.6351554590535597,
+            "progress_gain_m": 6.502670719718687
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 50.413447767277546,
+            "first_contact_s": 6.6000000000000005,
+            "hold_end_s": 11.489636915369545,
+            "hold_start_s": 3.489636915369545,
+            "progress_gain_m": 5.994973219841917
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 49.981561811075196,
+            "first_contact_s": 7.0,
+            "hold_end_s": 11.362743626059126,
+            "hold_start_s": 3.3627436260591264,
+            "progress_gain_m": 5.5630872636395665
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 46.04339086684805,
+            "first_contact_s": null,
+            "hold_end_s": 9.84141858065434,
+            "hold_start_s": 1.8414185806543397,
+            "progress_gain_m": 1.6249163194124208
+          }
+        ],
+        "initial_progress_m": 44.41847454743563,
+        "planning_diagnostics": {
+          "candidates": [
+            {
+              "disposition": "CheckedStop",
+              "index": 0,
+              "lateral_target_m": 0.0,
+              "nominal_forecast_conflict": {
+                "forecast_horizon_s": 8.0,
+                "forecast_radius_m": 3.102359599773542,
+                "minimum_clearance_floor_m": 0.0,
+                "prediction_id": 1,
+                "relative_time_s": 3.0176996775812532
+              },
+              "profile": {
+                "end_progress_m": 45.50893832084996,
+                "end_time_s": 9.514957339036059,
+                "point_count": 5,
+                "searched_stop": true,
+                "terminal_speed_m_s": 0.0
+              }
+            },
+            {
+              "disposition": "CheckedStop",
+              "index": 1,
+              "lateral_target_m": 3.9,
+              "nominal_forecast_conflict": {
+                "forecast_horizon_s": 8.0,
+                "forecast_radius_m": 3.1556582811282814,
+                "minimum_clearance_floor_m": 0.0,
+                "prediction_id": 1,
+                "relative_time_s": 3.105107855159771
+              },
+              "profile": {
+                "end_progress_m": 46.04339086684805,
+                "end_time_s": 9.84141858065434,
+                "point_count": 6,
+                "searched_stop": true,
+                "terminal_speed_m_s": 0.0
+              }
+            },
+            {
+              "disposition": "OppositeSideDuringPass",
+              "index": 2,
+              "lateral_target_m": -3.9,
+              "nominal_forecast_conflict": null,
+              "profile": null
+            }
+          ],
+          "failure": null,
+          "obstruction_stop_active": false,
+          "obstruction_stop_requested": false,
+          "planning_span_m": 40.0,
+          "refinement_confirmation": null,
+          "route_progress_m": 44.41847454743563,
+          "scene_acquisition_s": 65.0,
+          "selected_candidate": 1
+        },
+        "trajectory": {
+          "lateral_target": 3.9,
+          "mode": "Yield",
+          "points": [
+            {
+              "position": {
+                "x": 44.300329906917966,
+                "y": 6.9356677175288945
+              },
+              "speed": 0.0,
+              "time": 0.0
+            },
+            {
+              "position": {
+                "x": 44.807159367589485,
+                "y": 6.960129274604819
+              },
+              "speed": 1.4246675712657473,
+              "time": 0.7123337856328736
+            },
+            {
+              "position": {
+                "x": 45.31401560282818,
+                "y": 6.981409663162123
+              },
+              "speed": 1.5836320308704872,
+              "time": 1.0496025652190961
+            },
+            {
+              "position": {
+                "x": 45.820904583834306,
+                "y": 6.99787623043515
+              },
+              "speed": 0.6922896187992424,
+              "time": 1.4952737712547184
+            },
+            {
+              "position": {
+                "x": 45.94069466303317,
+                "y": 7.000379363494806
+              },
+              "speed": 0.0,
+              "time": 1.8414185806543397
+            },
+            {
+              "position": {
+                "x": 45.94069466303317,
+                "y": 7.000379363494806
+              },
+              "speed": 0.0,
+              "time": 9.84141858065434
+            }
+          ]
+        }
+      },
+      "search": {
+        "sweep_counts": {
+          "moving_conflict": 130,
+          "stationary_tail_conflict": 12,
+          "clear_below_2m": 2
+        },
+        "maximum_clear_progress_gain_m": 1.6249163194124208,
+        "global_infeasibility_proven": false,
+        "confirmation_authorized": false
+      },
+      "planning_validation": {
+        "capture_enabled": true,
+        "verified_control_ticks": 1301,
+        "maximum_candidate_records": 3,
+        "candidate_dispositions": {
+          "CompletePath": 210,
+          "NoCheckedStop": 54,
+          "CheckedStop": 2492,
+          "OppositeSideDuringPass": 1147
+        },
+        "selected_profiles": {
+          "CompletePath": 70,
+          "CheckedStop": 1224
+        },
+        "nominal_forecast_conflicts": 2546,
+        "forecast_blockers": {
+          "1": 2546
+        },
+        "fault_braking_ticks": 0
+      },
+      "selected_path_certificate": {
+        "passed": true,
+        "active": true,
+        "certified_paths": 1294,
+        "interval_bounds": 54401,
+        "actor_truth_used": false,
+        "uncertainty_calibrated": false
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "seed": 7,
+      "verified_legacy_ticks": 1301,
+      "sensor_sha256": "d632617b676e9d589e29979bc12970920e8c3c2c12900916a7862e4d0ab83d9f",
+      "probe": {
+        "attempts": [
+          {
+            "candidate_index": 0,
+            "end_progress_m": 84.60554699796872,
+            "first_contact_s": 3.0,
+            "hold_end_s": 17.85535646400735,
+            "hold_start_s": 9.855356464007349,
+            "progress_gain_m": 39.99999999147136
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 84.1055470134066,
+            "first_contact_s": 3.0,
+            "hold_end_s": 17.772023132025645,
+            "hold_start_s": 9.772023132025646,
+            "progress_gain_m": 39.500000006909254
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 83.60554699409211,
+            "first_contact_s": 3.0,
+            "hold_end_s": 17.68868979539684,
+            "hold_start_s": 9.688689795396842,
+            "progress_gain_m": 38.999999987594755
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 83.10554701703222,
+            "first_contact_s": 3.0,
+            "hold_end_s": 17.60535646400873,
+            "hold_start_s": 9.605356464008729,
+            "progress_gain_m": 38.50000001053487
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 82.60554698976343,
+            "first_contact_s": 3.0,
+            "hold_end_s": 17.522023125892673,
+            "hold_start_s": 9.522023125892673,
+            "progress_gain_m": 37.99999998326607
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 82.10554702119683,
+            "first_contact_s": 3.0,
+            "hold_end_s": 17.438689795134287,
+            "hold_start_s": 9.43868979513429,
+            "progress_gain_m": 37.500000014699474
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 81.60554698509394,
+            "first_contact_s": 3.0,
+            "hold_end_s": 17.355356455331545,
+            "hold_start_s": 9.355356455331547,
+            "progress_gain_m": 36.999999978596584
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 81.10554702578285,
+            "first_contact_s": 3.0,
+            "hold_end_s": 17.272023125211426,
+            "hold_start_s": 9.272023125211428,
+            "progress_gain_m": 36.5000000192855
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 80.60554698019394,
+            "first_contact_s": 3.0,
+            "hold_end_s": 17.188689783554835,
+            "hold_start_s": 9.188689783554834,
+            "progress_gain_m": 35.99999997369658
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 80.10554703067157,
+            "first_contact_s": 3.0,
+            "hold_end_s": 17.105356454054416,
+            "hold_start_s": 9.105356454054414,
+            "progress_gain_m": 35.50000002417422
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 79.60554697517053,
+            "first_contact_s": 3.0,
+            "hold_end_s": 17.02202311040913,
+            "hold_start_s": 9.022023110409128,
+            "progress_gain_m": 34.99999996867317
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 79.10554703574576,
+            "first_contact_s": 3.0,
+            "hold_end_s": 16.93868978148385,
+            "hold_start_s": 8.938689781483848,
+            "progress_gain_m": 34.500000029248405
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 78.60554697012574,
+            "first_contact_s": 3.0,
+            "hold_end_s": 16.855356435746806,
+            "hold_start_s": 8.855356435746804,
+            "progress_gain_m": 33.99999996362839
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 78.10554704089218,
+            "first_contact_s": 3.0,
+            "hold_end_s": 16.772023107327765,
+            "hold_start_s": 8.772023107327765,
+            "progress_gain_m": 33.50000003439482
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 77.60554696515464,
+            "first_contact_s": 3.0,
+            "hold_end_s": 16.688689759426545,
+            "hold_start_s": 8.688689759426545,
+            "progress_gain_m": 32.99999995865729
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 77.1055470460039,
+            "first_contact_s": 3.0,
+            "hold_end_s": 16.605356431422713,
+            "hold_start_s": 8.605356431422713,
+            "progress_gain_m": 32.50000003950655
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 76.60554696034386,
+            "first_contact_s": 3.0,
+            "hold_end_s": 16.5220230813139,
+            "hold_start_s": 8.5220230813139,
+            "progress_gain_m": 31.999999953846505
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 76.10554705098252,
+            "first_contact_s": 3.0,
+            "hold_end_s": 16.438689753614756,
+            "hold_start_s": 8.438689753614756,
+            "progress_gain_m": 31.50000004448517
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 75.6055469557702,
+            "first_contact_s": 3.0,
+            "hold_end_s": 16.35535640128184,
+            "hold_start_s": 8.35535640128184,
+            "progress_gain_m": 30.99999994927284
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 75.10554705574003,
+            "first_contact_s": 3.0,
+            "hold_end_s": 16.2720230737604,
+            "hold_start_s": 8.272023073760403,
+            "progress_gain_m": 30.50000004924268
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 74.60554695149963,
+            "first_contact_s": 3.0,
+            "hold_end_s": 16.188689719211297,
+            "hold_start_s": 8.188689719211297,
+            "progress_gain_m": 29.99999994500228
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 74.1055470602003,
+            "first_contact_s": 3.0,
+            "hold_end_s": 16.10535639172747,
+            "hold_start_s": 8.10535639172747,
+            "progress_gain_m": 29.50000005370294
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 73.6055469475866,
+            "first_contact_s": 3.0,
+            "hold_end_s": 16.022023034991747,
+            "hold_start_s": 8.022023034991747,
+            "progress_gain_m": 28.99999994108925
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 73.10554706430037,
+            "first_contact_s": 3.0,
+            "hold_end_s": 15.938689707395831,
+            "hold_start_s": 7.93868970739583,
+            "progress_gain_m": 28.500000057803014
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 72.6055469440736,
+            "first_contact_s": 3.0,
+            "hold_end_s": 15.855356348521749,
+            "hold_start_s": 7.855356348521749,
+            "progress_gain_m": 27.99999993757624
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 72.10554706799121,
+            "first_contact_s": 3.0,
+            "hold_end_s": 15.772023020658098,
+            "hold_start_s": 7.772023020658098,
+            "progress_gain_m": 27.500000061493857
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 71.60554694099099,
+            "first_contact_s": 3.0,
+            "hold_end_s": 15.688689659709498,
+            "hold_start_s": 7.688689659709498,
+            "progress_gain_m": 26.999999934493637
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 71.10554707123808,
+            "first_contact_s": 3.0,
+            "hold_end_s": 15.605356331420179,
+            "hold_start_s": 7.60535633142018,
+            "progress_gain_m": 26.500000064740725
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 70.60554693835728,
+            "first_contact_s": 3.0,
+            "hold_end_s": 15.522022968473395,
+            "hold_start_s": 7.5220229684733955,
+            "progress_gain_m": 25.999999931859925
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 70.10554707402065,
+            "first_contact_s": 3.0,
+            "hold_end_s": 15.43868963960178,
+            "hold_start_s": 7.43868963960178,
+            "progress_gain_m": 25.500000067523295
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 69.60554693617952,
+            "first_contact_s": 3.0,
+            "hold_end_s": 15.355356274742547,
+            "hold_start_s": 7.355356274742548,
+            "progress_gain_m": 24.99999992968217
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 69.10554707633244,
+            "first_contact_s": 3.0,
+            "hold_end_s": 15.272022945136737,
+            "hold_start_s": 7.272022945136737,
+            "progress_gain_m": 24.50000006983509
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 68.60554693445405,
+            "first_contact_s": 3.0,
+            "hold_end_s": 15.188689578457303,
+            "hold_start_s": 7.1886895784573035,
+            "progress_gain_m": 23.9999999279567
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 68.10554707818022,
+            "first_contact_s": 3.0,
+            "hold_end_s": 15.105356247973319,
+            "hold_start_s": 7.105356247973319,
+            "progress_gain_m": 23.50000007168287
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 67.60554693316737,
+            "first_contact_s": 3.0,
+            "hold_end_s": 15.022022879569707,
+            "hold_start_s": 7.022022879569708,
+            "progress_gain_m": 22.99999992667002
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 67.10554707958283,
+            "first_contact_s": 3.0,
+            "hold_end_s": 14.938689548074404,
+            "hold_start_s": 6.938689548074405,
+            "progress_gain_m": 22.50000007308548
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 66.60554693229737,
+            "first_contact_s": 3.0,
+            "hold_end_s": 14.855356178043987,
+            "hold_start_s": 6.855356178043986,
+            "progress_gain_m": 21.99999992580002
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 66.10554708056986,
+            "first_contact_s": 3.0,
+            "hold_end_s": 14.772022845417553,
+            "hold_start_s": 6.772022845417553,
+            "progress_gain_m": 21.50000007407251
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 65.60554693181444,
+            "first_contact_s": 3.0,
+            "hold_end_s": 14.6886894738569,
+            "hold_start_s": 6.6886894738569005,
+            "progress_gain_m": 20.99999992531709
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 65.10554708117995,
+            "first_contact_s": 3.0,
+            "hold_end_s": 14.605356139995015,
+            "hold_start_s": 6.605356139995015,
+            "progress_gain_m": 20.500000074682596
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 64.60554693168297,
+            "first_contact_s": 3.0,
+            "hold_end_s": 14.522022766998123,
+            "hold_start_s": 6.5220227669981234,
+            "progress_gain_m": 19.999999925185612
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 64.10554708145918,
+            "first_contact_s": 3.0,
+            "hold_end_s": 14.43868943181366,
+            "hold_start_s": 6.43868943181366,
+            "progress_gain_m": 19.500000074961825
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 63.60554693186277,
+            "first_contact_s": 3.0,
+            "hold_end_s": 14.355356057470537,
+            "hold_start_s": 6.355356057470537,
+            "progress_gain_m": 18.999999925365415
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 63.10554708145893,
+            "first_contact_s": 3.0,
+            "hold_end_s": 14.272022777510369,
+            "hold_start_s": 6.272022777510368,
+            "progress_gain_m": 18.500000074961577
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 62.605546932310524,
+            "first_contact_s": 3.0,
+            "hold_end_s": 14.188691555265052,
+            "hold_start_s": 6.188691555265053,
+            "progress_gain_m": 17.99999992581317
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 62.10554708123402,
+            "first_contact_s": 3.0,
+            "hold_end_s": 14.105370866577646,
+            "hold_start_s": 6.105370866577646,
+            "progress_gain_m": 17.50000007473667
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 61.60554693298133,
+            "first_contact_s": 3.0,
+            "hold_end_s": 14.022074504949243,
+            "hold_start_s": 6.022074504949243,
+            "progress_gain_m": 16.99999992648398
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 61.10554708084069,
+            "first_contact_s": 3.0003436471325164,
+            "hold_end_s": 13.938843917059877,
+            "hold_start_s": 5.938843917059876,
+            "progress_gain_m": 16.500000074343333
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 60.605546933830105,
+            "first_contact_s": 3.0010121925424422,
+            "hold_end_s": 13.853416069954477,
+            "hold_start_s": 5.853416069954478,
+            "progress_gain_m": 15.999999927332752
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 60.10554708033463,
+            "first_contact_s": 3.004204735069684,
+            "hold_end_s": 13.76813167729684,
+            "hold_start_s": 5.768131677296839,
+            "progress_gain_m": 15.500000073837278
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 59.60554693481296,
+            "first_contact_s": 3.007631169307874,
+            "hold_end_s": 13.68020468454116,
+            "hold_start_s": 5.6802046845411605,
+            "progress_gain_m": 14.99999992831561
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 59.10554707976915,
+            "first_contact_s": 3.0137334739220547,
+            "hold_end_s": 13.59215111815013,
+            "hold_start_s": 5.592151118150131,
+            "progress_gain_m": 14.5000000732718
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 58.60554693588851,
+            "first_contact_s": 3.0208984495389744,
+            "hold_end_s": 13.501791014036005,
+            "hold_start_s": 5.501791014036004,
+            "progress_gain_m": 13.999999929391159
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 58.10554707919341,
+            "first_contact_s": 3.0304241139732158,
+            "hold_end_s": 13.410238299622597,
+            "hold_start_s": 5.410238299622597,
+            "progress_gain_m": 13.500000072696054
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 57.605546937019,
+            "first_contact_s": 3.042608236288326,
+            "hold_end_s": 13.317390702944344,
+            "hold_start_s": 5.317390702944343,
+            "progress_gain_m": 12.999999930521646
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 57.10554707865094,
+            "first_contact_s": 3.056480634447983,
+            "hold_end_s": 13.221551547029222,
+            "hold_start_s": 5.221551547029221,
+            "progress_gain_m": 12.50000007215359
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 56.605546938171315,
+            "first_contact_s": 3.075485123287647,
+            "hold_end_s": 13.126149260292781,
+            "hold_start_s": 5.126149260292781,
+            "progress_gain_m": 11.999999931673962
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 56.10554707817835,
+            "first_contact_s": 3.0967681334345913,
+            "hold_end_s": 13.02697434001767,
+            "hold_start_s": 5.026974340017669,
+            "progress_gain_m": 11.500000071680994
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 55.6055469393178,
+            "first_contact_s": 3.123610473992749,
+            "hold_end_s": 12.927003201426174,
+            "hold_start_s": 4.927003201426175,
+            "progress_gain_m": 10.999999932820444
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 55.1055470778042,
+            "first_contact_s": 3.163515812431991,
+            "hold_end_s": 12.824817173529341,
+            "hold_start_s": 4.8248171735293415,
+            "progress_gain_m": 10.500000071306843
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 54.60554694043692,
+            "first_contact_s": 3.2,
+            "hold_end_s": 12.718691597429272,
+            "hold_start_s": 4.718691597429272,
+            "progress_gain_m": 9.99999993393957
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 54.10555700868376,
+            "first_contact_s": 3.238306232046313,
+            "hold_end_s": 12.613262693823174,
+            "hold_start_s": 4.613262693823173,
+            "progress_gain_m": 9.500010002186407
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 53.60555832807509,
+            "first_contact_s": 3.31693410527417,
+            "hold_end_s": 12.50243662121969,
+            "hold_start_s": 4.502436621219689,
+            "progress_gain_m": 9.000011321577738
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 53.10577241565317,
+            "first_contact_s": 3.4000000000000004,
+            "hold_end_s": 12.389349959128356,
+            "hold_start_s": 4.3893499591283565,
+            "progress_gain_m": 8.500225409155817
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 52.60561199421201,
+            "first_contact_s": 3.5406665524098355,
+            "hold_end_s": 12.270728334676017,
+            "hold_start_s": 4.270728334676017,
+            "progress_gain_m": 8.000064987714659
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 52.10641156173106,
+            "first_contact_s": 3.744207011983123,
+            "hold_end_s": 12.142578334908306,
+            "hold_start_s": 4.142578334908306,
+            "progress_gain_m": 7.500864555233704
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 51.605696477908495,
+            "first_contact_s": 4.2,
+            "hold_end_s": 12.008392248594264,
+            "hold_start_s": 4.008392248594264,
+            "progress_gain_m": 7.000149471411142
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 51.10748212141934,
+            "first_contact_s": 4.800000000000001,
+            "hold_end_s": 11.858481147507113,
+            "hold_start_s": 3.8584811475071126,
+            "progress_gain_m": 6.501935114921984
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 50.60577363381625,
+            "first_contact_s": 5.6000000000000005,
+            "hold_end_s": 11.702610340514706,
+            "hold_start_s": 3.702610340514707,
+            "progress_gain_m": 6.000226627318895
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 50.108843537058455,
+            "first_contact_s": 6.2,
+            "hold_end_s": 11.529024315774532,
+            "hold_start_s": 3.5290243157745325,
+            "progress_gain_m": 5.5032965305611015
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 49.605806134298675,
+            "first_contact_s": 6.800000000000001,
+            "hold_end_s": 11.349525140918804,
+            "hold_start_s": 3.3495251409188027,
+            "progress_gain_m": 5.000259127801321
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 49.128204157472815,
+            "first_contact_s": 7.4,
+            "hold_end_s": 11.165289574639559,
+            "hold_start_s": 3.165289574639559,
+            "progress_gain_m": 4.522657150975462
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 45.59015020557916,
+            "first_contact_s": null,
+            "hold_end_s": 9.424979512019506,
+            "hold_start_s": 1.4249795120195068,
+            "progress_gain_m": 0.9846031990818034
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 84.60539162620545,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 17.734798883610992,
+            "hold_start_s": 9.734798883610992,
+            "progress_gain_m": 39.99984461970809
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 84.10635821371329,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 17.651284226167256,
+            "hold_start_s": 9.651284226167258,
+            "progress_gain_m": 39.50081120721594
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 83.60534065780898,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 17.56778570392077,
+            "hold_start_s": 9.567785703920771,
+            "progress_gain_m": 38.99979365131163
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 83.10656672652269,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 17.484227382390088,
+            "hold_start_s": 9.484227382390088,
+            "progress_gain_m": 38.50101972002533
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 82.6052954233952,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 17.400686431046747,
+            "hold_start_s": 9.400686431046747,
+            "progress_gain_m": 37.99974841689785
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 82.10677964387932,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 17.317084738699407,
+            "hold_start_s": 9.317084738699409,
+            "progress_gain_m": 37.50123263738197
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 81.60525579218758,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 17.23350155604278,
+            "hold_start_s": 9.233501556042778,
+            "progress_gain_m": 36.999708785690224
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 81.10699652384274,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 17.149856838321185,
+            "hold_start_s": 9.149856838321186,
+            "progress_gain_m": 36.501449517345385
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 80.60522159699893,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 17.066231668306692,
+            "hold_start_s": 9.066231668306692,
+            "progress_gain_m": 35.99967459050158
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 80.10721688669754,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 16.98254432226792,
+            "hold_start_s": 8.98254432226792,
+            "progress_gain_m": 35.50166988020019
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 79.6051926364679,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 16.898877455615384,
+            "hold_start_s": 8.898877455615384,
+            "progress_gain_m": 34.99964562997055
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 79.10744021748847,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 16.815147929357437,
+            "hold_start_s": 8.815147929357439,
+            "progress_gain_m": 34.50189321099112
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 78.6051686775902,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 16.731439704142048,
+            "hold_start_s": 8.731439704142048,
+            "progress_gain_m": 33.99962167109285
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 78.10766596891963,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 16.647668496220174,
+            "hold_start_s": 8.647668496220174,
+            "progress_gain_m": 33.50211896242228
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 77.60514945852178,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 16.5639192984464,
+            "hold_start_s": 8.5639192984464,
+            "progress_gain_m": 32.999602452024426
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 77.10789356459371,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 16.480106957284853,
+            "hold_start_s": 8.480106957284852,
+            "progress_gain_m": 32.502346558096356
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 76.60513469162987,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 16.39631722142783,
+            "hold_start_s": 8.39631722142783,
+            "progress_gain_m": 31.999587685132518
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 76.10812240256315,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 16.31246434473131,
+            "hold_start_s": 8.312464344731312,
+            "progress_gain_m": 31.5025753960658
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 75.60512406676425,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 16.22863455423027,
+            "hold_start_s": 8.22863455423027,
+            "progress_gain_m": 30.999577060266894
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 75.10835185916082,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 16.144741788398136,
+            "hold_start_s": 8.144741788398134,
+            "progress_gain_m": 30.502804852663466
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 74.60511725471927,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 16.06087247608695,
+            "hold_start_s": 8.06087247608695,
+            "progress_gain_m": 29.99957024822192
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 74.10858129307326,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 15.976940515631535,
+            "hold_start_s": 7.976940515631535,
+            "progress_gain_m": 29.503034286575904
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 73.6051139108551,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 15.89303226409247,
+            "hold_start_s": 7.89303226409247,
+            "progress_gain_m": 28.999566904357742
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 73.10881004961745,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 15.809061851061438,
+            "hold_start_s": 7.809061851061438,
+            "progress_gain_m": 28.503263043120093
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 72.60511367884412,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 15.72511529288889,
+            "hold_start_s": 7.725115292888891,
+            "progress_gain_m": 27.999566672346766
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 72.10903746517683,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 15.641107216289589,
+            "hold_start_s": 7.641107216289589,
+            "progress_gain_m": 27.503490458679472
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 71.60511619450693,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 15.557123034252193,
+            "hold_start_s": 7.557123034252192,
+            "progress_gain_m": 26.99956918800958
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 71.10926287175138,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 15.47307812947446,
+            "hold_start_s": 7.473078129474461,
+            "progress_gain_m": 26.50371586525403
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 70.60512108970005,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 15.389057056565115,
+            "hold_start_s": 7.389057056565115,
+            "progress_gain_m": 25.999574083202695
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 70.10948560157343,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 15.304976204797075,
+            "hold_start_s": 7.304976204797074,
+            "progress_gain_m": 25.50393859507607
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 69.60512799621667,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 15.220919024162196,
+            "hold_start_s": 7.220919024162196,
+            "progress_gain_m": 24.999580989719313
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 69.10970499173938,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 15.136803151792023,
+            "hold_start_s": 7.136803151792023,
+            "progress_gain_m": 24.504157985242024
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 68.60513654966019,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 15.052710696532792,
+            "hold_start_s": 7.052710696532792,
+            "progress_gain_m": 23.999589543162834
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 68.10992038880734,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 14.968560774528047,
+            "hold_start_s": 6.968560774528046,
+            "progress_gain_m": 23.504373382309986
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 67.60514639324958,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 14.884433927368075,
+            "hold_start_s": 6.884433927368075,
+            "progress_gain_m": 22.99959938675223
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 67.1101311533094,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 14.800250970622837,
+            "hold_start_s": 6.800250970622837,
+            "progress_gain_m": 22.504584146812043
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 66.60515718151524,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 14.716090663438393,
+            "hold_start_s": 6.7160906634383934,
+            "progress_gain_m": 21.999610175017885
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 66.11033666412891,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 14.631875730077498,
+            "hold_start_s": 6.631875730077498,
+            "progress_gain_m": 21.504789657631555
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 65.60516858384393,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 14.547682943287706,
+            "hold_start_s": 6.547682943287706,
+            "progress_gain_m": 20.99962157734658
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 65.11053632269346,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 14.463437133916804,
+            "hold_start_s": 6.463437133916804,
+            "progress_gain_m": 20.50498931619611
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 64.60518028783227,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 14.379212895732863,
+            "hold_start_s": 6.379212895732864,
+            "progress_gain_m": 19.999633281334916
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 64.11072955693714,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 14.294937352622568,
+            "hold_start_s": 6.2949373526225685,
+            "progress_gain_m": 19.50518255043979
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 63.60519200240896,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 14.210682738156125,
+            "hold_start_s": 6.210682738156125,
+            "progress_gain_m": 18.99964499591161
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 63.11091582498692,
+            "first_contact_s": 3.0882504137810396,
+            "hold_end_s": 14.126378653035903,
+            "hold_start_s": 6.126378653035903,
+            "progress_gain_m": 18.505368818489565
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 62.60520346068774,
+            "first_contact_s": 3.0885060908678064,
+            "hold_end_s": 14.042094834565962,
+            "hold_start_s": 6.042094834565961,
+            "progress_gain_m": 17.999656454190387
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 62.111094618533,
+            "first_contact_s": 3.090572234925001,
+            "hold_end_s": 13.957783440234268,
+            "hold_start_s": 5.957783440234268,
+            "progress_gain_m": 17.50554761203565
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 61.60521442251509,
+            "first_contact_s": 3.0933759052016154,
+            "hold_end_s": 13.87167045228814,
+            "hold_start_s": 5.871670452288138,
+            "progress_gain_m": 16.999667416017736
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 61.111265465845285,
+            "first_contact_s": 3.0985732344657744,
+            "hold_end_s": 13.785475174224388,
+            "hold_start_s": 5.785475174224389,
+            "progress_gain_m": 16.505718459347932
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 60.60522467667981,
+            "first_contact_s": 3.1042369815764443,
+            "hold_end_s": 13.696686035777624,
+            "hold_start_s": 5.696686035777625,
+            "progress_gain_m": 15.999677670182457
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 60.11142793440319,
+            "first_contact_s": 3.1127651537704537,
+            "hold_end_s": 13.6078265716969,
+            "hold_start_s": 5.607826571696901,
+            "progress_gain_m": 15.505880927905835
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 59.60523404275448,
+            "first_contact_s": 3.122096253722367,
+            "hold_end_s": 13.516098578500873,
+            "hold_start_s": 5.516098578500874,
+            "progress_gain_m": 14.999687036257129
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 59.11158163311068,
+            "first_contact_s": 3.134914203741663,
+            "hold_end_s": 13.424315850348629,
+            "hold_start_s": 5.424315850348629,
+            "progress_gain_m": 14.506034626613328
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 58.605242372543096,
+            "first_contact_s": 3.1490264777996178,
+            "hold_end_s": 13.329342677458516,
+            "hold_start_s": 5.329342677458517,
+            "progress_gain_m": 13.999695366045742
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 58.11172621407337,
+            "first_contact_s": 3.1720712335895365,
+            "hold_end_s": 13.234332513835042,
+            "hold_start_s": 5.234332513835042,
+            "progress_gain_m": 13.506179207576018
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 57.60524955111333,
+            "first_contact_s": 3.2,
+            "hold_end_s": 13.135747287631588,
+            "hold_start_s": 5.135747287631587,
+            "progress_gain_m": 12.999702544615978
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 57.11186137392019,
+            "first_contact_s": 3.2129394997103247,
+            "hold_end_s": 13.037148491436518,
+            "hold_start_s": 5.037148491436517,
+            "progress_gain_m": 12.506314367422839
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 56.605255497396854,
+            "first_contact_s": 3.2410470992874765,
+            "hold_end_s": 12.934512204336068,
+            "hold_start_s": 4.934512204336068,
+            "progress_gain_m": 11.9997084908995
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 56.111986854657424,
+            "first_contact_s": 3.2775010126793007,
+            "hold_end_s": 12.831890533567236,
+            "hold_start_s": 4.831890533567237,
+            "progress_gain_m": 11.50643984816007
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 55.6052601643465,
+            "first_contact_s": 3.3424819822602356,
+            "hold_end_s": 12.724663544218416,
+            "hold_start_s": 4.724663544218416,
+            "progress_gain_m": 10.999713157849143
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 55.112102444048865,
+            "first_contact_s": 3.4000000000000004,
+            "hold_end_s": 12.617489131024797,
+            "hold_start_s": 4.617489131024798,
+            "progress_gain_m": 10.506555437551512
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 54.60526353864446,
+            "first_contact_s": 3.4980327231051014,
+            "hold_end_s": 12.50500322088298,
+            "hold_start_s": 4.50500322088298,
+            "progress_gain_m": 9.999716532147104
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 54.112203639259214,
+            "first_contact_s": 3.6,
+            "hold_end_s": 12.392617547813668,
+            "hold_start_s": 4.392617547813669,
+            "progress_gain_m": 9.50665663276186
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 53.60523342614836,
+            "first_contact_s": 3.6875817556578774,
+            "hold_end_s": 12.274013611867383,
+            "hold_start_s": 4.2740136118673835,
+            "progress_gain_m": 8.999686419651006
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 53.11221355114768,
+            "first_contact_s": 4.0,
+            "hold_end_s": 12.155568917427729,
+            "hold_start_s": 4.15556891742773,
+            "progress_gain_m": 8.50666654465033
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 52.60506995232631,
+            "first_contact_s": 4.4,
+            "hold_end_s": 12.029723350730311,
+            "hold_start_s": 4.02972335073031,
+            "progress_gain_m": 7.999522945828957
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 52.11207847276742,
+            "first_contact_s": 5.0,
+            "hold_end_s": 11.904124532199196,
+            "hold_start_s": 3.9041245321991966,
+            "progress_gain_m": 7.506531466270069
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 51.60477449676167,
+            "first_contact_s": 5.6000000000000005,
+            "hold_end_s": 11.769548064336002,
+            "hold_start_s": 3.7695480643360013,
+            "progress_gain_m": 6.9992274902643175
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 51.11185064104215,
+            "first_contact_s": 6.0,
+            "hold_end_s": 11.635330945686624,
+            "hold_start_s": 3.635330945686624,
+            "progress_gain_m": 6.5063036345448
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 50.60443112552358,
+            "first_contact_s": 6.4,
+            "hold_end_s": 11.489930642218429,
+            "hold_start_s": 3.489930642218429,
+            "progress_gain_m": 5.998884119026229
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 50.111631386272705,
+            "first_contact_s": 7.0,
+            "hold_end_s": 11.345102458442213,
+            "hold_start_s": 3.3451024584422138,
+            "progress_gain_m": 5.506084379775352
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 50.058635611544744,
+            "first_contact_s": 7.0,
+            "hold_end_s": 11.329218693899247,
+            "hold_start_s": 3.3292186938992465,
+            "progress_gain_m": 5.453088605047391
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 46.12041771501272,
+            "first_contact_s": null,
+            "hold_end_s": 9.784772839429756,
+            "hold_start_s": 1.784772839429756,
+            "progress_gain_m": 1.5148707085153674
+          }
+        ],
+        "initial_progress_m": 44.60554700649735,
+        "planning_diagnostics": {
+          "candidates": [
+            {
+              "disposition": "CheckedStop",
+              "index": 0,
+              "lateral_target_m": 0.0,
+              "nominal_forecast_conflict": {
+                "forecast_horizon_s": 8.0,
+                "forecast_radius_m": 3.0877125832053416,
+                "minimum_clearance_floor_m": 0.0,
+                "prediction_id": 1,
+                "relative_time_s": 3.0
+              },
+              "profile": {
+                "end_progress_m": 45.59015020557916,
+                "end_time_s": 9.424979512019506,
+                "point_count": 4,
+                "searched_stop": true,
+                "terminal_speed_m_s": 0.0
+              }
+            },
+            {
+              "disposition": "CheckedStop",
+              "index": 1,
+              "lateral_target_m": 3.9,
+              "nominal_forecast_conflict": {
+                "forecast_horizon_s": 8.0,
+                "forecast_radius_m": 3.14155682026873,
+                "minimum_clearance_floor_m": 0.0,
+                "prediction_id": 1,
+                "relative_time_s": 3.0882504137810396
+              },
+              "profile": {
+                "end_progress_m": 46.12041771501272,
+                "end_time_s": 9.784772839429756,
+                "point_count": 6,
+                "searched_stop": true,
+                "terminal_speed_m_s": 0.0
+              }
+            },
+            {
+              "disposition": "OppositeSideDuringPass",
+              "index": 2,
+              "lateral_target_m": -3.9,
+              "nominal_forecast_conflict": null,
+              "profile": null
+            }
+          ],
+          "failure": null,
+          "obstruction_stop_active": false,
+          "obstruction_stop_requested": false,
+          "planning_span_m": 40.0,
+          "refinement_confirmation": null,
+          "route_progress_m": 44.60554700649735,
+          "scene_acquisition_s": 65.0,
+          "selected_candidate": 1
+        },
+        "trajectory": {
+          "lateral_target": 3.9,
+          "mode": "Yield",
+          "points": [
+            {
+              "position": {
+                "x": 44.487645864316896,
+                "y": 7.058412497986347
+              },
+              "speed": 0.0008110350333353936,
+              "time": 0.0
+            },
+            {
+              "position": {
+                "x": 44.995051789384924,
+                "y": 7.05091269519744
+              },
+              "speed": 1.42472665808526,
+              "time": 0.7119578115259624
+            },
+            {
+              "position": {
+                "x": 45.50246114312248,
+                "y": 7.041905790175945
+              },
+              "speed": 1.43604670508136,
+              "time": 1.066749486889076
+            },
+            {
+              "position": {
+                "x": 46.00983875386214,
+                "y": 7.031030923460358
+              },
+              "speed": 0.17959280975689643,
+              "time": 1.6949764345513076
+            },
+            {
+              "position": {
+                "x": 46.017899529452265,
+                "y": 7.030825436253715
+              },
+              "speed": 0.0,
+              "time": 1.784772839429756
+            },
+            {
+              "position": {
+                "x": 46.017899529452265,
+                "y": 7.030825436253715
+              },
+              "speed": 0.0,
+              "time": 9.784772839429756
+            }
+          ]
+        }
+      },
+      "search": {
+        "sweep_counts": {
+          "moving_conflict": 130,
+          "stationary_tail_conflict": 13,
+          "clear_below_2m": 2
+        },
+        "maximum_clear_progress_gain_m": 1.5148707085153674,
+        "global_infeasibility_proven": false,
+        "confirmation_authorized": false
+      },
+      "planning_validation": {
+        "capture_enabled": true,
+        "verified_control_ticks": 1301,
+        "maximum_candidate_records": 3,
+        "candidate_dispositions": {
+          "CompletePath": 216,
+          "NoCheckedStop": 64,
+          "CheckedStop": 2462,
+          "OppositeSideDuringPass": 1161
+        },
+        "selected_profiles": {
+          "CompletePath": 72,
+          "CheckedStop": 1224
+        },
+        "nominal_forecast_conflicts": 2526,
+        "forecast_blockers": {
+          "1": 2526
+        },
+        "fault_braking_ticks": 0
+      },
+      "selected_path_certificate": {
+        "passed": true,
+        "active": true,
+        "certified_paths": 1296,
+        "interval_bounds": 55848,
+        "actor_truth_used": false,
+        "uncertainty_calibrated": false
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "seed": 42,
+      "verified_legacy_ticks": 1301,
+      "sensor_sha256": "8d688b1cd42ef0356a836fb090a066fda013950e5c7f90000c7a1b1bb59fda89",
+      "probe": {
+        "attempts": [
+          {
+            "candidate_index": 0,
+            "end_progress_m": 85.52721517676089,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 17.861640610018036,
+            "hold_start_s": 9.861640610018034,
+            "progress_gain_m": 39.99999999415174
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 85.02721518717182,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 17.778307277479627,
+            "hold_start_s": 9.778307277479627,
+            "progress_gain_m": 39.50000000456267
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 84.52721517259296,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 17.694973941997198,
+            "hold_start_s": 9.694973941997198,
+            "progress_gain_m": 38.99999998998381
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 84.02721519102309,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 17.611640610165114,
+            "hold_start_s": 9.611640610165114,
+            "progress_gain_m": 38.50000000841394
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 83.52721516745734,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 17.528307273182573,
+            "hold_start_s": 9.528307273182573,
+            "progress_gain_m": 37.999999984848195
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 83.02721519594,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 17.44497394222803,
+            "hold_start_s": 9.444973942228032,
+            "progress_gain_m": 37.500000013330855
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 82.52721516143599,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 17.361640603403192,
+            "hold_start_s": 9.361640603403192,
+            "progress_gain_m": 36.99999997882684
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 82.02721520185399,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 17.27830727347943,
+            "hold_start_s": 9.278307273479431,
+            "progress_gain_m": 36.500000019244844
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 81.52721515461839,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 17.194973932493134,
+            "hold_start_s": 9.194973932493134,
+            "progress_gain_m": 35.99999997200924
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 81.02721520868647,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 17.11164060373352,
+            "hold_start_s": 9.11164060373352,
+            "progress_gain_m": 35.50000002607732
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 80.52721514709957,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 17.028307260292117,
+            "hold_start_s": 9.028307260292115,
+            "progress_gain_m": 34.99999996449042
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 80.02721521635058,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 16.94497393280873,
+            "hold_start_s": 8.944973932808727,
+            "progress_gain_m": 34.500000033741436
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 79.52721513897808,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 16.861640586646036,
+            "hold_start_s": 8.861640586646036,
+            "progress_gain_m": 33.99999995636893
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 79.02721522475323,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 16.77830726052879,
+            "hold_start_s": 8.778307260528791,
+            "progress_gain_m": 33.50000004214409
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 78.5272151303541,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 16.694973911407565,
+            "hold_start_s": 8.694973911407565,
+            "progress_gain_m": 32.999999947744946
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 78.02721523379716,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 16.61164058672386,
+            "hold_start_s": 8.61164058672386,
+            "progress_gain_m": 32.50000005118802
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 77.5272151213274,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 16.528307234436614,
+            "hold_start_s": 8.528307234436614,
+            "progress_gain_m": 31.999999938718254
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 77.02721524338301,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 16.44497391123152,
+            "hold_start_s": 8.44497391123152,
+            "progress_gain_m": 31.500000060773864
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 76.52721511199556,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 16.361640555600857,
+            "hold_start_s": 8.361640555600857,
+            "progress_gain_m": 30.999999929386412
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 76.0272152534114,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 16.27830723389782,
+            "hold_start_s": 8.278307233897818,
+            "progress_gain_m": 30.50000007080225
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 75.52721510245229,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 16.194973874776245,
+            "hold_start_s": 8.194973874776244,
+            "progress_gain_m": 29.99999991984314
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 75.02721526378488,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 16.11164055457823,
+            "hold_start_s": 8.11164055457823,
+            "progress_gain_m": 29.500000081175735
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 74.52721509278595,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 16.028307191847475,
+            "hold_start_s": 8.028307191847476,
+            "progress_gain_m": 28.999999910176804
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 74.02721527440974,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 15.944973873138558,
+            "hold_start_s": 7.944973873138559,
+            "progress_gain_m": 28.500000091800594
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 73.52721508307833,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 15.861640506708486,
+            "hold_start_s": 7.861640506708486,
+            "progress_gain_m": 27.999999900469184
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 73.02721528519753,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 15.778307189455777,
+            "hold_start_s": 7.778307189455778,
+            "progress_gain_m": 27.50000010258838
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 72.52721507340367,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 15.69497381926293,
+            "hold_start_s": 7.69497381926293,
+            "progress_gain_m": 26.99999989079452
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 72.02721529606643,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 15.611640503418773,
+            "hold_start_s": 7.611640503418772,
+            "progress_gain_m": 26.500000113457283
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 71.52721506382802,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 15.528307129424643,
+            "hold_start_s": 7.528307129424643,
+            "progress_gain_m": 25.999999881218876
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 71.02721530694213,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 15.444973814929009,
+            "hold_start_s": 7.444973814929009,
+            "progress_gain_m": 25.500000124332978
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 70.52721505440876,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 15.361640437118114,
+            "hold_start_s": 7.361640437118114,
+            "progress_gain_m": 24.99999987179961
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 70.02721531775875,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 15.27830712390113,
+            "hold_start_s": 7.278307123901129,
+            "progress_gain_m": 24.500000135149598
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 69.52721504519451,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 15.1949737422789,
+            "hold_start_s": 7.1949737422789015,
+            "progress_gain_m": 23.999999862585362
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 69.02721532845896,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 15.1116404302634,
+            "hold_start_s": 7.1116404302634,
+            "progress_gain_m": 23.500000145849818
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 68.52721503622527,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 15.028307044854103,
+            "hold_start_s": 7.028307044854103,
+            "progress_gain_m": 22.999999853616124
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 68.02721533899424,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 14.944973733958117,
+            "hold_start_s": 6.944973733958117,
+            "progress_gain_m": 22.50000015638509
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 67.52721502753278,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 14.861640344802728,
+            "hold_start_s": 6.861640344802728,
+            "progress_gain_m": 21.99999984492363
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 67.02721534932454,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 14.778307034941887,
+            "hold_start_s": 6.7783070349418875,
+            "progress_gain_m": 21.500000166715388
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 66.5272150191411,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 14.694973642096075,
+            "hold_start_s": 6.694973642096075,
+            "progress_gain_m": 20.99999983653195
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 66.02721535941771,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 14.611640333185807,
+            "hold_start_s": 6.611640333185808,
+            "progress_gain_m": 20.500000176808562
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 65.52721501106748,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 14.528306936718057,
+            "hold_start_s": 6.5283069367180575,
+            "progress_gain_m": 19.999999828458336
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 65.02721536924886,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 14.444973628675555,
+            "hold_start_s": 6.444973628675556,
+            "progress_gain_m": 19.500000186639717
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 64.52721500332318,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 14.361640228665518,
+            "hold_start_s": 6.361640228665518,
+            "progress_gain_m": 18.99999982071403
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 64.02721537879928,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 14.278306989311139,
+            "hold_start_s": 6.2783069893111385,
+            "progress_gain_m": 18.500000196190136
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 63.52721499591463,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 14.19497593722644,
+            "hold_start_s": 6.19497593722644,
+            "progress_gain_m": 17.999999813305486
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 63.02721538805533,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 14.111656263967863,
+            "hold_start_s": 6.1116562639678635,
+            "progress_gain_m": 17.500000205446185
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 62.5272149888445,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 14.028362499436357,
+            "hold_start_s": 6.028362499436357,
+            "progress_gain_m": 16.99999980623535
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 62.027215397007275,
+            "first_contact_s": 2.8425277261594544,
+            "hold_end_s": 13.945134021095795,
+            "hold_start_s": 5.945134021095795,
+            "progress_gain_m": 16.500000214398128
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 61.52721498211284,
+            "first_contact_s": 2.8425579413762705,
+            "hold_end_s": 13.859892528317129,
+            "hold_start_s": 5.85989252831713,
+            "progress_gain_m": 15.99999979950369
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 61.027215405647866,
+            "first_contact_s": 2.84284945882321,
+            "hold_end_s": 13.774634402373112,
+            "hold_start_s": 5.7746344023731115,
+            "progress_gain_m": 15.500000223038718
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 60.527214975718294,
+            "first_contact_s": 2.8423262489131096,
+            "hold_end_s": 13.686735879414952,
+            "hold_start_s": 5.686735879414952,
+            "progress_gain_m": 14.999999793109147
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 60.02721541397118,
+            "first_contact_s": 2.843295240866325,
+            "hold_end_s": 13.598886504138115,
+            "hold_start_s": 5.5988865041381155,
+            "progress_gain_m": 14.50000023136203
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 59.52721496965919,
+            "first_contact_s": 2.844501417286127,
+            "hold_end_s": 13.508582782176823,
+            "hold_start_s": 5.508582782176824,
+            "progress_gain_m": 13.999999787050044
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 59.027215421971256,
+            "first_contact_s": 2.847529364887265,
+            "hold_end_s": 13.4172154529352,
+            "hold_start_s": 5.417215452935199,
+            "progress_gain_m": 13.500000239362109
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 58.527214963934554,
+            "first_contact_s": 2.852363319424168,
+            "hold_end_s": 13.324464236092139,
+            "hold_start_s": 5.324464236092139,
+            "progress_gain_m": 12.999999781325407
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 58.027215429641025,
+            "first_contact_s": 2.858601329751001,
+            "hold_end_s": 13.22876210681966,
+            "hold_start_s": 5.22876210681966,
+            "progress_gain_m": 12.500000247031878
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 57.52721495854509,
+            "first_contact_s": 2.8712832022748764,
+            "hold_end_s": 13.133508119571434,
+            "hold_start_s": 5.1335081195714345,
+            "progress_gain_m": 11.99999977593594
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 57.02721543697122,
+            "first_contact_s": 2.8856246542770125,
+            "hold_end_s": 13.034499186627208,
+            "hold_start_s": 5.034499186627209,
+            "progress_gain_m": 11.500000254362071
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 56.52721495349393,
+            "first_contact_s": 2.905428414002626,
+            "hold_end_s": 12.934630525053612,
+            "hold_start_s": 4.9346305250536115,
+            "progress_gain_m": 10.999999770884784
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 56.02721544394958,
+            "first_contact_s": 2.9306670136710316,
+            "hold_end_s": 12.832682100101682,
+            "hold_start_s": 4.832682100101682,
+            "progress_gain_m": 10.500000261340432
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 55.52721494878734,
+            "first_contact_s": 2.9608651423491685,
+            "hold_end_s": 12.726555043220987,
+            "hold_start_s": 4.726555043220986,
+            "progress_gain_m": 9.999999766178192
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 55.02722116875373,
+            "first_contact_s": 2.997262575372678,
+            "hold_end_s": 12.621444488119446,
+            "hold_start_s": 4.621444488119446,
+            "progress_gain_m": 9.50000598614458
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 54.527195762339346,
+            "first_contact_s": 3.0354600916939973,
+            "hold_end_s": 12.510968308487904,
+            "hold_start_s": 4.510968308487904,
+            "progress_gain_m": 8.999980579730199
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 54.02735661309065,
+            "first_contact_s": 3.0851517022139956,
+            "hold_end_s": 12.397716963984532,
+            "hold_start_s": 4.397716963984533,
+            "progress_gain_m": 8.500141430481506
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 53.527100437737005,
+            "first_contact_s": 3.1582920948350397,
+            "hold_end_s": 12.279312176179182,
+            "hold_start_s": 4.279312176179182,
+            "progress_gain_m": 7.999885255127857
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 53.02780188531951,
+            "first_contact_s": 3.217881782076408,
+            "hold_end_s": 12.150483388004053,
+            "hold_start_s": 4.150483388004053,
+            "progress_gain_m": 7.500586702710365
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 52.52693625323661,
+            "first_contact_s": 3.4000000000000004,
+            "hold_end_s": 12.016029931886962,
+            "hold_start_s": 4.016029931886963,
+            "progress_gain_m": 6.999721070627466
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 52.028630926826544,
+            "first_contact_s": 3.606492088765279,
+            "hold_end_s": 11.86476841522795,
+            "hold_start_s": 3.86476841522795,
+            "progress_gain_m": 6.501415744217397
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 51.526758605325746,
+            "first_contact_s": 4.4,
+            "hold_end_s": 11.708048166233961,
+            "hold_start_s": 3.7080481662339606,
+            "progress_gain_m": 5.999543422716599
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 51.02980492500859,
+            "first_contact_s": 5.0,
+            "hold_end_s": 11.532642982944314,
+            "hold_start_s": 3.5326429829443136,
+            "progress_gain_m": 5.502589742399444
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 50.526632852159906,
+            "first_contact_s": 5.800000000000001,
+            "hold_end_s": 11.351922618764052,
+            "hold_start_s": 3.351922618764051,
+            "progress_gain_m": 4.999417669550759
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 50.031188714672815,
+            "first_contact_s": 6.4,
+            "hold_end_s": 11.155678549576418,
+            "hold_start_s": 3.1556785495764177,
+            "progress_gain_m": 4.503973532063668
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 49.52660661115685,
+            "first_contact_s": 7.0,
+            "hold_end_s": 10.952046051445652,
+            "hold_start_s": 2.9520460514456524,
+            "progress_gain_m": 3.9993914285477032
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 49.30861782147725,
+            "first_contact_s": 7.2,
+            "hold_end_s": 10.857646467738107,
+            "hold_start_s": 2.857646467738106,
+            "progress_gain_m": 3.7814026388681015
+          },
+          {
+            "candidate_index": 0,
+            "end_progress_m": 45.61091818862079,
+            "first_contact_s": null,
+            "hold_end_s": 135.23789896973676,
+            "hold_start_s": 127.23789896973676,
+            "progress_gain_m": 0.08370300601164615
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 85.5269780279781,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 17.732944387356795,
+            "hold_start_s": 9.732944387356794,
+            "progress_gain_m": 39.999762845368956
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 85.02773178828635,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 17.64948158658455,
+            "hold_start_s": 9.649481586584548,
+            "progress_gain_m": 39.5005166056772
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 84.52688151870827,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 17.56601105404664,
+            "hold_start_s": 9.566011054046642,
+            "progress_gain_m": 38.99966633609912
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 84.02789442834744,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 17.482504122333992,
+            "hold_start_s": 9.482504122333992,
+            "progress_gain_m": 38.50067924573829
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 83.52679104855395,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 17.398991269841886,
+            "hold_start_s": 9.398991269841888,
+            "progress_gain_m": 37.9995758659448
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 83.02806197986878,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 17.31544042972495,
+            "hold_start_s": 9.315440429724953,
+            "progress_gain_m": 37.50084679725963
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 82.52670656434572,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 17.231885434098377,
+            "hold_start_s": 9.231885434098377,
+            "progress_gain_m": 36.99949138173657
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 82.02823409098288,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 17.148290962636644,
+            "hold_start_s": 9.148290962636642,
+            "progress_gain_m": 36.50101890837373
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 81.52662797446571,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 17.064694044450498,
+            "hold_start_s": 9.064694044450496,
+            "progress_gain_m": 35.999412791856564
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 81.02841037067203,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 16.98105627284221,
+            "hold_start_s": 8.98105627284221,
+            "progress_gain_m": 35.50119518806289
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 80.52655515085424,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 16.897417696870043,
+            "hold_start_s": 8.897417696870045,
+            "progress_gain_m": 34.99933996824509
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 80.02859039084947,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 16.8137370100186,
+            "hold_start_s": 8.813737010018597,
+            "progress_gain_m": 34.501375208240326
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 79.5264879313267,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 16.73005708571461,
+            "hold_start_s": 8.73005708571461,
+            "progress_gain_m": 33.99927274871755
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 79.02877368880571,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 16.646333921750436,
+            "hold_start_s": 8.646333921750436,
+            "progress_gain_m": 33.50155850619657
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 78.52642612217889,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 16.562613003757086,
+            "hold_start_s": 8.562613003757088,
+            "progress_gain_m": 32.99921093956974
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 78.02895977000159,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 16.47884785351944,
+            "hold_start_s": 8.478847853519438,
+            "progress_gain_m": 32.501744587392444
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 77.5263695010563,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 16.395086342186787,
+            "hold_start_s": 8.395086342186787,
+            "progress_gain_m": 31.999154318447147
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 77.02914811118505,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 16.311279748669484,
+            "hold_start_s": 8.311279748669484,
+            "progress_gain_m": 31.501932928575904
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 76.52631782006083,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 16.227478090571708,
+            "hold_start_s": 8.22747809057171,
+            "progress_gain_m": 30.999102637451678
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 76.02933816380549,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 16.143630648336398,
+            "hold_start_s": 8.1436306483364,
+            "progress_gain_m": 30.502122981196344
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 75.52627080906659,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 16.059789336770688,
+            "hold_start_s": 8.059789336770688,
+            "progress_gain_m": 29.99905562645744
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 75.02952935769501,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 15.975901691330396,
+            "hold_start_s": 7.975901691330395,
+            "progress_gain_m": 29.502314175085864
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 74.52622817921316,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 15.892021266783154,
+            "hold_start_s": 7.8920212667831535,
+            "progress_gain_m": 28.999012996604016
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 74.02972110498271,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 15.80809411395821,
+            "hold_start_s": 7.8080941139582105,
+            "progress_gain_m": 28.502505922373565
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 73.52618962654425,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 15.724175164523912,
+            "hold_start_s": 7.724175164523912,
+            "progress_gain_m": 27.998974443935104
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 73.02991280420474,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 15.640209249771027,
+            "hold_start_s": 7.6402092497710274,
+            "progress_gain_m": 27.502697621595594
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 72.52615483575634,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 15.556252411509393,
+            "hold_start_s": 7.5562524115093925,
+            "progress_gain_m": 26.998939653147197
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 72.03010384456927,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 15.472248529223803,
+            "hold_start_s": 7.472248529223803,
+            "progress_gain_m": 26.50288866196012
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 71.52612348402134,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 15.388254486441724,
+            "hold_start_s": 7.388254486441724,
+            "progress_gain_m": 25.998908301412193
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 71.03029361033356,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 15.304213479230945,
+            "hold_start_s": 7.304213479230945,
+            "progress_gain_m": 25.50307842772441
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 70.52609524484524,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 15.220182964676479,
+            "hold_start_s": 7.220182964676478,
+            "progress_gain_m": 24.99888006223609
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 70.0304814852483,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 15.13610572260325,
+            "hold_start_s": 7.13610572260325,
+            "progress_gain_m": 24.503266302639155
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 69.52606979192339,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 15.052039517559983,
+            "hold_start_s": 7.052039517559982,
+            "progress_gain_m": 23.998854609314243
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 69.03066685702136,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 14.96792697735056,
+            "hold_start_s": 6.96792697735056,
+            "progress_gain_m": 23.50345167441221
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 68.52604680295293,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 14.883825911621933,
+            "hold_start_s": 6.883825911621934,
+            "progress_gain_m": 22.998831620343786
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 68.0308491217541,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 14.799679055835135,
+            "hold_start_s": 6.799679055835134,
+            "progress_gain_m": 22.503633939144954
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 67.52602596336108,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 14.71554400760947,
+            "hold_start_s": 6.71554400760947,
+            "progress_gain_m": 21.99881078075193
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 67.03102768830132,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 14.631363863760754,
+            "hold_start_s": 6.631363863760753,
+            "progress_gain_m": 21.503812505692174
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 66.52600696990909,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 14.54719575934903,
+            "hold_start_s": 6.547195759349029,
+            "progress_gain_m": 20.998791787299943
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 66.03120198250687,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 14.462983398983258,
+            "hold_start_s": 6.462983398983258,
+            "progress_gain_m": 20.503986799897724
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 65.5259895341309,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 14.37878321242301,
+            "hold_start_s": 6.378783212423009,
+            "progress_gain_m": 19.998774351521753
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 65.03137145126769,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 14.294539750129077,
+            "hold_start_s": 6.294539750129077,
+            "progress_gain_m": 19.50415626865854
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 64.52597338556683,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 14.210308502649038,
+            "hold_start_s": 6.210308502649038,
+            "progress_gain_m": 18.99875820295768
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 64.03153556638071,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 14.126035112928172,
+            "hold_start_s": 6.126035112928172,
+            "progress_gain_m": 18.504320383771564
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 63.52595827475374,
+            "first_contact_s": 2.9466829285084146,
+            "hold_end_s": 14.041773979790008,
+            "hold_start_s": 6.041773979790008,
+            "progress_gain_m": 17.998743092144593
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 63.03169382812882,
+            "first_contact_s": 2.947090691077012,
+            "hold_end_s": 13.95749199081823,
+            "hold_start_s": 5.95749199081823,
+            "progress_gain_m": 17.504478645519676
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 62.52594397593481,
+            "first_contact_s": 2.9468516919290932,
+            "hold_end_s": 13.871410188430843,
+            "hold_start_s": 5.8714101884308425,
+            "progress_gain_m": 16.99872879332566
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 62.031845768565475,
+            "first_contact_s": 2.9484786879964995,
+            "hold_end_s": 13.785234107935938,
+            "hold_start_s": 5.785234107935938,
+            "progress_gain_m": 16.504630585956328
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 61.52593028945437,
+            "first_contact_s": 2.9503135146134802,
+            "hold_end_s": 13.696476164847653,
+            "hold_start_s": 5.696476164847653,
+            "progress_gain_m": 15.998715106845225
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 61.03199095446014,
+            "first_contact_s": 2.955198208552034,
+            "hold_end_s": 13.607636588612937,
+            "hold_start_s": 5.607636588612937,
+            "progress_gain_m": 15.504775771850994
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 60.525917043806366,
+            "first_contact_s": 2.960641698687657,
+            "hold_end_s": 13.5159393129188,
+            "hold_start_s": 5.515939312918799,
+            "progress_gain_m": 14.998701861197219
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 60.032128989871644,
+            "first_contact_s": 2.9699007575798224,
+            "hold_end_s": 13.424177911321426,
+            "hold_start_s": 5.424177911321427,
+            "progress_gain_m": 14.504913807262497
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 59.5259040973081,
+            "first_contact_s": 2.9802942656351323,
+            "hold_end_s": 13.329234050781057,
+            "hold_start_s": 5.329234050781057,
+            "progress_gain_m": 13.998688914698953
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 59.03225951831979,
+            "first_contact_s": 2.9956301777782377,
+            "hold_end_s": 13.23424761703371,
+            "hold_start_s": 5.234247617033709,
+            "progress_gain_m": 13.505044335710643
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 58.52589133937521,
+            "first_contact_s": 3.000052386982017,
+            "hold_end_s": 13.135689472354482,
+            "hold_start_s": 5.135689472354482,
+            "progress_gain_m": 12.99867615676606
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 58.032382224531304,
+            "first_contact_s": 3.0235687979389554,
+            "hold_end_s": 13.037117959761254,
+            "hold_start_s": 5.037117959761254,
+            "progress_gain_m": 12.505167041922157
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 57.52587869137815,
+            "first_contact_s": 3.0509246099920757,
+            "hold_end_s": 12.934505410360533,
+            "hold_start_s": 4.934505410360533,
+            "progress_gain_m": 11.998663508769006
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 57.03249683574066,
+            "first_contact_s": 3.0798807489002753,
+            "hold_end_s": 12.831915860382574,
+            "hold_start_s": 4.8319158603825745,
+            "progress_gain_m": 11.505281653131512
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 56.52586610706548,
+            "first_contact_s": 3.1111243521999055,
+            "hold_end_s": 12.724708432209464,
+            "hold_start_s": 4.724708432209464,
+            "progress_gain_m": 10.998650924456335
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 56.03260312253213,
+            "first_contact_s": 3.1506466431577254,
+            "hold_end_s": 12.617572325445096,
+            "hold_start_s": 4.617572325445095,
+            "progress_gain_m": 10.505387939922983
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 55.52585357254452,
+            "first_contact_s": 3.2,
+            "hold_end_s": 12.50510095652634,
+            "hold_start_s": 4.50510095652634,
+            "progress_gain_m": 9.998638389935373
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 55.032692053224245,
+            "first_contact_s": 3.2446693365990593,
+            "hold_end_s": 12.392760020629503,
+            "hold_start_s": 4.392760020629502,
+            "progress_gain_m": 9.505476870615098
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 54.52577602001775,
+            "first_contact_s": 3.3636514290079678,
+            "hold_end_s": 12.274182071595195,
+            "hold_start_s": 4.274182071595195,
+            "progress_gain_m": 8.998560837408604
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 54.03261316649123,
+            "first_contact_s": 3.4435443805581105,
+            "hold_end_s": 12.155748236086962,
+            "hold_start_s": 4.155748236086962,
+            "progress_gain_m": 8.505397983882084
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 53.52544606669949,
+            "first_contact_s": 3.6,
+            "hold_end_s": 12.029921540993088,
+            "hold_start_s": 4.029921540993088,
+            "progress_gain_m": 7.99823088409034
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 53.03228648756932,
+            "first_contact_s": 4.0,
+            "hold_end_s": 11.904272626365149,
+            "hold_start_s": 3.9042726263651493,
+            "progress_gain_m": 7.505071304960175
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 52.52490373321661,
+            "first_contact_s": 4.6000000000000005,
+            "hold_end_s": 11.769672618395035,
+            "hold_start_s": 3.7696726183950355,
+            "progress_gain_m": 6.997688550607464
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 52.031854298388204,
+            "first_contact_s": 5.0,
+            "hold_end_s": 11.635348260865912,
+            "hold_start_s": 3.635348260865912,
+            "progress_gain_m": 6.504639115779057
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 51.52435192840176,
+            "first_contact_s": 5.6000000000000005,
+            "hold_end_s": 11.489876435260744,
+            "hold_start_s": 3.489876435260743,
+            "progress_gain_m": 5.997136745792609
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 51.03153958448092,
+            "first_contact_s": 6.0,
+            "hold_end_s": 11.344905773835517,
+            "hold_start_s": 3.3449057738355172,
+            "progress_gain_m": 5.50432440187177
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 50.524020020819115,
+            "first_contact_s": 6.6000000000000005,
+            "hold_end_s": 11.185500890349314,
+            "hold_start_s": 3.1855008903493145,
+            "progress_gain_m": 4.996804838209968
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 50.135443752364004,
+            "first_contact_s": 7.0,
+            "hold_end_s": 11.06571704670114,
+            "hold_start_s": 3.0657170467011396,
+            "progress_gain_m": 4.608228569754857
+          },
+          {
+            "candidate_index": 1,
+            "end_progress_m": 46.198275665361,
+            "first_contact_s": null,
+            "hold_end_s": 9.619788823251294,
+            "hold_start_s": 1.6197888232512951,
+            "progress_gain_m": 0.6710604827518551
+          }
+        ],
+        "initial_progress_m": 45.52721518260915,
+        "planning_diagnostics": {
+          "candidates": [
+            {
+              "disposition": "CheckedStop",
+              "index": 0,
+              "lateral_target_m": 0.0,
+              "nominal_forecast_conflict": {
+                "forecast_horizon_s": 8.0,
+                "forecast_radius_m": 2.980884310255183,
+                "minimum_clearance_floor_m": 0.0,
+                "prediction_id": 1,
+                "relative_time_s": 2.8425277261594544
+              },
+              "profile": {
+                "end_progress_m": 45.61091818862079,
+                "end_time_s": 135.23789896973676,
+                "point_count": 3,
+                "searched_stop": true,
+                "terminal_speed_m_s": 0.0
+              }
+            },
+            {
+              "disposition": "CheckedStop",
+              "index": 1,
+              "lateral_target_m": 3.9,
+              "nominal_forecast_conflict": {
+                "forecast_horizon_s": 8.0,
+                "forecast_radius_m": 3.042337582142058,
+                "minimum_clearance_floor_m": 0.0,
+                "prediction_id": 1,
+                "relative_time_s": 2.9466829285084146
+              },
+              "profile": {
+                "end_progress_m": 46.198275665361,
+                "end_time_s": 9.619788823251294,
+                "point_count": 4,
+                "searched_stop": true,
+                "terminal_speed_m_s": 0.0
+              }
+            },
+            {
+              "disposition": "OppositeSideDuringPass",
+              "index": 2,
+              "lateral_target_m": -3.9,
+              "nominal_forecast_conflict": null,
+              "profile": null
+            }
+          ],
+          "failure": null,
+          "obstruction_stop_active": false,
+          "obstruction_stop_requested": false,
+          "planning_span_m": 40.0,
+          "refinement_confirmation": null,
+          "route_progress_m": 45.52721518260915,
+          "scene_acquisition_s": 65.0,
+          "selected_candidate": 1
+        },
+        "trajectory": {
+          "lateral_target": 3.9,
+          "mode": "Yield",
+          "points": [
+            {
+              "position": {
+                "x": 45.42506991402581,
+                "y": 7.09679447183188
+              },
+              "speed": 0.001315705526440969,
+              "time": 0.0
+            },
+            {
+              "position": {
+                "x": 45.93248277908498,
+                "y": 7.100575134180682
+              },
+              "speed": 0.8470301791544185,
+              "time": 1.1962737336740858
+            },
+            {
+              "position": {
+                "x": 46.111847464477066,
+                "y": 7.100927292605215
+              },
+              "speed": 0.0,
+              "time": 1.6197888232512951
+            },
+            {
+              "position": {
+                "x": 46.111847464477066,
+                "y": 7.100927292605215
+              },
+              "speed": 0.0,
+              "time": 9.619788823251294
+            }
+          ]
+        }
+      },
+      "search": {
+        "sweep_counts": {
+          "moving_conflict": 133,
+          "stationary_tail_conflict": 13,
+          "clear_below_2m": 2
+        },
+        "maximum_clear_progress_gain_m": 0.6710604827518551,
+        "global_infeasibility_proven": false,
+        "confirmation_authorized": false
+      },
+      "planning_validation": {
+        "capture_enabled": true,
+        "verified_control_ticks": 1301,
+        "maximum_candidate_records": 3,
+        "candidate_dispositions": {
+          "CompletePath": 216,
+          "NoCheckedStop": 29,
+          "CheckedStop": 2522,
+          "OppositeSideDuringPass": 1136
+        },
+        "selected_profiles": {
+          "CompletePath": 72,
+          "CheckedStop": 1224
+        },
+        "nominal_forecast_conflicts": 2551,
+        "forecast_blockers": {
+          "1": 2551
+        },
+        "fault_braking_ticks": 0
+      },
+      "selected_path_certificate": {
+        "passed": true,
+        "active": true,
+        "certified_paths": 1296,
+        "interval_bounds": 55916,
+        "actor_truth_used": false,
+        "uncertainty_calibrated": false
+      }
+    }
+  ]
+}
