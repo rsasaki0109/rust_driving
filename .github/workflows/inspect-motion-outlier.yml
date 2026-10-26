@@ -1,0 +1,105 @@
+name: Inspect acquired motion outlier
+on:
+  push:
+    branches: [fix/acquired-motion-support]
+    paths: ['.github/workflows/inspect-motion-outlier.yml']
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Bind the recording to unchanged driver sources
+        run: |
+          git fetch --no-tags --depth=1 origin 8550e1a2b1d06703d05036a625609e21b9fa0cf6
+          git diff --exit-code 8550e1a2b1d06703d05036a625609e21b9fa0cf6 HEAD -- crates Cargo.toml Cargo.lock rust-toolchain.toml integrations/rne
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '12624662660'
+          run-id: '40258418216'
+          github-token: ${{ github.token }}
+          path: retained-evidence
+          merge-multiple: true
+      - name: Inspect all four original mission witnesses using retained bytes
+        env:
+          RUSTDRIVING_DIAGNOSTIC_SOURCE: ${{ github.sha }}
+        run: |
+          python - <<'PY'
+          import hashlib,json,math,os,sys
+          from pathlib import Path
+          sys.path.insert(0,'scripts')
+          from check_forecast_calibration import CANONICAL,read_retained
+          from forecast_calibration import case_scores
+          from tracking_frame import continuous_observations
+          root=Path('retained-evidence')
+          raw=(root/'report.json').read_bytes()
+          assert raw==CANONICAL.read_bytes()
+          canonical=json.loads(raw)
+          report=dict(source=os.environ['RUSTDRIVING_DIAGNOSTIC_SOURCE'],recorded_driver_source=canonical['source_commit'],
+                      paired_report_sha256=hashlib.sha256(raw).hexdigest(),simulation_rerun=False,
+                      operational_truth_used=False,missions=[])
+          def norm(p):return math.hypot(p['x'],p['y'])
+          for row in canonical['executions']['new']:
+            if row['world']!='mission':continue
+            run=json.loads(read_retained(root/'new',row,'run/run.json'))
+            records=[json.loads(line) for line in read_retained(root/'new',row,'run/sensors.jsonl').splitlines()]
+            config=records[0]['header']['config']
+            ticks=[r['tick'] for r in records if 'tick' in r]
+            score=case_scores(run,config,ticks)
+            witness=score['horizons']['8.0']['worst_utilization']
+            focus=witness['origin_s']
+            def snapshot(index):
+              tick=ticks[index];out=tick['expected']
+              tracks,predictions=continuous_observations(out)
+              actor=next((a for a in run['frames'][index]['objects'] if a['id']==witness['actor_id']),None)
+              future=index+160
+              actual=next((a for a in run['frames'][future]['objects'] if a['id']==witness['actor_id']),None) if future<len(ticks) else None
+              fields=['estimate','tracking_frame','pose_covariance','tracks','track_measurements','cold_motion',
+                      'cold_motion_diagnostics','velocity_hypotheses','velocity_hypothesis_diagnostics',
+                      'recent_velocity_hypotheses','health','command','checked_approach','planning_progress']
+              compact={k:out[k] for k in fields if k in out}
+              for k in out:
+                if 'cold' in k or 'velocity' in k:compact[k]=out[k]
+              compact.update(time_s=out['time'],continuous_tracks=tracks,
+                             odometry=tick['input'].get('odometry'),lidar_stamp=(tick['input'].get('lidar') or {}).get('stamp'),
+                             actor_at_origin=actor,actor_at_eight_seconds=actual)
+              compact['forecasts']=[dict(id=p['id'],radius=p['radius'],dt=p['dt'],
+                  knots=[dict(i=i,time_s=i*p['dt'],position=p['positions'][i],
+                              additional_radius_m=p['additional_radius_m'][i]) for i in [0,1,5,10,20,40]]) for p in out['predictions']]
+              compact['continuous_forecast_endpoints']=[dict(id=p['id'],first=p['positions'][0],last=p['positions'][-1]) for p in predictions]
+              return compact
+            selected=[i for i,t in enumerate(ticks) if abs(t['expected']['time']-focus)<=1.5+1e-9
+                      and t['input'].get('lidar') is not None]
+            item=dict(plant=row['plant'],seed=row['seed'],summary=row['summary'],witness=witness,
+                      output_fields=list(ticks[round(focus/.05)]['expected']),config=config,
+                      snapshots=[snapshot(i) for i in selected])
+            report['missions'].append(item)
+            print(row['plant'],row['seed'],'focus',focus,'required extra',witness['required_extra_radius_m'],flush=True)
+          path=Path('assets/forecast-motion-witness-v1/canaries')/(report['source']+'.json')
+          path.parent.mkdir(parents=True,exist_ok=True)
+          with path.open('x') as stream:json.dump(report,stream,indent=2,allow_nan=False);stream.write('\n')
+          Path('assets/forecast-motion-witness-v1/latest.json').write_text(json.dumps(dict(source=report['source'],path=str(path)),indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: acquired-motion-witnesses
+          path: assets/forecast-motion-witness-v1
+          if-no-files-found: warn
+      - name: Preserve the first source-keyed diagnostic on this exact branch
+        env:
+          RUSTDRIVING_EXPECTED_SOURCE: ${{ github.sha }}
+        run: |
+          test "$GITHUB_REF_NAME" = 'fix/acquired-motion-support'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/forecast-motion-witness-v1
+          git commit -m 'Preserve original mission motion witnesses without rerunning simulation'
+          git push --force-with-lease="refs/heads/fix/acquired-motion-support:$RUSTDRIVING_EXPECTED_SOURCE" origin HEAD:refs/heads/fix/acquired-motion-support
