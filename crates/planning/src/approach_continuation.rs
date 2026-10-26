@@ -280,6 +280,58 @@ impl ContinuationPermit {
         true
     }
 
+
+    /// Combine eligibility with profile generation and a mandatory full-path
+    /// certificate. A route (with an empty zone slice if unrestricted) is required
+    /// so candidate knots stay inside the original authorized progress bound.
+    /// The caller still certifies road containment, target geometry and all
+    /// current-scene collision intervals, including the stationary tail, and
+    /// between-knot route-progress containment.
+    pub fn certified_profile(
+        &mut self,
+        observation: &ContinuationObservation<'_>,
+        geometry: &[Vec2],
+        initial_speed: f64,
+        bounds: &ContinuationBounds,
+        constraints: &ProfileConstraints<'_>,
+        mut certify: impl FnMut(&[TrajectoryPoint]) -> bool,
+    ) -> Option<Vec<TrajectoryPoint>> {
+        if !self.observe(observation) {
+            return None;
+        }
+        let Some((route, _, _)) = constraints.route_speed_zones else {
+            self.revoke();
+            return None;
+        };
+        // The constructor validates this route before invoking the callback.
+        let end_progress = self.end_progress_m;
+        let endpoint = self.endpoint;
+        let result = stopped_profile_with_constraints(
+            geometry, initial_speed, bounds, constraints, |path| {
+                let recorded_end = route.project(endpoint).0;
+                if !recorded_end.is_finite() || (recorded_end-end_progress).abs() > 1e-7 {
+                    return false;
+                }
+                let start = route.project(path[0].position).0;
+                if !start.is_finite() || (start-observation.progress_m).abs() > 0.2 {
+                    return false;
+                }
+                if path.iter().any(|p| {
+                    let progress = route.project(p.position).0;
+                    !progress.is_finite() || progress < observation.progress_m-0.2
+                        || progress > end_progress+1e-8
+                }) {
+                    return false;
+                }
+                certify(path)
+            },
+        );
+        if result.is_none() {
+            self.revoke();
+        }
+        result
+    }
+
     /// Original endpoint and route progress, never advanced by renewed sensing.
     pub fn endpoint_bound(&self) -> Option<(Vec2, f64)> {
         self.valid.then_some((self.endpoint, self.end_progress_m))
@@ -600,4 +652,52 @@ mod tests {
         backwards.progress_m = 9.;
         assert!(!retreat.observe(&backwards));
     }
+    #[test]
+    fn combined_generation_requires_live_permit_and_current_certificate() {
+        let line: Vec<_> = (0..=40).map(|i| Vec2::new(10.+i as f64*0.1,3.9)).collect();
+        let route = Route::new(vec![Vec2::new(0.,0.), Vec2::new(20.,0.)], 6.).unwrap();
+        let constraints = ProfileConstraints { route_speed_zones: Some((&route,&[],0.)), lateral_acceleration_m_s2: None };
+        let mut permit = ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 1.).unwrap();
+        let mut seen = 0;
+        let path = permit.certified_profile(&observation(0.3), &line, 0.21, &bounds(), &constraints, |p| {
+            seen += 1;
+            assert!(p.last().unwrap().position.x <= 12.+1e-8);
+            true
+        }).unwrap();
+        assert!(seen > 0);
+        assert!(path.iter().any(|p| p.speed > 0.7));
+        let mut stale = observation(0.6);
+        stale.acquisition_s = Some(0.2);
+        assert!(permit.certified_profile(&stale, &line, 0.21, &bounds(), &constraints, |_| panic!("revoked permit reached certificate")).is_none());
+        assert!(permit.certified_profile(&observation(0.7), &line, 0.21, &bounds(), &constraints, |_| panic!("permit revived")).is_none());
+    }
+
+    #[test]
+    fn rejected_complete_paths_revoke_combined_generation() {
+        let line: Vec<_> = (0..=40).map(|i| Vec2::new(10.+i as f64*0.1,3.9)).collect();
+        let route = Route::new(vec![Vec2::new(0.,0.), Vec2::new(20.,0.)], 6.).unwrap();
+        let constraints = ProfileConstraints { route_speed_zones: Some((&route,&[],0.)), lateral_acceleration_m_s2: None };
+        let mut permit = ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 1.).unwrap();
+        assert!(permit.certified_profile(&observation(0.3), &line, 0.21, &bounds(), &constraints, |_| false).is_none());
+        assert!(permit.endpoint_bound().is_none());
+        assert!(permit.certified_profile(&observation(0.4), &line, 0.21, &bounds(), &constraints, |_| panic!("rejection did not revoke")).is_none());
+    }
+
+    #[test]
+    fn candidate_cannot_extend_authorized_progress_or_change_start() {
+        let route = Route::new(vec![Vec2::new(0.,0.), Vec2::new(20.,0.)], 6.).unwrap();
+        let constraints = ProfileConstraints { route_speed_zones: Some((&route,&[],0.)), lateral_acceleration_m_s2: None };
+        let line: Vec<_> = (0..=40).map(|i| Vec2::new(10.+i as f64*0.1,3.9)).collect();
+        let mut b = bounds();
+        b.maximum_distance_m = 4.;
+        let mut permit = ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 1.).unwrap();
+        let path = permit.certified_profile(&observation(0.3), &line, 0.21, &b, &constraints, |p| {
+            assert!(p.iter().all(|p| route.project(p.position).0 <= 12.+1e-8));
+            true
+        }).unwrap();
+        assert!(path.last().unwrap().position.x <= 12.+1e-8);
+        let unrelated: Vec<_> = line.iter().map(|p| Vec2::new(p.x+3.,p.y)).collect();
+        assert!(permit.certified_profile(&observation(0.4), &unrelated, 0.21, &bounds(), &constraints, |_| panic!("wrong start reached certificate")).is_none());
+    }
+
 }

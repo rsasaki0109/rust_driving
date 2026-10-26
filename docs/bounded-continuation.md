@@ -80,3 +80,24 @@ acquisitions, endpoint completion, unsupported adoption and invalid duration.
 This state machine and the profile constructor still require live-planner
 integration with complete current-scene and road certificates. No new driving
 behavior or closed-loop improvement is claimed.
+
+## Combined eligibility and certified generation (validation pending)
+
+`ContinuationPermit::certified_profile` connects the permit and constrained
+constructor. Eligibility is checked before candidate generation. A route is
+mandatory (an empty zone slice represents no speed zones); its validated
+projection must agree with the original endpoint progress and current start.
+Candidate knots outside the authorized progress range do not reach the caller's
+certificate. The caller still verifies continuous between-knot progress bounds,
+road containment, target geometry and every collision interval through the tail.
+
+A revoked permit cannot reach certification. If no candidate passes all checks,
+including when inputs are malformed or the route is absent, the permit is
+permanently revoked. The function returns no command and remains unconnected
+to the live planner.
+
+Three new tests exercise valid generation followed by stale observations,
+complete certificate rejection followed by restored inputs, oversized proposed
+distance and an unrelated candidate start. This tests composition rather than
+only the components in isolation. Both the previous permit addition and this
+composition still require their hosted workflow results to be reviewed.
