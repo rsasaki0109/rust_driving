@@ -156,7 +156,6 @@ pub fn stopped_profile_with_constraints(
     None
 }
 
-
 /// Inputs for validating the lifetime of an already verified approach adoption.
 /// Route and localization generations must change whenever their frames change.
 pub struct ContinuationObservation<'a> {
@@ -200,18 +199,31 @@ impl ContinuationPermit {
         let end = adoption.proposal_end_progress_m?;
         let endpoint = adoption.proposal_endpoint?;
         let target = adoption.proposal_lateral_target_m?;
-        if !adoption.adopted || adoption.supporting_acquisitions != 3
-            || !first.is_finite() || first < 0. || !last.is_finite()
-            || last-first < 0.2-1e-9 || observation.acquisition_s != Some(last)
-            || !endpoint.finite() || !end.is_finite() || !target.is_finite()
-            || !observation.progress_m.is_finite() || end-observation.progress_m < 0.5
-            || !maximum_duration_s.is_finite() || maximum_duration_s <= 0. || maximum_duration_s > 8.
-            || adoption.blocking_prediction_ids.is_empty() || adoption.blocking_prediction_ids.len() > 9
-            || adoption.blocking_prediction_ids.windows(2).any(|p| p[0] >= p[1])
+        if !adoption.adopted
+            || adoption.supporting_acquisitions != 3
+            || !first.is_finite()
+            || first < 0.
+            || !last.is_finite()
+            || last - first < 0.2 - 1e-9
+            || observation.acquisition_s != Some(last)
+            || !endpoint.finite()
+            || !end.is_finite()
+            || !target.is_finite()
+            || !observation.progress_m.is_finite()
+            || end - observation.progress_m < 0.5
+            || !maximum_duration_s.is_finite()
+            || maximum_duration_s <= 0.
+            || maximum_duration_s > 8.
+            || adoption.blocking_prediction_ids.is_empty()
+            || adoption.blocking_prediction_ids.len() > 9
+            || adoption
+                .blocking_prediction_ids
+                .windows(2)
+                .any(|p| p[0] >= p[1])
         {
             return None;
         }
-        let expires = observation.now_s+maximum_duration_s;
+        let expires = observation.now_s + maximum_duration_s;
         if !expires.is_finite() || expires <= observation.now_s {
             return None;
         }
@@ -239,19 +251,24 @@ impl ContinuationPermit {
     /// Check eligibility only; callers must separately certify each complete path.
     pub fn observe(&mut self, observation: &ContinuationObservation<'_>) -> bool {
         let acquisition_valid = observation.acquisition_s.is_some_and(|stamp| {
-            stamp.is_finite() && stamp >= self.last_acquisition_s
-                && stamp <= observation.now_s && observation.now_s-stamp <= 0.35+1e-9
+            stamp.is_finite()
+                && stamp >= self.last_acquisition_s
+                && stamp <= observation.now_s
+                && observation.now_s - stamp <= 0.35 + 1e-9
         });
-        if !self.valid || !observation.healthy || !observation.now_s.is_finite()
-            || observation.now_s < self.last_control_s || observation.now_s >= self.expires_s
+        if !self.valid
+            || !observation.healthy
+            || !observation.now_s.is_finite()
+            || observation.now_s < self.last_control_s
+            || observation.now_s >= self.expires_s
             || !acquisition_valid
             || observation.localization_generation != self.localization_generation
             || observation.route_generation != self.route_generation
             || observation.blocking_ids != self.blocking_ids.as_slice()
             || !observation.lateral_target_m.is_finite()
-            || (observation.lateral_target_m-self.lateral_target_m).abs() > 0.01
+            || (observation.lateral_target_m - self.lateral_target_m).abs() > 0.01
             || !observation.progress_m.is_finite()
-            || observation.progress_m < self.greatest_progress_m-0.2
+            || observation.progress_m < self.greatest_progress_m - 0.2
             || observation.progress_m >= self.end_progress_m
         {
             self.revoke();
@@ -490,23 +507,33 @@ mod tests {
     }
     fn observation(now: f64) -> ContinuationObservation<'static> {
         ContinuationObservation {
-            now_s: now, acquisition_s: Some(now),
-            localization_generation: 1, route_generation: 2,
-            blocking_ids: &[7], lateral_target_m: 3.9, progress_m: 10., healthy: true,
+            now_s: now,
+            acquisition_s: Some(now),
+            localization_generation: 1,
+            route_generation: 2,
+            blocking_ids: &[7],
+            lateral_target_m: 3.9,
+            progress_m: 10.,
+            healthy: true,
         }
     }
     fn adoption() -> rustdriving_core::CheckedApproachDiagnostics {
         rustdriving_core::CheckedApproachDiagnostics {
-            supporting_acquisitions: 3, first_acquisition_s: Some(0.),
-            last_acquisition_s: Some(0.2), proposal_end_progress_m: Some(12.),
+            supporting_acquisitions: 3,
+            first_acquisition_s: Some(0.),
+            last_acquisition_s: Some(0.2),
+            proposal_end_progress_m: Some(12.),
             proposal_endpoint: Some(Vec2::new(12., 3.9)),
-            proposal_lateral_target_m: Some(3.9), blocking_prediction_ids: vec![7], adopted: true,
+            proposal_lateral_target_m: Some(3.9),
+            blocking_prediction_ids: vec![7],
+            adopted: true,
         }
     }
 
     #[test]
     fn permit_deadline_is_not_renewed_by_cached_or_fresh_observations() {
-        let mut permit = ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 1.).unwrap();
+        let mut permit =
+            ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 1.).unwrap();
         let mut cached = observation(0.5);
         cached.acquisition_s = Some(0.2);
         assert!(permit.observe(&cached));
@@ -519,7 +546,8 @@ mod tests {
     #[test]
     fn changed_context_or_bad_clock_stickily_revokes_permit() {
         for case in 0..9 {
-            let mut permit = ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 2.).unwrap();
+            let mut permit =
+                ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 2.).unwrap();
             let mut changed = observation(0.3);
             match case {
                 0 => changed.healthy = false,
@@ -539,11 +567,13 @@ mod tests {
 
     #[test]
     fn stale_observations_and_endpoint_completion_expire_permit() {
-        let mut permit = ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 2.).unwrap();
+        let mut permit =
+            ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 2.).unwrap();
         let mut stale = observation(0.56);
         stale.acquisition_s = Some(0.2);
         assert!(!permit.observe(&stale));
-        let mut permit = ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 2.).unwrap();
+        let mut permit =
+            ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 2.).unwrap();
         let mut completed = observation(0.3);
         completed.progress_m = 12.;
         assert!(!permit.observe(&completed));
@@ -556,15 +586,18 @@ mod tests {
         unconfirmed.adopted = false;
         assert!(ContinuationPermit::from_adoption(&unconfirmed, &observation(0.2), 1.).is_none());
         for duration in [0., -1., f64::NAN, f64::INFINITY, 8.1] {
-            assert!(ContinuationPermit::from_adoption(&adoption(), &observation(0.2), duration).is_none());
+            assert!(
+                ContinuationPermit::from_adoption(&adoption(), &observation(0.2), duration)
+                    .is_none()
+            );
         }
         let mut mismatch = observation(0.2);
         mismatch.blocking_ids = &[9];
         assert!(ContinuationPermit::from_adoption(&adoption(), &mismatch, 1.).is_none());
-        let mut retreat = ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 1.).unwrap();
+        let mut retreat =
+            ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 1.).unwrap();
         let mut backwards = observation(0.3);
         backwards.progress_m = 9.;
         assert!(!retreat.observe(&backwards));
     }
-
 }
