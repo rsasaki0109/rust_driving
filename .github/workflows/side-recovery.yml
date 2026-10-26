@@ -1,7 +1,5 @@
 name: Experimental anchored side recovery
 on:
-  push:
-    branches: [feat/anchored-side-recovery]
   workflow_dispatch:
 permissions:
   contents: read
