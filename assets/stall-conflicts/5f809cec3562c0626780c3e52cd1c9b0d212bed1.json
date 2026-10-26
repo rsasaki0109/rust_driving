@@ -1,0 +1,445 @@
+{
+  "source": "92c72b1c473f0b6209f09c4ce1ff9508026b2d40",
+  "report_sha256": "c80e8de23027704a8a95c79d0f87cafb7485f4d5c59b0e9b3cddd5b446a51e45",
+  "simulation_rerun": false,
+  "operational_policy_changed": false,
+  "global_infeasibility_proven": false,
+  "cases": [
+    {
+      "plant": "reference-2d",
+      "seed": 7,
+      "summary": {
+        "scenario": "Curved-road obstacle avoidance",
+        "seed": 7,
+        "simulated_seconds": 65.0,
+        "steps": 1301,
+        "reached_goal": false,
+        "collisions": 0,
+        "road_violations": 0,
+        "min_clearance": 11.930142392821352,
+        "localization_rmse": 0.04915484313276107,
+        "localization_max_error": 0.13833867833363642,
+        "final_speed": 0.0,
+        "progress": 44.505726021766215,
+        "emergency_steps": 6,
+        "avoidance_steps": 0,
+        "max_tracks": 1,
+        "passed": false,
+        "failures": [
+          "goal not reached within duration"
+        ]
+      },
+      "sensor_sha256": "5d8a2f721af5b8e8757cf170dac52a96af52207a87bcb3ab127b78b79ae155a0",
+      "verified_control_ticks": 1301,
+      "healthy_stationary_ticks": 1033,
+      "first": {
+        "time_s": 0.0,
+        "route_progress_m": 0.0,
+        "selected_candidate": 0,
+        "candidates": [
+          {
+            "index": 0,
+            "disposition": "CompletePath",
+            "conflict": null
+          },
+          {
+            "index": 1,
+            "disposition": "CompletePath",
+            "conflict": null
+          },
+          {
+            "index": 2,
+            "disposition": "CompletePath",
+            "conflict": null
+          }
+        ]
+      },
+      "last": {
+        "time_s": 65.0,
+        "route_progress_m": 44.54222442347032,
+        "selected_candidate": 0,
+        "candidates": [
+          {
+            "index": 0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "candidate_index": 0,
+              "lateral_target_m": 0.0,
+              "disposition": "CheckedStop",
+              "prediction_id": 1,
+              "relative_conflict_time_s": 3.021011255675979,
+              "acquisition_age_s": 0.0,
+              "forecast_horizon_s": 8.0,
+              "endpoint_held": false,
+              "declared_cv_terms_m": {
+                "position": 0.2,
+                "velocity": 0.9063033767027937,
+                "acceleration": 0.4563254503460479
+              },
+              "declared_cv_radius_m": 1.5626288270488415,
+              "published_forecast_radius_m": 3.100421813639765,
+              "nominal_object_radius_m": 1.1215097269372494,
+              "minimum_clearance_floor_m": 0.0
+            }
+          },
+          {
+            "index": 1,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "candidate_index": 1,
+              "lateral_target_m": 3.9,
+              "disposition": "CheckedStop",
+              "prediction_id": 1,
+              "relative_conflict_time_s": 3.1053857465911596,
+              "acquisition_age_s": 0.0,
+              "forecast_horizon_s": 8.0,
+              "endpoint_held": false,
+              "declared_cv_terms_m": {
+                "position": 0.2,
+                "velocity": 0.9316157239773478,
+                "acceleration": 0.4821710317565767
+              },
+              "declared_cv_radius_m": 1.6137867557339245,
+              "published_forecast_radius_m": 3.151906849132542,
+              "nominal_object_radius_m": 1.1215097269372494,
+              "minimum_clearance_floor_m": 0.0
+            }
+          },
+          {
+            "index": 2,
+            "disposition": "OppositeSideDuringPass",
+            "conflict": null
+          }
+        ]
+      },
+      "interpretation": "Recorded nominal candidate conflicts only. CV terms are a reference bound, not an additive decomposition of the enclosing forecast. No proof of global infeasibility or of safety after reducing a budget."
+    },
+    {
+      "plant": "reference-2d",
+      "seed": 42,
+      "summary": {
+        "scenario": "Curved-road obstacle avoidance",
+        "seed": 42,
+        "simulated_seconds": 65.0,
+        "steps": 1301,
+        "reached_goal": false,
+        "collisions": 0,
+        "road_violations": 0,
+        "min_clearance": 12.025914678254972,
+        "localization_rmse": 0.05480784569721241,
+        "localization_max_error": 0.1416902971838823,
+        "final_speed": 0.0,
+        "progress": 44.37174150271491,
+        "emergency_steps": 7,
+        "avoidance_steps": 0,
+        "max_tracks": 1,
+        "passed": false,
+        "failures": [
+          "goal not reached within duration"
+        ]
+      },
+      "sensor_sha256": "34a21b462b1c3dc137c875a38b3d7e758f7536641ed60e4e1410fafa7e126240",
+      "verified_control_ticks": 1301,
+      "healthy_stationary_ticks": 1032,
+      "first": {
+        "time_s": 0.0,
+        "route_progress_m": 0.0,
+        "selected_candidate": 0,
+        "candidates": [
+          {
+            "index": 0,
+            "disposition": "CompletePath",
+            "conflict": null
+          },
+          {
+            "index": 1,
+            "disposition": "CompletePath",
+            "conflict": null
+          },
+          {
+            "index": 2,
+            "disposition": "CompletePath",
+            "conflict": null
+          }
+        ]
+      },
+      "last": {
+        "time_s": 65.0,
+        "route_progress_m": 44.41847454743563,
+        "selected_candidate": 1,
+        "candidates": [
+          {
+            "index": 0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "candidate_index": 0,
+              "lateral_target_m": 0.0,
+              "disposition": "CheckedStop",
+              "prediction_id": 1,
+              "relative_conflict_time_s": 3.0176996775812532,
+              "acquisition_age_s": 0.0,
+              "forecast_horizon_s": 8.0,
+              "endpoint_held": false,
+              "declared_cv_terms_m": {
+                "position": 0.2,
+                "velocity": 0.9053099032743759,
+                "acceleration": 0.45532556720370004
+              },
+              "declared_cv_radius_m": 1.560635470478076,
+              "published_forecast_radius_m": 3.102359599773542,
+              "nominal_object_radius_m": 1.1250866379675242,
+              "minimum_clearance_floor_m": 0.0
+            }
+          },
+          {
+            "index": 1,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "candidate_index": 1,
+              "lateral_target_m": 3.9,
+              "disposition": "CheckedStop",
+              "prediction_id": 1,
+              "relative_conflict_time_s": 3.105107855159771,
+              "acquisition_age_s": 0.0,
+              "forecast_horizon_s": 8.0,
+              "endpoint_held": false,
+              "declared_cv_terms_m": {
+                "position": 0.2,
+                "velocity": 0.9315323565479312,
+                "acceleration": 0.48208473960874565
+              },
+              "declared_cv_radius_m": 1.613617096156677,
+              "published_forecast_radius_m": 3.1556582811282814,
+              "nominal_object_radius_m": 1.1250866379675242,
+              "minimum_clearance_floor_m": 0.0
+            }
+          },
+          {
+            "index": 2,
+            "disposition": "OppositeSideDuringPass",
+            "conflict": null
+          }
+        ]
+      },
+      "interpretation": "Recorded nominal candidate conflicts only. CV terms are a reference bound, not an additive decomposition of the enclosing forecast. No proof of global infeasibility or of safety after reducing a budget."
+    },
+    {
+      "plant": "rne-dynamic",
+      "seed": 7,
+      "summary": {
+        "scenario": "Curved-road obstacle avoidance",
+        "seed": 7,
+        "simulated_seconds": 65.0,
+        "steps": 1301,
+        "reached_goal": false,
+        "collisions": 0,
+        "road_violations": 0,
+        "min_clearance": 11.829512258548053,
+        "localization_rmse": 0.051551097903914565,
+        "localization_max_error": 0.1463160575416091,
+        "final_speed": 0.0,
+        "progress": 44.59998843464433,
+        "emergency_steps": 5,
+        "avoidance_steps": 0,
+        "max_tracks": 1,
+        "passed": false,
+        "failures": [
+          "goal not reached within duration"
+        ]
+      },
+      "sensor_sha256": "d632617b676e9d589e29979bc12970920e8c3c2c12900916a7862e4d0ab83d9f",
+      "verified_control_ticks": 1301,
+      "healthy_stationary_ticks": 1038,
+      "first": {
+        "time_s": 0.0,
+        "route_progress_m": 0.0877972202298926,
+        "selected_candidate": 0,
+        "candidates": [
+          {
+            "index": 0,
+            "disposition": "CompletePath",
+            "conflict": null
+          },
+          {
+            "index": 1,
+            "disposition": "CompletePath",
+            "conflict": null
+          },
+          {
+            "index": 2,
+            "disposition": "CompletePath",
+            "conflict": null
+          }
+        ]
+      },
+      "last": {
+        "time_s": 65.0,
+        "route_progress_m": 44.60554700649735,
+        "selected_candidate": 0,
+        "candidates": [
+          {
+            "index": 0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "candidate_index": 0,
+              "lateral_target_m": 0.0,
+              "disposition": "CheckedStop",
+              "prediction_id": 1,
+              "relative_conflict_time_s": 3.0,
+              "acquisition_age_s": 0.0,
+              "forecast_horizon_s": 8.0,
+              "endpoint_held": false,
+              "declared_cv_terms_m": {
+                "position": 0.2,
+                "velocity": 0.8999999999999999,
+                "acceleration": 0.45000000000000007
+              },
+              "declared_cv_radius_m": 1.55,
+              "published_forecast_radius_m": 3.0877125832053416,
+              "nominal_object_radius_m": 1.1238040028450191,
+              "minimum_clearance_floor_m": 0.0
+            }
+          },
+          {
+            "index": 1,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "candidate_index": 1,
+              "lateral_target_m": 3.9,
+              "disposition": "CheckedStop",
+              "prediction_id": 1,
+              "relative_conflict_time_s": 3.0882504137810396,
+              "acquisition_age_s": 0.0,
+              "forecast_horizon_s": 8.0,
+              "endpoint_held": false,
+              "declared_cv_terms_m": {
+                "position": 0.2,
+                "velocity": 0.9264751241343119,
+                "acceleration": 0.4768645309109381
+              },
+              "declared_cv_radius_m": 1.6033396550452501,
+              "published_forecast_radius_m": 3.14155682026873,
+              "nominal_object_radius_m": 1.1238040028450191,
+              "minimum_clearance_floor_m": 0.0
+            }
+          },
+          {
+            "index": 2,
+            "disposition": "OppositeSideDuringPass",
+            "conflict": null
+          }
+        ]
+      },
+      "interpretation": "Recorded nominal candidate conflicts only. CV terms are a reference bound, not an additive decomposition of the enclosing forecast. No proof of global infeasibility or of safety after reducing a budget."
+    },
+    {
+      "plant": "rne-dynamic",
+      "seed": 42,
+      "summary": {
+        "scenario": "Curved-road obstacle avoidance",
+        "seed": 42,
+        "simulated_seconds": 65.0,
+        "steps": 1301,
+        "reached_goal": false,
+        "collisions": 0,
+        "road_violations": 0,
+        "min_clearance": 10.928358779211324,
+        "localization_rmse": 0.04842120980245662,
+        "localization_max_error": 0.17230913629881034,
+        "final_speed": 0.0,
+        "progress": 45.57016813947341,
+        "emergency_steps": 5,
+        "avoidance_steps": 0,
+        "max_tracks": 1,
+        "passed": false,
+        "failures": [
+          "goal not reached within duration"
+        ]
+      },
+      "sensor_sha256": "8d688b1cd42ef0356a836fb090a066fda013950e5c7f90000c7a1b1bb59fda89",
+      "verified_control_ticks": 1301,
+      "healthy_stationary_ticks": 924,
+      "first": {
+        "time_s": 0.0,
+        "route_progress_m": 0.0,
+        "selected_candidate": 0,
+        "candidates": [
+          {
+            "index": 0,
+            "disposition": "CompletePath",
+            "conflict": null
+          },
+          {
+            "index": 1,
+            "disposition": "CompletePath",
+            "conflict": null
+          },
+          {
+            "index": 2,
+            "disposition": "CompletePath",
+            "conflict": null
+          }
+        ]
+      },
+      "last": {
+        "time_s": 65.0,
+        "route_progress_m": 45.52721518260915,
+        "selected_candidate": 1,
+        "candidates": [
+          {
+            "index": 0,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "candidate_index": 0,
+              "lateral_target_m": 0.0,
+              "disposition": "CheckedStop",
+              "prediction_id": 1,
+              "relative_conflict_time_s": 2.8425277261594544,
+              "acquisition_age_s": 0.0,
+              "forecast_horizon_s": 8.0,
+              "endpoint_held": false,
+              "declared_cv_terms_m": {
+                "position": 0.2,
+                "velocity": 0.8527583178478363,
+                "acceleration": 0.40399819369926193
+              },
+              "declared_cv_radius_m": 1.4567565115470982,
+              "published_forecast_radius_m": 2.980884310255183,
+              "nominal_object_radius_m": 1.1274919253164404,
+              "minimum_clearance_floor_m": 0.0
+            }
+          },
+          {
+            "index": 1,
+            "disposition": "CheckedStop",
+            "conflict": {
+              "candidate_index": 1,
+              "lateral_target_m": 3.9,
+              "disposition": "CheckedStop",
+              "prediction_id": 1,
+              "relative_conflict_time_s": 2.9466829285084146,
+              "acquisition_age_s": 0.0,
+              "forecast_horizon_s": 8.0,
+              "endpoint_held": false,
+              "declared_cv_terms_m": {
+                "position": 0.2,
+                "velocity": 0.8840048785525244,
+                "acceleration": 0.4341470140581463
+              },
+              "declared_cv_radius_m": 1.5181518926106707,
+              "published_forecast_radius_m": 3.042337582142058,
+              "nominal_object_radius_m": 1.1274919253164404,
+              "minimum_clearance_floor_m": 0.0
+            }
+          },
+          {
+            "index": 2,
+            "disposition": "OppositeSideDuringPass",
+            "conflict": null
+          }
+        ]
+      },
+      "interpretation": "Recorded nominal candidate conflicts only. CV terms are a reference bound, not an additive decomposition of the enclosing forecast. No proof of global infeasibility or of safety after reducing a budget."
+    }
+  ]
+}
