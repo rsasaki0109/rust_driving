@@ -32,7 +32,13 @@ pub fn stopped_profile(
     bounds: &ContinuationBounds,
     certify: impl FnMut(&[TrajectoryPoint]) -> bool,
 ) -> Option<Vec<TrajectoryPoint>> {
-    stopped_profile_with_constraints(geometry, initial_speed, bounds, &ProfileConstraints::default(), certify)
+    stopped_profile_with_constraints(
+        geometry,
+        initial_speed,
+        bounds,
+        &ProfileConstraints::default(),
+        certify,
+    )
 }
 
 /// Generate a fully stopped candidate while preserving the supplied existing
@@ -45,19 +51,28 @@ pub fn stopped_profile_with_constraints(
     constraints: &ProfileConstraints<'_>,
     mut certify: impl FnMut(&[TrajectoryPoint]) -> bool,
 ) -> Option<Vec<TrajectoryPoint>> {
-    if constraints.lateral_acceleration_m_s2.is_some_and(|v| !v.is_finite() || v <= 0.)
-        || constraints.route_speed_zones.is_some_and(|(route, zones, padding)| {
-            !padding.is_finite() || padding < 0.
-                || route.points.len() < 2
-                || !route.half_width.is_finite() || route.half_width <= 0.
-                || route.points.iter().any(|p| !p.finite())
-                || route.points.windows(2).any(|p| {
-                    let distance = p[0].distance(p[1]);
-                    !distance.is_finite() || distance <= 0.
-                })
-                || !Route::new(route.points.clone(), route.half_width).is_ok_and(|rebuilt| rebuilt.lengths == route.lengths && rebuilt.length().is_finite())
-                || zones.len() > 128 || zones.iter().any(|z| !z.valid())
-        })
+    if constraints
+        .lateral_acceleration_m_s2
+        .is_some_and(|v| !v.is_finite() || v <= 0.)
+        || constraints
+            .route_speed_zones
+            .is_some_and(|(route, zones, padding)| {
+                !padding.is_finite()
+                    || padding < 0.
+                    || route.points.len() < 2
+                    || !route.half_width.is_finite()
+                    || route.half_width <= 0.
+                    || route.points.iter().any(|p| !p.finite())
+                    || route.points.windows(2).any(|p| {
+                        let distance = p[0].distance(p[1]);
+                        !distance.is_finite() || distance <= 0.
+                    })
+                    || !Route::new(route.points.clone(), route.half_width).is_ok_and(|rebuilt| {
+                        rebuilt.lengths == route.lengths && rebuilt.length().is_finite()
+                    })
+                    || zones.len() > 128
+                    || zones.iter().any(|z| !z.valid())
+            })
     {
         return None;
     }
@@ -108,9 +123,13 @@ pub fn stopped_profile_with_constraints(
         let Some(path) = speed::profile(geometry, initial_speed, &limits, Some(distance)) else {
             continue;
         };
-        if path.iter().any(|p| !p.position.finite() || !p.speed.is_finite()
-            || p.speed < 0. || !p.time.is_finite() || p.time < 0.)
-            || path.windows(2).any(|p| p[1].time <= p[0].time)
+        if path.iter().any(|p| {
+            !p.position.finite()
+                || !p.speed.is_finite()
+                || p.speed < 0.
+                || !p.time.is_finite()
+                || p.time < 0.
+        }) || path.windows(2).any(|p| p[1].time <= p[0].time)
         {
             continue;
         }
@@ -252,61 +271,108 @@ mod tests {
     #[test]
     fn speed_zone_caps_acceleration_without_clamping_initial_overspeed() {
         let route = Route::new(geometry(), 5.).unwrap();
-        let zones = vec![RouteSpeedZone { start_s_m: 0., end_s_m: 4., speed_m_s: 0.4 }];
+        let zones = vec![RouteSpeedZone {
+            start_s_m: 0.,
+            end_s_m: 4.,
+            speed_m_s: 0.4,
+        }];
         let constraints = ProfileConstraints {
             route_speed_zones: Some((&route, &zones, 0.)),
             lateral_acceleration_m_s2: None,
         };
         for initial in [0.21, 0.8] {
             let b = bounds();
-            let path = stopped_profile_with_constraints(&geometry(), initial, &b, &constraints, |_| true).unwrap();
+            let path =
+                stopped_profile_with_constraints(&geometry(), initial, &b, &constraints, |_| true)
+                    .unwrap();
             verify(&path, initial, &b);
             for p in &path {
-                let recovery = (initial*initial - 2.*b.deceleration_m_s2*p.position.x).max(0.).sqrt();
-                assert!(p.speed <= 0.4_f64.max(recovery)+1e-8);
+                let recovery = (initial * initial - 2. * b.deceleration_m_s2 * p.position.x)
+                    .max(0.)
+                    .sqrt();
+                assert!(p.speed <= 0.4_f64.max(recovery) + 1e-8);
             }
         }
     }
 
     #[test]
     fn narrow_zone_between_knots_is_not_skipped() {
-        let line = vec![Vec2::new(0.,0.), Vec2::new(1.,0.), Vec2::new(2.,0.)];
+        let line = vec![Vec2::new(0., 0.), Vec2::new(1., 0.), Vec2::new(2., 0.)];
         let route = Route::new(line.clone(), 5.).unwrap();
-        let zones = vec![RouteSpeedZone { start_s_m: 0.45, end_s_m: 0.55, speed_m_s: 0.3 }];
+        let zones = vec![RouteSpeedZone {
+            start_s_m: 0.45,
+            end_s_m: 0.55,
+            speed_m_s: 0.3,
+        }];
         let constraints = ProfileConstraints {
             route_speed_zones: Some((&route, &zones, 0.)),
             lateral_acceleration_m_s2: None,
         };
-        let path = stopped_profile_with_constraints(&line, 0.21, &bounds(), &constraints, |_| true).unwrap();
-        assert!(path.iter().filter(|p| p.position.x <= 1.).all(|p| p.speed <= 0.3+1e-8));
+        let path = stopped_profile_with_constraints(&line, 0.21, &bounds(), &constraints, |_| true)
+            .unwrap();
+        assert!(
+            path.iter()
+                .filter(|p| p.position.x <= 1.)
+                .all(|p| p.speed <= 0.3 + 1e-8)
+        );
     }
 
     #[test]
     fn curved_continuation_keeps_lateral_acceleration_limit() {
-        let arc: Vec<_> = (0..=40).map(|i| {
-            let angle = i as f64 * 0.025;
-            Vec2::new(2.*angle.sin(), 2.*(1.-angle.cos()))
-        }).collect();
-        let constraints = ProfileConstraints { route_speed_zones: None, lateral_acceleration_m_s2: Some(0.1) };
-        let path = stopped_profile_with_constraints(&arc, 0.21, &bounds(), &constraints, |_| true).unwrap();
+        let arc: Vec<_> = (0..=40)
+            .map(|i| {
+                let angle = i as f64 * 0.025;
+                Vec2::new(2. * angle.sin(), 2. * (1. - angle.cos()))
+            })
+            .collect();
+        let constraints = ProfileConstraints {
+            route_speed_zones: None,
+            lateral_acceleration_m_s2: Some(0.1),
+        };
+        let path = stopped_profile_with_constraints(&arc, 0.21, &bounds(), &constraints, |_| true)
+            .unwrap();
         verify(&path, 0.21, &bounds());
         // Radius two metres implies curvature 0.5 and v <= sqrt(0.1/0.5).
-        assert!(path.iter().all(|p| p.speed <= (0.2_f64).sqrt()+1e-8));
+        assert!(path.iter().all(|p| p.speed <= (0.2_f64).sqrt() + 1e-8));
     }
 
     #[test]
     fn invalid_constraints_do_not_reach_certificate() {
         let route = Route::new(geometry(), 5.).unwrap();
-        let zones = vec![RouteSpeedZone { start_s_m: 1., end_s_m: 0., speed_m_s: 0.4 }];
+        let zones = vec![RouteSpeedZone {
+            start_s_m: 1.,
+            end_s_m: 0.,
+            speed_m_s: 0.4,
+        }];
         let invalid = [
-            ProfileConstraints { route_speed_zones: Some((&route, &zones, 0.)), lateral_acceleration_m_s2: None },
-            ProfileConstraints { route_speed_zones: None, lateral_acceleration_m_s2: Some(f64::NAN) },
-            ProfileConstraints { route_speed_zones: None, lateral_acceleration_m_s2: Some(0.) },
-            ProfileConstraints { route_speed_zones: Some((&route, &[], -1.)), lateral_acceleration_m_s2: None },
+            ProfileConstraints {
+                route_speed_zones: Some((&route, &zones, 0.)),
+                lateral_acceleration_m_s2: None,
+            },
+            ProfileConstraints {
+                route_speed_zones: None,
+                lateral_acceleration_m_s2: Some(f64::NAN),
+            },
+            ProfileConstraints {
+                route_speed_zones: None,
+                lateral_acceleration_m_s2: Some(0.),
+            },
+            ProfileConstraints {
+                route_speed_zones: Some((&route, &[], -1.)),
+                lateral_acceleration_m_s2: None,
+            },
         ];
         for constraints in invalid {
-            assert!(stopped_profile_with_constraints(&geometry(), 0.21, &bounds(), &constraints, |_| panic!("invalid input reached certificate")).is_none());
+            assert!(
+                stopped_profile_with_constraints(
+                    &geometry(),
+                    0.21,
+                    &bounds(),
+                    &constraints,
+                    |_| panic!("invalid input reached certificate")
+                )
+                .is_none()
+            );
         }
     }
-
 }
