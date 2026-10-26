@@ -35,6 +35,28 @@ def observe(oracle,*args,**kwargs):
 
 
 class CheckedApproachTests(unittest.TestCase):
+    def test_small_progress_requires_explicit_policy_and_fresh_observations(self):
+        with self.assertRaises(ValueError):
+            observe(CheckedApproachOracle(CONFIG),0.,0.,[0.],endpoint=.5)
+        o=CheckedApproachOracle(dict(CONFIG,checked_approach_min_progress_m=.5))
+        observe(o,0.,0.,[0.],endpoint=.5)
+        observe(o,.05,0.,[0.],endpoint=.5)
+        observe(o,.1,.1,[0.,.1],endpoint=.5)
+        tick,cold=value(.2,.2,[0.,.1,.2],adopted=True,endpoint=.5)
+        tick['expected']['trajectory']['points']=[
+            dict(position=dict(x=x,y=0.),time=t,speed=v)
+            for x,t,v in [(0.,0.,0.),(.25,.5,1.),(.5,1.,0.),(.5,9.,0.)]]
+        o.observe(tick,cold)
+        self.assertEqual(len(o.adoptions),1)
+        with self.assertRaises(ValueError):
+            observe(CheckedApproachOracle(dict(CONFIG,checked_approach_min_progress_m=.5)),
+                    0.,0.,[0.],endpoint=.49)
+
+    def test_progress_floor_rejects_invalid_configuration(self):
+        for value_ in [True,.49,2.01,float('nan'),float('inf')]:
+            with self.assertRaises(ValueError):
+                CheckedApproachOracle(dict(CONFIG,checked_approach_min_progress_m=value_))
+
     def test_three_fresh_acquisitions_authorize_one_fully_certified_stop(self):
         o=CheckedApproachOracle(CONFIG);observe(o,0.,0.,[0.]);observe(o,.05,0.,[0.]);observe(o,.1,.1,[0.,.1]);observe(o,.2,.2,[0.,.1,.2],adopted=True)
         self.assertEqual(len(o.adoptions),1);self.assertGreater(o.bounds,0)

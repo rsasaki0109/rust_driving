@@ -27,6 +27,10 @@ class CheckedApproachOracle:
             raise ValueError('checked approach prerequisites missing')
         if any(config.get(k) for k in ['lane_change','traffic_controls','stop_signs','intersections']):
             raise ValueError('checked approach inspection requires fixed or navigation routes without mapped duties')
+        minimum=config.get('checked_approach_min_progress_m')
+        self.minimum_progress=2. if minimum is None else minimum
+        if type(self.minimum_progress) not in [int,float] or not math.isfinite(self.minimum_progress) or not .5<=self.minimum_progress<=2.:
+            raise ValueError('invalid checked approach progress floor')
         self.config=config;self.consumed=None;self.support=None;self.epoch=0;self.switches=0
         self.last_time=None;self.ticks=0;self.adoptions=[];self.bounds=0
 
@@ -59,7 +63,7 @@ class CheckedApproachOracle:
         here=decisions['route_progress_m'];position=out['estimate']['pose']['position'];target=report['proposal_lateral_target_m']
         ids=report['blocking_prediction_ids'];point=lambda p:[p[k] for k in ['x','y']]
         if (not all(type(v) in [int,float] and math.isfinite(v) for v in [here,progress,target]+point(position)+point(endpoint))
-                or progress-here<2. or abs(out['estimate']['speed'])>.2
+                or progress-here<self.minimum_progress or abs(out['estimate']['speed'])>.2
                 or not isinstance(ids,list) or not 1<=len(ids)<=9
                 or any(type(i) is not int or i<0 for i in ids) or ids!=sorted(set(ids))
                 or not set(ids).issubset(p['id'] for p in out['predictions'])):

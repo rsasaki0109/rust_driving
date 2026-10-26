@@ -55,6 +55,8 @@ pub struct LatticePlanner {
     pub search_obstruction_stops: bool,
     /// Confirm a newly checked stopping approach using fresh scene acquisitions.
     pub replan_checked_approaches: bool,
+    /// Optional experimental progress floor in [0.5, 2] metres; None retains 2 m.
+    pub checked_approach_min_progress_m: Option<f64>,
     /// Search up to eighty existing farther geometry knots, retaining stop commitments.
     pub search_later_obstruction_stops: bool,
     /// Optional additional road-edge reserve for width-fitted side candidates.
@@ -114,6 +116,7 @@ impl Default for LatticePlanner {
             settle_obstruction_stops: false,
             search_obstruction_stops: false,
             replan_checked_approaches: false,
+            checked_approach_min_progress_m: None,
             search_later_obstruction_stops: false,
             lateral_candidate_margin_m: None,
             refine_lateral_candidates: false,
@@ -265,6 +268,8 @@ impl Planner for LatticePlanner {
         if !self.replan_checked_approaches {
             return self.plan_inner(ego, route, objects);
         }
+        self.approach_confirmation
+            .set_minimum_progress(self.checked_approach_min_progress_m.unwrap_or(2.));
         let capture = self.diagnostics_enabled;
         self.diagnostics_enabled = true;
         let mut result = self.plan_inner(ego, route, objects);
@@ -352,6 +357,9 @@ impl LatticePlanner {
             || !self.cruise_speed.is_finite()
             || self.cruise_speed <= 0.0
             || (self.search_obstruction_stops && !self.settle_obstruction_stops)
+            || self.checked_approach_min_progress_m.is_some_and(|value| {
+                !self.replan_checked_approaches || !value.is_finite() || !(0.5..=2.).contains(&value)
+            })
             || (self.search_later_obstruction_stops && !self.replan_checked_approaches)
             || (self.replan_checked_approaches
                 && !(self.search_obstruction_stops

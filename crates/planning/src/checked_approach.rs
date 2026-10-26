@@ -21,15 +21,34 @@ pub(super) struct Proposal {
     pub ids: Vec<u64>,
 }
 
-#[derive(Clone, Default)]
+#[derive(Clone)]
 pub(super) struct Confirmation {
+    minimum_progress: f64,
     consumed: Option<f64>,
     last_control: Option<f64>,
     support: Option<Support>,
     pub diagnostics: CheckedApproachDiagnostics,
 }
 
+impl Default for Confirmation {
+    fn default() -> Self {
+        Self {
+            minimum_progress: 2.,
+            consumed: None,
+            last_control: None,
+            support: None,
+            diagnostics: CheckedApproachDiagnostics::default(),
+        }
+    }
+}
 impl Confirmation {
+    pub fn set_minimum_progress(&mut self, value: f64) {
+        if value != self.minimum_progress {
+            self.reset();
+            self.minimum_progress = value;
+        }
+    }
+
     pub fn reset(&mut self) {
         self.support = None;
         self.diagnostics = CheckedApproachDiagnostics::default();
@@ -43,6 +62,10 @@ impl Confirmation {
         proposal: Option<Proposal>,
     ) -> bool {
         self.diagnostics = CheckedApproachDiagnostics::default();
+        if !self.minimum_progress.is_finite() || !(0.5..=2.).contains(&self.minimum_progress) {
+            self.reset();
+            return false;
+        }
         let Some((now, scene)) = clock else {
             self.reset();
             return false;
@@ -73,7 +96,7 @@ impl Confirmation {
                 && progress.is_finite()
                 && p.endpoint.finite()
                 && p.end_progress.is_finite()
-                && p.end_progress - progress >= 2.
+                && p.end_progress - progress >= self.minimum_progress
                 && p.target.is_finite()
                 && !p.ids.is_empty()
                 && p.ids.len() <= 9
@@ -145,6 +168,45 @@ mod tests {
     }
     fn sample(state: &mut Confirmation, now: f64, scene: Option<f64>, p: Option<Proposal>) -> bool {
         state.observe(Some((now, scene)), Vec2::default(), 0., p)
+    }
+
+
+    #[test]
+    fn smaller_progress_still_requires_three_fresh_acquisitions() {
+        let mut state = Confirmation::default();
+        state.set_minimum_progress(0.5);
+        let small = || Proposal {
+            endpoint: Vec2::new(0.5, 0.),
+            end_progress: 0.5,
+            ..proposal()
+        };
+        let mut short = proposal();
+        short.end_progress = 0.49;
+        assert!(!sample(&mut state, 0., Some(0.), Some(short)));
+        assert!(!sample(&mut state, 0.1, Some(0.1), Some(proposal())));
+        state.reset();
+        assert!(!sample(&mut state, 0.2, Some(0.2), Some(small())));
+        assert!(!sample(&mut state, 0.25, Some(0.2), Some(small())));
+        assert_eq!(state.diagnostics.supporting_acquisitions, 1);
+        assert!(!sample(&mut state, 0.3, Some(0.3), Some(small())));
+        assert!(sample(&mut state, 0.4, Some(0.4), Some(small())));
+    }
+
+    #[test]
+    fn threshold_changes_cannot_reuse_evidence_or_cached_credit() {
+        let mut state = Confirmation::default();
+        sample(&mut state, 0., Some(0.), Some(proposal()));
+        sample(&mut state, 0.1, Some(0.1), Some(proposal()));
+        state.set_minimum_progress(0.5);
+        assert!(!sample(&mut state, 0.2, Some(0.1), Some(proposal())));
+        assert_eq!(state.diagnostics.supporting_acquisitions, 0);
+        assert!(!sample(&mut state, 0.3, Some(0.3), Some(proposal())));
+        assert_eq!(state.diagnostics.supporting_acquisitions, 1);
+        for invalid in [f64::NAN, f64::INFINITY, 0.49, 2.01] {
+            state.set_minimum_progress(invalid);
+            assert!(!sample(&mut state, 0.4, Some(0.4), Some(proposal())));
+            assert_eq!(state.diagnostics, CheckedApproachDiagnostics::default());
+        }
     }
 
     #[test]
