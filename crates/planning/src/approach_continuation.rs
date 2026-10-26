@@ -156,6 +156,119 @@ pub fn stopped_profile_with_constraints(
     None
 }
 
+
+/// Inputs for validating the lifetime of an already verified approach adoption.
+/// Route and localization generations must change whenever their frames change.
+pub struct ContinuationObservation<'a> {
+    pub now_s: f64,
+    pub acquisition_s: Option<f64>,
+    pub localization_generation: u64,
+    pub route_generation: u64,
+    pub blocking_ids: &'a [u64],
+    pub lateral_target_m: f64,
+    pub progress_m: f64,
+    pub healthy: bool,
+}
+
+/// Bounded lifetime of an existing checked adoption, not a collision certificate.
+/// Construction requires the caller's independently verified adoption record.
+/// Every proposed path still needs current-scene, road and full-stop checks.
+pub struct ContinuationPermit {
+    expires_s: f64,
+    last_control_s: f64,
+    last_acquisition_s: f64,
+    localization_generation: u64,
+    route_generation: u64,
+    blocking_ids: Vec<u64>,
+    lateral_target_m: f64,
+    greatest_progress_m: f64,
+    end_progress_m: f64,
+    endpoint: Vec2,
+    valid: bool,
+}
+
+impl ContinuationPermit {
+    /// The duration is an explicit experimental policy bound in (0, 8] seconds.
+    /// No observation, including a fresh one, extends the original deadline.
+    pub fn from_adoption(
+        adoption: &rustdriving_core::CheckedApproachDiagnostics,
+        observation: &ContinuationObservation<'_>,
+        maximum_duration_s: f64,
+    ) -> Option<Self> {
+        let first = adoption.first_acquisition_s?;
+        let last = adoption.last_acquisition_s?;
+        let end = adoption.proposal_end_progress_m?;
+        let endpoint = adoption.proposal_endpoint?;
+        let target = adoption.proposal_lateral_target_m?;
+        if !adoption.adopted || adoption.supporting_acquisitions != 3
+            || !first.is_finite() || first < 0. || !last.is_finite()
+            || last-first < 0.2-1e-9 || observation.acquisition_s != Some(last)
+            || !endpoint.finite() || !end.is_finite() || !target.is_finite()
+            || !observation.progress_m.is_finite() || end-observation.progress_m < 0.5
+            || !maximum_duration_s.is_finite() || maximum_duration_s <= 0. || maximum_duration_s > 8.
+            || adoption.blocking_prediction_ids.is_empty() || adoption.blocking_prediction_ids.len() > 9
+            || adoption.blocking_prediction_ids.windows(2).any(|p| p[0] >= p[1])
+        {
+            return None;
+        }
+        let expires = observation.now_s+maximum_duration_s;
+        if !expires.is_finite() || expires <= observation.now_s {
+            return None;
+        }
+        let mut permit = Self {
+            expires_s: expires,
+            last_control_s: observation.now_s,
+            last_acquisition_s: last,
+            localization_generation: observation.localization_generation,
+            route_generation: observation.route_generation,
+            blocking_ids: adoption.blocking_prediction_ids.clone(),
+            lateral_target_m: target,
+            greatest_progress_m: observation.progress_m,
+            end_progress_m: end,
+            endpoint,
+            valid: true,
+        };
+        permit.observe(observation).then_some(permit)
+    }
+
+    /// Revocation is sticky. Restored inputs cannot resurrect a revoked permit.
+    pub fn revoke(&mut self) {
+        self.valid = false;
+    }
+
+    /// Check eligibility only; callers must separately certify each complete path.
+    pub fn observe(&mut self, observation: &ContinuationObservation<'_>) -> bool {
+        let acquisition_valid = observation.acquisition_s.is_some_and(|stamp| {
+            stamp.is_finite() && stamp >= self.last_acquisition_s
+                && stamp <= observation.now_s && observation.now_s-stamp <= 0.35+1e-9
+        });
+        if !self.valid || !observation.healthy || !observation.now_s.is_finite()
+            || observation.now_s < self.last_control_s || observation.now_s >= self.expires_s
+            || !acquisition_valid
+            || observation.localization_generation != self.localization_generation
+            || observation.route_generation != self.route_generation
+            || observation.blocking_ids != self.blocking_ids.as_slice()
+            || !observation.lateral_target_m.is_finite()
+            || (observation.lateral_target_m-self.lateral_target_m).abs() > 0.01
+            || !observation.progress_m.is_finite()
+            || observation.progress_m < self.greatest_progress_m-0.2
+            || observation.progress_m >= self.end_progress_m
+        {
+            self.revoke();
+            return false;
+        }
+        self.last_control_s = observation.now_s;
+        self.last_acquisition_s = observation.acquisition_s.expect("validated acquisition");
+        self.greatest_progress_m = self.greatest_progress_m.max(observation.progress_m);
+        true
+    }
+
+    /// Original endpoint and route progress, never advanced by renewed sensing.
+    pub fn endpoint_bound(&self) -> Option<(Vec2, f64)> {
+        self.valid.then_some((self.endpoint, self.end_progress_m))
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -375,4 +488,83 @@ mod tests {
             );
         }
     }
+    fn observation(now: f64) -> ContinuationObservation<'static> {
+        ContinuationObservation {
+            now_s: now, acquisition_s: Some(now),
+            localization_generation: 1, route_generation: 2,
+            blocking_ids: &[7], lateral_target_m: 3.9, progress_m: 10., healthy: true,
+        }
+    }
+    fn adoption() -> rustdriving_core::CheckedApproachDiagnostics {
+        rustdriving_core::CheckedApproachDiagnostics {
+            supporting_acquisitions: 3, first_acquisition_s: Some(0.),
+            last_acquisition_s: Some(0.2), proposal_end_progress_m: Some(12.),
+            proposal_endpoint: Some(Vec2::new(12., 3.9)),
+            proposal_lateral_target_m: Some(3.9), blocking_prediction_ids: vec![7], adopted: true,
+        }
+    }
+
+    #[test]
+    fn permit_deadline_is_not_renewed_by_cached_or_fresh_observations() {
+        let mut permit = ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 1.).unwrap();
+        let mut cached = observation(0.5);
+        cached.acquisition_s = Some(0.2);
+        assert!(permit.observe(&cached));
+        assert!(permit.observe(&observation(1.1)));
+        assert!(!permit.observe(&observation(1.2)));
+        assert!(permit.endpoint_bound().is_none());
+        assert!(!permit.observe(&observation(1.15)));
+    }
+
+    #[test]
+    fn changed_context_or_bad_clock_stickily_revokes_permit() {
+        for case in 0..9 {
+            let mut permit = ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 2.).unwrap();
+            let mut changed = observation(0.3);
+            match case {
+                0 => changed.healthy = false,
+                1 => changed.route_generation += 1,
+                2 => changed.localization_generation += 1,
+                3 => changed.blocking_ids = &[8],
+                4 => changed.lateral_target_m = -3.9,
+                5 => changed.acquisition_s = None,
+                6 => changed.acquisition_s = Some(0.4),
+                7 => changed.now_s = 0.1,
+                _ => changed.acquisition_s = Some(0.1),
+            }
+            assert!(!permit.observe(&changed));
+            assert!(!permit.observe(&observation(0.4)));
+        }
+    }
+
+    #[test]
+    fn stale_observations_and_endpoint_completion_expire_permit() {
+        let mut permit = ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 2.).unwrap();
+        let mut stale = observation(0.56);
+        stale.acquisition_s = Some(0.2);
+        assert!(!permit.observe(&stale));
+        let mut permit = ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 2.).unwrap();
+        let mut completed = observation(0.3);
+        completed.progress_m = 12.;
+        assert!(!permit.observe(&completed));
+        assert!(!permit.observe(&observation(0.4)));
+    }
+
+    #[test]
+    fn unsupported_adoption_and_unbounded_duration_cannot_grant_permit() {
+        let mut unconfirmed = adoption();
+        unconfirmed.adopted = false;
+        assert!(ContinuationPermit::from_adoption(&unconfirmed, &observation(0.2), 1.).is_none());
+        for duration in [0., -1., f64::NAN, f64::INFINITY, 8.1] {
+            assert!(ContinuationPermit::from_adoption(&adoption(), &observation(0.2), duration).is_none());
+        }
+        let mut mismatch = observation(0.2);
+        mismatch.blocking_ids = &[9];
+        assert!(ContinuationPermit::from_adoption(&adoption(), &mismatch, 1.).is_none());
+        let mut retreat = ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 1.).unwrap();
+        let mut backwards = observation(0.3);
+        backwards.progress_m = 9.;
+        assert!(!retreat.observe(&backwards));
+    }
+
 }

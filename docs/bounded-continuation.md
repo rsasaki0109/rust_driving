@@ -31,12 +31,14 @@ bounds must never reach the certificate callback.
 The initial four tests and hosted `bash scripts/check.sh` passed in
 [run 40411729415](https://github.com/rsasaki0109/rust_driving/actions/runs/40411729415)
 on formatted source `bfd34f62e1731f91864996adb59aef0b1bf8cece`.
-The following constraints extension is pending a new workflow run. No local executor is
+The constraints extension passed hosted `bash scripts/check.sh` in
+[run 40420127615](https://github.com/rsasaki0109/rust_driving/actions/runs/40420127615)
+on formatted source `724012d6ecf030220f184e2c6b6531f450edec1d` (eight module tests). No local executor is
 available. No closed-loop improvement, adoption or maturity increase is claimed.
 Next integrate the constructor with an acquisition-owned continuation permit and
 the existing complete path certificates, then compare the original paired cases.
 
-## Route and curvature constraints (validation pending)
+## Route and curvature constraints (validated)
 
 `stopped_profile_with_constraints` accepts optional existing route speed zones,
 padding and a positive lateral acceleration bound. It preserves the supplied
@@ -52,3 +54,29 @@ active-zone acceleration, initial overspeed recovery, a narrow between-knot zone
 a radius-two bend and invalid constraints. Neither entry point is wired into the
 live planner yet; fresh continuation ownership and full scene/road certificates
 remain prerequisites for that integration.
+
+## Continuation lifetime (validation pending)
+
+`ContinuationPermit` records the endpoint, route progress, lateral target,
+blocker identities, localization/route generations and immutable expiry of an
+already verified adoption. Construction requires an adopted three-acquisition
+record spanning at least 0.2 seconds, matching acquisition and blocker context.
+This is eligibility state, not independent proof of the supplied adoption.
+
+Each observation must be healthy, monotonic and no more than 0.35 seconds old.
+Cached acquisitions can preserve existing eligibility briefly but cannot extend
+its deadline; neither can fresh observations. Caller-supplied duration must be
+positive and at most eight seconds. This is an experimental maximum, not a
+calibrated safety or completion bound.
+
+Missing/future/regressed/stale observations, a changed frame/route/blocker/target,
+retreat beyond 0.2 m of greatest observed progress, reaching the original endpoint
+progress or expiry revoke eligibility permanently. The caller may also explicitly
+revoke it when a path certificate fails. Restoring inputs never reactivates it;
+a newly verified adoption is required. Endpoint bounds are never advanced.
+
+Four new tests cover immutable expiry, changed contexts and clocks, stale
+acquisitions, endpoint completion, unsupported adoption and invalid duration.
+This state machine and the profile constructor still require live-planner
+integration with complete current-scene and road certificates. No new driving
+behavior or closed-loop improvement is claimed.
