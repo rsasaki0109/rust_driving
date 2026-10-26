@@ -1,0 +1,29 @@
+name: Bounded continuation profile checks
+on:
+  push:
+    branches: [feat/bounded-continuation-profile]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup toolchain install 1.90.0 --profile minimal --component rustfmt --component clippy
+      - name: Format and pin source
+        env:
+          EXPECTED_SOURCE: ${{ github.sha }}
+        run: |
+          cargo fmt --all
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if ! git diff --quiet; then
+            git add crates/planning/src/approach_continuation.rs crates/planning/src/lib.rs
+            git commit -m 'Format experimental bounded continuation profiles'
+            git push --force-with-lease="refs/heads/feat/bounded-continuation-profile:$EXPECTED_SOURCE" origin HEAD:refs/heads/feat/bounded-continuation-profile
+          fi
+          git rev-parse HEAD
+      - name: Required workspace checks including continuation tests
+        run: bash scripts/check.sh

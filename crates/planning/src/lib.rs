@@ -1,4 +1,5 @@
 //! Receding-horizon lateral lattice with time-indexed collision envelopes.
+pub mod approach_continuation;
 mod checked_approach;
 mod collision;
 mod corners;
