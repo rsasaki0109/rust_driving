@@ -166,6 +166,9 @@ pub struct PipelineConfig {
     pub gnss_latency_compensation: bool,
     #[serde(default, skip_serializing_if = "is_false")]
     pub local_route_geometry: bool,
+    /// Experimental anchored lateral correction; absent in existing recordings.
+    #[serde(default, skip_serializing_if = "is_false")]
+    pub anchored_side_recovery: bool,
     /// Optional chassis-to-rear-axle distance for low-speed no-slip motion.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub rear_axle_offset_m: Option<f64>,
@@ -249,6 +252,7 @@ impl PipelineConfig {
             monitor_planning_progress: false,
             gnss_latency_compensation: false,
             local_route_geometry: false,
+            anchored_side_recovery: false,
             rear_axle_offset_m: None,
             instantaneous_odometry: false,
             motion_limits: None,
@@ -794,6 +798,7 @@ impl DrivingPipeline {
         );
         planner.local_route_geometry = config.local_route_geometry;
         planner.point_reference_recovery = config.rear_axle_offset_m.is_none();
+        planner.anchored_side_recovery = config.anchored_side_recovery;
         planner.retain_yield_stop_on_emergency = config.retain_yield_stop_on_emergency;
         planner.settle_obstruction_stops = config.settle_obstruction_stops;
         planner.search_obstruction_stops = config.search_obstruction_stops;

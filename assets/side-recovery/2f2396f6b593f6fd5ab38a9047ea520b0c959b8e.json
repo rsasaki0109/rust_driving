@@ -1,0 +1,389 @@
+{
+  "recorded_source": "92c72b1c473f0b6209f09c4ce1ff9508026b2d40",
+  "closed_loop": false,
+  "goal_improvement_established": false,
+  "default_policy_changed": false,
+  "complete": true,
+  "cases": [
+    {
+      "plant": "reference-2d",
+      "seed": 7,
+      "sensor_sha256": "5d8a2f721af5b8e8757cf170dac52a96af52207a87bcb3ab127b78b79ae155a0",
+      "verified_legacy_ticks": 1301,
+      "healthy_stationary_complete_paths": {
+        "original": 3,
+        "counterfactual": 3
+      },
+      "counterfactual": {
+        "verified_control_ticks": 1301,
+        "healthy_stationary_ticks": 1033,
+        "first": {
+          "time_s": 0,
+          "route_progress_m": 0,
+          "selected_candidate": 0,
+          "candidates": [
+            {
+              "index": 0,
+              "disposition": "CompletePath",
+              "conflict": null
+            },
+            {
+              "index": 1,
+              "disposition": "CompletePath",
+              "conflict": null
+            },
+            {
+              "index": 2,
+              "disposition": "CompletePath",
+              "conflict": null
+            }
+          ]
+        },
+        "last": {
+          "time_s": 65,
+          "route_progress_m": 44.54222442347032,
+          "selected_candidate": 0,
+          "candidates": [
+            {
+              "index": 0,
+              "disposition": "CheckedStop",
+              "conflict": {
+                "candidate_index": 0,
+                "lateral_target_m": 0,
+                "disposition": "CheckedStop",
+                "prediction_id": 1,
+                "relative_conflict_time_s": 3.021011255675979,
+                "acquisition_age_s": 0,
+                "forecast_horizon_s": 8,
+                "endpoint_held": false,
+                "declared_cv_terms_m": {
+                  "position": 0.2,
+                  "velocity": 0.9063033767027937,
+                  "acceleration": 0.4563254503460479
+                },
+                "declared_cv_radius_m": 1.5626288270488415,
+                "published_forecast_radius_m": 3.100421813639765,
+                "nominal_object_radius_m": 1.1215097269372494,
+                "minimum_clearance_floor_m": 0
+              }
+            },
+            {
+              "index": 1,
+              "disposition": "CheckedStop",
+              "conflict": {
+                "candidate_index": 1,
+                "lateral_target_m": 3.9,
+                "disposition": "CheckedStop",
+                "prediction_id": 1,
+                "relative_conflict_time_s": 3.105810014738824,
+                "acquisition_age_s": 0,
+                "forecast_horizon_s": 8,
+                "endpoint_held": false,
+                "declared_cv_terms_m": {
+                  "position": 0.2,
+                  "velocity": 0.9317430044216471,
+                  "acceleration": 0.4823027923825987
+                },
+                "declared_cv_radius_m": 1.6140457968042459,
+                "published_forecast_radius_m": 3.1521657361540103,
+                "nominal_object_radius_m": 1.1215097269372494,
+                "minimum_clearance_floor_m": 0
+              }
+            },
+            {
+              "index": 2,
+              "disposition": "OppositeSideDuringPass",
+              "conflict": null
+            }
+          ]
+        },
+        "interpretation": "Recorded nominal candidate conflicts only. CV terms are a reference bound, not an additive decomposition of the enclosing forecast. No proof of global infeasibility or of safety after reducing a budget."
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "seed": 42,
+      "sensor_sha256": "34a21b462b1c3dc137c875a38b3d7e758f7536641ed60e4e1410fafa7e126240",
+      "verified_legacy_ticks": 1301,
+      "healthy_stationary_complete_paths": {
+        "original": 3,
+        "counterfactual": 3
+      },
+      "counterfactual": {
+        "verified_control_ticks": 1301,
+        "healthy_stationary_ticks": 1032,
+        "first": {
+          "time_s": 0,
+          "route_progress_m": 0,
+          "selected_candidate": 0,
+          "candidates": [
+            {
+              "index": 0,
+              "disposition": "CompletePath",
+              "conflict": null
+            },
+            {
+              "index": 1,
+              "disposition": "CompletePath",
+              "conflict": null
+            },
+            {
+              "index": 2,
+              "disposition": "CompletePath",
+              "conflict": null
+            }
+          ]
+        },
+        "last": {
+          "time_s": 65,
+          "route_progress_m": 44.41847454743563,
+          "selected_candidate": 1,
+          "candidates": [
+            {
+              "index": 0,
+              "disposition": "CheckedStop",
+              "conflict": {
+                "candidate_index": 0,
+                "lateral_target_m": 0,
+                "disposition": "CheckedStop",
+                "prediction_id": 1,
+                "relative_conflict_time_s": 3.0176996775812532,
+                "acquisition_age_s": 0,
+                "forecast_horizon_s": 8,
+                "endpoint_held": false,
+                "declared_cv_terms_m": {
+                  "position": 0.2,
+                  "velocity": 0.9053099032743759,
+                  "acceleration": 0.45532556720370004
+                },
+                "declared_cv_radius_m": 1.560635470478076,
+                "published_forecast_radius_m": 3.102359599773542,
+                "nominal_object_radius_m": 1.1250866379675242,
+                "minimum_clearance_floor_m": 0
+              }
+            },
+            {
+              "index": 1,
+              "disposition": "CheckedStop",
+              "conflict": {
+                "candidate_index": 1,
+                "lateral_target_m": 3.9,
+                "disposition": "CheckedStop",
+                "prediction_id": 1,
+                "relative_conflict_time_s": 3.104406446658302,
+                "acquisition_age_s": 0,
+                "forecast_horizon_s": 8,
+                "endpoint_held": false,
+                "declared_cv_terms_m": {
+                  "position": 0.2,
+                  "velocity": 0.9313219339974905,
+                  "acceleration": 0.48186696930268125
+                },
+                "declared_cv_radius_m": 1.6131889033001718,
+                "published_forecast_radius_m": 3.1552305848960183,
+                "nominal_object_radius_m": 1.1250866379675242,
+                "minimum_clearance_floor_m": 0
+              }
+            },
+            {
+              "index": 2,
+              "disposition": "OppositeSideDuringPass",
+              "conflict": null
+            }
+          ]
+        },
+        "interpretation": "Recorded nominal candidate conflicts only. CV terms are a reference bound, not an additive decomposition of the enclosing forecast. No proof of global infeasibility or of safety after reducing a budget."
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "seed": 7,
+      "sensor_sha256": "d632617b676e9d589e29979bc12970920e8c3c2c12900916a7862e4d0ab83d9f",
+      "verified_legacy_ticks": 1301,
+      "healthy_stationary_complete_paths": {
+        "original": 3,
+        "counterfactual": 3
+      },
+      "counterfactual": {
+        "verified_control_ticks": 1301,
+        "healthy_stationary_ticks": 1038,
+        "first": {
+          "time_s": 0,
+          "route_progress_m": 0.0877972202298926,
+          "selected_candidate": 0,
+          "candidates": [
+            {
+              "index": 0,
+              "disposition": "CompletePath",
+              "conflict": null
+            },
+            {
+              "index": 1,
+              "disposition": "CompletePath",
+              "conflict": null
+            },
+            {
+              "index": 2,
+              "disposition": "CompletePath",
+              "conflict": null
+            }
+          ]
+        },
+        "last": {
+          "time_s": 65,
+          "route_progress_m": 44.60554700649735,
+          "selected_candidate": 0,
+          "candidates": [
+            {
+              "index": 0,
+              "disposition": "CheckedStop",
+              "conflict": {
+                "candidate_index": 0,
+                "lateral_target_m": 0,
+                "disposition": "CheckedStop",
+                "prediction_id": 1,
+                "relative_conflict_time_s": 3,
+                "acquisition_age_s": 0,
+                "forecast_horizon_s": 8,
+                "endpoint_held": false,
+                "declared_cv_terms_m": {
+                  "position": 0.2,
+                  "velocity": 0.8999999999999999,
+                  "acceleration": 0.45000000000000007
+                },
+                "declared_cv_radius_m": 1.55,
+                "published_forecast_radius_m": 3.0877125832053416,
+                "nominal_object_radius_m": 1.1238040028450191,
+                "minimum_clearance_floor_m": 0
+              }
+            },
+            {
+              "index": 1,
+              "disposition": "CheckedStop",
+              "conflict": {
+                "candidate_index": 1,
+                "lateral_target_m": 3.9,
+                "disposition": "CheckedStop",
+                "prediction_id": 1,
+                "relative_conflict_time_s": 3.0885868516541937,
+                "acquisition_age_s": 0,
+                "forecast_horizon_s": 8,
+                "endpoint_held": false,
+                "declared_cv_terms_m": {
+                  "position": 0.2,
+                  "velocity": 0.9265760554962581,
+                  "acceleration": 0.4769684370105582
+                },
+                "declared_cv_radius_m": 1.6035444925068163,
+                "published_forecast_radius_m": 3.141762091154418,
+                "nominal_object_radius_m": 1.1238040028450191,
+                "minimum_clearance_floor_m": 0
+              }
+            },
+            {
+              "index": 2,
+              "disposition": "OppositeSideDuringPass",
+              "conflict": null
+            }
+          ]
+        },
+        "interpretation": "Recorded nominal candidate conflicts only. CV terms are a reference bound, not an additive decomposition of the enclosing forecast. No proof of global infeasibility or of safety after reducing a budget."
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "seed": 42,
+      "sensor_sha256": "8d688b1cd42ef0356a836fb090a066fda013950e5c7f90000c7a1b1bb59fda89",
+      "verified_legacy_ticks": 1301,
+      "healthy_stationary_complete_paths": {
+        "original": 3,
+        "counterfactual": 3
+      },
+      "counterfactual": {
+        "verified_control_ticks": 1301,
+        "healthy_stationary_ticks": 924,
+        "first": {
+          "time_s": 0,
+          "route_progress_m": 0,
+          "selected_candidate": 0,
+          "candidates": [
+            {
+              "index": 0,
+              "disposition": "CompletePath",
+              "conflict": null
+            },
+            {
+              "index": 1,
+              "disposition": "CompletePath",
+              "conflict": null
+            },
+            {
+              "index": 2,
+              "disposition": "CompletePath",
+              "conflict": null
+            }
+          ]
+        },
+        "last": {
+          "time_s": 65,
+          "route_progress_m": 45.52721518260915,
+          "selected_candidate": 1,
+          "candidates": [
+            {
+              "index": 0,
+              "disposition": "CheckedStop",
+              "conflict": {
+                "candidate_index": 0,
+                "lateral_target_m": 0,
+                "disposition": "CheckedStop",
+                "prediction_id": 1,
+                "relative_conflict_time_s": 2.8425277261594544,
+                "acquisition_age_s": 0,
+                "forecast_horizon_s": 8,
+                "endpoint_held": false,
+                "declared_cv_terms_m": {
+                  "position": 0.2,
+                  "velocity": 0.8527583178478363,
+                  "acceleration": 0.40399819369926193
+                },
+                "declared_cv_radius_m": 1.4567565115470982,
+                "published_forecast_radius_m": 2.980884310255183,
+                "nominal_object_radius_m": 1.1274919253164404,
+                "minimum_clearance_floor_m": 0
+              }
+            },
+            {
+              "index": 1,
+              "disposition": "CheckedStop",
+              "conflict": {
+                "candidate_index": 1,
+                "lateral_target_m": 3.9,
+                "disposition": "CheckedStop",
+                "prediction_id": 1,
+                "relative_conflict_time_s": 2.946273888606587,
+                "acquisition_age_s": 0,
+                "forecast_horizon_s": 8,
+                "endpoint_held": false,
+                "declared_cv_terms_m": {
+                  "position": 0.2,
+                  "velocity": 0.8838821665819762,
+                  "acceleration": 0.434026491334249
+                },
+                "declared_cv_radius_m": 1.517908657916225,
+                "published_forecast_radius_m": 3.042096241913892,
+                "nominal_object_radius_m": 1.1274919253164404,
+                "minimum_clearance_floor_m": 0
+              }
+            },
+            {
+              "index": 2,
+              "disposition": "OppositeSideDuringPass",
+              "conflict": null
+            }
+          ]
+        },
+        "interpretation": "Recorded nominal candidate conflicts only. CV terms are a reference bound, not an additive decomposition of the enclosing forecast. No proof of global infeasibility or of safety after reducing a budget."
+      }
+    }
+  ]
+}
