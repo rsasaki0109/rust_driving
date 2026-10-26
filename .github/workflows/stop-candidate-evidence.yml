@@ -1,0 +1,54 @@
+name: Inspect checked stopping candidates
+on:
+  push:
+    branches: [feat/stop-candidate-evidence]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: rustup toolchain install 1.90.0 --profile minimal --component rustfmt --component clippy
+      - name: Format and pin the inspected source
+        env:
+          EXPECTED_SOURCE: ${{ github.sha }}
+        run: |
+          cargo fmt --all
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if ! git diff --quiet; then
+            git add crates/planning/src/lib.rs crates/pipeline/src/lib.rs crates/pipeline/examples/inspect_stop_candidates.rs
+            git commit -m 'Format stopping inspection with the pinned Rust toolchain'
+            git push --force-with-lease="refs/heads/feat/stop-candidate-evidence:$EXPECTED_SOURCE" origin HEAD:refs/heads/feat/stop-candidate-evidence
+          fi
+          echo "ANALYSIS_SOURCE=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+      - name: Required workspace verification
+        run: bash scripts/check.sh
+      - run: cargo build --release --locked -p rustdriving-pipeline --example inspect_stop_candidates
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '12638847273'
+          run-id: '40295079674'
+          github-token: ${{ github.token }}
+          path: retained-chassis
+          merge-multiple: true
+      - name: Replay and inspect complete stopping sweeps
+        run: python scripts/check_stop_candidates.py retained-chassis artifacts/stop-candidates target/release/examples/inspect_stop_candidates
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stop-candidate-evidence
+          path: artifacts/stop-candidates
+      - name: Retain the inspected result
+        run: |
+          mkdir -p assets/stop-candidates
+          cp artifacts/stop-candidates/report.json "assets/stop-candidates/$ANALYSIS_SOURCE.json"
+          git add assets/stop-candidates
+          git commit -m 'Retain original mission stopping-candidate evidence'
+          git push --force-with-lease="refs/heads/feat/stop-candidate-evidence:$ANALYSIS_SOURCE" origin HEAD:refs/heads/feat/stop-candidate-evidence

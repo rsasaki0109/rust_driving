@@ -58,6 +58,9 @@ use traffic_controls::{
     SignalObservation, StopLine, TrafficControlStatus, TrafficControls, validate_stop_lines,
 };
 
+/// Offline inspection at the exact planner call boundary; inputs are immutable.
+pub type PlannerInspection<'a> = dyn FnMut(&LatticePlanner, EgoState, &Route, &[Prediction]) + 'a;
+
 /// Conservative, externally calibrated planning limits, independent of simulator truth.
 #[derive(Clone, Copy, Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -948,6 +951,24 @@ impl DrivingPipeline {
     /// Clock errors return Err before mutation; callers must apply emergency braking on Err.
     /// Invalid or missing sensor data produces a finite emergency command with diagnostics.
     pub fn step(&mut self, input: &SensorFrame) -> Result<PipelineOutput, String> {
+        self.step_inspected(input, None)
+    }
+
+    /// Run the same sensor step with a read-only planner inspection callback.
+    /// The callback cannot alter live planning state or supply operational inputs.
+    pub fn step_with_planner_inspection(
+        &mut self,
+        input: &SensorFrame,
+        inspection: &mut PlannerInspection<'_>,
+    ) -> Result<PipelineOutput, String> {
+        self.step_inspected(input, Some(inspection))
+    }
+
+    fn step_inspected(
+        &mut self,
+        input: &SensorFrame,
+        inspection: Option<&mut PlannerInspection<'_>>,
+    ) -> Result<PipelineOutput, String> {
         if !input.time.is_finite()
             || input.time < 0.0
             || self.previous_time.is_some_and(|t| input.time <= t)
@@ -1790,6 +1811,14 @@ impl DrivingPipeline {
             &self.tracks,
             input.time,
         );
+        if let Some(inspect) = inspection {
+            inspect(
+                &self.planner,
+                motion_estimate,
+                stop_route.as_ref().unwrap_or(&self.config.route),
+                &predictions,
+            );
+        }
         let mut trajectory = self.planner.plan(
             motion_estimate,
             stop_route.as_ref().unwrap_or(&self.config.route),
