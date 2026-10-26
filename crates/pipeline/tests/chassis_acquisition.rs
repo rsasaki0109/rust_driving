@@ -139,21 +139,34 @@ fn changing_input(time: f64, rotation: f64, direction: f64) -> SensorFrame {
         rear = rear.plus(Vec2::new(yaw.cos(), yaw.sin()).scaled(speed * time / 2_048.0));
     }
     let origin = Vec2::new(12.0, -7.0);
-    let position = rear.plus(Vec2::new(offset * (angle.cos() - 1.0), offset * angle.sin()))
-        .rotated(rotation).plus(origin);
-    let body = Pose { position, yaw: rotation + angle };
+    let position = rear
+        .plus(Vec2::new(
+            offset * (angle.cos() - 1.0),
+            offset * angle.sin(),
+        ))
+        .rotated(rotation)
+        .plus(origin);
+    let body = Pose {
+        position,
+        yaw: rotation + angle,
+    };
     let center = Vec2::new(30.0, 4.0).rotated(rotation).plus(origin);
-    let points: Vec<_> = (0..16).map(|i| {
-        let a = std::f64::consts::PI - 0.7 + i as f64 * 1.4 / 15.0;
-        center.plus(Vec2::new(a.cos(), a.sin()).rotated(rotation))
-            .minus(body.position).rotated(-body.yaw)
-    }).collect();
+    let points: Vec<_> = (0..16)
+        .map(|i| {
+            let a = std::f64::consts::PI - 0.7 + i as f64 * 1.4 / 15.0;
+            center
+                .plus(Vec2::new(a.cos(), a.sin()).rotated(rotation))
+                .minus(body.position)
+                .rotated(-body.yaw)
+        })
+        .collect();
     serde_json::from_value(serde_json::json!({
         "time":time, "odometry":{"stamp":time,"speed":speed,"yaw_rate":rate},
         "gnss":{"stamp":time,"position":position,"variance":0.02},
         "absolute_heading":{"stamp":time,"yaw_rad":body.yaw,"variance_rad2":0.0001},
         "lidar":{"stamp":time,"points":points}
-    })).unwrap()
+    }))
+    .unwrap()
 }
 
 #[test]
@@ -177,8 +190,14 @@ fn changing_endpoint_rates_do_not_create_static_object_motion() {
                     new_peak = new_peak.max(new.tracks[0].velocity.distance(Vec2::default()));
                 }
             }
-            assert!(old_peak > 0.2, "held endpoint fixture did not expose false motion: {old_peak}");
-            assert!(new_peak < 0.05, "instantaneous static track moved at {new_peak} m/s");
+            assert!(
+                old_peak > 0.2,
+                "held endpoint fixture did not expose false motion: {old_peak}"
+            );
+            assert!(
+                new_peak < 0.05,
+                "instantaneous static track moved at {new_peak} m/s"
+            );
         }
     }
 }
@@ -220,7 +239,11 @@ fn sensor_replay_owns_the_instantaneous_sampling_convention() {
     }
     let mut bytes = vec![];
     log.write(&mut bytes).unwrap();
-    assert!(verify(std::io::Cursor::new(bytes), vec![]).unwrap().verified);
+    assert!(
+        verify(std::io::Cursor::new(bytes), vec![])
+            .unwrap()
+            .verified
+    );
     log.header.config.instantaneous_odometry = false;
     let mut changed = vec![];
     log.write(&mut changed).unwrap();

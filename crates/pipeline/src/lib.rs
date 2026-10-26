@@ -509,8 +509,10 @@ impl PipelineConfig {
         }
         if self.instantaneous_odometry
             && (self.rear_axle_offset_m.is_none()
-                || self.gnss_latency_compensation || self.heading_latency_compensation
-                || self.localization_map.is_some() || self.relocalization.is_some())
+                || self.gnss_latency_compensation
+                || self.heading_latency_compensation
+                || self.localization_map.is_some()
+                || self.relocalization.is_some())
         {
             return Err("instantaneous odometry requires an explicit chassis reference and a synchronous single localization epoch".into());
         }
@@ -1003,11 +1005,14 @@ impl DrivingPipeline {
             Some(odom) if input.time - odom.stamp > MAX_ODOMETRY_AGE_S + 1e-9 => {
                 health.push(HealthIssue::StaleOdometry)
             }
-            Some(odom) if self.config.instantaneous_odometry
-                && ((odom.stamp - input.time).abs() > 1e-9
-                    || (!first && previous_odometry.is_none_or(|previous| {
-                        (previous.stamp - self.previous_time.unwrap()).abs() > 1e-9
-                    }))) => {
+            Some(odom)
+                if self.config.instantaneous_odometry
+                    && ((odom.stamp - input.time).abs() > 1e-9
+                        || (!first
+                            && previous_odometry.is_none_or(|previous| {
+                                (previous.stamp - self.previous_time.unwrap()).abs() > 1e-9
+                            }))) =>
+            {
                 health.push(HealthIssue::StaleOdometry);
             }
             Some(odom) if !first && dt <= 0.25 && motion_allowed => {
@@ -1028,10 +1033,15 @@ impl DrivingPipeline {
                         health.push(HealthIssue::InvalidOdometry);
                     }
                 } else if self.config.instantaneous_odometry {
-                    motion_covered = self.ekf.predict_chassis_instantaneous(
-                        previous_odometry.unwrap(), odom, dt,
-                        self.config.rear_axle_offset_m.unwrap(),
-                    ).is_ok();
+                    motion_covered = self
+                        .ekf
+                        .predict_chassis_instantaneous(
+                            previous_odometry.unwrap(),
+                            odom,
+                            dt,
+                            self.config.rear_axle_offset_m.unwrap(),
+                        )
+                        .is_ok();
                     if !motion_covered {
                         self.odometry_fault = Some(input.time);
                         health.push(HealthIssue::InvalidOdometry);
