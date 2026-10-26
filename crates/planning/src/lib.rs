@@ -26,6 +26,8 @@ pub struct LatticePlanner {
     /// course tracking retains the original join except for narrowed width-fitted
     /// candidates, which also recover by their anchored completion arc.
     pub point_reference_recovery: bool,
+    /// Experimental anchored side recovery on the supplied route, disabled by default.
+    pub anchored_side_recovery: bool,
     /// Finish a near-stationary goal within the terminal position tolerance.
     /// Disable for temporary regulatory or route-handover stopping prefixes.
     pub terminal_settling: bool,
@@ -92,6 +94,7 @@ impl Default for LatticePlanner {
             cruise_speed: 8.0,
             local_route_geometry: false,
             point_reference_recovery: false,
+            anchored_side_recovery: false,
             terminal_settling: true,
             retain_yield_stop_on_emergency: true,
             settle_obstruction_stops: false,
@@ -506,9 +509,10 @@ impl LatticePlanner {
             // whole transition at every local side-path tick would continually
             // defer correction of the remaining tracking error. A wheelbase
             // floor leaves a finite recovery span after the anchor has passed.
-            let correction_transition = if self.local_route_geometry
-                && (self.point_reference_recovery
-                    || ((fitted_chassis_recovery || refined) && s >= start_s + transition))
+            let correction_transition = if (self.anchored_side_recovery
+                || (self.local_route_geometry
+                    && (self.point_reference_recovery
+                        || ((fitted_chassis_recovery || refined) && s >= start_s + transition))))
                 && target.abs() > 0.1
             {
                 // Reuse the quintic's existing second-derivative bound for
@@ -524,7 +528,7 @@ impl LatticePlanner {
                             )
                         });
                 let recovery = (start_s + transition - s).max(recovery_floor);
-                if self.point_reference_recovery {
+                if self.point_reference_recovery && !self.anchored_side_recovery {
                     recovery.min(transition)
                 } else {
                     // A temporary center brake can increase the residual while
@@ -1043,6 +1047,51 @@ mod tests {
         }
     }
     #[test]
+    fn experimental_nonlocal_side_recovery_keeps_the_completion_arc() {
+        for direction in [-1., 1.] {
+            for s in [10., 12.] {
+                let mut planner = LatticePlanner {
+                    cruise_speed: 4.,
+                    local_route_geometry: false,
+                    anchored_side_recovery: true,
+                    point_reference_recovery: false,
+                    lateral_candidate_margin_m: Some(0.35),
+                    max_lateral_acceleration_m_s2: Some(2.5),
+                    previous_lateral: direction * 2.9,
+                    maneuver_start: Some((0., 0., 10.)),
+                    ..LatticePlanner::default()
+                };
+                let ego = EgoState {
+                    pose: rustdriving_core::Pose {
+                        position: Vec2::new(s, direction * 2.5),
+                        yaw: 0., // Measured course, as supplied by chassis mode.
+                    },
+                    speed: 2.,
+                };
+                let object = Prediction {
+                    positions: vec![Vec2::new(25., 0.); 41],
+                    radius: 0.5,
+                    ..obstacle()
+                };
+                let mut legacy = planner.clone();
+                legacy.anchored_side_recovery = false;
+                let old = legacy.plan(ego, &road(4.5), std::slice::from_ref(&object));
+                let old_join = old.points.iter().find(|p| p.position.x >= s + 4.).unwrap();
+                assert!((old_join.position.y - direction * 2.9).abs() > 0.05);
+                let path = planner.plan(ego, &road(4.5), &[object]);
+                assert_ne!(path.mode, DrivingMode::Emergency);
+                assert_eq!(path.lateral_target, direction * 2.9);
+                assert_eq!(path.points[0].position, ego.pose.position);
+                // The original shift finishes at x=10. Its 0.4 m residual at
+                // 2 m/s admits recovery within four meters at the declared limit.
+                // A fresh ten-meter join at each tick hides that error again.
+                let recovered = path.points.iter().find(|p| p.position.x >= s + 4.).unwrap();
+                assert!((recovered.position.y - direction * 2.9).abs() < 1e-12);
+                assert!(path.points.iter().all(|p| p.position.y.abs() + 1.25 <= 4.5));
+            }
+        }
+    }
+    #[test]
     fn narrowed_chassis_side_path_recovers_by_the_anchored_completion_arc() {
         for direction in [-1., 1.] {
             for s in [10., 12.] {
@@ -1315,6 +1364,35 @@ mod tests {
         assert_eq!(continued.lateral_target, first.lateral_target);
         ego.pose.position.x = 25.;
         assert_eq!(planner.plan(ego, &route, &[object]).lateral_target, 0.);
+    }
+
+    #[test]
+    fn experimental_recovery_never_overrides_collision_feasibility() {
+        let mut planner = LatticePlanner {
+            anchored_side_recovery: true,
+            ..LatticePlanner::default()
+        };
+        let route = road(5.5);
+        planner.plan(EgoState::default(), &route, &[obstacle()]);
+        let mut blocking = obstacle();
+        blocking.radius = 8.0;
+        let stopped = planner.plan(EgoState::default(), &route, &[blocking.clone()]);
+        assert!(matches!(
+            stopped.mode,
+            DrivingMode::Yield | DrivingMode::Emergency
+        ));
+        if !stopped.points.is_empty() {
+            assert_eq!(stopped.points.last().unwrap().speed, 0.0);
+            assert!(
+                collision::first_contact_time(
+                    &stopped.points,
+                    &blocking,
+                    planner.vehicle.radius,
+                    Vec2::new(1.0, 0.0),
+                )
+                .is_none()
+            );
+        }
     }
 
     #[test]

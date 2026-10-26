@@ -1,0 +1,34 @@
+name: Experimental anchored side recovery
+on:
+  push:
+    branches: [feat/anchored-side-recovery]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: rustup toolchain install 1.90.0 --profile minimal --component rustfmt --component clippy
+      - name: Required workspace verification
+        run: bash scripts/check.sh
+      - run: cargo build --release --locked -p rustdriving-pipeline --example inspect_side_recovery
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '12638847273'
+          run-id: '40295079674'
+          github-token: ${{ github.token }}
+          path: retained-chassis
+          merge-multiple: true
+      - name: Compare original sensor streams without applying counterfactual commands
+        run: python scripts/check_side_recovery.py retained-chassis artifacts/side-recovery target/release/examples/inspect_side_recovery
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: side-recovery-recorded-inputs
+          path: artifacts/side-recovery
