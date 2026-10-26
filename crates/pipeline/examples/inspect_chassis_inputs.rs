@@ -32,7 +32,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 if baseline.is_some()
                     || ticks != 0
                     || header.schema_version != LOG_SCHEMA_VERSION
-                    || header.source != "rne-dynamic"
+                    || header.source != "rne-dynamic-rapier-lidar"
                     || header.config.rear_axle_offset_m.is_some()
                     || header.config.local_route_geometry
                 {

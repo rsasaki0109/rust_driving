@@ -143,7 +143,13 @@ def main():
                   default_policy_changed=False, new_scenario_flag=False, truth_operational_input=False)
     def save():
         (output/'report.json').write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
-    report['fixed_inputs'] = fixed_inputs(evidence, old_rows, output, args.example_binary.resolve())
+    save()
+    try:
+        report['fixed_inputs'] = fixed_inputs(evidence, old_rows, output, args.example_binary.resolve())
+    except Exception as error:
+        report['fixed_inputs'] = dict(passed=False, complete=False, error=repr(error))
+        save()
+        raise
     save()
     selected = [(index, spec) for index, spec in enumerate(manifest['episodes'])
                 if args.stage == 'full' or (spec['plant']=='rne-dynamic' and spec['world']=='mission' and spec['seed']==7)]

@@ -1,0 +1,10 @@
+{
+  "source": "75a9be6c73df86ea55bd2a1732f2b9f333ab2d7c",
+  "workflow_run": 40288248100,
+  "job": 121457300524,
+  "complete": false,
+  "comparison_started": false,
+  "simulation_executions": 0,
+  "reason": "Fixed-input inspector required rne-dynamic instead of the actual recorded backend source rne-dynamic-rapier-lidar. It rejected the header before pipeline inspection. Bounds, worlds and acceptance gates were not changed.",
+  "log_artifact_id": 12634998756
+}
