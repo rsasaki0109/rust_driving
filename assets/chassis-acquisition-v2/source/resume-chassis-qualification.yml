@@ -1,0 +1,144 @@
+name: Resume frozen chassis endpoint qualification
+on:
+  push:
+    branches: [verify/chassis-endpoints-20261026]
+    paths: ['.github/workflows/resume-chassis-qualification.yml']
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: resume-chassis-endpoints-20261026
+  cancel-in-progress: false
+env:
+  CARGO_INCREMENTAL: '0'
+jobs:
+  qualify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash
+        working-directory: rust_drive
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 92c72b1c473f0b6209f09c4ce1ff9508026b2d40
+          path: rust_drive
+      - uses: actions/checkout@v4
+        with:
+          repository: rsasaki0109/RobotNativeEngine
+          ref: df6007aa40315e81d12ae00fc1f60369e393a178
+          path: RobotNativeEngine
+          sparse-checkout: |
+            crates
+            third_party
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache/restore@v4
+        id: native-cache
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            rust_drive/target
+            rust_drive/integrations/rne/target
+          key: native-city-ubuntu-24.04-rust190-195-df6007a-v1-${{ hashFiles('rust_drive/Cargo.lock', 'rust_drive/integrations/rne/Cargo.lock') }}
+      - name: Build actual pipeline, fixed-input inspector and unchanged native engine
+        run: |
+          rustup toolchain install 1.90.0 --profile minimal
+          rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy
+          test "$(git -C ../RobotNativeEngine rev-parse HEAD)" = "$(cat integrations/rne/rne-revision.txt)"
+          cargo +1.90.0 build --release --locked --bin rustdriving
+          cargo +1.90.0 build --release --locked -p rustdriving-pipeline --example inspect_chassis_inputs
+          cargo +1.95.0 fmt --manifest-path integrations/rne/Cargo.toml --check
+          cargo +1.95.0 build --release --locked --manifest-path integrations/rne/Cargo.toml
+      - uses: actions/cache/save@v4
+        if: steps.native-cache.outputs.cache-hit != 'true'
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            rust_drive/target
+            rust_drive/integrations/rne/target
+          key: ${{ steps.native-cache.outputs.cache-primary-key }}
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '12624662660'
+          run-id: '40258418216'
+          github-token: ${{ github.token }}
+          path: rust_drive/retained-evidence
+          merge-multiple: true
+      - name: Build the exact unchanged main native baseline after the canary
+        run: |
+          git fetch --no-tags origin 6fd7e8a1e8f87e8effce36ce27449bafed393aa3 8550e1a2b1d06703d05036a625609e21b9fa0cf6
+          git diff --exit-code 8550e1a2b1d06703d05036a625609e21b9fa0cf6 6fd7e8a1e8f87e8effce36ce27449bafed393aa3 -- crates Cargo.toml Cargo.lock rust-toolchain.toml integrations/rne
+          mkdir -p "$RUNNER_TEMP/chassis-baseline/rust_drive"
+          git archive 6fd7e8a1e8f87e8effce36ce27449bafed393aa3 Cargo.toml Cargo.lock rust-toolchain.toml crates integrations/rne scenarios | tar -x -C "$RUNNER_TEMP/chassis-baseline/rust_drive"
+          ln -s "$GITHUB_WORKSPACE/RobotNativeEngine" "$RUNNER_TEMP/chassis-baseline/RobotNativeEngine"
+          cargo +1.95.0 build --release --locked --manifest-path "$RUNNER_TEMP/chassis-baseline/rust_drive/integrations/rne/Cargo.toml" --target-dir integrations/rne/target
+          cp integrations/rne/target/release/rustdriving-rne "$RUNNER_TEMP/chassis-baseline/rustdriving-rne"
+          cargo +1.95.0 build --release --locked --manifest-path integrations/rne/Cargo.toml
+      - name: Qualify every original case, historical log and default control
+        env:
+          RUSTDRIVING_TESTED_SOURCE: 92c72b1c473f0b6209f09c4ce1ff9508026b2d40
+        run: |
+          python scripts/check_chassis_acquisition.py --stage full --evidence retained-evidence --output artifacts/chassis-qualification --binary target/release/rustdriving --native-binary integrations/rne/target/release/rustdriving-rne --example-binary target/release/examples/inspect_chassis_inputs --baseline-native "$RUNNER_TEMP/chassis-baseline/rustdriving-rne"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: chassis-acquisition-v2-full
+          path: rust_drive/artifacts/chassis-qualification
+          if-no-files-found: warn
+          compression-level: 1
+  preserve:
+    if: always()
+    needs: qualify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 92c72b1c473f0b6209f09c4ce1ff9508026b2d40
+      - uses: actions/download-artifact@v4
+        with:
+          name: chassis-acquisition-v2-full
+          path: retained-chassis
+      - name: Retain exact full result without altering the driver or preceding evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUSTDRIVING_TESTED_SOURCE: 92c72b1c473f0b6209f09c4ce1ff9508026b2d40
+          RUSTDRIVING_FULL_RUN: ${{ github.run_id }}
+        run: |
+          gh api repos/rsasaki0109/rust_driving/actions/jobs/121475928949 > "$RUNNER_TEMP/chassis-contract-proof.json"
+          git fetch --no-tags origin refs/heads/fix/acquired-motion-support
+          git checkout -B fix/acquired-motion-support FETCH_HEAD
+          RUSTDRIVING_EXPECTED_HEAD="$(git rev-parse HEAD)"
+          git merge-base --is-ancestor "$RUSTDRIVING_TESTED_SOURCE" HEAD
+          git diff --exit-code "$RUSTDRIVING_TESTED_SOURCE" HEAD -- crates scripts integrations Cargo.toml Cargo.lock rust-toolchain.toml
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          source=os.environ['RUSTDRIVING_TESTED_SOURCE']
+          path=Path('retained-chassis/report.json')
+          if not path.is_file():raise SystemExit('No full report; retained logs remain the failure evidence.')
+          raw=path.read_bytes();report=json.loads(raw)
+          assert report['source']==source and report['stage']=='full'
+          proof=json.loads((Path(os.environ['RUNNER_TEMP'])/'chassis-contract-proof.json').read_text())
+          assert proof['name']=='contracts' and proof['status']=='completed'
+          folder=Path('assets/chassis-acquisition-v2/qualifications');folder.mkdir(parents=True,exist_ok=True)
+          target=folder/(source+'.json')
+          with target.open('xb') as stream:stream.write(raw)
+          pointer=dict(source=source,path=str(target),stage='full',complete=report['complete'],passed=report['passed'],
+              contracts_passed=proof['conclusion']=='success',contracts_job=121475928949,
+              run=int(os.environ['RUSTDRIVING_FULL_RUN']),adopted=False)
+          Path('assets/chassis-acquisition-v2/latest.json').write_text(json.dumps(pointer,indent=2)+'\n')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/chassis-acquisition-v2
+          git commit -m 'Retain full original-input chassis endpoint qualification'
+          git push --force-with-lease="refs/heads/fix/acquired-motion-support:$RUSTDRIVING_EXPECTED_HEAD" origin HEAD:refs/heads/fix/acquired-motion-support

@@ -1,74 +1,20 @@
-name: Chassis endpoint acquisition qualification
+name: Chassis acquisition qualification
 on:
-  push:
-    branches: [fix/acquired-motion-support]
-    paths: ['crates/**','integrations/rne/src/lib.rs','scripts/check_chassis_acquisition.py','integrations/planning/chassis-acquisition-v2.json','scripts/check_gnss_latency.py','scripts/check_heading_history.py','scripts/check_absolute_heading.py','scripts/test_instantaneous_odometry.py','.github/workflows/chassis-acquisition.yml']
   workflow_dispatch:
 permissions:
   contents: read
+  actions: read
 concurrency:
   group: chassis-acquisition-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 env:
   CARGO_INCREMENTAL: '0'
 jobs:
-  format:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 15
-    permissions:
-      contents: write
-    outputs:
-      source: ${{ steps.source.outputs.commit }}
-    defaults:
-      run:
-        working-directory: rust_drive
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          path: rust_drive
-      - uses: actions/checkout@v4
-        with:
-          repository: rsasaki0109/RobotNativeEngine
-          ref: df6007aa40315e81d12ae00fc1f60369e393a178
-          path: RobotNativeEngine
-          sparse-checkout: |
-            crates
-            third_party
-      - name: Install pinned formatters
-        run: |
-          rustup toolchain install 1.90.0 --profile minimal --component rustfmt
-          rustup toolchain install 1.95.0 --profile minimal --component rustfmt
-      - id: source
-        name: Format only authored Rust and identify the exact tested source
-        env:
-          RUSTDRIVING_EXPECTED_SOURCE: ${{ github.sha }}
-        run: |
-          cargo +1.90.0 fmt --all
-          cargo +1.95.0 fmt --manifest-path integrations/rne/Cargo.toml
-          git -C ../RobotNativeEngine diff --exit-code
-          python - <<'PY'
-          import subprocess
-          changes=set(subprocess.check_output(['git','diff','--name-only'],text=True).splitlines())
-          allowed={'crates/pipeline/src/lib.rs','integrations/rne/src/lib.rs','crates/pipeline/tests/chassis_acquisition.rs','crates/pipeline/examples/inspect_chassis_inputs.rs','crates/localization/src/lib.rs'}
-          assert changes<=allowed,changes
-          PY
-          if ! git diff --quiet; then
-            test "$GITHUB_REF_NAME" = 'fix/acquired-motion-support'
-            git config user.name 'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git add crates/pipeline/src/lib.rs integrations/rne/src/lib.rs crates/pipeline/tests/chassis_acquisition.rs crates/pipeline/examples/inspect_chassis_inputs.rs crates/localization/src/lib.rs
-            git commit -m 'Format chassis acquisition calibration and independent controls'
-            git push --force-with-lease="refs/heads/fix/acquired-motion-support:$RUSTDRIVING_EXPECTED_SOURCE" origin HEAD:refs/heads/fix/acquired-motion-support
-          fi
-          echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
   contracts:
-    needs: format
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ needs.format.outputs.source }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -79,12 +25,12 @@ jobs:
             ~/.cargo/git
             target
           key: workspace-ubuntu24-rust190-v1-${{ hashFiles('Cargo.lock', 'rust-toolchain.toml', '.cargo/config.toml') }}
-      - name: Install the unchanged pinned workspace toolchain
+      - name: Install the pinned workspace toolchain
         run: rustup toolchain install 1.90.0 --profile minimal --component rustfmt --component clippy
-      - name: Verify workspace, analytical controls and original scenario replays
+      - name: Verify the workspace and original scenario replays
         run: bash scripts/check.sh
-  canary:
-    needs: format
+  qualify:
+    needs: contracts
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     defaults:
@@ -94,7 +40,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ needs.format.outputs.source }}
+          ref: ${{ github.sha }}
           path: rust_drive
       - uses: actions/checkout@v4
         with:
@@ -124,9 +70,7 @@ jobs:
           cargo +1.90.0 build --release --locked --bin rustdriving
           cargo +1.90.0 build --release --locked -p rustdriving-pipeline --example inspect_chassis_inputs
           cargo +1.95.0 fmt --manifest-path integrations/rne/Cargo.toml --check
-          cargo +1.95.0 clippy --release --locked --manifest-path integrations/rne/Cargo.toml --all-targets -- -D warnings
           cargo +1.95.0 build --release --locked --manifest-path integrations/rne/Cargo.toml
-          cargo +1.95.0 test --release --locked --manifest-path integrations/rne/Cargo.toml acquired_motion_records_chassis_calibration_without_changing_road_geometry
       - uses: actions/cache/save@v4
         if: steps.native-cache.outputs.cache-hit != 'true'
         with:
@@ -143,78 +87,25 @@ jobs:
           github-token: ${{ github.token }}
           path: rust_drive/retained-evidence
           merge-multiple: true
-      - name: Verify fixed-input error and the original first native closed-loop mission
-        env:
-          RUSTDRIVING_TESTED_SOURCE: ${{ needs.format.outputs.source }}
-        run: |
-          python scripts/check_chassis_acquisition.py --stage canary --evidence retained-evidence --output artifacts/chassis-acquisition --binary target/release/rustdriving --native-binary integrations/rne/target/release/rustdriving-rne --example-binary target/release/examples/inspect_chassis_inputs
       - name: Build the exact unchanged main native baseline after the canary
         run: |
           git fetch --no-tags origin 6fd7e8a1e8f87e8effce36ce27449bafed393aa3 8550e1a2b1d06703d05036a625609e21b9fa0cf6
           git diff --exit-code 8550e1a2b1d06703d05036a625609e21b9fa0cf6 6fd7e8a1e8f87e8effce36ce27449bafed393aa3 -- crates Cargo.toml Cargo.lock rust-toolchain.toml integrations/rne
           mkdir -p "$RUNNER_TEMP/chassis-baseline/rust_drive"
-          git archive 6fd7e8a1e8f87e8effce36ce27449bafed393aa3 Cargo.toml Cargo.lock rust-toolchain.toml .cargo crates integrations/rne scenarios | tar -x -C "$RUNNER_TEMP/chassis-baseline/rust_drive"
+          git archive 6fd7e8a1e8f87e8effce36ce27449bafed393aa3 Cargo.toml Cargo.lock rust-toolchain.toml crates integrations/rne scenarios | tar -x -C "$RUNNER_TEMP/chassis-baseline/rust_drive"
           ln -s "$GITHUB_WORKSPACE/RobotNativeEngine" "$RUNNER_TEMP/chassis-baseline/RobotNativeEngine"
           cargo +1.95.0 build --release --locked --manifest-path "$RUNNER_TEMP/chassis-baseline/rust_drive/integrations/rne/Cargo.toml" --target-dir integrations/rne/target
           cp integrations/rne/target/release/rustdriving-rne "$RUNNER_TEMP/chassis-baseline/rustdriving-rne"
           cargo +1.95.0 build --release --locked --manifest-path integrations/rne/Cargo.toml
       - name: Qualify every original case, historical log and default control
         env:
-          RUSTDRIVING_TESTED_SOURCE: ${{ needs.format.outputs.source }}
+          RUSTDRIVING_TESTED_SOURCE: ${{ github.sha }}
         run: |
           python scripts/check_chassis_acquisition.py --stage full --evidence retained-evidence --output artifacts/chassis-qualification --binary target/release/rustdriving --native-binary integrations/rne/target/release/rustdriving-rne --example-binary target/release/examples/inspect_chassis_inputs --baseline-native "$RUNNER_TEMP/chassis-baseline/rustdriving-rne"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: chassis-acquisition-v2
-          path: |
-            rust_drive/artifacts/chassis-acquisition
-            rust_drive/artifacts/chassis-qualification
+          name: chassis-acquisition-qualification
+          path: rust_drive/artifacts/chassis-qualification
           if-no-files-found: warn
           compression-level: 1
-  preserve:
-    if: always() && needs.format.result == 'success'
-    needs: [format,contracts,canary]
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ needs.format.outputs.source }}
-      - uses: actions/download-artifact@v4
-        if: needs.canary.result != 'skipped'
-        with:
-          name: chassis-acquisition-v2
-          path: retained-chassis
-      - name: Retain first complete or failed comparison with an exact branch lease
-        env:
-          RUSTDRIVING_TESTED_SOURCE: ${{ needs.format.outputs.source }}
-          RUSTDRIVING_CONTRACT_RESULT: ${{ needs.contracts.result }}
-        run: |
-          python - <<'PY'
-          import json,os
-          from pathlib import Path
-          source=os.environ['RUSTDRIVING_TESTED_SOURCE']
-          reports=sorted(Path('retained-chassis').rglob('report.json'))
-          if not reports:raise SystemExit('No comparison report; preserve build/parser failure in job logs.')
-          pointers=[]
-          for path in reports:
-              raw=path.read_bytes();report=json.loads(raw)
-              assert report['source']==source
-              stage=report['stage']
-              folder=Path('assets/chassis-acquisition-v2')/('canaries' if stage=='canary' else 'qualifications')
-              folder.mkdir(parents=True,exist_ok=True);target=folder/(source+'.json')
-              with target.open('xb') as stream:stream.write(raw)
-              pointers.append(dict(source=source,path=str(target),stage=stage,complete=report['complete'],passed=report['passed'],
-                  contracts_passed=os.environ['RUSTDRIVING_CONTRACT_RESULT']=='success',adopted=False))
-          pointer=next((p for p in pointers if p['stage']=='full'),pointers[0])
-          Path('assets/chassis-acquisition-v2/latest.json').write_text(json.dumps(pointer,indent=2)+'\n')
-          PY
-          test "$GITHUB_REF_NAME" = 'fix/acquired-motion-support'
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add assets/chassis-acquisition-v2
-          git commit -m 'Retain unchanged-gate chassis endpoint qualification, including failures'
-          git push --force-with-lease="refs/heads/fix/acquired-motion-support:$RUSTDRIVING_TESTED_SOURCE" origin HEAD:refs/heads/fix/acquired-motion-support

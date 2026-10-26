@@ -58,6 +58,12 @@ that retrospective observation does not qualify a reduced forecast envelope.
 | rne-dynamic | 7 | 1.722 m | 8.542 m | 6.300 m |
 | rne-dynamic | 42 | 1.271 m | 2.122 m | 6.313 m |
 
+These results remain tied to the preceding recorded driver. The subsequent
+[acquired chassis motion repair](chassis-acquisition.md) evaluates the same raw
+inputs separately; its lower forecast error does not refit these scores or
+qualify a finite confidence threshold. The manual historical audit checks out
+its exact original analysis source before verifying recorded driver equivalence.
+
 These are **additional** radii beyond the nominal object radius. For native
 mission seed 7, the forecast at 5.0 s needs 8.542 m additional radius eight
 seconds later, against 11.971 m published. Its p95 is much smaller; relying
@@ -82,8 +88,9 @@ python scripts/check_forecast_calibration.py \
 The evidence directory is the extracted `directional-reserve-comparison`
 artifact from run 40258418216. The
 [protocol](../integrations/planning/forecast-calibration-v1.json) pins its source,
-artifact and split before this audit. The workflow checks that the active
-driver sources still equal the recorded driver sources.
+artifact and split before this audit. The historical analysis job pins source `47a9497` and checks that its driver
+sources equal the recorded driver sources. Its output is historical evidence;
+current workspace contracts run separately.
 
 Per-horizon descriptive summaries retain required and published radius, unused
 radius, the declared constant-velocity error radius and world-pose padding.

@@ -2,6 +2,16 @@
 
 The current engineering estimate is **about 29%**, compared with the scope, independent validation and operating experience of Autoware, Apollo and openpilot. Their operating domains differ. This is a subjective planning estimate, not a benchmark, safety score, percentage of source code or demonstrated parity.
 
+The [acquired chassis motion repair](chassis-acquisition.md) keeps the estimate
+at **about 29%**. Declared body reference and endpoint-time integration reduce
+the same-input native eight-second maximum required radius from 8.542 to 0.685 m
+and from 2.122 to 0.498 m across the two viewed seeds, without reducing budgets.
+All 48 comparisons retain prior gates, 20 arrivals and 36 strict passes; all
+historical logs and existing-mode byte controls pass.
+The first mission still loses about 0.94 m of progress and fails its original
+goal. The original eight incomplete missions and independent uncertainty
+calibration remain open; the **30% waypoint remains unmet**.
+
 The OSM [input contract](osm-input.md) and [export preservation](osm-export.md)
 keep the estimate at **about 29%**. Actual read bounds and explicit option
 validation complement create-only staged publication, protecting geographic

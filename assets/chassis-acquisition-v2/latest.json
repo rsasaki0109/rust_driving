@@ -7,5 +7,9 @@
   "contracts_passed": true,
   "contracts_job": 121475928949,
   "run": 40295079674,
-  "adopted": false
+  "adopted": false,
+  "repair_qualification_passed": true,
+  "original_full_adoption_gate_passed": false,
+  "result_publication_source": "73bf7924919083a9673c3657e2178d73cea7c9bc",
+  "result_publication_run": 40297566338
 }

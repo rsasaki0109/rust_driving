@@ -1,0 +1,2365 @@
+{
+  "schema_version": 1,
+  "source": "92c72b1c473f0b6209f09c4ce1ff9508026b2d40",
+  "baseline_source": "6fd7e8a1e8f87e8effce36ce27449bafed393aa3",
+  "recorded_baseline_source": "8550e1a2b1d06703d05036a625609e21b9fa0cf6",
+  "full_run": 40295079674,
+  "full_artifact": {
+    "id": 12638847273,
+    "bytes": 439336766,
+    "sha256": "f47a534db070bd84c3b957500c9f59dd151ad6df996384fe0ef23a29b51d2c5c"
+  },
+  "report": "qualifications/92c72b1c473f0b6209f09c4ce1ff9508026b2d40.json",
+  "repair_qualification_passed": true,
+  "original_full_adoption_gate_passed": false,
+  "default_policy_changed": false,
+  "truth_operational_input": false,
+  "confidence_established": false,
+  "fresh_holdout": false,
+  "cases": 48,
+  "strict_passes": {
+    "before": 36,
+    "after": 36
+  },
+  "arrivals": {
+    "before": 20,
+    "after": 20
+  },
+  "new_failed_gates": [],
+  "all_preceding_arrivals_retained": true,
+  "fixed_inputs": {
+    "passed": true,
+    "cases": [
+      {
+        "seed": 7,
+        "input_sha256": "814c7f737e5a91b36073388b09d4c4070057d385964a10444fd3cde329ed1bde",
+        "required_eight_second_radius_m": {
+          "old": {
+            "count": 535,
+            "minimum": 0,
+            "median": 0.009626780488216413,
+            "p95": 1.7224936902364867,
+            "maximum": 8.542303717117793
+          },
+          "calibrated": {
+            "count": 535,
+            "minimum": 0,
+            "median": 0.0036297884870253316,
+            "p95": 0.31637676543651216,
+            "maximum": 0.6853720089888564
+          }
+        },
+        "at_five_seconds": {
+          "old": {
+            "track": {
+              "id": 1,
+              "position": {
+                "x": 57.91570262379413,
+                "y": 2.889066694911334
+              },
+              "velocity": {
+                "x": 0.05701494844650499,
+                "y": -1.1152920973212086
+              },
+              "radius": 1.1440103715896917,
+              "last_seen": 5
+            },
+            "forecast_endpoint": {
+              "x": 58.37182221136618,
+              "y": -6.033270083658335
+            },
+            "required_extra_radius_m": 8.542303717117793,
+            "published_extra_radius_m": 11.97092135594673
+          },
+          "calibrated": {
+            "track": {
+              "id": 1,
+              "last_seen": 5,
+              "position": {
+                "x": 57.894325558371065,
+                "y": 3.0921128079745666
+              },
+              "radius": 1.1318516802108842,
+              "velocity": {
+                "x": 0.005359705117844772,
+                "y": 0.003193548521616336
+              }
+            },
+            "forecast_endpoint": {
+              "x": 57.93720319931383,
+              "y": 3.117661196147497
+            },
+            "required_extra_radius_m": 0.352391974598254,
+            "published_extra_radius_m": 6.800843980135761
+          }
+        },
+        "passed": true,
+        "closed_loop": false,
+        "original_replay_verified": true,
+        "actor_truth_evaluation_only": true
+      },
+      {
+        "seed": 42,
+        "input_sha256": "f1bf2669572ebc24c40a70f789116add7e3494fcbeca1e4d9de2a4d262723efe",
+        "required_eight_second_radius_m": {
+          "old": {
+            "count": 535,
+            "minimum": 0,
+            "median": 0.024106488507458446,
+            "p95": 1.2710119043856745,
+            "maximum": 2.121849338464721
+          },
+          "calibrated": {
+            "count": 535,
+            "minimum": 0,
+            "median": 0.01223479425285845,
+            "p95": 0.27379950092704997,
+            "maximum": 0.4983865374846863
+          }
+        },
+        "at_five_seconds": {
+          "old": {
+            "track": {
+              "id": 1,
+              "position": {
+                "x": 57.79846447020991,
+                "y": 2.6645318100724578
+              },
+              "velocity": {
+                "x": -0.0689970685051164,
+                "y": -0.0011002111029692094
+              },
+              "radius": 1.1265193033362155,
+              "last_seen": 5
+            },
+            "forecast_endpoint": {
+              "x": 57.24648792216897,
+              "y": 2.655730121248704
+            },
+            "required_extra_radius_m": 0.4950740975375083,
+            "published_extra_radius_m": 6.784129458936631
+          },
+          "calibrated": {
+            "track": {
+              "id": 1,
+              "last_seen": 5,
+              "position": {
+                "x": 57.8240768339045,
+                "y": 2.664292830667222
+              },
+              "radius": 1.1265809737162582,
+              "velocity": {
+                "x": -0.008111400794612172,
+                "y": 0.0015536447139265343
+              }
+            },
+            "forecast_endpoint": {
+              "x": 57.7591856275476,
+              "y": 2.676721988378634
+            },
+            "required_extra_radius_m": 0,
+            "published_extra_radius_m": 6.7955621708005465
+          }
+        },
+        "passed": true,
+        "closed_loop": false,
+        "original_replay_verified": true,
+        "actor_truth_evaluation_only": true
+      }
+    ]
+  },
+  "historical_replays": {
+    "passed": true,
+    "cases": 48
+  },
+  "byte_controls": [
+    {
+      "name": "dynamic-default",
+      "identical": true
+    },
+    {
+      "name": "kinematic-acquired",
+      "identical": true
+    },
+    {
+      "name": "dynamic-existing-local",
+      "identical": true
+    }
+  ],
+  "episodes": [
+    {
+      "plant": "reference-2d",
+      "world": "detour",
+      "mode": "detour-on-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/000.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": true,
+        "after": true
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 206.8208740272844,
+        "after": 206.8208740272844
+      },
+      "emergency_ticks": {
+        "before": 19,
+        "after": 19
+      },
+      "duration_s": {
+        "before": 57.2,
+        "after": 57.2
+      },
+      "min_clearance_m": {
+        "before": 5.457721971433331,
+        "after": 5.457721971433331
+      },
+      "localization_rmse_m": {
+        "before": 0.05141109941368312,
+        "after": 0.05141109941368312
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 261,
+        "minimum": 0,
+        "median": 0.0499857773570489,
+        "p95": 0.3721338658692046,
+        "maximum": 0.7317812923490663
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "detour",
+      "mode": "detour-off-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/001.json",
+      "passed": {
+        "before": false,
+        "after": false
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 50.70420303480713,
+        "after": 50.70420303480713
+      },
+      "emergency_ticks": {
+        "before": 5,
+        "after": 5
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 12.046152177813962,
+        "after": 12.046152177813962
+      },
+      "localization_rmse_m": {
+        "before": 0.05201420911967504,
+        "after": 0.05201420911967504
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 563,
+        "minimum": 0,
+        "median": 0.0057132704226492415,
+        "p95": 0.1846189233159592,
+        "maximum": 0.7317812923490663
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "known-closure",
+      "mode": "known-closure-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/002.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": true,
+        "after": true
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 206.82517596556005,
+        "after": 206.82517596556005
+      },
+      "emergency_ticks": {
+        "before": 12,
+        "after": 12
+      },
+      "duration_s": {
+        "before": 56.75,
+        "after": 56.75
+      },
+      "min_clearance_m": {
+        "before": 5.893212385660302,
+        "after": 5.893212385660302
+      },
+      "localization_rmse_m": {
+        "before": 0.05235186035599866,
+        "after": 0.05235186035599866
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 258,
+        "minimum": 0,
+        "median": 0.044108496879435855,
+        "p95": 0.3727798754041589,
+        "maximum": 0.7439234065010447
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "no-alternative",
+      "mode": "no-alternative-on-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/003.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 50.70420303480713,
+        "after": 50.70420303480713
+      },
+      "emergency_ticks": {
+        "before": 5,
+        "after": 5
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 12.046152177813962,
+        "after": 12.046152177813962
+      },
+      "localization_rmse_m": {
+        "before": 0.05201420911967504,
+        "after": 0.05201420911967504
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 563,
+        "minimum": 0,
+        "median": 0.0057132704226492415,
+        "p95": 0.1846189233159592,
+        "maximum": 0.7317812923490663
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "no-alternative",
+      "mode": "no-alternative-off-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/004.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 50.70420303480713,
+        "after": 50.70420303480713
+      },
+      "emergency_ticks": {
+        "before": 5,
+        "after": 5
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 12.046152177813962,
+        "after": 12.046152177813962
+      },
+      "localization_rmse_m": {
+        "before": 0.05201420911967504,
+        "after": 0.05201420911967504
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 563,
+        "minimum": 0,
+        "median": 0.0057132704226492415,
+        "p95": 0.1846189233159592,
+        "maximum": 0.7317812923490663
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "moving",
+      "mode": "moving-on-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/005.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": true,
+        "after": true
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 198.96356281586696,
+        "after": 198.96356281586696
+      },
+      "emergency_ticks": {
+        "before": 13,
+        "after": 13
+      },
+      "duration_s": {
+        "before": 51.95,
+        "after": 51.95
+      },
+      "min_clearance_m": {
+        "before": 17.561421251013886,
+        "after": 17.561421251013886
+      },
+      "localization_rmse_m": {
+        "before": 0.0459928840208384,
+        "after": 0.0459928840208384
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 176,
+        "minimum": 0,
+        "median": 0.5218008653631936,
+        "p95": 1.3138582098512668,
+        "maximum": 20.498158666346825
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "moving",
+      "mode": "moving-off-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/006.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": true,
+        "after": true
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 198.96356281586696,
+        "after": 198.96356281586696
+      },
+      "emergency_ticks": {
+        "before": 13,
+        "after": 13
+      },
+      "duration_s": {
+        "before": 51.95,
+        "after": 51.95
+      },
+      "min_clearance_m": {
+        "before": 17.561421251013886,
+        "after": 17.561421251013886
+      },
+      "localization_rmse_m": {
+        "before": 0.0459928840208384,
+        "after": 0.0459928840208384
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 176,
+        "minimum": 0,
+        "median": 0.5218008653631936,
+        "p95": 1.3138582098512668,
+        "maximum": 20.498158666346825
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "late",
+      "mode": "late-on-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/007.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 52.31946775379361,
+        "after": 52.31946775379361
+      },
+      "emergency_ticks": {
+        "before": 6,
+        "after": 6
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 10.546308209090542,
+        "after": 10.546308209090542
+      },
+      "localization_rmse_m": {
+        "before": 0.05148389373975018,
+        "after": 0.05148389373975018
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 501,
+        "minimum": 0,
+        "median": 0,
+        "p95": 0.10703280690305861,
+        "maximum": 0.34047700834255257
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "late",
+      "mode": "late-off-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/008.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 52.31946775379361,
+        "after": 52.31946775379361
+      },
+      "emergency_ticks": {
+        "before": 6,
+        "after": 6
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 10.546308209090542,
+        "after": 10.546308209090542
+      },
+      "localization_rmse_m": {
+        "before": 0.05148389373975018,
+        "after": 0.05148389373975018
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 501,
+        "minimum": 0,
+        "median": 0,
+        "p95": 0.10703280690305861,
+        "maximum": 0.34047700834255257
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "external",
+      "mode": "external-on-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/009.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": true,
+        "after": true
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 206.8208740272844,
+        "after": 206.8208740272844
+      },
+      "emergency_ticks": {
+        "before": 19,
+        "after": 19
+      },
+      "duration_s": {
+        "before": 57.2,
+        "after": 57.2
+      },
+      "min_clearance_m": {
+        "before": 5.457721971433331,
+        "after": 5.457721971433331
+      },
+      "localization_rmse_m": {
+        "before": 0.05141109941368312,
+        "after": 0.05141109941368312
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 261,
+        "minimum": 0,
+        "median": 0.0499857773570489,
+        "p95": 0.3721338658692046,
+        "maximum": 0.7317812923490663
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "external",
+      "mode": "external-off-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/010.json",
+      "passed": {
+        "before": false,
+        "after": false
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 50.70420303480713,
+        "after": 50.70420303480713
+      },
+      "emergency_ticks": {
+        "before": 5,
+        "after": 5
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 12.046152177813962,
+        "after": 12.046152177813962
+      },
+      "localization_rmse_m": {
+        "before": 0.05201420911967504,
+        "after": 0.05201420911967504
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 563,
+        "minimum": 0,
+        "median": 0.0057132704226492415,
+        "p95": 0.1846189233159592,
+        "maximum": 0.7317812923490663
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "detour",
+      "mode": "detour-on-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/011.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": true,
+        "after": true
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 206.77535789286048,
+        "after": 206.77535789286048
+      },
+      "emergency_ticks": {
+        "before": 12,
+        "after": 12
+      },
+      "duration_s": {
+        "before": 56.150000000000006,
+        "after": 56.150000000000006
+      },
+      "min_clearance_m": {
+        "before": 4.402231793811704,
+        "after": 4.402231793811704
+      },
+      "localization_rmse_m": {
+        "before": 0.049894631734108054,
+        "after": 0.049894631734108054
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 252,
+        "minimum": 0,
+        "median": 0.0627503049747915,
+        "p95": 0.34597315298280096,
+        "maximum": 0.8472107583967927
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "detour",
+      "mode": "detour-off-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/012.json",
+      "passed": {
+        "before": false,
+        "after": false
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 50.88017986176095,
+        "after": 50.88017986176095
+      },
+      "emergency_ticks": {
+        "before": 6,
+        "after": 6
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 11.870369090500818,
+        "after": 11.870369090500818
+      },
+      "localization_rmse_m": {
+        "before": 0.0554832719687803,
+        "after": 0.0554832719687803
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 563,
+        "minimum": 0,
+        "median": 0,
+        "p95": 0.2016155874941079,
+        "maximum": 0.8472107583967927
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "known-closure",
+      "mode": "known-closure-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/013.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": true,
+        "after": true
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 206.82266230968372,
+        "after": 206.82266230968372
+      },
+      "emergency_ticks": {
+        "before": 17,
+        "after": 17
+      },
+      "duration_s": {
+        "before": 56.75,
+        "after": 56.75
+      },
+      "min_clearance_m": {
+        "before": 5.412283678677232,
+        "after": 5.412283678677232
+      },
+      "localization_rmse_m": {
+        "before": 0.05379381548922236,
+        "after": 0.05379381548922236
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 258,
+        "minimum": 0,
+        "median": 0.04984412465833166,
+        "p95": 0.3927383118608314,
+        "maximum": 0.8471947109352711
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "no-alternative",
+      "mode": "no-alternative-on-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/014.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 50.88017986176095,
+        "after": 50.88017986176095
+      },
+      "emergency_ticks": {
+        "before": 6,
+        "after": 6
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 11.870369090500818,
+        "after": 11.870369090500818
+      },
+      "localization_rmse_m": {
+        "before": 0.0554832719687803,
+        "after": 0.0554832719687803
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 563,
+        "minimum": 0,
+        "median": 0,
+        "p95": 0.2016155874941079,
+        "maximum": 0.8472107583967927
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "no-alternative",
+      "mode": "no-alternative-off-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/015.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 50.88017986176095,
+        "after": 50.88017986176095
+      },
+      "emergency_ticks": {
+        "before": 6,
+        "after": 6
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 11.870369090500818,
+        "after": 11.870369090500818
+      },
+      "localization_rmse_m": {
+        "before": 0.0554832719687803,
+        "after": 0.0554832719687803
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 563,
+        "minimum": 0,
+        "median": 0,
+        "p95": 0.2016155874941079,
+        "maximum": 0.8472107583967927
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "moving",
+      "mode": "moving-on-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/016.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": true,
+        "after": true
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 199.0174654456729,
+        "after": 199.0174654456729
+      },
+      "emergency_ticks": {
+        "before": 11,
+        "after": 11
+      },
+      "duration_s": {
+        "before": 52.150000000000006,
+        "after": 52.150000000000006
+      },
+      "min_clearance_m": {
+        "before": 17.553057541140568,
+        "after": 17.553057541140568
+      },
+      "localization_rmse_m": {
+        "before": 0.05422056001098195,
+        "after": 0.05422056001098195
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 176,
+        "minimum": 0,
+        "median": 0.4858295102470709,
+        "p95": 1.7063055421331466,
+        "maximum": 19.95399254977648
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "moving",
+      "mode": "moving-off-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/017.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": true,
+        "after": true
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 199.0174654456729,
+        "after": 199.0174654456729
+      },
+      "emergency_ticks": {
+        "before": 11,
+        "after": 11
+      },
+      "duration_s": {
+        "before": 52.150000000000006,
+        "after": 52.150000000000006
+      },
+      "min_clearance_m": {
+        "before": 17.553057541140568,
+        "after": 17.553057541140568
+      },
+      "localization_rmse_m": {
+        "before": 0.05422056001098195,
+        "after": 0.05422056001098195
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 176,
+        "minimum": 0,
+        "median": 0.4858295102470709,
+        "p95": 1.7063055421331466,
+        "maximum": 19.95399254977648
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "late",
+      "mode": "late-on-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/018.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 52.21997610742765,
+        "after": 52.21997610742765
+      },
+      "emergency_ticks": {
+        "before": 8,
+        "after": 8
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 10.638878751883478,
+        "after": 10.638878751883478
+      },
+      "localization_rmse_m": {
+        "before": 0.051443579624617194,
+        "after": 0.051443579624617194
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 501,
+        "minimum": 0,
+        "median": 0.008517216381279447,
+        "p95": 0.13091230536527387,
+        "maximum": 0.2333007880591773
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "late",
+      "mode": "late-off-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/019.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 52.21997610742765,
+        "after": 52.21997610742765
+      },
+      "emergency_ticks": {
+        "before": 8,
+        "after": 8
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 10.638878751883478,
+        "after": 10.638878751883478
+      },
+      "localization_rmse_m": {
+        "before": 0.051443579624617194,
+        "after": 0.051443579624617194
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 501,
+        "minimum": 0,
+        "median": 0.008517216381279447,
+        "p95": 0.13091230536527387,
+        "maximum": 0.2333007880591773
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "external",
+      "mode": "external-on-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/020.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": true,
+        "after": true
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 206.77535789286048,
+        "after": 206.77535789286048
+      },
+      "emergency_ticks": {
+        "before": 12,
+        "after": 12
+      },
+      "duration_s": {
+        "before": 56.150000000000006,
+        "after": 56.150000000000006
+      },
+      "min_clearance_m": {
+        "before": 4.402231793811704,
+        "after": 4.402231793811704
+      },
+      "localization_rmse_m": {
+        "before": 0.049894631734108054,
+        "after": 0.049894631734108054
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 252,
+        "minimum": 0,
+        "median": 0.0627503049747915,
+        "p95": 0.34597315298280096,
+        "maximum": 0.8472107583967927
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "external",
+      "mode": "external-off-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/021.json",
+      "passed": {
+        "before": false,
+        "after": false
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 50.88017986176095,
+        "after": 50.88017986176095
+      },
+      "emergency_ticks": {
+        "before": 6,
+        "after": 6
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 11.870369090500818,
+        "after": 11.870369090500818
+      },
+      "localization_rmse_m": {
+        "before": 0.0554832719687803,
+        "after": 0.0554832719687803
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 563,
+        "minimum": 0,
+        "median": 0,
+        "p95": 0.2016155874941079,
+        "maximum": 0.8472107583967927
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "detour",
+      "mode": "detour-on-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/022.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": true,
+        "after": true
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 206.87811980435808,
+        "after": 206.84065736614818
+      },
+      "emergency_ticks": {
+        "before": 14,
+        "after": 15
+      },
+      "duration_s": {
+        "before": 57.1,
+        "after": 57.1
+      },
+      "min_clearance_m": {
+        "before": 4.6040623488396735,
+        "after": 4.3237993358715885
+      },
+      "localization_rmse_m": {
+        "before": 0.07002520979322069,
+        "after": 0.05260837290021225
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 263,
+        "minimum": 0,
+        "median": 0.04654797710903624,
+        "p95": 0.358575885165189,
+        "maximum": 0.7867860294166629
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "detour",
+      "mode": "detour-off-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/023.json",
+      "passed": {
+        "before": false,
+        "after": false
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 50.73288477006885,
+        "after": 50.71088742545468
+      },
+      "emergency_ticks": {
+        "before": 6,
+        "after": 7
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 12.019558882657408,
+        "after": 12.040763059335122
+      },
+      "localization_rmse_m": {
+        "before": 0.05180242798521702,
+        "after": 0.05030168398489287
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 563,
+        "minimum": 0,
+        "median": 0.011134654989765291,
+        "p95": 0.19169399141668975,
+        "maximum": 0.7867860294166629
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "known-closure",
+      "mode": "known-closure-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/024.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": true,
+        "after": true
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 206.88659908970192,
+        "after": 206.8375477499745
+      },
+      "emergency_ticks": {
+        "before": 12,
+        "after": 11
+      },
+      "duration_s": {
+        "before": 56.45,
+        "after": 56.300000000000004
+      },
+      "min_clearance_m": {
+        "before": 4.703445269271095,
+        "after": 4.331808528666148
+      },
+      "localization_rmse_m": {
+        "before": 0.06607954867910364,
+        "after": 0.05277431318195927
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 254,
+        "minimum": 0,
+        "median": 0.03987680809947669,
+        "p95": 0.3521050819792002,
+        "maximum": 0.7661598936965646
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "no-alternative",
+      "mode": "no-alternative-on-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/025.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 50.73288477006885,
+        "after": 50.71088742545468
+      },
+      "emergency_ticks": {
+        "before": 6,
+        "after": 7
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 12.019558882657408,
+        "after": 12.040763059335122
+      },
+      "localization_rmse_m": {
+        "before": 0.05180242798521702,
+        "after": 0.05030168398489287
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 563,
+        "minimum": 0,
+        "median": 0.011134654989765291,
+        "p95": 0.19169399141668975,
+        "maximum": 0.7867860294166629
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "no-alternative",
+      "mode": "no-alternative-off-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/026.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 50.73288477006885,
+        "after": 50.71088742545468
+      },
+      "emergency_ticks": {
+        "before": 6,
+        "after": 7
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 12.019558882657408,
+        "after": 12.040763059335122
+      },
+      "localization_rmse_m": {
+        "before": 0.05180242798521702,
+        "after": 0.05030168398489287
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 563,
+        "minimum": 0,
+        "median": 0.011134654989765291,
+        "p95": 0.19169399141668975,
+        "maximum": 0.7867860294166629
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "moving",
+      "mode": "moving-on-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/027.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": true,
+        "after": true
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 198.99667418996373,
+        "after": 198.99789974455095
+      },
+      "emergency_ticks": {
+        "before": 8,
+        "after": 11
+      },
+      "duration_s": {
+        "before": 51.85,
+        "after": 52.050000000000004
+      },
+      "min_clearance_m": {
+        "before": 17.64016693057038,
+        "after": 17.957487344706966
+      },
+      "localization_rmse_m": {
+        "before": 0.05414931508659366,
+        "after": 0.05277635592716836
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 177,
+        "minimum": 0,
+        "median": 0.3995367258776472,
+        "p95": 1.1823613042293792,
+        "maximum": 20.58014060801948
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "moving",
+      "mode": "moving-off-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/028.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": true,
+        "after": true
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 198.99667418996373,
+        "after": 198.99789974455095
+      },
+      "emergency_ticks": {
+        "before": 8,
+        "after": 11
+      },
+      "duration_s": {
+        "before": 51.85,
+        "after": 52.050000000000004
+      },
+      "min_clearance_m": {
+        "before": 17.64016693057038,
+        "after": 17.957487344706966
+      },
+      "localization_rmse_m": {
+        "before": 0.05414931508659366,
+        "after": 0.05277635592716836
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 177,
+        "minimum": 0,
+        "median": 0.3995367258776472,
+        "p95": 1.1823613042293792,
+        "maximum": 20.58014060801948
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "late",
+      "mode": "late-on-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/029.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 51.31916151389943,
+        "after": 52.00117695377061
+      },
+      "emergency_ticks": {
+        "before": 7,
+        "after": 7
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 11.437388589908489,
+        "after": 10.842587075258315
+      },
+      "localization_rmse_m": {
+        "before": 0.05201174775268597,
+        "after": 0.050452481291958375
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 501,
+        "minimum": 0,
+        "median": 0,
+        "p95": 0.10862959606787315,
+        "maximum": 0.21198176844948424
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "late",
+      "mode": "late-off-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/030.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 51.31916151389943,
+        "after": 52.00117695377061
+      },
+      "emergency_ticks": {
+        "before": 7,
+        "after": 7
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 11.437388589908489,
+        "after": 10.842587075258315
+      },
+      "localization_rmse_m": {
+        "before": 0.05201174775268597,
+        "after": 0.050452481291958375
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 501,
+        "minimum": 0,
+        "median": 0,
+        "p95": 0.10862959606787315,
+        "maximum": 0.21198176844948424
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "external",
+      "mode": "external-on-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/031.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": true,
+        "after": true
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 206.87811980435808,
+        "after": 206.84065736614818
+      },
+      "emergency_ticks": {
+        "before": 14,
+        "after": 15
+      },
+      "duration_s": {
+        "before": 57.1,
+        "after": 57.1
+      },
+      "min_clearance_m": {
+        "before": 4.6040623488396735,
+        "after": 4.3237993358715885
+      },
+      "localization_rmse_m": {
+        "before": 0.07002520979322069,
+        "after": 0.05260837290021225
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 263,
+        "minimum": 0,
+        "median": 0.04654797710903624,
+        "p95": 0.358575885165189,
+        "maximum": 0.7867860294166629
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "external",
+      "mode": "external-off-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/032.json",
+      "passed": {
+        "before": false,
+        "after": false
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 50.73288477006885,
+        "after": 50.71088742545468
+      },
+      "emergency_ticks": {
+        "before": 6,
+        "after": 7
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 12.019558882657408,
+        "after": 12.040763059335122
+      },
+      "localization_rmse_m": {
+        "before": 0.05180242798521702,
+        "after": 0.05030168398489287
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 563,
+        "minimum": 0,
+        "median": 0.011134654989765291,
+        "p95": 0.19169399141668975,
+        "maximum": 0.7867860294166629
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "detour",
+      "mode": "detour-on-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/033.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": true,
+        "after": true
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 206.94234506951335,
+        "after": 206.86890618272892
+      },
+      "emergency_ticks": {
+        "before": 15,
+        "after": 27
+      },
+      "duration_s": {
+        "before": 56.2,
+        "after": 57.5
+      },
+      "min_clearance_m": {
+        "before": 4.532140046894178,
+        "after": 4.322404813842721
+      },
+      "localization_rmse_m": {
+        "before": 0.06382423600500098,
+        "after": 0.04990641034976027
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 252,
+        "minimum": 0,
+        "median": 0.030955048328792367,
+        "p95": 0.3619101791972652,
+        "maximum": 1.1587501050023303
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "detour",
+      "mode": "detour-off-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/034.json",
+      "passed": {
+        "before": false,
+        "after": false
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 50.61040328227967,
+        "after": 50.80985722104201
+      },
+      "emergency_ticks": {
+        "before": 7,
+        "after": 7
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 12.141348101602796,
+        "after": 11.941678428502385
+      },
+      "localization_rmse_m": {
+        "before": 0.048791516065177766,
+        "after": 0.04803858866439456
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 563,
+        "minimum": 0,
+        "median": 0.005960300686556508,
+        "p95": 0.17604765085396412,
+        "maximum": 0.510665901549084
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "known-closure",
+      "mode": "known-closure-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/035.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": true,
+        "after": true
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 206.85203322979652,
+        "after": 206.8695201255651
+      },
+      "emergency_ticks": {
+        "before": 27,
+        "after": 14
+      },
+      "duration_s": {
+        "before": 57.900000000000006,
+        "after": 56.2
+      },
+      "min_clearance_m": {
+        "before": 4.586202497664899,
+        "after": 5.544983923230086
+      },
+      "localization_rmse_m": {
+        "before": 0.06749406008384826,
+        "after": 0.049976303857785884
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 252,
+        "minimum": 0,
+        "median": 0.04240328972144547,
+        "p95": 0.32155267601600124,
+        "maximum": 0.5161339915316576
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "no-alternative",
+      "mode": "no-alternative-on-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/036.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 50.61040328227967,
+        "after": 50.80985722104201
+      },
+      "emergency_ticks": {
+        "before": 7,
+        "after": 7
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 12.141348101602796,
+        "after": 11.941678428502385
+      },
+      "localization_rmse_m": {
+        "before": 0.048791516065177766,
+        "after": 0.04803858866439456
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 563,
+        "minimum": 0,
+        "median": 0.005960300686556508,
+        "p95": 0.17604765085396412,
+        "maximum": 0.510665901549084
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "no-alternative",
+      "mode": "no-alternative-off-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/037.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 50.61040328227967,
+        "after": 50.80985722104201
+      },
+      "emergency_ticks": {
+        "before": 7,
+        "after": 7
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 12.141348101602796,
+        "after": 11.941678428502385
+      },
+      "localization_rmse_m": {
+        "before": 0.048791516065177766,
+        "after": 0.04803858866439456
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 563,
+        "minimum": 0,
+        "median": 0.005960300686556508,
+        "p95": 0.17604765085396412,
+        "maximum": 0.510665901549084
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "moving",
+      "mode": "moving-on-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/038.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": true,
+        "after": true
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 198.94635610007754,
+        "after": 198.90196735248068
+      },
+      "emergency_ticks": {
+        "before": 14,
+        "after": 13
+      },
+      "duration_s": {
+        "before": 51.95,
+        "after": 51.900000000000006
+      },
+      "min_clearance_m": {
+        "before": 17.93834979570159,
+        "after": 17.94240997570867
+      },
+      "localization_rmse_m": {
+        "before": 0.05191506673565854,
+        "after": 0.05050458778846146
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 177,
+        "minimum": 0,
+        "median": 0.39290852869826653,
+        "p95": 1.3857363779635241,
+        "maximum": 19.901486941610564
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "moving",
+      "mode": "moving-off-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/039.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": true,
+        "after": true
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 198.94635610007754,
+        "after": 198.90196735248068
+      },
+      "emergency_ticks": {
+        "before": 14,
+        "after": 13
+      },
+      "duration_s": {
+        "before": 51.95,
+        "after": 51.900000000000006
+      },
+      "min_clearance_m": {
+        "before": 17.93834979570159,
+        "after": 17.94240997570867
+      },
+      "localization_rmse_m": {
+        "before": 0.05191506673565854,
+        "after": 0.05050458778846146
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 177,
+        "minimum": 0,
+        "median": 0.39290852869826653,
+        "p95": 1.3857363779635241,
+        "maximum": 19.901486941610564
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "late",
+      "mode": "late-on-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/040.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 51.23141738157988,
+        "after": 51.96845073648145
+      },
+      "emergency_ticks": {
+        "before": 6,
+        "after": 6
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 11.539331620982004,
+        "after": 10.886542722952987
+      },
+      "localization_rmse_m": {
+        "before": 0.05297822803339641,
+        "after": 0.04827727652615605
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 501,
+        "minimum": 0,
+        "median": 0,
+        "p95": 0.11163035547876543,
+        "maximum": 0.21473810899388557
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "late",
+      "mode": "late-off-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/041.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 51.23141738157988,
+        "after": 51.96845073648145
+      },
+      "emergency_ticks": {
+        "before": 6,
+        "after": 6
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 11.539331620982004,
+        "after": 10.886542722952987
+      },
+      "localization_rmse_m": {
+        "before": 0.05297822803339641,
+        "after": 0.04827727652615605
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 501,
+        "minimum": 0,
+        "median": 0,
+        "p95": 0.11163035547876543,
+        "maximum": 0.21473810899388557
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "external",
+      "mode": "external-on-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/042.json",
+      "passed": {
+        "before": true,
+        "after": true
+      },
+      "reached_goal": {
+        "before": true,
+        "after": true
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 206.94234506951335,
+        "after": 206.86890618272892
+      },
+      "emergency_ticks": {
+        "before": 15,
+        "after": 27
+      },
+      "duration_s": {
+        "before": 56.2,
+        "after": 57.5
+      },
+      "min_clearance_m": {
+        "before": 4.532140046894178,
+        "after": 4.322404813842721
+      },
+      "localization_rmse_m": {
+        "before": 0.06382423600500098,
+        "after": 0.04990641034976027
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 252,
+        "minimum": 0,
+        "median": 0.030955048328792367,
+        "p95": 0.3619101791972652,
+        "maximum": 1.1587501050023303
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "external",
+      "mode": "external-off-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/043.json",
+      "passed": {
+        "before": false,
+        "after": false
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 50.61040328227967,
+        "after": 50.80985722104201
+      },
+      "emergency_ticks": {
+        "before": 7,
+        "after": 7
+      },
+      "duration_s": {
+        "before": 70,
+        "after": 70
+      },
+      "min_clearance_m": {
+        "before": 12.141348101602796,
+        "after": 11.941678428502385
+      },
+      "localization_rmse_m": {
+        "before": 0.048791516065177766,
+        "after": 0.04803858866439456
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 563,
+        "minimum": 0,
+        "median": 0.005960300686556508,
+        "p95": 0.17604765085396412,
+        "maximum": 0.510665901549084
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "mission",
+      "mode": "heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/044.json",
+      "passed": {
+        "before": false,
+        "after": false
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 44.505726021766215,
+        "after": 44.505726021766215
+      },
+      "emergency_ticks": {
+        "before": 6,
+        "after": 6
+      },
+      "duration_s": {
+        "before": 65,
+        "after": 65
+      },
+      "min_clearance_m": {
+        "before": 11.930142392821352,
+        "after": 11.930142392821352
+      },
+      "localization_rmse_m": {
+        "before": 0.04915484313276107,
+        "after": 0.04915484313276107
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 536,
+        "minimum": 0,
+        "median": 0.0024040399112714717,
+        "p95": 0.23037428719352815,
+        "maximum": 0.7586677349558262
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "world": "mission",
+      "mode": "heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/045.json",
+      "passed": {
+        "before": false,
+        "after": false
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 44.37174150271491,
+        "after": 44.37174150271491
+      },
+      "emergency_ticks": {
+        "before": 7,
+        "after": 7
+      },
+      "duration_s": {
+        "before": 65,
+        "after": 65
+      },
+      "min_clearance_m": {
+        "before": 12.025914678254972,
+        "after": 12.025914678254972
+      },
+      "localization_rmse_m": {
+        "before": 0.05480784569721241,
+        "after": 0.05480784569721241
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": true,
+      "required_eight_second_radius_m": {
+        "count": 536,
+        "minimum": 0,
+        "median": 0.0052091641729248295,
+        "p95": 0.1661766999730483,
+        "maximum": 0.5856963251873009
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "mission",
+      "mode": "heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "scenario": "frozen/046.json",
+      "passed": {
+        "before": false,
+        "after": false
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 45.54347430421562,
+        "after": 44.59998843464433
+      },
+      "emergency_ticks": {
+        "before": 5,
+        "after": 5
+      },
+      "duration_s": {
+        "before": 65,
+        "after": 65
+      },
+      "min_clearance_m": {
+        "before": 10.862681624835524,
+        "after": 11.829512258548053
+      },
+      "localization_rmse_m": {
+        "before": 0.0630062915884097,
+        "after": 0.051551097903914565
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 535,
+        "minimum": 0,
+        "median": 0,
+        "p95": 0.31109536357726664,
+        "maximum": 0.5725326959113155
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "world": "mission",
+      "mode": "heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 42,
+      "scenario": "frozen/047.json",
+      "passed": {
+        "before": false,
+        "after": false
+      },
+      "reached_goal": {
+        "before": false,
+        "after": false
+      },
+      "new_failed_gates": [],
+      "progress_m": {
+        "before": 45.03321878121013,
+        "after": 45.57016813947341
+      },
+      "emergency_ticks": {
+        "before": 7,
+        "after": 5
+      },
+      "duration_s": {
+        "before": 65,
+        "after": 65
+      },
+      "min_clearance_m": {
+        "before": 11.369196158969345,
+        "after": 10.928358779211324
+      },
+      "localization_rmse_m": {
+        "before": 0.0519785197885516,
+        "after": 0.04842120980245662
+      },
+      "replay_verified": true,
+      "reference_bytes_identical": null,
+      "required_eight_second_radius_m": {
+        "count": 535,
+        "minimum": 0,
+        "median": 0,
+        "p95": 0.20062435476671836,
+        "maximum": 0.4401771841949249
+      }
+    }
+  ],
+  "maturity_estimate_percent": 29,
+  "original_eight_incomplete_missions_open": true,
+  "result_publication_verification": {
+    "source": "73bf7924919083a9673c3657e2178d73cea7c9bc",
+    "run": 40297566338,
+    "job": 121487238902,
+    "script": "bash scripts/check.sh",
+    "conclusion": "success",
+    "old_checker_rejections": 2,
+    "old_checker_expected_rejections": 2,
+    "tests": 5,
+    "artifact": 12638649409,
+    "artifact_sha256": "3ab1812e69e2e131c8ef16aded30f6b3273faf521e79d0f8a0425312e06e2c81"
+  }
+}

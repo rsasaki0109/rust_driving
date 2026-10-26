@@ -4,13 +4,15 @@ RNE dynamic vehicle poses are at the chassis/center of mass. The existing refere
 
 ## Operational contract
 
-`PipelineConfig.rear_axle_offset_m` is optional and omitted from older/default sensor-log headers. A supplied offset must be finite, positive, less than wheelbase, and used with `local_route_geometry`. The RNE adapter selects the declared 1.5 m rear distance from its pinned native dynamics calibration only for dynamic local-route mode. Reference and default native modes retain their previous computation and serialization.
+`PipelineConfig.rear_axle_offset_m` is optional and omitted from older/default sensor-log headers. A supplied offset must be finite, positive and less than wheelbase. The chassis reference is independent of `local_route_geometry`: enabling body calibration does not change the surveyed road or add motion limits. The RNE adapter records its pinned 1.5 m rear distance for dynamic local/history configurations and dynamic acquired-motion fitting. Reference, kinematic and default native modes retain their previous computation and serialization.
 
 The opt-in EKF predicts chassis displacement from noisy measured longitudinal wheel speed `v` and gyro `r`: body velocity `(v, offset*r)` rotates through the midpoint body heading. Its yaw Jacobian uses the integrated displacement; the existing covariance noise and GNSS innovation policy remain. Estimated speed is the chassis/course magnitude `hypot(v, offset*r)`. Recorded pose yaw remains **body heading**, preserving LiDAR frame conversion and acquisition-pose history. No native lateral-velocity state, future pose, actor identity or simulator geometry crosses the sensing boundary.
 
 Above 0.1 m/s measured longitudinal speed, local planning and pursuit use course `body_yaw + atan2(offset*r, v)`; below that threshold they retain body yaw to avoid a gyro-noise direction at standstill. This course is a temporary planning/control view, not a replacement sensor pose. Reachable trajectory profiles and speed feedback use the estimated chassis speed.
 
 For course curvature `k`, no-slip chassis pursuit requests `atan(wheelbase*k / sqrt(1-(offset*k)^2))`, then retains the existing 0.55 rad steering limit and 0.7 rad/s command rate. Unreachable curvature saturates finitely. Offset zero delegates the preceding estimator and steering arithmetic exactly. The local fillet remains a guidance curve; its rear-axle radius validation is not a chassis tracking guarantee. Every candidate still passes original-corridor containment and speed/collision checks.
+
+New dynamic acquired-motion fitting without local geometry, measurement-history replay or map localization also records `instantaneous_odometry=true`. Adjacent synchronous measured wheel/gyro endpoints determine interval-average body rates; the latest measurement still determines current course speed. Missing or cached endpoints latch the existing motion discontinuity and brake. Absent metadata preserves the preceding held-rate calculation and exact historical replay. This sampling mode rejects delayed-history, map and relocalization combinations. See [acquired chassis motion](chassis-acquisition.md) for paired original-input evaluation and the retained failed first attempt.
 
 ## Measured repair
 

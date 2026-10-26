@@ -28,11 +28,14 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: 47a949707d480f3d62cff8d4ad47a52fe1842866
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Verify recorded driver equivalence and analytic controls
+      - name: Verify historical source equivalence and analytic controls
         run: |
+          test "$(git rev-parse HEAD)" = 47a949707d480f3d62cff8d4ad47a52fe1842866
           git fetch --no-tags --depth=1 origin 8550e1a2b1d06703d05036a625609e21b9fa0cf6
           git diff --exit-code 8550e1a2b1d06703d05036a625609e21b9fa0cf6 HEAD -- crates Cargo.lock rust-toolchain.toml integrations/rne
           python scripts/test_forecast_calibration.py
@@ -43,12 +46,22 @@ jobs:
           github-token: ${{ github.token }}
           path: retained-directional-evidence
           merge-multiple: true
-      - name: Reinspect all 48 stored cases without altering any source outcome
+      - name: Reinspect all 48 historical cases without altering any source outcome
+        env:
+          RUSTDRIVING_ACTIVE_SOURCE: ${{ github.sha }}
         run: |
           python scripts/check_forecast_calibration.py --evidence retained-directional-evidence --output artifacts/forecast-calibration/report.json
+          python - <<'PY'
+          import json,os,subprocess
+          from pathlib import Path
+          receipt=dict(historical=True,analysis_source=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
+              recorded_driver_source='8550e1a2b1d06703d05036a625609e21b9fa0cf6',
+              active_source=os.environ['RUSTDRIVING_ACTIVE_SOURCE'],confidence_for_active_driver_established=False)
+          Path('artifacts/forecast-calibration/source-receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
+          PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: forecast-calibration-analysis
+          name: historical-forecast-calibration-analysis
           path: artifacts/forecast-calibration
           if-no-files-found: warn

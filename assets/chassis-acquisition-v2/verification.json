@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "runtime_source": "92c72b1c473f0b6209f09c4ce1ff9508026b2d40",
+  "runtime_contracts": {
+    "run": 40294008604,
+    "job": 121475928949,
+    "script": "bash scripts/check.sh",
+    "conclusion": "success",
+    "hosted": true
+  },
+  "full_qualification": {
+    "workflow_source": "7ade752d08d096ee5ca410bfd553fc38b7a62bec",
+    "run": 40295079674,
+    "conclusion": "success",
+    "cases": 48,
+    "strict_passes": 36,
+    "arrivals": 20,
+    "historical_replays": 48,
+    "existing_mode_byte_controls": 3,
+    "artifact": 12638847273,
+    "artifact_sha256": "f47a534db070bd84c3b957500c9f59dd151ad6df996384fe0ef23a29b51d2c5c"
+  },
+  "result_publication": {
+    "source": "73bf7924919083a9673c3657e2178d73cea7c9bc",
+    "run": 40297566338,
+    "job": 121487238902,
+    "script": "bash scripts/check.sh",
+    "conclusion": "success",
+    "old_checker_rejections": 2,
+    "old_checker_expected_rejections": 2,
+    "tests": 5,
+    "artifact": 12638649409,
+    "artifact_sha256": "3ab1812e69e2e131c8ef16aded30f6b3273faf521e79d0f8a0425312e06e2c81"
+  },
+  "workspace_unit_test_steps": {
+    "source": "92c72b1c473f0b6209f09c4ce1ff9508026b2d40",
+    "run": 40294530777,
+    "step": "Run cargo test --workspace --locked",
+    "linux": {
+      "job": 121477234607,
+      "conclusion": "success"
+    },
+    "windows": {
+      "job": 121477234706,
+      "conclusion": "success"
+    },
+    "macos_intel": {
+      "job": 121477234548,
+      "conclusion": "success"
+    }
+  },
+  "local_executor_available": false,
+  "default_policy_changed": false,
+  "confidence_established": false,
+  "original_full_adoption_gate_passed": false,
+  "maturity_estimate_percent": 29
+}
