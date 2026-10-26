@@ -1,0 +1,9 @@
+{
+  "analysis_source": "47a949707d480f3d62cff8d4ad47a52fe1842866",
+  "path": "assets/forecast-calibration-v1/canaries/47a949707d480f3d62cff8d4ad47a52fe1842866.json",
+  "sha256": "0916d33bf78e596359fa164cba7d2055a277ef06e3129bf7920556759cb792f3",
+  "complete": true,
+  "cases": 48,
+  "operational_change": false,
+  "confidence_established": false
+}
