@@ -3,6 +3,7 @@ mod checked_approach;
 mod collision;
 mod corners;
 mod diagnostics;
+mod direction;
 mod geometry;
 mod speed;
 mod speed_zones;
@@ -67,6 +68,7 @@ pub struct LatticePlanner {
     approach_clock: Option<(f64, Option<f64>)>,
     approach_confirmation: checked_approach::Confirmation,
     prefer_stop_progress: bool,
+    motion_directions: Option<direction::Context>,
 }
 #[derive(Clone)]
 struct RefinementSupport {
@@ -116,10 +118,23 @@ impl Default for LatticePlanner {
             approach_clock: None,
             approach_confirmation: checked_approach::Confirmation::default(),
             prefer_stop_progress: false,
+            motion_directions: None,
         }
     }
 }
 impl LatticePlanner {
+    /// Supply acquisition-owned world-frame track velocities and declared error
+    /// budgets. None preserves legacy behavior. Missing or invalid active
+    /// context fails closed; cached acquisitions retain their original age.
+    pub fn observe_motion_directions(
+        &mut self,
+        bounds: Option<rustdriving_core::ForecastEnvelopeConfig>,
+        tracks: &[rustdriving_core::Track],
+        now: f64,
+    ) {
+        self.motion_directions = bounds.map(|b| direction::Context::observe(b, tracks, now));
+    }
+
     /// Record bounded decision summaries without changing candidate selection.
     pub fn set_diagnostics_enabled(&mut self, enabled: bool) {
         self.diagnostics_enabled = enabled;
@@ -426,12 +441,15 @@ impl LatticePlanner {
                 legacy_needs_refinement = best.as_ref().is_none_or(|choice| {
                     choice.blocked
                         || objects.iter().any(|object| {
-                            collision::with_minimum_clearance(
+                            collision::with_motion_direction(
                                 &choice.trajectory.points,
                                 object,
                                 self.vehicle.radius,
                                 rustdriving_core::Vec2::new(ego.pose.yaw.cos(), ego.pose.yaw.sin()),
                                 REFINED_CANDIDATE_CLEARANCE_M,
+                                self.motion_directions
+                                    .as_ref()
+                                    .map(|context| context.for_prediction(object.id)),
                             )
                             .is_some()
                         })
@@ -588,12 +606,24 @@ impl LatticePlanner {
                         let heading =
                             rustdriving_core::Vec2::new(ego.pose.yaw.cos(), ego.pose.yaw.sin());
                         if refined {
-                            collision::with_minimum_clearance(
+                            collision::with_motion_direction(
                                 path,
                                 object,
                                 self.vehicle.radius,
                                 heading,
                                 REFINED_CANDIDATE_CLEARANCE_M,
+                                self.motion_directions
+                                    .as_ref()
+                                    .map(|context| context.for_prediction(object.id)),
+                            )
+                        } else if let Some(context) = &self.motion_directions {
+                            collision::with_motion_direction(
+                                path,
+                                object,
+                                self.vehicle.radius,
+                                heading,
+                                0.,
+                                Some(context.for_prediction(object.id)),
                             )
                         } else {
                             collision::first_contact_time(
@@ -620,12 +650,15 @@ impl LatticePlanner {
                 let conflict = objects
                     .iter()
                     .filter_map(|object| {
-                        collision::with_minimum_clearance(
+                        collision::with_motion_direction(
                             &points,
                             object,
                             self.vehicle.radius,
                             heading,
                             floor,
+                            self.motion_directions
+                                .as_ref()
+                                .map(|context| context.for_prediction(object.id)),
                         )
                         .map(|time| PlanningForecastConflict {
                             prediction_id: object.id,

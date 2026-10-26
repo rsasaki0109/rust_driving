@@ -11,6 +11,7 @@ python3 scripts/test_registered_wrapper_provenance.py
 python3 scripts/test_recorded_submap.py
 python3 scripts/test_prediction_evidence.py
 python3 scripts/test_forecast_envelope.py
+python3 scripts/test_directional_reserves.py
 python3 scripts/test_pose_forecasts.py
 python3 scripts/test_cold_motion.py
 python3 scripts/test_velocity_hypotheses.py

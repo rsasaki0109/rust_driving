@@ -1,0 +1,9 @@
+{
+  "source_commit": "8550e1a2b1d06703d05036a625609e21b9fa0cf6",
+  "path": "assets/directional-reserve-v1/canaries/8550e1a2b1d06703d05036a625609e21b9fa0cf6.json",
+  "comparison_passed": true,
+  "complete": true,
+  "contracts_passed": true,
+  "adopted": false,
+  "original_full_adoption_gate_passed": false
+}

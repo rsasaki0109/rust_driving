@@ -1,4 +1,5 @@
 //! Piecewise-linear, synchronized circular sweeps for candidate trajectory validation.
+use super::direction::Envelope;
 use rustdriving_core::{Prediction, TrajectoryPoint, Vec2};
 
 /// Earliest contact under the supplied time parameterization. Inputs are validated by
@@ -18,6 +19,7 @@ pub(super) fn first_contact_time(
 struct Safety {
     vehicle_radius: f64,
     minimum_clearance: f64,
+    direction: Option<Envelope>,
 }
 
 pub(super) fn with_minimum_clearance(
@@ -27,9 +29,28 @@ pub(super) fn with_minimum_clearance(
     held_heading: Vec2,
     minimum_clearance: f64,
 ) -> Option<f64> {
+    with_motion_direction(
+        path,
+        object,
+        vehicle_radius,
+        held_heading,
+        minimum_clearance,
+        None,
+    )
+}
+
+pub(super) fn with_motion_direction(
+    path: &[TrajectoryPoint],
+    object: &Prediction,
+    vehicle_radius: f64,
+    held_heading: Vec2,
+    minimum_clearance: f64,
+    direction: Option<Envelope>,
+) -> Option<f64> {
     let safety = Safety {
         vehicle_radius,
         minimum_clearance,
+        direction,
     };
     let first = path.first()?;
     let initial_tangent = path
@@ -40,10 +61,11 @@ pub(super) fn with_minimum_clearance(
     if first.position.distance(position_at(object, first.time))
         <= vehicle_radius
             + object.radius_at(first.time)
-            + minimum_clearance.max(margin(
+            + minimum_clearance.max(effective_margin(
                 first.time,
                 velocity_at(object, first.time),
                 initial_tangent,
+                direction,
             ))
     {
         return Some(first.time);
@@ -72,6 +94,13 @@ pub(super) fn with_minimum_clearance(
         }
     }
     None
+}
+
+fn effective_margin(time: f64, velocity: Vec2, tangent: Vec2, direction: Option<Envelope>) -> f64 {
+    let legacy = margin(time, velocity, tangent);
+    direction.map_or(legacy, |model| {
+        legacy.max(0.30 + 0.06 * time.min(5.0) + model.reserve(time, tangent))
+    })
 }
 
 fn margin(time: f64, velocity: Vec2, tangent: Vec2) -> f64 {
@@ -157,10 +186,11 @@ fn segment_contact(
         // by at most |delta_v| * duration / 8. Inflate the circle by this bound.
         safety.vehicle_radius
             + object.radius_at(start).max(object.radius_at(end))
-            + safety.minimum_clearance.max(margin(
+            + safety.minimum_clearance.max(effective_margin(
                 end,
                 velocity_at(object, 0.5 * start + 0.5 * end),
                 tangent,
+                safety.direction,
             ))
             + (b.speed - a.speed).abs() * (b.time - a.time) / 8.0,
     )
@@ -192,6 +222,48 @@ fn contact_fraction(start: Vec2, end: Vec2, radius: f64) -> Option<f64> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn directional_context_never_removes_a_nominal_crossing_reserve() {
+        use super::super::direction::Context;
+        use rustdriving_core::{ForecastEnvelopeConfig, Track};
+        let context = Context::observe(
+            ForecastEnvelopeConfig {
+                position_error_m: 0.,
+                velocity_error_m_s: 0.,
+                acceleration_error_m_s2: 0.,
+            },
+            &[Track {
+                id: 1,
+                position: Vec2::default(),
+                velocity: Vec2::default(),
+                radius: 0.5,
+                last_seen: 0.,
+            }],
+            0.,
+        );
+        let ego = path(Vec2::default(), Vec2::default(), [0., 1.]);
+        let object = Prediction {
+            id: 1,
+            radius: 0.5,
+            positions: vec![Vec2::new(1.8, 0.), Vec2::new(1.8, 0.01)],
+            dt: 1.,
+            additional_radius_m: vec![],
+        };
+        let heading = Vec2::new(1., 0.);
+        assert_eq!(first_contact_time(&ego, &object, 1., heading), Some(0.));
+        assert_eq!(
+            with_motion_direction(
+                &ego,
+                &object,
+                1.,
+                heading,
+                0.,
+                Some(context.for_prediction(1))
+            ),
+            Some(0.)
+        );
+    }
 
     #[test]
     fn an_explicit_floor_rejects_a_legacy_near_miss_and_keeps_larger_motion_reserves() {

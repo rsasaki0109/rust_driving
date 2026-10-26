@@ -1745,6 +1745,15 @@ impl DrivingPipeline {
                 None
             },
         );
+        self.planner.observe_motion_directions(
+            if self.config.replan_checked_approaches {
+                self.config.forecast_envelope
+            } else {
+                None
+            },
+            &self.tracks,
+            input.time,
+        );
         let mut trajectory = self.planner.plan(
             motion_estimate,
             stop_route.as_ref().unwrap_or(&self.config.route),

@@ -79,7 +79,7 @@ def verify_policy(config,frozen,spec):
         if config.get(key)!=frozen.get(key):raise ValueError('existing motion, pose or support policy changed')
 
 
-def audit(run,config,ticks,spec,frozen):
+def audit(run,config,ticks,spec,frozen,*,verify_directions=False):
     verify_policy(config,frozen,spec);result=audit_dynamics(run,config,ticks,spec,frozen)
     result['cold_motion']=cold_occupancy(config,ticks)
     result['recent_velocity_hypotheses']=velocity_occupancy(config,ticks)
@@ -87,6 +87,9 @@ def audit(run,config,ticks,spec,frozen):
     result['stopping_certificates']=stopping_certificates(config,ticks)
     result['targets']=(dict(verified_control_ticks=result['planning_decisions']['verified_ticks'],active_route_corridors=True)
         if config.get('navigation') else verify_targets(config,ticks))
+    if verify_directions:
+        from directional_reserve_oracle import certify
+        result['directional_certificates']=certify(config,ticks)
     return result
 
 
@@ -94,6 +97,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--plant',choices=['all','reference-2d','rne-dynamic'],default='all')
     parser.add_argument('--freeze-only',action='store_true');parser.add_argument('--only-index',type=int)
+    parser.add_argument('--verify-directional-reserves',action='store_true',help='independently certify uncertainty-supported directional margins on current outputs')
     parser.add_argument('--check-contract',action='store_true',help='retain current checked approach contract while reporting physical regression failures')
     suffix='.exe' if os.name=='nt' else ''
     parser.add_argument('--binary',type=Path,default=REPO/('target/release/rustdriving'+suffix))
@@ -106,15 +110,16 @@ def main():
     if args.only_index is not None:selected=[selected[args.only_index]]
     def one(item):
         index,spec=item;folder=output/'episodes'/spec['plant']/f"{spec['world']}-{spec['mode']}-seed-{spec['seed']}"
-        row=run_case(output,spec,binaries[spec['plant']],args.binary.resolve(),auditor=lambda r,c,t,s,f:audit(r,c,t,dict(s,_folder=str(folder)),f))
+        row=run_case(output,spec,binaries[spec['plant']],args.binary.resolve(),auditor=lambda r,c,t,s,f:audit(r,c,t,dict(s,_folder=str(folder)),f,verify_directions=args.verify_directional_reserves))
         row['comparison']=compare(row,baseline(spec));receipts=output/'episode-receipts';receipts.mkdir(exist_ok=True)
         (receipts/f'{index:03d}.json').write_text(json.dumps(row,indent=2)+'\n');return row
     report=dict(complete=False,passed=False,gates=GATES,binaries=fingerprints,manifest_sha256=sha(output/'frozen-manifest.json'),
-        parent_results_sha256=sha(PARENT),episodes=[])
+        parent_results_sha256=sha(PARENT),directional_reserves_verified=args.verify_directional_reserves,episodes=[])
     with ThreadPoolExecutor(max_workers=2) as pool:
         for row in pool.map(one,selected):
             rows=report['episodes'];rows.append(row);report['complete']=len(rows)==len(selected)
             report['contract_passed']=all(not r.get('audit_error') and r.get('pose_occupancy',{}).get('passed') is True and r.get('cold_motion',{}).get('passed') is True and r.get('recent_velocity_hypotheses',{}).get('passed') is True and r.get('checked_approach',{}).get('passed') is True and r.get('stopping_certificates',{}).get('passed') is True
+                and (not args.verify_directional_reserves or r.get('directional_certificates',{}).get('passed') is True)
                 and r.get('replay_exit_code')==0 and r.get('replay',{}).get('verified') is True
                 and r['replay']['ticks']==r['summary']['steps'] and r.get('run_exit_code')==(0 if r['summary']['passed'] else 1) for r in rows)
             report['regression_passed']=all(r['comparison']['regression_passed'] for r in rows)
