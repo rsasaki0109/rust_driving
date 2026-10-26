@@ -358,7 +358,9 @@ impl LatticePlanner {
             || self.cruise_speed <= 0.0
             || (self.search_obstruction_stops && !self.settle_obstruction_stops)
             || self.checked_approach_min_progress_m.is_some_and(|value| {
-                !self.replan_checked_approaches || !value.is_finite() || !(0.5..=2.).contains(&value)
+                !self.replan_checked_approaches
+                    || !value.is_finite()
+                    || !(0.5..=2.).contains(&value)
             })
             || (self.search_later_obstruction_stops && !self.replan_checked_approaches)
             || (self.replan_checked_approaches

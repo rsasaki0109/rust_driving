@@ -170,7 +170,6 @@ mod tests {
         state.observe(Some((now, scene)), Vec2::default(), 0., p)
     }
 
-
     #[test]
     fn smaller_progress_still_requires_three_fresh_acquisitions() {
         let mut state = Confirmation::default();

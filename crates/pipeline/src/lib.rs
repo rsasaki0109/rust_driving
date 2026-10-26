@@ -275,7 +275,9 @@ impl PipelineConfig {
         if self.checked_approach_min_progress_m.is_some_and(|value| {
             !self.replan_checked_approaches || !value.is_finite() || !(0.5..=2.).contains(&value)
         }) {
-            return Err("checked approach progress requires enabled replanning and 0.5..=2 m".into());
+            return Err(
+                "checked approach progress requires enabled replanning and 0.5..=2 m".into(),
+            );
         }
         if self.search_later_obstruction_stops && !self.replan_checked_approaches {
             return Err("later stop search requires acquired checked approach replanning".into());
