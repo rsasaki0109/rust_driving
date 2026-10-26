@@ -276,7 +276,7 @@ def main():
                   'audit', row.get('audit_error'), 'gates', row.get('failed_gates'),
                   'new', row['comparison']['new_failed_gates'], flush=True)
     report['complete'] = len(report['cases']) == len(selected)
-    report['passed'] = (report['complete'] and report['fixed_inputs']['passed']
+    qualification_passed = (report['complete'] and report['fixed_inputs']['passed']
         and all(contract(r) and r['comparison']['regression_passed']
                 and r.get('replay',{}).get('verified') and r.get('directional_certificates',{}).get('passed')
                 and (r['plant'] != 'reference-2d' or r.get('reference_bytes_identical'))
@@ -291,7 +291,7 @@ def main():
         report['baseline_native_sha256'] = sha(baseline_native.read_bytes())
         report['byte_controls'] = byte_controls(output, baseline_native, binaries['rne-dynamic'], binaries['reference-2d'], mission)
         report['full_qualification_complete'] = (report['historical_replays']['passed'] and report['byte_controls']['passed'])
-        report['passed'] = report['passed'] and report['full_qualification_complete']
+        qualification_passed = qualification_passed and report['full_qualification_complete']
         if report['baseline_native_sha256'] != sha(baseline_native.read_bytes()):
             raise ValueError('baseline native binary changed during controls')
         save()
@@ -299,11 +299,14 @@ def main():
     report['arrivals'] = sum(r.get('summary',{}).get('reached_goal',False) for r in report['cases'])
     if args.stage=='full':
         report['cohort_gate_passed'] = report['strict_passes'] >= 36 and report['arrivals'] >= 20
-        report['passed'] = report['passed'] and report['cohort_gate_passed']
-    report['original_full_adoption_gate_passed'] = (args.stage=='full' and report['passed']
-                                                    and report['strict_passes']==48)
+        qualification_passed = qualification_passed and report['cohort_gate_passed']
     if fingerprints != {key:sha(path.read_bytes()) for key,path in binaries.items()}:
         raise ValueError('driver changed during evaluation')
+    # No intermediate save may claim success before auxiliary checks and the
+    # final binary-identity check complete, even when all 48 runs have finished.
+    report['passed'] = qualification_passed
+    report['original_full_adoption_gate_passed'] = (args.stage=='full' and report['passed']
+                                                    and report['strict_passes']==48)
     save()
     print(json.dumps({k:report[k] for k in ['complete','passed','stage','strict_passes','arrivals',
           'original_full_adoption_gate_passed']}),flush=True)

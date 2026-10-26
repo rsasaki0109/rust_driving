@@ -1,0 +1,59 @@
+name: Verify chassis result publication
+on:
+  push:
+    branches: [verify/chassis-report-20261026]
+    paths: ['.github/workflows/check-chassis-publication.yml','scripts/check_chassis_acquisition.py','scripts/test_chassis_acquisition_publication.py','scripts/check.sh']
+permissions:
+  contents: read
+concurrency:
+  group: chassis-result-publication-20261026
+  cancel-in-progress: false
+env:
+  CARGO_INCREMENTAL: '0'
+jobs:
+  contracts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: workspace-ubuntu24-rust190-v1-${{ hashFiles('Cargo.lock', 'rust-toolchain.toml', '.cargo/config.toml') }}
+      - name: Install the unchanged workspace toolchain
+        run: rustup toolchain install 1.90.0 --profile minimal --component rustfmt --component clippy
+      - name: Prove injected failures reject the preceding premature success
+        run: |
+          git fetch --no-tags --depth=1 origin 92c72b1c473f0b6209f09c4ce1ff9508026b2d40
+          git show 92c72b1c473f0b6209f09c4ce1ff9508026b2d40:scripts/check_chassis_acquisition.py > "$RUNNER_TEMP/previous_chassis_checker.py"
+          python - <<'PY'
+          import importlib.util,io,json,os,sys,unittest
+          from pathlib import Path
+          sys.path.insert(0,str(Path('scripts').resolve()))
+          import test_chassis_acquisition_publication as controls
+          spec=importlib.util.spec_from_file_location('previous_checker',Path(os.environ['RUNNER_TEMP'])/'previous_chassis_checker.py')
+          previous=importlib.util.module_from_spec(spec);spec.loader.exec_module(previous)
+          controls.checker=previous
+          names=['test_byte_control_exception_cannot_leave_intermediate_success',
+              'test_final_binary_change_cannot_leave_intermediate_success']
+          suite=unittest.TestSuite(controls.ResultPublicationTests(name) for name in names)
+          result=unittest.TextTestRunner(stream=io.StringIO()).run(suite)
+          assert result.testsRun==2 and len(result.failures)==2 and not result.errors
+          Path('negative-control.json').write_text(json.dumps(dict(previous_source='92c72b1c473f0b6209f09c4ce1ff9508026b2d40',
+              expected_rejections=2,observed_rejections=len(result.failures),passed=True),indent=2)+'\n')
+          print('Both premature-success regressions are detected in the actual preceding checker.')
+          PY
+      - name: Run required workspace contracts with the repaired result publisher
+        run: bash scripts/check.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: chassis-result-publication-control
+          path: negative-control.json
+          if-no-files-found: warn
