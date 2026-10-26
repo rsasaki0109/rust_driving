@@ -1,0 +1,34 @@
+name: Inspect checked stopping candidates
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: rustup toolchain install 1.90.0 --profile minimal --component rustfmt --component clippy
+      - name: Record the inspected source
+        run: echo "ANALYSIS_SOURCE=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+      - name: Required workspace verification
+        run: bash scripts/check.sh
+      - run: cargo build --release --locked -p rustdriving-pipeline --example inspect_stop_candidates
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '12638847273'
+          run-id: '40295079674'
+          github-token: ${{ github.token }}
+          path: retained-chassis
+          merge-multiple: true
+      - name: Replay and inspect complete stopping sweeps
+        run: python scripts/check_stop_candidates.py retained-chassis artifacts/stop-candidates target/release/examples/inspect_stop_candidates
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stop-candidate-evidence
+          path: artifacts/stop-candidates

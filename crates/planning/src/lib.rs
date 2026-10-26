@@ -15,6 +15,21 @@ use rustdriving_core::{
 };
 /// Refined proposals retain at least one meter beyond acquired forecast discs.
 pub const REFINED_CANDIDATE_CLEARANCE_M: f64 = 1.0;
+/// One complete stopping-path sweep in an offline probe, before admission.
+#[derive(Clone, Debug)]
+pub struct StopAttempt {
+    pub candidate_index: usize,
+    pub end_progress_m: f64,
+    pub hold_start_s: f64,
+    pub hold_end_s: f64,
+    pub first_contact_s: Option<f64>,
+}
+/// Read-only proposal evidence; it is never an authorization to move.
+pub struct StopProbe {
+    pub trajectory: Trajectory,
+    pub diagnostics: Option<PlanningDiagnostics>,
+    pub attempts: Vec<StopAttempt>,
+}
 #[derive(Clone)]
 pub struct LatticePlanner {
     /// Known fixed-route arc intervals; overlaps use the lowest cap.
@@ -69,6 +84,8 @@ pub struct LatticePlanner {
     approach_confirmation: checked_approach::Confirmation,
     prefer_stop_progress: bool,
     motion_directions: Option<direction::Context>,
+    record_stop_attempts: bool,
+    stop_attempts: Vec<StopAttempt>,
 }
 #[derive(Clone)]
 struct RefinementSupport {
@@ -119,10 +136,37 @@ impl Default for LatticePlanner {
             approach_confirmation: checked_approach::Confirmation::default(),
             prefer_stop_progress: false,
             motion_directions: None,
+            record_stop_attempts: false,
+            stop_attempts: vec![],
         }
     }
 }
 impl LatticePlanner {
+    /// Inspect the ordinary checked-approach probe before the two-meter and
+    /// acquisition-confirmation gates. All braking and hold sweeps remain active.
+    /// The live planner's commitments, evidence credit and diagnostics are untouched.
+    pub fn inspect_stopping_proposals(
+        &self,
+        ego: EgoState,
+        route: &Route,
+        objects: &[Prediction],
+    ) -> StopProbe {
+        let mut probe = self.clone();
+        probe.obstruction_stop_requested = false;
+        probe.obstruction_stop_active = false;
+        probe.searched_stop_s = None;
+        probe.yield_stop_s = None;
+        probe.prefer_stop_progress = true;
+        probe.diagnostics_enabled = true;
+        probe.record_stop_attempts = true;
+        let trajectory = probe.plan_inner(ego, route, objects);
+        StopProbe {
+            trajectory,
+            diagnostics: probe.diagnostics,
+            attempts: probe.stop_attempts,
+        }
+    }
+
     /// Supply acquisition-owned world-frame track velocities and declared error
     /// budgets. None preserves legacy behavior. Missing or invalid active
     /// context fails closed; cached acquisitions retain their original age.
@@ -294,6 +338,8 @@ impl Planner for LatticePlanner {
 impl LatticePlanner {
     fn plan_inner(&mut self, ego: EgoState, route: &Route, objects: &[Prediction]) -> Trajectory {
         self.diagnostics = None;
+        self.stop_attempts.clear();
+        let stop_attempts = std::cell::RefCell::new(Vec::new());
         let mut diagnostics = self.diagnostics_enabled.then(|| PlanningDiagnostics {
             scene_acquisition_s: self.refinement_stamp,
             obstruction_stop_requested: self.obstruction_stop_requested,
@@ -600,7 +646,7 @@ impl LatticePlanner {
                 continue;
             };
             let contact = |path: &[rustdriving_core::TrajectoryPoint]| {
-                objects
+                let first = objects
                     .iter()
                     .filter_map(|object| {
                         let heading =
@@ -634,7 +680,22 @@ impl LatticePlanner {
                             )
                         }
                     })
-                    .fold(f64::INFINITY, f64::min)
+                    .fold(f64::INFINITY, f64::min);
+                if self.record_stop_attempts
+                    && let Some(pair) = path.windows(2).next_back()
+                    && pair[0].position == pair[1].position
+                    && pair[1].speed == 0.
+                    && pair[1].time - pair[0].time >= 8. - 1e-9
+                {
+                    stop_attempts.borrow_mut().push(StopAttempt {
+                        candidate_index: index,
+                        end_progress_m: supplied_route.project(pair[1].position).0,
+                        hold_start_s: pair[0].time,
+                        hold_end_s: pair[1].time,
+                        first_contact_s: first.is_finite().then_some(first),
+                    });
+                }
+                first
             };
             let first_contact = contact(&points);
             let blocked = first_contact.is_finite();
@@ -974,6 +1035,7 @@ impl LatticePlanner {
             record.obstruction_stop_active = self.obstruction_stop_active;
         }
         self.diagnostics = diagnostics;
+        self.stop_attempts = stop_attempts.into_inner();
         trajectory
     }
 }
@@ -1010,6 +1072,43 @@ mod tests {
             dt: 0.2,
         }
     }
+    #[test]
+    fn stopping_probe_preserves_live_choices_and_records_complete_holds() {
+        let mut planner = LatticePlanner {
+            settle_obstruction_stops: true,
+            search_obstruction_stops: true,
+            replan_checked_approaches: true,
+            search_later_obstruction_stops: true,
+            lateral_candidate_margin_m: Some(0.35),
+            ..LatticePlanner::default()
+        };
+        let route = road(2.1);
+        let ego = EgoState::default();
+        let object = obstacle();
+        let mut untouched = planner.clone();
+        let probe = planner.inspect_stopping_proposals(ego, &route, std::slice::from_ref(&object));
+        assert!(!probe.attempts.is_empty());
+        assert!(probe.attempts.len() <= 294);
+        assert!(
+            probe
+                .attempts
+                .iter()
+                .all(|a| a.hold_end_s - a.hold_start_s >= 8. - 1e-9)
+        );
+        assert!(probe.attempts.iter().any(|a| a.first_contact_s.is_none()));
+        let actual = planner.plan(ego, &route, std::slice::from_ref(&object));
+        let expected = untouched.plan(ego, &route, &[object]);
+        assert_eq!(actual.mode, expected.mode);
+        assert_eq!(actual.lateral_target, expected.lateral_target);
+        assert_eq!(actual.points.len(), expected.points.len());
+        for (a, b) in actual.points.iter().zip(&expected.points) {
+            assert_eq!(a.position, b.position);
+            assert_eq!(a.speed, b.speed);
+            assert_eq!(a.time, b.time);
+        }
+        assert!(planner.stop_attempts.is_empty());
+    }
+
     #[test]
     fn local_side_path_reanchoring_does_not_defer_the_original_completion_arc() {
         for direction in [-1., 1.] {

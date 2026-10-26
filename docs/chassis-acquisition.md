@@ -61,3 +61,8 @@ python scripts/check_chassis_acquisition.py --stage full \
 The evidence directory is the original directional-reserve artifact from run 40258418216; its report and compressed/raw recording hashes are checked before evaluation. The manual qualification workflow builds both native versions with the pinned engine and toolchains. Use a fresh output destination.
 
 The original eight incomplete missions and independent uncertainty calibration remain open. The [grouped calibration result](forecast-calibration.md) still cannot provide a finite 99% threshold; this change adds no independent seed groups. The comparative engineering maturity estimate remains about 29%.
+
+The subsequent [stopping-candidate inspection](stop-candidate-evidence.md) finds
+clear checked stops advancing 0.671–1.625 m at the four supported missions' final
+snapshots. They miss the unchanged two-metre admission threshold; the inspection
+does not change policy or establish closed-loop completion.
