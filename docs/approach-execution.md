@@ -89,7 +89,7 @@ Do not simply raise the 0.2 m/s boundary or bypass complete stopping checks.
 PR #58 remains unadopted and default behavior remains unchanged. These traces
 identify a planner-speed limitation to investigate, not a completed mission fix.
 
-## Stop-request transition follow-up (validation pending)
+## Stop-request transition follow-up (validated)
 
 The inspector now retains the existing post-planning stop-request and active-hold
 flags, plus the selected candidate's searched-stop flag, on every snapshot.
@@ -107,3 +107,47 @@ Removing only these added fields must reproduce the entire original archived
 inspection report exactly before the new report can be saved. New tests cover
 request-versus-active-hold distinction, snapshot preservation, existing requests
 and the next-authorization boundary. The original driving code is unchanged.
+
+### Result and branch attribution
+
+[Follow-up run 40333044701](https://github.com/rsasaki0109/rust_driving/actions/runs/40333044701)
+completed at 2026-10-26 23:14 JST on source
+`ed3a3afbdff3c550f450cc4e9ed9dfaa0d38113a`. All six boundary tests,
+eight recorded-log inspections, the full original-report projection comparison,
+and hosted `bash scripts/check.sh` passed. No local checks ran.
+
+[Full state trace](../assets/approach-execution/ed3a3afbdff3c550f450cc4e9ed9dfaa0d38113a.json)
+and [state-transition summary](../assets/approach-execution/state-summary.json).
+The summary is the inspector's structured log output, not an independent rerun.
+Artifact 12656154169 is 584,596 bytes; ZIP SHA-256:
+`f9e8caa38c4c449d4d402f0ea4041e9a85059412f2cb9d5ffd231c893988d977`.
+
+Nine of the ten candidate restarts have a new stop request at exactly their
+first nonpositive acceleration tick. In all nine, the preceding tick has no
+request and no active hold, speed crosses from at most 0.2 to above 0.2 m/s,
+the selected profile is a searched checked stop, and the resulting peak speed
+equals current estimated speed. Neither health faults, emergency mode nor a new
+approach adoption occurs at the transition. Active hold is still false.
+
+This distinguishes the trigger using the pinned planner's state-update rules:
+for a non-emergency checked stop, a false-to-true request requires
+`Selection.searched`. The later-stop path explicitly sets that value false;
+the earlier fallback path sets it to `used && ego.speed > 0.2`. Before this
+transition there is no retained braking request. Thus these nine newly armed
+requests identify the earlier-stop fallback, whose cruise cap becomes current
+speed above 0.2 m/s. On subsequent calls the retained braking request can maintain
+that cap. This is source-based attribution for the recorded fixed-route cases,
+not a new direct branch telemetry field or proof that removing the cap is safe.
+
+The exception is reference seed 7's 24.20 s restart: at 24.35 s speed is only
+0.040893 m/s, acceleration is −0.001996 m/s² and both request and active-hold
+flags remain false. Its first new request is much later, at an emergency tick
+at 45.20 s. It must not be counted as the same threshold-crossing mechanism.
+
+The next bounded intervention should distinguish a previously authorized,
+fully checked approach from an ordinary collision-braking fallback. Any
+continuation must still pass the complete current-scene trajectory and
+stationary-tail checks, and must retain immediate braking when those checks
+fail. Test the state transition around 0.2 m/s, cached observations, changed
+blockers and rejected continuation before a closed-loop paired comparison.
+Keep the default policy unchanged until the original cohort qualifies.
