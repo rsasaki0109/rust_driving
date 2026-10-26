@@ -1,0 +1,3559 @@
+{
+  "source": "75d6c3fe11b5194ba522708f23a3a5c3eb43de46",
+  "minimum_progress_m": 0.5,
+  "original_report_sha256": "c80e8de23027704a8a95c79d0f87cafb7485f4d5c59b0e9b3cddd5b446a51e45",
+  "closed_loop": true,
+  "default_policy_changed": false,
+  "full_cohort_qualified": false,
+  "adoption_passed": false,
+  "complete": true,
+  "contract_passed": true,
+  "cases": [
+    {
+      "plant": "reference-2d",
+      "seed": 7,
+      "default_bytes_identical": true,
+      "baseline": {
+        "plant": "reference-2d",
+        "world": "mission",
+        "mode": "heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops",
+        "seed": 7,
+        "cohort": "stop-search",
+        "family": "heading",
+        "heading": true,
+        "kind": "base",
+        "parent_mode": "heading-search",
+        "parent_scenario": "frozen/003.json",
+        "baseline_scenario": "frozen/001.json",
+        "sweep_mode": "recover",
+        "qualification_family": "missions",
+        "cold_baseline_scenario": "frozen/044.json",
+        "velocity_baseline_scenario": "frozen/044.json",
+        "approach_baseline_scenario": "frozen/044.json",
+        "later_baseline_scenario": "frozen/044.json",
+        "scenario": "frozen/044.json",
+        "sha256": "7e6f89f8a858cf5e760ecbc8504c5291eb09ef06fdcab762e16a3d5d42469ac8",
+        "source": "scenarios/mission.json",
+        "source_sha256": "68ff3bb4db1734669d290350535b9998cc8323b5462eec26815539540282fd5e",
+        "passed": false,
+        "recordings": "episodes/reference-2d/mission-heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops-seed-7",
+        "run_exit_code": 1,
+        "replay_exit_code": 0,
+        "summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 7,
+          "simulated_seconds": 65.0,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 11.930142392821352,
+          "localization_rmse": 0.04915484313276107,
+          "localization_max_error": 0.13833867833363642,
+          "final_speed": 0.0,
+          "progress": 44.505726021766215,
+          "emergency_steps": 6,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "replay": {
+          "source": "reference-2d",
+          "ticks": 1301,
+          "verified": true
+        },
+        "expected_run_exit_code": 1,
+        "failed_gates": [
+          "source_acceptance"
+        ],
+        "driving_passed": false,
+        "motion_predictions": {
+          "verified": true,
+          "forecasts": 1231,
+          "braking_forecasts": 0,
+          "confirmed_slow_forecasts": 0,
+          "unconfirmed_slow_forecasts": 1231,
+          "uncertain_slow_forecasts": 0,
+          "stale_fallbacks": 0,
+          "reacceleration_fallbacks": 619,
+          "intermediate_braking_vetoes": 0,
+          "max_forecast_deceleration_m_s2": 0.0,
+          "aged_forecasts": 615,
+          "rebased_moving_forecasts": 0,
+          "max_epoch_age_s": 0.05000000000001137,
+          "current_epoch_reconstruction_verified": true,
+          "enveloped_forecasts": 1231
+        },
+        "speed_profiles": {
+          "verified": true,
+          "active_trajectories": 1295,
+          "stationary_holds": 1225,
+          "max_acceleration_m_s2": 2.000000000000014,
+          "max_deceleration_m_s2": 2.500000000000006
+        },
+        "independent_clearance": {
+          "full_tick_coverage": true,
+          "minimum_swept_clearance_m": 11.930142392821352,
+          "contact_intervals": 0
+        },
+        "coverage": {
+          "horizons": {
+            "0.2": {
+              "eligible": 614,
+              "matched": 614,
+              "covered": 614,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 2,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "1.0": {
+              "eligible": 606,
+              "matched": 606,
+              "covered": 606,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 10,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "2.0": {
+              "eligible": 596,
+              "matched": 596,
+              "covered": 596,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 20,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "4.0": {
+              "eligible": 576,
+              "matched": 576,
+              "covered": 576,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 40,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "8.0": {
+              "eligible": 536,
+              "matched": 536,
+              "covered": 536,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 80,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            }
+          },
+          "passed": true,
+          "acquired_identities": 616,
+          "evaluation_only": true
+        },
+        "rmse_m": 0.04915484313276109,
+        "maximum_error_m": 0.13833867833363642,
+        "maximum_yaw_rad": 0.017221824480736725,
+        "acquired_forecasts_verified": true,
+        "planning_progress": {
+          "passed": true,
+          "enabled": true,
+          "verified_control_ticks": 1301,
+          "blocked_control_ticks": 973,
+          "intervals": [
+            {
+              "detected_at_control_s": 16.400000000000002,
+              "first_supporting_acquisition_s": 14.4,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "cleared_at_control_s": null
+            }
+          ],
+          "final_state": "StationaryForecastBlocked",
+          "sensor_only": true,
+          "global_infeasibility_claimed": false
+        },
+        "forecast_consistency": {
+          "passed": true,
+          "verified_control_ticks": 1301,
+          "acquisitions": 651,
+          "checked_measurements": 615,
+          "unmonitored_measurements": 1,
+          "missed_measurements": 0,
+          "missed_acquisitions": 0,
+          "cached_control_ticks": 650,
+          "hold_entries": 0,
+          "braking_control_ticks": 0,
+          "recoveries": [],
+          "first_miss": null,
+          "maximum_shortfall_m": 0.0,
+          "final_state": "Observing",
+          "final_held_identities": [],
+          "sensor_only": true,
+          "reference_horizons_respected": true,
+          "physical_uncertainty_calibrated": false,
+          "clear_sweep_recoveries": [],
+          "clear_qualifying_acquisitions": 2
+        },
+        "forecast_hold_physics": {
+          "passed": true,
+          "intervals": [],
+          "scored_intervals": 0,
+          "censored_intervals": 0
+        },
+        "road_containment": {
+          "minimum_actual_road_margin_m": 0.21030712101267568,
+          "violations": 0,
+          "samples": 1301
+        },
+        "sparse_circles": {
+          "acquisitions": 651,
+          "detections": 616,
+          "sparse_fits": 1,
+          "sparse_fallbacks": 0,
+          "dense_detections": 615,
+          "passed": true,
+          "maximum_center_difference_m": 4.27457491654804e-14,
+          "maximum_radius_difference_m": 4.929390229335695e-14,
+          "original_returns_used": true,
+          "independent_centered_2x2_fit": true,
+          "physical_shape_confidence_claimed": false
+        },
+        "track_motion": {
+          "passed": true,
+          "ticks": 1301,
+          "births": 1,
+          "updates": 615,
+          "cached_ticks": 650,
+          "confirmations": [],
+          "maximum_position_difference_m": 1.4217791915866692e-14,
+          "maximum_velocity_difference_m_s": 2.0907961143635987e-17,
+          "independent_batch_fit": true,
+          "clustering_association_checked_by_sensor_replay": true,
+          "recent_motion_fit": {
+            "fit_updates": 0,
+            "unsupported_updates": 615,
+            "maximum_samples": 3,
+            "independent_dense_batch": true
+          }
+        },
+        "measurement_enclosure": {
+          "passed": true,
+          "acquired_measurements": 616,
+          "associated_updates": 615,
+          "cached_tracks": 615,
+          "maximum_containment_deficit_m": 1.176836406102666e-14,
+          "maximum_nonminimal_slack_m": 1.6653345369377348e-14,
+          "maximum_extension_above_smoothed_radius_m": 0.0355329455544835,
+          "exact_boundary_witnesses": true,
+          "physical_unseen_shape_coverage_claimed": false
+        },
+        "planar_sweeps": {
+          "passed": true,
+          "acquired_sweeps": 651,
+          "complete_empty_sweeps": 35,
+          "acquired_rays": 468720,
+          "bound_original_points": 9557,
+          "maximum_angular_gap_rad": 0.008726646259972881,
+          "sensor_only": true
+        },
+        "pose_occupancy": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "verified_knots": 50471,
+          "sigma": 3.0,
+          "maximum_added_radius_m": 1.6732517073390378,
+          "localization": {
+            "verified_ticks": 1301,
+            "maximum_state_difference": 7.105427357601002e-15,
+            "maximum_covariance_difference": 6.938893903907228e-18,
+            "accepted_headings": 326,
+            "compensated_fixes": 0,
+            "replayed_heading_corrections": 0,
+            "heading_health_counts": {}
+          },
+          "continuous_guard_uses_unexpanded_nominal": true,
+          "actor_truth_used": false,
+          "confidence_calibrated": false
+        },
+        "cold_motion": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "expanded_forecasts": 4,
+          "confirmations": 1,
+          "maximum_reachable_extra_radius_m": 121.58519780305063,
+          "maximum_speed_m_s": 15.0,
+          "first_acquisitions_scored": true,
+          "nominal_centers_preserved": true,
+          "actor_truth_used": false,
+          "maximum_speed_calibrated": false
+        },
+        "recent_velocity_hypotheses": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "verified_point_discs": 425006,
+          "maximum_retained_samples": 9,
+          "maximum_velocity_difference_m_s": 0.10332984381458869,
+          "window_s": 0.8,
+          "maximum_samples_per_identity": 32,
+          "actor_truth_used": false,
+          "confidence_calibrated": false,
+          "cached_acquisitions_not_renewed": true,
+          "nominal_centers_preserved": true
+        },
+        "checked_approach": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "adoptions": [
+            {
+              "time_s": 6.800000000000001,
+              "supporting_acquisitions": 3,
+              "first_acquisition_s": 6.6000000000000005,
+              "last_acquisition_s": 6.800000000000001,
+              "proposal_end_progress_m": 48.37883041327398,
+              "proposal_endpoint": {
+                "x": 48.31981719096776,
+                "y": 6.8646011941901275
+              },
+              "proposal_lateral_target_m": 3.9,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "adopted": true
+            }
+          ],
+          "certified_adopted_paths": 1,
+          "interval_bounds": 97,
+          "cached_acquisitions_cannot_authorize": true,
+          "actor_truth_used": false,
+          "counterfactual_candidate_optimality_verified": false
+        },
+        "stopping_certificates": {
+          "passed": true,
+          "verified_control_ticks": 1301,
+          "certified_checked_stops": 1225,
+          "certified_searched_stops": 38,
+          "interval_bounds": 54515,
+          "all_search_directions_checked": true,
+          "minimum_stationary_tail_s": 8.0,
+          "actor_truth_used": false,
+          "counterfactual_optimality_verified": false
+        },
+        "targets": {
+          "side_candidate_m": 3.9,
+          "side_control_ticks": 679,
+          "verified_control_ticks": 1301
+        },
+        "directional_certificates": {
+          "passed": true,
+          "active": true,
+          "certified_paths": 1295,
+          "interval_bounds": 54515,
+          "actor_truth_used": false,
+          "uncertainty_calibrated": false
+        },
+        "motion_metrics": {
+          "measured_departures_s": [
+            0.25,
+            7.1000000000000005
+          ],
+          "measured_settles_s": [
+            6.1000000000000005,
+            14.350000000000001
+          ],
+          "nonzero_lateral_side_changes": 0,
+          "emergency_entries": 3,
+          "definition": "Measured-speed hysteresis: depart >=0.5 m/s, settle <=0.2 m/s; includes initial departure."
+        },
+        "storage": {
+          "replay/outputs.jsonl": {
+            "path": "replay/outputs.jsonl.xz",
+            "sha256": "e46f65eed23c0d98a53c68c21745ea1ff233af5c0e048b80bfa0c6210e0eb424",
+            "stored_sha256": "f136d204bce123917de7c1ff9e8e07649818b8021b46b23baf04d1ac6ad6cc94",
+            "encoding": "xz"
+          },
+          "replay/replay.json": {
+            "path": "replay/replay.json.xz",
+            "sha256": "5f3327074cceda59f4bf7ca720e6b7f757bb8d0e758f0a489617074e80c6f2b4",
+            "stored_sha256": "693affdeaebc3e62472703d1e35febaf3de913cd2e03bc63b35505abffd9f565",
+            "encoding": "xz"
+          },
+          "run/run.json": {
+            "path": "run/run.json.xz",
+            "sha256": "ec9a68efd911b4b077ef527d4e22ffce33980c9f808fa77fe80fc09cd41b3e6f",
+            "stored_sha256": "70be8f2cb01f8e1ae382623fa8b415aae5e1dfb31fa9bc23833850512af2e6bf",
+            "encoding": "xz"
+          },
+          "run/sensors.jsonl": {
+            "path": "run/sensors.jsonl.xz",
+            "sha256": "5d8a2f721af5b8e8757cf170dac52a96af52207a87bcb3ab127b78b79ae155a0",
+            "stored_sha256": "38aa0e3a7c7a0e812478d7238a0362cbf184ae31464f6d9cec4b300e2452bf21",
+            "encoding": "xz"
+          },
+          "run/summary.json": {
+            "path": "run/summary.json.xz",
+            "sha256": "38b782660eab78647d6b36795d95a24482b9256036e61e4b3085d0a837d942e8",
+            "stored_sha256": "1fe273a196e26e105636c207e2ddce1b581051e7ad98863a0efed5b9dd702c1b",
+            "encoding": "xz"
+          }
+        }
+      },
+      "candidate": {
+        "plant": "reference-2d",
+        "world": "mission",
+        "mode": "heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops",
+        "seed": 7,
+        "cohort": "stop-search",
+        "family": "heading",
+        "heading": true,
+        "kind": "base",
+        "parent_mode": "heading-search",
+        "parent_scenario": "frozen/003.json",
+        "baseline_scenario": "frozen/001.json",
+        "sweep_mode": "recover",
+        "qualification_family": "missions",
+        "cold_baseline_scenario": "frozen/044.json",
+        "velocity_baseline_scenario": "frozen/044.json",
+        "approach_baseline_scenario": "frozen/044.json",
+        "later_baseline_scenario": "frozen/044.json",
+        "scenario": "frozen/044.json",
+        "sha256": "cf11885863131a7ecd36e6d27310aa4c4784dbd0d103254cca353b4722d3f8ea",
+        "source": "scenarios/mission.json",
+        "source_sha256": "68ff3bb4db1734669d290350535b9998cc8323b5462eec26815539540282fd5e",
+        "passed": false,
+        "recordings": "episodes/reference-2d/mission-heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops-seed-7",
+        "run_exit_code": 1,
+        "replay_exit_code": 0,
+        "summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 7,
+          "simulated_seconds": 65.0,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 10.512105991189888,
+          "localization_rmse": 0.048077596107327696,
+          "localization_max_error": 0.13833867833363642,
+          "final_speed": 0.0,
+          "progress": 45.991831760078774,
+          "emergency_steps": 7,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "replay": {
+          "source": "reference-2d",
+          "ticks": 1301,
+          "verified": true
+        },
+        "expected_run_exit_code": 1,
+        "failed_gates": [
+          "source_acceptance"
+        ],
+        "driving_passed": false,
+        "motion_predictions": {
+          "verified": true,
+          "forecasts": 1231,
+          "braking_forecasts": 0,
+          "confirmed_slow_forecasts": 0,
+          "unconfirmed_slow_forecasts": 1231,
+          "uncertain_slow_forecasts": 0,
+          "stale_fallbacks": 0,
+          "reacceleration_fallbacks": 603,
+          "intermediate_braking_vetoes": 0,
+          "max_forecast_deceleration_m_s2": 0.0,
+          "aged_forecasts": 615,
+          "rebased_moving_forecasts": 0,
+          "max_epoch_age_s": 0.05000000000001137,
+          "current_epoch_reconstruction_verified": true,
+          "enveloped_forecasts": 1231
+        },
+        "speed_profiles": {
+          "verified": true,
+          "active_trajectories": 1294,
+          "stationary_holds": 1224,
+          "max_acceleration_m_s2": 2.000000000000014,
+          "max_deceleration_m_s2": 2.500000000000006
+        },
+        "independent_clearance": {
+          "full_tick_coverage": true,
+          "minimum_swept_clearance_m": 10.512105991189888,
+          "contact_intervals": 0
+        },
+        "coverage": {
+          "horizons": {
+            "0.2": {
+              "eligible": 614,
+              "matched": 614,
+              "covered": 614,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 2,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "1.0": {
+              "eligible": 606,
+              "matched": 606,
+              "covered": 606,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 10,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "2.0": {
+              "eligible": 596,
+              "matched": 596,
+              "covered": 596,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 20,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "4.0": {
+              "eligible": 576,
+              "matched": 576,
+              "covered": 576,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 40,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "8.0": {
+              "eligible": 536,
+              "matched": 536,
+              "covered": 536,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 80,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            }
+          },
+          "passed": true,
+          "acquired_identities": 616,
+          "evaluation_only": true
+        },
+        "rmse_m": 0.048077596107327696,
+        "maximum_error_m": 0.13833867833363642,
+        "maximum_yaw_rad": 0.017221824480736725,
+        "acquired_forecasts_verified": true,
+        "planning_progress": {
+          "passed": true,
+          "enabled": true,
+          "verified_control_ticks": 1301,
+          "blocked_control_ticks": 749,
+          "intervals": [
+            {
+              "detected_at_control_s": 21.3,
+              "first_supporting_acquisition_s": 19.3,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "cleared_at_control_s": 24.200000000000003
+            },
+            {
+              "detected_at_control_s": 28.400000000000002,
+              "first_supporting_acquisition_s": 26.400000000000002,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "cleared_at_control_s": 45.2
+            },
+            {
+              "detected_at_control_s": 47.300000000000004,
+              "first_supporting_acquisition_s": 45.300000000000004,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "cleared_at_control_s": null
+            }
+          ],
+          "final_state": "StationaryForecastBlocked",
+          "sensor_only": true,
+          "global_infeasibility_claimed": false
+        },
+        "forecast_consistency": {
+          "passed": true,
+          "verified_control_ticks": 1301,
+          "acquisitions": 651,
+          "checked_measurements": 615,
+          "unmonitored_measurements": 1,
+          "missed_measurements": 0,
+          "missed_acquisitions": 0,
+          "cached_control_ticks": 650,
+          "hold_entries": 0,
+          "braking_control_ticks": 0,
+          "recoveries": [],
+          "first_miss": null,
+          "maximum_shortfall_m": 0.0,
+          "final_state": "Observing",
+          "final_held_identities": [],
+          "sensor_only": true,
+          "reference_horizons_respected": true,
+          "physical_uncertainty_calibrated": false,
+          "clear_sweep_recoveries": [],
+          "clear_qualifying_acquisitions": 2
+        },
+        "forecast_hold_physics": {
+          "passed": true,
+          "intervals": [],
+          "scored_intervals": 0,
+          "censored_intervals": 0
+        },
+        "road_containment": {
+          "minimum_actual_road_margin_m": 0.20136749504064255,
+          "violations": 0,
+          "samples": 1301
+        },
+        "sparse_circles": {
+          "acquisitions": 651,
+          "detections": 616,
+          "sparse_fits": 1,
+          "sparse_fallbacks": 0,
+          "dense_detections": 615,
+          "passed": true,
+          "maximum_center_difference_m": 4.27457491654804e-14,
+          "maximum_radius_difference_m": 4.929390229335695e-14,
+          "original_returns_used": true,
+          "independent_centered_2x2_fit": true,
+          "physical_shape_confidence_claimed": false
+        },
+        "track_motion": {
+          "passed": true,
+          "ticks": 1301,
+          "births": 1,
+          "updates": 615,
+          "cached_ticks": 650,
+          "confirmations": [],
+          "maximum_position_difference_m": 1.4238583238573986e-14,
+          "maximum_velocity_difference_m_s": 2.969368287472575e-17,
+          "independent_batch_fit": true,
+          "clustering_association_checked_by_sensor_replay": true,
+          "recent_motion_fit": {
+            "fit_updates": 0,
+            "unsupported_updates": 615,
+            "maximum_samples": 3,
+            "independent_dense_batch": true
+          }
+        },
+        "measurement_enclosure": {
+          "passed": true,
+          "acquired_measurements": 616,
+          "associated_updates": 615,
+          "cached_tracks": 615,
+          "maximum_containment_deficit_m": 1.176836406102666e-14,
+          "maximum_nonminimal_slack_m": 1.6653345369377348e-14,
+          "maximum_extension_above_smoothed_radius_m": 0.0355329455544835,
+          "exact_boundary_witnesses": true,
+          "physical_unseen_shape_coverage_claimed": false
+        },
+        "planar_sweeps": {
+          "passed": true,
+          "acquired_sweeps": 651,
+          "complete_empty_sweeps": 35,
+          "acquired_rays": 468720,
+          "bound_original_points": 10009,
+          "maximum_angular_gap_rad": 0.008726646259972881,
+          "sensor_only": true
+        },
+        "pose_occupancy": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "verified_knots": 50471,
+          "sigma": 3.0,
+          "maximum_added_radius_m": 1.6732517073390378,
+          "localization": {
+            "verified_ticks": 1301,
+            "maximum_state_difference": 1.4210854715202004e-14,
+            "maximum_covariance_difference": 6.938893903907228e-18,
+            "accepted_headings": 326,
+            "compensated_fixes": 0,
+            "replayed_heading_corrections": 0,
+            "heading_health_counts": {}
+          },
+          "continuous_guard_uses_unexpanded_nominal": true,
+          "actor_truth_used": false,
+          "confidence_calibrated": false
+        },
+        "cold_motion": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "expanded_forecasts": 4,
+          "confirmations": 1,
+          "maximum_reachable_extra_radius_m": 121.58519780305063,
+          "maximum_speed_m_s": 15.0,
+          "first_acquisitions_scored": true,
+          "nominal_centers_preserved": true,
+          "actor_truth_used": false,
+          "maximum_speed_calibrated": false
+        },
+        "recent_velocity_hypotheses": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "verified_point_discs": 425006,
+          "maximum_retained_samples": 9,
+          "maximum_velocity_difference_m_s": 0.10332984381458869,
+          "window_s": 0.8,
+          "maximum_samples_per_identity": 32,
+          "actor_truth_used": false,
+          "confidence_calibrated": false,
+          "cached_acquisitions_not_renewed": true,
+          "nominal_centers_preserved": true
+        },
+        "checked_approach": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "adoptions": [
+            {
+              "time_s": 6.800000000000001,
+              "supporting_acquisitions": 3,
+              "first_acquisition_s": 6.6000000000000005,
+              "last_acquisition_s": 6.800000000000001,
+              "proposal_end_progress_m": 48.37883041327398,
+              "proposal_endpoint": {
+                "x": 48.31981719096776,
+                "y": 6.8646011941901275
+              },
+              "proposal_lateral_target_m": 3.9,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "adopted": true
+            },
+            {
+              "time_s": 14.600000000000001,
+              "supporting_acquisitions": 3,
+              "first_acquisition_s": 14.4,
+              "last_acquisition_s": 14.600000000000001,
+              "proposal_end_progress_m": 46.17026321210258,
+              "proposal_endpoint": {
+                "x": 46.083869606215025,
+                "y": 7.104657974657465
+              },
+              "proposal_lateral_target_m": 3.9,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "adopted": true
+            },
+            {
+              "time_s": 15.0,
+              "supporting_acquisitions": 3,
+              "first_acquisition_s": 14.8,
+              "last_acquisition_s": 15.0,
+              "proposal_end_progress_m": 46.08859101027092,
+              "proposal_endpoint": {
+                "x": 45.986393686257095,
+                "y": 7.086196970380307
+              },
+              "proposal_lateral_target_m": 3.9,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "adopted": true
+            },
+            {
+              "time_s": 24.200000000000003,
+              "supporting_acquisitions": 3,
+              "first_acquisition_s": 24.0,
+              "last_acquisition_s": 24.200000000000003,
+              "proposal_end_progress_m": 46.31819166956985,
+              "proposal_endpoint": {
+                "x": 46.23078392395391,
+                "y": 6.998532823156002
+              },
+              "proposal_lateral_target_m": 3.9,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "adopted": true
+            }
+          ],
+          "certified_adopted_paths": 4,
+          "interval_bounds": 230,
+          "cached_acquisitions_cannot_authorize": true,
+          "actor_truth_used": false,
+          "counterfactual_candidate_optimality_verified": false
+        },
+        "stopping_certificates": {
+          "passed": true,
+          "verified_control_ticks": 1301,
+          "certified_checked_stops": 1224,
+          "certified_searched_stops": 89,
+          "interval_bounds": 54704,
+          "all_search_directions_checked": true,
+          "minimum_stationary_tail_s": 8.0,
+          "actor_truth_used": false,
+          "counterfactual_optimality_verified": false
+        },
+        "targets": {
+          "side_candidate_m": 3.9,
+          "side_control_ticks": 750,
+          "verified_control_ticks": 1301
+        },
+        "directional_certificates": {
+          "passed": true,
+          "active": true,
+          "certified_paths": 1294,
+          "interval_bounds": 54704,
+          "actor_truth_used": false,
+          "uncertainty_calibrated": false
+        },
+        "motion_metrics": {
+          "measured_departures_s": [
+            0.25,
+            7.1000000000000005
+          ],
+          "measured_settles_s": [
+            6.1000000000000005,
+            14.350000000000001
+          ],
+          "nonzero_lateral_side_changes": 0,
+          "emergency_entries": 4,
+          "definition": "Measured-speed hysteresis: depart >=0.5 m/s, settle <=0.2 m/s; includes initial departure."
+        },
+        "storage": {
+          "replay/outputs.jsonl": {
+            "path": "replay/outputs.jsonl.xz",
+            "sha256": "096ea698493f6efd49a769082151d84e374670ec3d5c2c6a004f3875a13e6357",
+            "stored_sha256": "36b31a01afe7bcf93ae96b03356d510aa8129d2bc68c754863118e6dd66c2661",
+            "encoding": "xz"
+          },
+          "replay/replay.json": {
+            "path": "replay/replay.json.xz",
+            "sha256": "5f3327074cceda59f4bf7ca720e6b7f757bb8d0e758f0a489617074e80c6f2b4",
+            "stored_sha256": "693affdeaebc3e62472703d1e35febaf3de913cd2e03bc63b35505abffd9f565",
+            "encoding": "xz"
+          },
+          "run/run.json": {
+            "path": "run/run.json.xz",
+            "sha256": "570284fa7af9cefd67f68f3211f014d5234dd5b75a89858ba0ed402afe5f569a",
+            "stored_sha256": "50c0fa34146bcf76e5eb6699c88ce4f5392c099e81b5c244f043bbbc80cf717e",
+            "encoding": "xz"
+          },
+          "run/sensors.jsonl": {
+            "path": "run/sensors.jsonl.xz",
+            "sha256": "1f3b732c02364cfc37587e36ffc340b962f865acf3f35cb6f53158d35698175d",
+            "stored_sha256": "9f9601e585360db80757c96953b7a5ebfbc8f03adfcbe53ef338cf92f90e92f8",
+            "encoding": "xz"
+          },
+          "run/summary.json": {
+            "path": "run/summary.json.xz",
+            "sha256": "7b6203df6ef5fe84bfdf12f81cb1616821b57e7979ddbcb2feeb93e5c66d8914",
+            "stored_sha256": "9e495f9269b310668dd816832dcb166d9214b8a4dd3054a003c29875ad36742b",
+            "encoding": "xz"
+          }
+        }
+      },
+      "comparison": {
+        "regression_passed": true,
+        "new_failed_gates": [],
+        "baseline_failed_gates": [
+          "source_acceptance"
+        ],
+        "coverage": {
+          "0.2": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 614,
+            "after_eligible": 614
+          },
+          "1.0": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 606,
+            "after_eligible": 606
+          },
+          "2.0": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 596,
+            "after_eligible": 596
+          },
+          "4.0": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 576,
+            "after_eligible": 576
+          },
+          "8.0": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 536,
+            "after_eligible": 536
+          }
+        }
+      }
+    },
+    {
+      "plant": "reference-2d",
+      "seed": 42,
+      "default_bytes_identical": true,
+      "baseline": {
+        "plant": "reference-2d",
+        "world": "mission",
+        "mode": "heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops",
+        "seed": 42,
+        "cohort": "stop-search",
+        "family": "heading",
+        "heading": true,
+        "kind": "base",
+        "parent_mode": "heading-search",
+        "parent_scenario": "frozen/013.json",
+        "baseline_scenario": "frozen/006.json",
+        "sweep_mode": "recover",
+        "qualification_family": "missions",
+        "cold_baseline_scenario": "frozen/045.json",
+        "velocity_baseline_scenario": "frozen/045.json",
+        "approach_baseline_scenario": "frozen/045.json",
+        "later_baseline_scenario": "frozen/045.json",
+        "scenario": "frozen/045.json",
+        "sha256": "7e6f89f8a858cf5e760ecbc8504c5291eb09ef06fdcab762e16a3d5d42469ac8",
+        "source": "scenarios/mission.json",
+        "source_sha256": "68ff3bb4db1734669d290350535b9998cc8323b5462eec26815539540282fd5e",
+        "passed": false,
+        "recordings": "episodes/reference-2d/mission-heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops-seed-42",
+        "run_exit_code": 1,
+        "replay_exit_code": 0,
+        "summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 42,
+          "simulated_seconds": 65.0,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 12.025914678254972,
+          "localization_rmse": 0.05480784569721241,
+          "localization_max_error": 0.1416902971838823,
+          "final_speed": 0.0,
+          "progress": 44.37174150271491,
+          "emergency_steps": 7,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "replay": {
+          "source": "reference-2d",
+          "ticks": 1301,
+          "verified": true
+        },
+        "expected_run_exit_code": 1,
+        "failed_gates": [
+          "source_acceptance"
+        ],
+        "driving_passed": false,
+        "motion_predictions": {
+          "verified": true,
+          "forecasts": 1231,
+          "braking_forecasts": 0,
+          "confirmed_slow_forecasts": 0,
+          "unconfirmed_slow_forecasts": 1231,
+          "uncertain_slow_forecasts": 0,
+          "stale_fallbacks": 0,
+          "reacceleration_fallbacks": 620,
+          "intermediate_braking_vetoes": 0,
+          "max_forecast_deceleration_m_s2": 0.0,
+          "aged_forecasts": 615,
+          "rebased_moving_forecasts": 0,
+          "max_epoch_age_s": 0.05000000000001137,
+          "current_epoch_reconstruction_verified": true,
+          "enveloped_forecasts": 1231
+        },
+        "speed_profiles": {
+          "verified": true,
+          "active_trajectories": 1294,
+          "stationary_holds": 1224,
+          "max_acceleration_m_s2": 2.000000000000014,
+          "max_deceleration_m_s2": 2.5000000000000053
+        },
+        "independent_clearance": {
+          "full_tick_coverage": true,
+          "minimum_swept_clearance_m": 12.025914678254972,
+          "contact_intervals": 0
+        },
+        "coverage": {
+          "horizons": {
+            "0.2": {
+              "eligible": 614,
+              "matched": 614,
+              "covered": 614,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 2,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "1.0": {
+              "eligible": 606,
+              "matched": 606,
+              "covered": 606,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 10,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "2.0": {
+              "eligible": 596,
+              "matched": 596,
+              "covered": 596,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 20,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "4.0": {
+              "eligible": 576,
+              "matched": 576,
+              "covered": 576,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 40,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "8.0": {
+              "eligible": 536,
+              "matched": 536,
+              "covered": 536,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 80,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            }
+          },
+          "passed": true,
+          "acquired_identities": 616,
+          "evaluation_only": true
+        },
+        "rmse_m": 0.05480784569721237,
+        "maximum_error_m": 0.1416902971838823,
+        "maximum_yaw_rad": 0.016023466251186225,
+        "acquired_forecasts_verified": true,
+        "planning_progress": {
+          "passed": true,
+          "enabled": true,
+          "verified_control_ticks": 1301,
+          "blocked_control_ticks": 979,
+          "intervals": [
+            {
+              "detected_at_control_s": 16.1,
+              "first_supporting_acquisition_s": 14.100000000000001,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "cleared_at_control_s": null
+            }
+          ],
+          "final_state": "StationaryForecastBlocked",
+          "sensor_only": true,
+          "global_infeasibility_claimed": false
+        },
+        "forecast_consistency": {
+          "passed": true,
+          "verified_control_ticks": 1301,
+          "acquisitions": 651,
+          "checked_measurements": 615,
+          "unmonitored_measurements": 1,
+          "missed_measurements": 0,
+          "missed_acquisitions": 0,
+          "cached_control_ticks": 650,
+          "hold_entries": 0,
+          "braking_control_ticks": 0,
+          "recoveries": [],
+          "first_miss": null,
+          "maximum_shortfall_m": 0.0,
+          "final_state": "Observing",
+          "final_held_identities": [],
+          "sensor_only": true,
+          "reference_horizons_respected": true,
+          "physical_uncertainty_calibrated": false,
+          "clear_sweep_recoveries": [],
+          "clear_qualifying_acquisitions": 2
+        },
+        "forecast_hold_physics": {
+          "passed": true,
+          "intervals": [],
+          "scored_intervals": 0,
+          "censored_intervals": 0
+        },
+        "road_containment": {
+          "minimum_actual_road_margin_m": 0.31527673794436417,
+          "violations": 0,
+          "samples": 1301
+        },
+        "sparse_circles": {
+          "acquisitions": 651,
+          "detections": 616,
+          "sparse_fits": 1,
+          "sparse_fallbacks": 0,
+          "dense_detections": 615,
+          "passed": true,
+          "maximum_center_difference_m": 3.580361673049448e-14,
+          "maximum_radius_difference_m": 2.9753977059954195e-14,
+          "original_returns_used": true,
+          "independent_centered_2x2_fit": true,
+          "physical_shape_confidence_claimed": false
+        },
+        "track_motion": {
+          "passed": true,
+          "ticks": 1301,
+          "births": 1,
+          "updates": 615,
+          "cached_ticks": 650,
+          "confirmations": [],
+          "maximum_position_difference_m": 2.1320907500235726e-14,
+          "maximum_velocity_difference_m_s": 6.698930686086522e-17,
+          "independent_batch_fit": true,
+          "clustering_association_checked_by_sensor_replay": true,
+          "recent_motion_fit": {
+            "fit_updates": 0,
+            "unsupported_updates": 615,
+            "maximum_samples": 3,
+            "independent_dense_batch": true
+          }
+        },
+        "measurement_enclosure": {
+          "passed": true,
+          "acquired_measurements": 616,
+          "associated_updates": 615,
+          "cached_tracks": 615,
+          "maximum_containment_deficit_m": 1.709743457922741e-14,
+          "maximum_nonminimal_slack_m": 1.687538997430238e-14,
+          "maximum_extension_above_smoothed_radius_m": 0.052455991045340156,
+          "exact_boundary_witnesses": true,
+          "physical_unseen_shape_coverage_claimed": false
+        },
+        "planar_sweeps": {
+          "passed": true,
+          "acquired_sweeps": 651,
+          "complete_empty_sweeps": 35,
+          "acquired_rays": 468720,
+          "bound_original_points": 9099,
+          "maximum_angular_gap_rad": 0.008726646259972881,
+          "sensor_only": true
+        },
+        "pose_occupancy": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "verified_knots": 50471,
+          "sigma": 3.0,
+          "maximum_added_radius_m": 1.6699762744829365,
+          "localization": {
+            "verified_ticks": 1301,
+            "maximum_state_difference": 1.4210854715202004e-14,
+            "maximum_covariance_difference": 6.938893903907228e-18,
+            "accepted_headings": 326,
+            "compensated_fixes": 0,
+            "replayed_heading_corrections": 0,
+            "heading_health_counts": {}
+          },
+          "continuous_guard_uses_unexpanded_nominal": true,
+          "actor_truth_used": false,
+          "confidence_calibrated": false
+        },
+        "cold_motion": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "expanded_forecasts": 4,
+          "confirmations": 1,
+          "maximum_reachable_extra_radius_m": 121.22181536514113,
+          "maximum_speed_m_s": 15.0,
+          "first_acquisitions_scored": true,
+          "nominal_centers_preserved": true,
+          "actor_truth_used": false,
+          "maximum_speed_calibrated": false
+        },
+        "recent_velocity_hypotheses": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "verified_point_discs": 425006,
+          "maximum_retained_samples": 9,
+          "maximum_velocity_difference_m_s": 0.10008501759531634,
+          "window_s": 0.8,
+          "maximum_samples_per_identity": 32,
+          "actor_truth_used": false,
+          "confidence_calibrated": false,
+          "cached_acquisitions_not_renewed": true,
+          "nominal_centers_preserved": true
+        },
+        "checked_approach": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "adoptions": [
+            {
+              "time_s": 6.4,
+              "supporting_acquisitions": 3,
+              "first_acquisition_s": 6.2,
+              "last_acquisition_s": 6.4,
+              "proposal_end_progress_m": 48.46376760506738,
+              "proposal_endpoint": {
+                "x": 48.404742916525855,
+                "y": 6.863204104639335
+              },
+              "proposal_lateral_target_m": 3.9,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "adopted": true
+            }
+          ],
+          "certified_adopted_paths": 1,
+          "interval_bounds": 97,
+          "cached_acquisitions_cannot_authorize": true,
+          "actor_truth_used": false,
+          "counterfactual_candidate_optimality_verified": false
+        },
+        "stopping_certificates": {
+          "passed": true,
+          "verified_control_ticks": 1301,
+          "certified_checked_stops": 1224,
+          "certified_searched_stops": 36,
+          "interval_bounds": 54396,
+          "all_search_directions_checked": true,
+          "minimum_stationary_tail_s": 8.0,
+          "actor_truth_used": false,
+          "counterfactual_optimality_verified": false
+        },
+        "targets": {
+          "side_candidate_m": 3.9,
+          "side_control_ticks": 673,
+          "verified_control_ticks": 1301
+        },
+        "directional_certificates": {
+          "passed": true,
+          "active": true,
+          "certified_paths": 1294,
+          "interval_bounds": 54396,
+          "actor_truth_used": false,
+          "uncertainty_calibrated": false
+        },
+        "motion_metrics": {
+          "measured_departures_s": [
+            0.30000000000000004,
+            6.7
+          ],
+          "measured_settles_s": [
+            6.050000000000001,
+            14.05
+          ],
+          "nonzero_lateral_side_changes": 0,
+          "emergency_entries": 4,
+          "definition": "Measured-speed hysteresis: depart >=0.5 m/s, settle <=0.2 m/s; includes initial departure."
+        },
+        "storage": {
+          "replay/outputs.jsonl": {
+            "path": "replay/outputs.jsonl.xz",
+            "sha256": "c2694d4ab76fb24da7997b63f30d0fc410f3d3c9f89fc007d00a38b2f0fd22d3",
+            "stored_sha256": "72c9a2d2be168d32de23566b2b100a3e05195ab2701cbec14e483e35170cbf4b",
+            "encoding": "xz"
+          },
+          "replay/replay.json": {
+            "path": "replay/replay.json.xz",
+            "sha256": "5f3327074cceda59f4bf7ca720e6b7f757bb8d0e758f0a489617074e80c6f2b4",
+            "stored_sha256": "693affdeaebc3e62472703d1e35febaf3de913cd2e03bc63b35505abffd9f565",
+            "encoding": "xz"
+          },
+          "run/run.json": {
+            "path": "run/run.json.xz",
+            "sha256": "7feda4f677b6923195559b90bd55edb9f9b847b05c4711cf666fabadacc4e8d7",
+            "stored_sha256": "a7410c39fd5b961973f7f07927ff9da249bb03977e1545acd4cae4dcb1d91bcd",
+            "encoding": "xz"
+          },
+          "run/sensors.jsonl": {
+            "path": "run/sensors.jsonl.xz",
+            "sha256": "34a21b462b1c3dc137c875a38b3d7e758f7536641ed60e4e1410fafa7e126240",
+            "stored_sha256": "843bf0c3cdb5795dbac0160125062bfdc06c05ce32ed50ed53804ac6914d439c",
+            "encoding": "xz"
+          },
+          "run/summary.json": {
+            "path": "run/summary.json.xz",
+            "sha256": "84ad58c6c457bc4271b806870bb40d2836670377d41ba7ecefb6d26fa139bdea",
+            "stored_sha256": "4908e9cc21b549ec199dadebd90bb71dc423638da66226d4c922410bfc197479",
+            "encoding": "xz"
+          }
+        }
+      },
+      "candidate": {
+        "plant": "reference-2d",
+        "world": "mission",
+        "mode": "heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops",
+        "seed": 42,
+        "cohort": "stop-search",
+        "family": "heading",
+        "heading": true,
+        "kind": "base",
+        "parent_mode": "heading-search",
+        "parent_scenario": "frozen/013.json",
+        "baseline_scenario": "frozen/006.json",
+        "sweep_mode": "recover",
+        "qualification_family": "missions",
+        "cold_baseline_scenario": "frozen/045.json",
+        "velocity_baseline_scenario": "frozen/045.json",
+        "approach_baseline_scenario": "frozen/045.json",
+        "later_baseline_scenario": "frozen/045.json",
+        "scenario": "frozen/045.json",
+        "sha256": "cf11885863131a7ecd36e6d27310aa4c4784dbd0d103254cca353b4722d3f8ea",
+        "source": "scenarios/mission.json",
+        "source_sha256": "68ff3bb4db1734669d290350535b9998cc8323b5462eec26815539540282fd5e",
+        "passed": false,
+        "recordings": "episodes/reference-2d/mission-heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops-seed-42",
+        "run_exit_code": 1,
+        "replay_exit_code": 0,
+        "summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 42,
+          "simulated_seconds": 65.0,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 10.572651115127815,
+          "localization_rmse": 0.05241543162462636,
+          "localization_max_error": 0.1416902971838823,
+          "final_speed": 0.0,
+          "progress": 45.90970782264869,
+          "emergency_steps": 7,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "replay": {
+          "source": "reference-2d",
+          "ticks": 1301,
+          "verified": true
+        },
+        "expected_run_exit_code": 1,
+        "failed_gates": [
+          "source_acceptance"
+        ],
+        "driving_passed": false,
+        "motion_predictions": {
+          "verified": true,
+          "forecasts": 1231,
+          "braking_forecasts": 0,
+          "confirmed_slow_forecasts": 0,
+          "unconfirmed_slow_forecasts": 1231,
+          "uncertain_slow_forecasts": 0,
+          "stale_fallbacks": 0,
+          "reacceleration_fallbacks": 626,
+          "intermediate_braking_vetoes": 0,
+          "max_forecast_deceleration_m_s2": 0.0,
+          "aged_forecasts": 615,
+          "rebased_moving_forecasts": 0,
+          "max_epoch_age_s": 0.05000000000001137,
+          "current_epoch_reconstruction_verified": true,
+          "enveloped_forecasts": 1231
+        },
+        "speed_profiles": {
+          "verified": true,
+          "active_trajectories": 1294,
+          "stationary_holds": 1224,
+          "max_acceleration_m_s2": 2.000000000000014,
+          "max_deceleration_m_s2": 2.5000000000000053
+        },
+        "independent_clearance": {
+          "full_tick_coverage": true,
+          "minimum_swept_clearance_m": 10.572651115127815,
+          "contact_intervals": 0
+        },
+        "coverage": {
+          "horizons": {
+            "0.2": {
+              "eligible": 614,
+              "matched": 614,
+              "covered": 614,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 2,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "1.0": {
+              "eligible": 606,
+              "matched": 606,
+              "covered": 606,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 10,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "2.0": {
+              "eligible": 596,
+              "matched": 596,
+              "covered": 596,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 20,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "4.0": {
+              "eligible": 576,
+              "matched": 576,
+              "covered": 576,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 40,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "8.0": {
+              "eligible": 536,
+              "matched": 536,
+              "covered": 536,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 80,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            }
+          },
+          "passed": true,
+          "acquired_identities": 616,
+          "evaluation_only": true
+        },
+        "rmse_m": 0.05241543162462635,
+        "maximum_error_m": 0.1416902971838823,
+        "maximum_yaw_rad": 0.016067627039567878,
+        "acquired_forecasts_verified": true,
+        "planning_progress": {
+          "passed": true,
+          "enabled": true,
+          "verified_control_ticks": 1301,
+          "blocked_control_ticks": 867,
+          "intervals": [
+            {
+              "detected_at_control_s": 21.700000000000003,
+              "first_supporting_acquisition_s": 19.700000000000003,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "cleared_at_control_s": null
+            }
+          ],
+          "final_state": "StationaryForecastBlocked",
+          "sensor_only": true,
+          "global_infeasibility_claimed": false
+        },
+        "forecast_consistency": {
+          "passed": true,
+          "verified_control_ticks": 1301,
+          "acquisitions": 651,
+          "checked_measurements": 615,
+          "unmonitored_measurements": 1,
+          "missed_measurements": 0,
+          "missed_acquisitions": 0,
+          "cached_control_ticks": 650,
+          "hold_entries": 0,
+          "braking_control_ticks": 0,
+          "recoveries": [],
+          "first_miss": null,
+          "maximum_shortfall_m": 0.0,
+          "final_state": "Observing",
+          "final_held_identities": [],
+          "sensor_only": true,
+          "reference_horizons_respected": true,
+          "physical_uncertainty_calibrated": false,
+          "clear_sweep_recoveries": [],
+          "clear_qualifying_acquisitions": 2
+        },
+        "forecast_hold_physics": {
+          "passed": true,
+          "intervals": [],
+          "scored_intervals": 0,
+          "censored_intervals": 0
+        },
+        "road_containment": {
+          "minimum_actual_road_margin_m": 0.2511877077140703,
+          "violations": 0,
+          "samples": 1301
+        },
+        "sparse_circles": {
+          "acquisitions": 651,
+          "detections": 616,
+          "sparse_fits": 1,
+          "sparse_fallbacks": 0,
+          "dense_detections": 615,
+          "passed": true,
+          "maximum_center_difference_m": 3.580361673049448e-14,
+          "maximum_radius_difference_m": 2.9753977059954195e-14,
+          "original_returns_used": true,
+          "independent_centered_2x2_fit": true,
+          "physical_shape_confidence_claimed": false
+        },
+        "track_motion": {
+          "passed": true,
+          "ticks": 1301,
+          "births": 1,
+          "updates": 615,
+          "cached_ticks": 650,
+          "confirmations": [],
+          "maximum_position_difference_m": 2.1320907500235726e-14,
+          "maximum_velocity_difference_m_s": 5.48178794209042e-16,
+          "independent_batch_fit": true,
+          "clustering_association_checked_by_sensor_replay": true,
+          "recent_motion_fit": {
+            "fit_updates": 0,
+            "unsupported_updates": 615,
+            "maximum_samples": 3,
+            "independent_dense_batch": true
+          }
+        },
+        "measurement_enclosure": {
+          "passed": true,
+          "acquired_measurements": 616,
+          "associated_updates": 615,
+          "cached_tracks": 615,
+          "maximum_containment_deficit_m": 1.709743457922741e-14,
+          "maximum_nonminimal_slack_m": 1.554312234475219e-14,
+          "maximum_extension_above_smoothed_radius_m": 0.052455991045340156,
+          "exact_boundary_witnesses": true,
+          "physical_unseen_shape_coverage_claimed": false
+        },
+        "planar_sweeps": {
+          "passed": true,
+          "acquired_sweeps": 651,
+          "complete_empty_sweeps": 35,
+          "acquired_rays": 468720,
+          "bound_original_points": 10057,
+          "maximum_angular_gap_rad": 0.008726646259972881,
+          "sensor_only": true
+        },
+        "pose_occupancy": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "verified_knots": 50471,
+          "sigma": 3.0,
+          "maximum_added_radius_m": 1.6699762744829365,
+          "localization": {
+            "verified_ticks": 1301,
+            "maximum_state_difference": 1.4210854715202004e-14,
+            "maximum_covariance_difference": 6.938893903907228e-18,
+            "accepted_headings": 326,
+            "compensated_fixes": 0,
+            "replayed_heading_corrections": 0,
+            "heading_health_counts": {}
+          },
+          "continuous_guard_uses_unexpanded_nominal": true,
+          "actor_truth_used": false,
+          "confidence_calibrated": false
+        },
+        "cold_motion": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "expanded_forecasts": 4,
+          "confirmations": 1,
+          "maximum_reachable_extra_radius_m": 121.22181536514113,
+          "maximum_speed_m_s": 15.0,
+          "first_acquisitions_scored": true,
+          "nominal_centers_preserved": true,
+          "actor_truth_used": false,
+          "maximum_speed_calibrated": false
+        },
+        "recent_velocity_hypotheses": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "verified_point_discs": 425006,
+          "maximum_retained_samples": 9,
+          "maximum_velocity_difference_m_s": 0.10008501759531634,
+          "window_s": 0.8,
+          "maximum_samples_per_identity": 32,
+          "actor_truth_used": false,
+          "confidence_calibrated": false,
+          "cached_acquisitions_not_renewed": true,
+          "nominal_centers_preserved": true
+        },
+        "checked_approach": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "adoptions": [
+            {
+              "time_s": 6.4,
+              "supporting_acquisitions": 3,
+              "first_acquisition_s": 6.2,
+              "last_acquisition_s": 6.4,
+              "proposal_end_progress_m": 48.46376760506738,
+              "proposal_endpoint": {
+                "x": 48.404742916525855,
+                "y": 6.863204104639335
+              },
+              "proposal_lateral_target_m": 3.9,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "adopted": true
+            },
+            {
+              "time_s": 14.3,
+              "supporting_acquisitions": 3,
+              "first_acquisition_s": 14.100000000000001,
+              "last_acquisition_s": 14.3,
+              "proposal_end_progress_m": 45.97817412453698,
+              "proposal_endpoint": {
+                "x": 45.87534992117821,
+                "y": 6.978516417057674
+              },
+              "proposal_lateral_target_m": 3.9,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "adopted": true
+            }
+          ],
+          "certified_adopted_paths": 2,
+          "interval_bounds": 142,
+          "cached_acquisitions_cannot_authorize": true,
+          "actor_truth_used": false,
+          "counterfactual_candidate_optimality_verified": false
+        },
+        "stopping_certificates": {
+          "passed": true,
+          "verified_control_ticks": 1301,
+          "certified_checked_stops": 1224,
+          "certified_searched_stops": 40,
+          "interval_bounds": 54704,
+          "all_search_directions_checked": true,
+          "minimum_stationary_tail_s": 8.0,
+          "actor_truth_used": false,
+          "counterfactual_optimality_verified": false
+        },
+        "targets": {
+          "side_candidate_m": 3.9,
+          "side_control_ticks": 743,
+          "verified_control_ticks": 1301
+        },
+        "directional_certificates": {
+          "passed": true,
+          "active": true,
+          "certified_paths": 1294,
+          "interval_bounds": 54704,
+          "actor_truth_used": false,
+          "uncertainty_calibrated": false
+        },
+        "motion_metrics": {
+          "measured_departures_s": [
+            0.30000000000000004,
+            6.7
+          ],
+          "measured_settles_s": [
+            6.050000000000001,
+            14.05
+          ],
+          "nonzero_lateral_side_changes": 0,
+          "emergency_entries": 4,
+          "definition": "Measured-speed hysteresis: depart >=0.5 m/s, settle <=0.2 m/s; includes initial departure."
+        },
+        "storage": {
+          "replay/outputs.jsonl": {
+            "path": "replay/outputs.jsonl.xz",
+            "sha256": "3b28f5fbd63a126b146714f949afd9b3d36e36764d6c68f50cb4f0f640817e4c",
+            "stored_sha256": "f0412a81d60a72a34b39075cfcba17ca3fa8603845ffb80578599c992a7a34d7",
+            "encoding": "xz"
+          },
+          "replay/replay.json": {
+            "path": "replay/replay.json.xz",
+            "sha256": "5f3327074cceda59f4bf7ca720e6b7f757bb8d0e758f0a489617074e80c6f2b4",
+            "stored_sha256": "693affdeaebc3e62472703d1e35febaf3de913cd2e03bc63b35505abffd9f565",
+            "encoding": "xz"
+          },
+          "run/run.json": {
+            "path": "run/run.json.xz",
+            "sha256": "85e88c57ed3fe69453a35b379c34904d4adfaea5fbf2b603c089cb1608b11a1c",
+            "stored_sha256": "e6cbc384b6000bc92d1f69a63f946be1ae2e45f081dac818d15bcbddb041b012",
+            "encoding": "xz"
+          },
+          "run/sensors.jsonl": {
+            "path": "run/sensors.jsonl.xz",
+            "sha256": "e9f5536f8e64c780cfa533b124badb837f99d793308d9db8eb649590d818879d",
+            "stored_sha256": "28aed62ab93119020ef94a1aa3d6ef809d3253be7af89cb0f87cf52fa9ab5715",
+            "encoding": "xz"
+          },
+          "run/summary.json": {
+            "path": "run/summary.json.xz",
+            "sha256": "527b18d7c191aa715c9e18b01a500724bdc95567b1f51d389ebe2f32f769c6fc",
+            "stored_sha256": "4c44ccb90ca7d4afa4d3c70380f7bdc5961c558a23dd5c1b1d801a0589faa202",
+            "encoding": "xz"
+          }
+        }
+      },
+      "comparison": {
+        "regression_passed": true,
+        "new_failed_gates": [],
+        "baseline_failed_gates": [
+          "source_acceptance"
+        ],
+        "coverage": {
+          "0.2": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 614,
+            "after_eligible": 614
+          },
+          "1.0": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 606,
+            "after_eligible": 606
+          },
+          "2.0": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 596,
+            "after_eligible": 596
+          },
+          "4.0": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 576,
+            "after_eligible": 576
+          },
+          "8.0": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 536,
+            "after_eligible": 536
+          }
+        }
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "seed": 7,
+      "default_bytes_identical": true,
+      "baseline": {
+        "plant": "rne-dynamic",
+        "world": "mission",
+        "mode": "heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops",
+        "seed": 7,
+        "cohort": "stop-search",
+        "family": "heading",
+        "heading": true,
+        "kind": "base",
+        "parent_mode": "heading-search",
+        "parent_scenario": "frozen/023.json",
+        "baseline_scenario": "frozen/011.json",
+        "sweep_mode": "recover",
+        "qualification_family": "missions",
+        "cold_baseline_scenario": "frozen/046.json",
+        "velocity_baseline_scenario": "frozen/046.json",
+        "approach_baseline_scenario": "frozen/046.json",
+        "later_baseline_scenario": "frozen/046.json",
+        "scenario": "frozen/046.json",
+        "sha256": "d75d3c061685b7b55cf25bfdb5450e3b9cdc591a4db5067c2e9c1c5a859ae4c3",
+        "source": "scenarios/mission.json",
+        "source_sha256": "68ff3bb4db1734669d290350535b9998cc8323b5462eec26815539540282fd5e",
+        "passed": false,
+        "recordings": "episodes/rne-dynamic/mission-heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops-seed-7",
+        "run_exit_code": 1,
+        "replay_exit_code": 0,
+        "summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 7,
+          "simulated_seconds": 65.0,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 11.829512258548053,
+          "localization_rmse": 0.051551097903914565,
+          "localization_max_error": 0.1463160575416091,
+          "final_speed": 0.0,
+          "progress": 44.59998843464433,
+          "emergency_steps": 5,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "replay": {
+          "source": "rne-dynamic-rapier-lidar",
+          "ticks": 1301,
+          "verified": true
+        },
+        "expected_run_exit_code": 1,
+        "failed_gates": [
+          "source_acceptance"
+        ],
+        "driving_passed": false,
+        "motion_predictions": {
+          "verified": true,
+          "forecasts": 1229,
+          "braking_forecasts": 0,
+          "confirmed_slow_forecasts": 0,
+          "unconfirmed_slow_forecasts": 1229,
+          "uncertain_slow_forecasts": 0,
+          "stale_fallbacks": 0,
+          "reacceleration_fallbacks": 619,
+          "intermediate_braking_vetoes": 0,
+          "max_forecast_deceleration_m_s2": 0.0,
+          "aged_forecasts": 614,
+          "rebased_moving_forecasts": 0,
+          "max_epoch_age_s": 0.05000000000001137,
+          "current_epoch_reconstruction_verified": true,
+          "enveloped_forecasts": 1229
+        },
+        "speed_profiles": {
+          "verified": true,
+          "active_trajectories": 1296,
+          "stationary_holds": 1224,
+          "max_acceleration_m_s2": 2.0000000000000107,
+          "max_deceleration_m_s2": 2.5000000000000044
+        },
+        "independent_clearance": {
+          "full_tick_coverage": true,
+          "minimum_swept_clearance_m": 11.829512258548053,
+          "contact_intervals": 0
+        },
+        "coverage": {
+          "horizons": {
+            "0.2": {
+              "eligible": 613,
+              "matched": 613,
+              "covered": 613,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 2,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "1.0": {
+              "eligible": 605,
+              "matched": 605,
+              "covered": 605,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 10,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "2.0": {
+              "eligible": 595,
+              "matched": 595,
+              "covered": 595,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 20,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "4.0": {
+              "eligible": 575,
+              "matched": 575,
+              "covered": 575,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 40,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "8.0": {
+              "eligible": 535,
+              "matched": 535,
+              "covered": 535,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 80,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            }
+          },
+          "passed": true,
+          "acquired_identities": 615,
+          "evaluation_only": true
+        },
+        "rmse_m": 0.05155109790391458,
+        "maximum_error_m": 0.1463160575416091,
+        "maximum_yaw_rad": 0.01721897959534414,
+        "acquired_forecasts_verified": true,
+        "planning_progress": {
+          "passed": true,
+          "enabled": true,
+          "verified_control_ticks": 1301,
+          "blocked_control_ticks": 975,
+          "intervals": [
+            {
+              "detected_at_control_s": 16.3,
+              "first_supporting_acquisition_s": 14.3,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "cleared_at_control_s": null
+            }
+          ],
+          "final_state": "StationaryForecastBlocked",
+          "sensor_only": true,
+          "global_infeasibility_claimed": false
+        },
+        "forecast_consistency": {
+          "passed": true,
+          "verified_control_ticks": 1301,
+          "acquisitions": 651,
+          "checked_measurements": 614,
+          "unmonitored_measurements": 1,
+          "missed_measurements": 0,
+          "missed_acquisitions": 0,
+          "cached_control_ticks": 650,
+          "hold_entries": 0,
+          "braking_control_ticks": 0,
+          "recoveries": [],
+          "first_miss": null,
+          "maximum_shortfall_m": 0.0,
+          "final_state": "Observing",
+          "final_held_identities": [],
+          "sensor_only": true,
+          "reference_horizons_respected": true,
+          "physical_uncertainty_calibrated": false,
+          "clear_sweep_recoveries": [],
+          "clear_qualifying_acquisitions": 2
+        },
+        "forecast_hold_physics": {
+          "passed": true,
+          "intervals": [],
+          "scored_intervals": 0,
+          "censored_intervals": 0
+        },
+        "road_containment": {
+          "minimum_actual_road_margin_m": 0.127416050969126,
+          "violations": 0,
+          "samples": 1301
+        },
+        "sparse_circles": {
+          "acquisitions": 651,
+          "detections": 615,
+          "sparse_fits": 0,
+          "sparse_fallbacks": 0,
+          "dense_detections": 615,
+          "passed": true,
+          "maximum_center_difference_m": 2.847716647714797e-14,
+          "maximum_radius_difference_m": 2.731148640577885e-14,
+          "original_returns_used": true,
+          "independent_centered_2x2_fit": true,
+          "physical_shape_confidence_claimed": false
+        },
+        "track_motion": {
+          "passed": true,
+          "ticks": 1301,
+          "births": 1,
+          "updates": 614,
+          "cached_ticks": 650,
+          "confirmations": [],
+          "maximum_position_difference_m": 2.1316282072803006e-14,
+          "maximum_velocity_difference_m_s": 5.478059020305721e-16,
+          "independent_batch_fit": true,
+          "clustering_association_checked_by_sensor_replay": true,
+          "recent_motion_fit": {
+            "fit_updates": 0,
+            "unsupported_updates": 614,
+            "maximum_samples": 3,
+            "independent_dense_batch": true
+          }
+        },
+        "measurement_enclosure": {
+          "passed": true,
+          "acquired_measurements": 615,
+          "associated_updates": 614,
+          "cached_tracks": 614,
+          "maximum_containment_deficit_m": 1.1324274851176597e-14,
+          "maximum_nonminimal_slack_m": 1.3988810110276972e-14,
+          "maximum_extension_above_smoothed_radius_m": 0.028771966276065486,
+          "exact_boundary_witnesses": true,
+          "physical_unseen_shape_coverage_claimed": false
+        },
+        "planar_sweeps": {
+          "passed": true,
+          "acquired_sweeps": 651,
+          "complete_empty_sweeps": 35,
+          "acquired_rays": 468720,
+          "bound_original_points": 9546,
+          "maximum_angular_gap_rad": 0.008738783459221189,
+          "sensor_only": true
+        },
+        "pose_occupancy": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "verified_knots": 50389,
+          "sigma": 3.0,
+          "maximum_added_radius_m": 1.6409489628335798,
+          "localization": {
+            "verified_ticks": 1301,
+            "maximum_state_difference": 1.4210854715202004e-14,
+            "maximum_covariance_difference": 6.938893903907228e-18,
+            "accepted_headings": 326,
+            "compensated_fixes": 0,
+            "replayed_heading_corrections": 0,
+            "heading_health_counts": {}
+          },
+          "continuous_guard_uses_unexpanded_nominal": true,
+          "actor_truth_used": false,
+          "confidence_calibrated": false
+        },
+        "cold_motion": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "expanded_forecasts": 4,
+          "confirmations": 1,
+          "maximum_reachable_extra_radius_m": 121.03156643712401,
+          "maximum_speed_m_s": 15.0,
+          "first_acquisitions_scored": true,
+          "nominal_centers_preserved": true,
+          "actor_truth_used": false,
+          "maximum_speed_calibrated": false
+        },
+        "recent_velocity_hypotheses": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "verified_point_discs": 424309,
+          "maximum_retained_samples": 9,
+          "maximum_velocity_difference_m_s": 0.07321903604342632,
+          "window_s": 0.8,
+          "maximum_samples_per_identity": 32,
+          "actor_truth_used": false,
+          "confidence_calibrated": false,
+          "cached_acquisitions_not_renewed": true,
+          "nominal_centers_preserved": true
+        },
+        "checked_approach": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "adoptions": [
+            {
+              "time_s": 6.800000000000001,
+              "supporting_acquisitions": 3,
+              "first_acquisition_s": 6.6000000000000005,
+              "last_acquisition_s": 6.800000000000001,
+              "proposal_end_progress_m": 48.28668668066972,
+              "proposal_endpoint": {
+                "x": 48.2276853716834,
+                "y": 6.866086272353681
+              },
+              "proposal_lateral_target_m": 3.9,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "adopted": true
+            }
+          ],
+          "certified_adopted_paths": 1,
+          "interval_bounds": 101,
+          "cached_acquisitions_cannot_authorize": true,
+          "actor_truth_used": false,
+          "counterfactual_candidate_optimality_verified": false
+        },
+        "stopping_certificates": {
+          "passed": true,
+          "verified_control_ticks": 1301,
+          "certified_checked_stops": 1224,
+          "certified_searched_stops": 58,
+          "interval_bounds": 55845,
+          "all_search_directions_checked": true,
+          "minimum_stationary_tail_s": 8.0,
+          "actor_truth_used": false,
+          "counterfactual_optimality_verified": false
+        },
+        "targets": {
+          "side_candidate_m": 3.9,
+          "side_control_ticks": 710,
+          "verified_control_ticks": 1301
+        },
+        "directional_certificates": {
+          "passed": true,
+          "active": true,
+          "certified_paths": 1296,
+          "interval_bounds": 55845,
+          "actor_truth_used": false,
+          "uncertainty_calibrated": false
+        },
+        "motion_metrics": {
+          "measured_departures_s": [
+            0.30000000000000004,
+            7.050000000000001
+          ],
+          "measured_settles_s": [
+            5.9,
+            14.3
+          ],
+          "nonzero_lateral_side_changes": 0,
+          "emergency_entries": 2,
+          "definition": "Measured-speed hysteresis: depart >=0.5 m/s, settle <=0.2 m/s; includes initial departure."
+        },
+        "storage": {
+          "replay/outputs.jsonl": {
+            "path": "replay/outputs.jsonl.xz",
+            "sha256": "7ec15b9feab1147324f65c37c90d15abb0635cdd8233a03f1b9d8953ce1d843c",
+            "stored_sha256": "12df30c5e785beffa6eb0793f374ead1318e9165090032c30998330aadef42e3",
+            "encoding": "xz"
+          },
+          "replay/replay.json": {
+            "path": "replay/replay.json.xz",
+            "sha256": "24136c8acf5b8cfdc01f5d45f8c1426b00e892b5de8b82a012ed5ad6ed357566",
+            "stored_sha256": "163a215824a317e3e2822ba110583d437103d836c1b70231b618e16d285e4851",
+            "encoding": "xz"
+          },
+          "run/run.json": {
+            "path": "run/run.json.xz",
+            "sha256": "c2569db0ba8835c9fc8523df915aafbc996d465acdfa4987953f889fd7aca5d2",
+            "stored_sha256": "a682db83e474ed99d050387b86043752cbe640a20b4bb4cda4bfe6f7bc7023aa",
+            "encoding": "xz"
+          },
+          "run/sensors.jsonl": {
+            "path": "run/sensors.jsonl.xz",
+            "sha256": "d632617b676e9d589e29979bc12970920e8c3c2c12900916a7862e4d0ab83d9f",
+            "stored_sha256": "9b42344c59de4fe50da11b0997e7777f36529d56bbe004a9e2942f39dcb11c8a",
+            "encoding": "xz"
+          },
+          "run/summary.json": {
+            "path": "run/summary.json.xz",
+            "sha256": "ab649433c9e63db027f550383907f48ed9e460b1cb9f6a7cb8a762471ecef021",
+            "stored_sha256": "4397ba1c970e01046999e05d3609be64008949885012993698ac11ea812c783d",
+            "encoding": "xz"
+          }
+        }
+      },
+      "candidate": {
+        "plant": "rne-dynamic",
+        "world": "mission",
+        "mode": "heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops",
+        "seed": 7,
+        "cohort": "stop-search",
+        "family": "heading",
+        "heading": true,
+        "kind": "base",
+        "parent_mode": "heading-search",
+        "parent_scenario": "frozen/023.json",
+        "baseline_scenario": "frozen/011.json",
+        "sweep_mode": "recover",
+        "qualification_family": "missions",
+        "cold_baseline_scenario": "frozen/046.json",
+        "velocity_baseline_scenario": "frozen/046.json",
+        "approach_baseline_scenario": "frozen/046.json",
+        "later_baseline_scenario": "frozen/046.json",
+        "scenario": "frozen/046.json",
+        "sha256": "abe9c14f4b2518485242563b8f492b07c783f023f03368d501b9f10d044f16fb",
+        "source": "scenarios/mission.json",
+        "source_sha256": "68ff3bb4db1734669d290350535b9998cc8323b5462eec26815539540282fd5e",
+        "passed": false,
+        "recordings": "episodes/rne-dynamic/mission-heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops-seed-7",
+        "run_exit_code": 1,
+        "replay_exit_code": 0,
+        "summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 7,
+          "simulated_seconds": 65.0,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 10.614580260961501,
+          "localization_rmse": 0.05153474123049919,
+          "localization_max_error": 0.1463160575416091,
+          "final_speed": 0.0,
+          "progress": 45.858094207903974,
+          "emergency_steps": 5,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "replay": {
+          "source": "rne-dynamic-rapier-lidar",
+          "ticks": 1301,
+          "verified": true
+        },
+        "expected_run_exit_code": 1,
+        "failed_gates": [
+          "source_acceptance"
+        ],
+        "driving_passed": false,
+        "motion_predictions": {
+          "verified": true,
+          "forecasts": 1229,
+          "braking_forecasts": 0,
+          "confirmed_slow_forecasts": 0,
+          "unconfirmed_slow_forecasts": 1229,
+          "uncertain_slow_forecasts": 0,
+          "stale_fallbacks": 0,
+          "reacceleration_fallbacks": 600,
+          "intermediate_braking_vetoes": 0,
+          "max_forecast_deceleration_m_s2": 0.0,
+          "aged_forecasts": 614,
+          "rebased_moving_forecasts": 0,
+          "max_epoch_age_s": 0.05000000000001137,
+          "current_epoch_reconstruction_verified": true,
+          "enveloped_forecasts": 1229
+        },
+        "speed_profiles": {
+          "verified": true,
+          "active_trajectories": 1296,
+          "stationary_holds": 1224,
+          "max_acceleration_m_s2": 2.0000000000000107,
+          "max_deceleration_m_s2": 2.5000000000000044
+        },
+        "independent_clearance": {
+          "full_tick_coverage": true,
+          "minimum_swept_clearance_m": 10.614580260961501,
+          "contact_intervals": 0
+        },
+        "coverage": {
+          "horizons": {
+            "0.2": {
+              "eligible": 613,
+              "matched": 613,
+              "covered": 613,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 2,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "1.0": {
+              "eligible": 605,
+              "matched": 605,
+              "covered": 605,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 10,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "2.0": {
+              "eligible": 595,
+              "matched": 595,
+              "covered": 595,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 20,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "4.0": {
+              "eligible": 575,
+              "matched": 575,
+              "covered": 575,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 40,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "8.0": {
+              "eligible": 535,
+              "matched": 535,
+              "covered": 535,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 80,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            }
+          },
+          "passed": true,
+          "acquired_identities": 615,
+          "evaluation_only": true
+        },
+        "rmse_m": 0.05153474123049921,
+        "maximum_error_m": 0.1463160575416091,
+        "maximum_yaw_rad": 0.01721897959534414,
+        "acquired_forecasts_verified": true,
+        "planning_progress": {
+          "passed": true,
+          "enabled": true,
+          "verified_control_ticks": 1301,
+          "blocked_control_ticks": 869,
+          "intervals": [
+            {
+              "detected_at_control_s": 21.6,
+              "first_supporting_acquisition_s": 19.6,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "cleared_at_control_s": null
+            }
+          ],
+          "final_state": "StationaryForecastBlocked",
+          "sensor_only": true,
+          "global_infeasibility_claimed": false
+        },
+        "forecast_consistency": {
+          "passed": true,
+          "verified_control_ticks": 1301,
+          "acquisitions": 651,
+          "checked_measurements": 614,
+          "unmonitored_measurements": 1,
+          "missed_measurements": 0,
+          "missed_acquisitions": 0,
+          "cached_control_ticks": 650,
+          "hold_entries": 0,
+          "braking_control_ticks": 0,
+          "recoveries": [],
+          "first_miss": null,
+          "maximum_shortfall_m": 0.0,
+          "final_state": "Observing",
+          "final_held_identities": [],
+          "sensor_only": true,
+          "reference_horizons_respected": true,
+          "physical_uncertainty_calibrated": false,
+          "clear_sweep_recoveries": [],
+          "clear_qualifying_acquisitions": 2
+        },
+        "forecast_hold_physics": {
+          "passed": true,
+          "intervals": [],
+          "scored_intervals": 0,
+          "censored_intervals": 0
+        },
+        "road_containment": {
+          "minimum_actual_road_margin_m": 0.127416050969126,
+          "violations": 0,
+          "samples": 1301
+        },
+        "sparse_circles": {
+          "acquisitions": 651,
+          "detections": 615,
+          "sparse_fits": 0,
+          "sparse_fallbacks": 0,
+          "dense_detections": 615,
+          "passed": true,
+          "maximum_center_difference_m": 2.847716647714797e-14,
+          "maximum_radius_difference_m": 2.731148640577885e-14,
+          "original_returns_used": true,
+          "independent_centered_2x2_fit": true,
+          "physical_shape_confidence_claimed": false
+        },
+        "track_motion": {
+          "passed": true,
+          "ticks": 1301,
+          "births": 1,
+          "updates": 614,
+          "cached_ticks": 650,
+          "confirmations": [],
+          "maximum_position_difference_m": 2.1316282072803006e-14,
+          "maximum_velocity_difference_m_s": 3.525974822944265e-17,
+          "independent_batch_fit": true,
+          "clustering_association_checked_by_sensor_replay": true,
+          "recent_motion_fit": {
+            "fit_updates": 0,
+            "unsupported_updates": 614,
+            "maximum_samples": 3,
+            "independent_dense_batch": true
+          }
+        },
+        "measurement_enclosure": {
+          "passed": true,
+          "acquired_measurements": 615,
+          "associated_updates": 614,
+          "cached_tracks": 614,
+          "maximum_containment_deficit_m": 1.4432899320127035e-14,
+          "maximum_nonminimal_slack_m": 1.3988810110276972e-14,
+          "maximum_extension_above_smoothed_radius_m": 0.028771966276065486,
+          "exact_boundary_witnesses": true,
+          "physical_unseen_shape_coverage_claimed": false
+        },
+        "planar_sweeps": {
+          "passed": true,
+          "acquired_sweeps": 651,
+          "complete_empty_sweeps": 35,
+          "acquired_rays": 468720,
+          "bound_original_points": 10005,
+          "maximum_angular_gap_rad": 0.008738783459221189,
+          "sensor_only": true
+        },
+        "pose_occupancy": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "verified_knots": 50389,
+          "sigma": 3.0,
+          "maximum_added_radius_m": 1.6409489628335798,
+          "localization": {
+            "verified_ticks": 1301,
+            "maximum_state_difference": 1.4210854715202004e-14,
+            "maximum_covariance_difference": 5.204170427930421e-18,
+            "accepted_headings": 326,
+            "compensated_fixes": 0,
+            "replayed_heading_corrections": 0,
+            "heading_health_counts": {}
+          },
+          "continuous_guard_uses_unexpanded_nominal": true,
+          "actor_truth_used": false,
+          "confidence_calibrated": false
+        },
+        "cold_motion": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "expanded_forecasts": 4,
+          "confirmations": 1,
+          "maximum_reachable_extra_radius_m": 121.03156643712401,
+          "maximum_speed_m_s": 15.0,
+          "first_acquisitions_scored": true,
+          "nominal_centers_preserved": true,
+          "actor_truth_used": false,
+          "maximum_speed_calibrated": false
+        },
+        "recent_velocity_hypotheses": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "verified_point_discs": 424309,
+          "maximum_retained_samples": 9,
+          "maximum_velocity_difference_m_s": 0.07321903604342632,
+          "window_s": 0.8,
+          "maximum_samples_per_identity": 32,
+          "actor_truth_used": false,
+          "confidence_calibrated": false,
+          "cached_acquisitions_not_renewed": true,
+          "nominal_centers_preserved": true
+        },
+        "checked_approach": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "adoptions": [
+            {
+              "time_s": 6.800000000000001,
+              "supporting_acquisitions": 3,
+              "first_acquisition_s": 6.6000000000000005,
+              "last_acquisition_s": 6.800000000000001,
+              "proposal_end_progress_m": 48.28668668066972,
+              "proposal_endpoint": {
+                "x": 48.2276853716834,
+                "y": 6.866086272353681
+              },
+              "proposal_lateral_target_m": 3.9,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "adopted": true
+            },
+            {
+              "time_s": 14.5,
+              "supporting_acquisitions": 3,
+              "first_acquisition_s": 14.3,
+              "last_acquisition_s": 14.5,
+              "proposal_end_progress_m": 45.973936166242055,
+              "proposal_endpoint": {
+                "x": 45.87106375343467,
+                "y": 6.970223021165889
+              },
+              "proposal_lateral_target_m": 3.9,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "adopted": true
+            },
+            {
+              "time_s": 14.9,
+              "supporting_acquisitions": 3,
+              "first_acquisition_s": 14.700000000000001,
+              "last_acquisition_s": 14.9,
+              "proposal_end_progress_m": 45.878733458308105,
+              "proposal_endpoint": {
+                "x": 45.77627088721401,
+                "y": 7.041108302463221
+              },
+              "proposal_lateral_target_m": 3.9,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "adopted": true
+            },
+            {
+              "time_s": 15.3,
+              "supporting_acquisitions": 3,
+              "first_acquisition_s": 15.100000000000001,
+              "last_acquisition_s": 15.3,
+              "proposal_end_progress_m": 46.03408345259601,
+              "proposal_endpoint": {
+                "x": 45.931407645956924,
+                "y": 7.003920473116533
+              },
+              "proposal_lateral_target_m": 3.9,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "adopted": true
+            }
+          ],
+          "certified_adopted_paths": 4,
+          "interval_bounds": 233,
+          "cached_acquisitions_cannot_authorize": true,
+          "actor_truth_used": false,
+          "counterfactual_candidate_optimality_verified": false
+        },
+        "stopping_certificates": {
+          "passed": true,
+          "verified_control_ticks": 1301,
+          "certified_checked_stops": 1224,
+          "certified_searched_stops": 68,
+          "interval_bounds": 55956,
+          "all_search_directions_checked": true,
+          "minimum_stationary_tail_s": 8.0,
+          "actor_truth_used": false,
+          "counterfactual_optimality_verified": false
+        },
+        "targets": {
+          "side_candidate_m": 3.9,
+          "side_control_ticks": 756,
+          "verified_control_ticks": 1301
+        },
+        "directional_certificates": {
+          "passed": true,
+          "active": true,
+          "certified_paths": 1296,
+          "interval_bounds": 55956,
+          "actor_truth_used": false,
+          "uncertainty_calibrated": false
+        },
+        "motion_metrics": {
+          "measured_departures_s": [
+            0.30000000000000004,
+            7.050000000000001
+          ],
+          "measured_settles_s": [
+            5.9,
+            14.3
+          ],
+          "nonzero_lateral_side_changes": 0,
+          "emergency_entries": 2,
+          "definition": "Measured-speed hysteresis: depart >=0.5 m/s, settle <=0.2 m/s; includes initial departure."
+        },
+        "storage": {
+          "replay/outputs.jsonl": {
+            "path": "replay/outputs.jsonl.xz",
+            "sha256": "0740ad99583b37c56c8c6d7184d132cd15f36930e486a03d624391c0fe9fae94",
+            "stored_sha256": "71e6c4a99cf245aeed75b1cb5ec28f90d4db9515de2cb130fccdb29b90497381",
+            "encoding": "xz"
+          },
+          "replay/replay.json": {
+            "path": "replay/replay.json.xz",
+            "sha256": "24136c8acf5b8cfdc01f5d45f8c1426b00e892b5de8b82a012ed5ad6ed357566",
+            "stored_sha256": "163a215824a317e3e2822ba110583d437103d836c1b70231b618e16d285e4851",
+            "encoding": "xz"
+          },
+          "run/run.json": {
+            "path": "run/run.json.xz",
+            "sha256": "08fe84391b3642b8d4e9f814a490e2ad5a2c41b74b53a60a5f5daa64ac465e9a",
+            "stored_sha256": "152765e8476dd9cacb4433e2a2d1169136a2f0aeda4465a980816e0e5b78ba55",
+            "encoding": "xz"
+          },
+          "run/sensors.jsonl": {
+            "path": "run/sensors.jsonl.xz",
+            "sha256": "444e030db2d0b602a8f7afc60479725caaaf78f5cfe3cc2f65dbbb4236fbbeff",
+            "stored_sha256": "ebe4b61e8703406fa32eee1265448316d9ff1d8e0dd8c6fb953e951558438d80",
+            "encoding": "xz"
+          },
+          "run/summary.json": {
+            "path": "run/summary.json.xz",
+            "sha256": "6f1caf907060a7760e03939d0b10d33d2c7031e180eed55b3faf84edea0bab6f",
+            "stored_sha256": "7d73f8c6e3dc194760d6b11738c4f4ffccabf6e9615ec252fac92a84cb24eda9",
+            "encoding": "xz"
+          }
+        }
+      },
+      "comparison": {
+        "regression_passed": true,
+        "new_failed_gates": [],
+        "baseline_failed_gates": [
+          "source_acceptance"
+        ],
+        "coverage": {
+          "0.2": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 613,
+            "after_eligible": 613
+          },
+          "1.0": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 605,
+            "after_eligible": 605
+          },
+          "2.0": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 595,
+            "after_eligible": 595
+          },
+          "4.0": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 575,
+            "after_eligible": 575
+          },
+          "8.0": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 535,
+            "after_eligible": 535
+          }
+        }
+      }
+    },
+    {
+      "plant": "rne-dynamic",
+      "seed": 42,
+      "default_bytes_identical": true,
+      "baseline": {
+        "plant": "rne-dynamic",
+        "world": "mission",
+        "mode": "heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops",
+        "seed": 42,
+        "cohort": "stop-search",
+        "family": "heading",
+        "heading": true,
+        "kind": "base",
+        "parent_mode": "heading-search",
+        "parent_scenario": "frozen/033.json",
+        "baseline_scenario": "frozen/016.json",
+        "sweep_mode": "recover",
+        "qualification_family": "missions",
+        "cold_baseline_scenario": "frozen/047.json",
+        "velocity_baseline_scenario": "frozen/047.json",
+        "approach_baseline_scenario": "frozen/047.json",
+        "later_baseline_scenario": "frozen/047.json",
+        "scenario": "frozen/047.json",
+        "sha256": "d75d3c061685b7b55cf25bfdb5450e3b9cdc591a4db5067c2e9c1c5a859ae4c3",
+        "source": "scenarios/mission.json",
+        "source_sha256": "68ff3bb4db1734669d290350535b9998cc8323b5462eec26815539540282fd5e",
+        "passed": false,
+        "recordings": "episodes/rne-dynamic/mission-heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops-seed-42",
+        "run_exit_code": 1,
+        "replay_exit_code": 0,
+        "summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 42,
+          "simulated_seconds": 65.0,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 10.928358779211324,
+          "localization_rmse": 0.04842120980245662,
+          "localization_max_error": 0.17230913629881034,
+          "final_speed": 0.0,
+          "progress": 45.57016813947341,
+          "emergency_steps": 5,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "replay": {
+          "source": "rne-dynamic-rapier-lidar",
+          "ticks": 1301,
+          "verified": true
+        },
+        "expected_run_exit_code": 1,
+        "failed_gates": [
+          "source_acceptance"
+        ],
+        "driving_passed": false,
+        "motion_predictions": {
+          "verified": true,
+          "forecasts": 1229,
+          "braking_forecasts": 0,
+          "confirmed_slow_forecasts": 0,
+          "unconfirmed_slow_forecasts": 1229,
+          "uncertain_slow_forecasts": 0,
+          "stale_fallbacks": 0,
+          "reacceleration_fallbacks": 590,
+          "intermediate_braking_vetoes": 0,
+          "max_forecast_deceleration_m_s2": 0.0,
+          "aged_forecasts": 614,
+          "rebased_moving_forecasts": 0,
+          "max_epoch_age_s": 0.05000000000001137,
+          "current_epoch_reconstruction_verified": true,
+          "enveloped_forecasts": 1229
+        },
+        "speed_profiles": {
+          "verified": true,
+          "active_trajectories": 1296,
+          "stationary_holds": 1224,
+          "max_acceleration_m_s2": 2.0000000000000107,
+          "max_deceleration_m_s2": 2.5000000000000036
+        },
+        "independent_clearance": {
+          "full_tick_coverage": true,
+          "minimum_swept_clearance_m": 10.928358779211324,
+          "contact_intervals": 0
+        },
+        "coverage": {
+          "horizons": {
+            "0.2": {
+              "eligible": 613,
+              "matched": 613,
+              "covered": 613,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 2,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "1.0": {
+              "eligible": 605,
+              "matched": 605,
+              "covered": 605,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 10,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "2.0": {
+              "eligible": 595,
+              "matched": 595,
+              "covered": 595,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 20,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "4.0": {
+              "eligible": 575,
+              "matched": 575,
+              "covered": 575,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 40,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "8.0": {
+              "eligible": 535,
+              "matched": 535,
+              "covered": 535,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 80,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            }
+          },
+          "passed": true,
+          "acquired_identities": 615,
+          "evaluation_only": true
+        },
+        "rmse_m": 0.0484212098024566,
+        "maximum_error_m": 0.17230913629881034,
+        "maximum_yaw_rad": 0.016106974868726004,
+        "acquired_forecasts_verified": true,
+        "planning_progress": {
+          "passed": true,
+          "enabled": true,
+          "verified_control_ticks": 1301,
+          "blocked_control_ticks": 861,
+          "intervals": [
+            {
+              "detected_at_control_s": 22.0,
+              "first_supporting_acquisition_s": 20.0,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "cleared_at_control_s": null
+            }
+          ],
+          "final_state": "StationaryForecastBlocked",
+          "sensor_only": true,
+          "global_infeasibility_claimed": false
+        },
+        "forecast_consistency": {
+          "passed": true,
+          "verified_control_ticks": 1301,
+          "acquisitions": 651,
+          "checked_measurements": 614,
+          "unmonitored_measurements": 1,
+          "missed_measurements": 0,
+          "missed_acquisitions": 0,
+          "cached_control_ticks": 650,
+          "hold_entries": 0,
+          "braking_control_ticks": 0,
+          "recoveries": [],
+          "first_miss": null,
+          "maximum_shortfall_m": 0.0,
+          "final_state": "Observing",
+          "final_held_identities": [],
+          "sensor_only": true,
+          "reference_horizons_respected": true,
+          "physical_uncertainty_calibrated": false,
+          "clear_sweep_recoveries": [],
+          "clear_qualifying_acquisitions": 2
+        },
+        "forecast_hold_physics": {
+          "passed": true,
+          "intervals": [],
+          "scored_intervals": 0,
+          "censored_intervals": 0
+        },
+        "road_containment": {
+          "minimum_actual_road_margin_m": 0.1433732031361501,
+          "violations": 0,
+          "samples": 1301
+        },
+        "sparse_circles": {
+          "acquisitions": 651,
+          "detections": 615,
+          "sparse_fits": 0,
+          "sparse_fallbacks": 0,
+          "dense_detections": 615,
+          "passed": true,
+          "maximum_center_difference_m": 2.847716647714797e-14,
+          "maximum_radius_difference_m": 2.2648549702353193e-14,
+          "original_returns_used": true,
+          "independent_centered_2x2_fit": true,
+          "physical_shape_confidence_claimed": false
+        },
+        "track_motion": {
+          "passed": true,
+          "ticks": 1301,
+          "births": 1,
+          "updates": 614,
+          "cached_ticks": 650,
+          "confirmations": [],
+          "maximum_position_difference_m": 2.1320907500235726e-14,
+          "maximum_velocity_difference_m_s": 1.048224244293071e-15,
+          "independent_batch_fit": true,
+          "clustering_association_checked_by_sensor_replay": true,
+          "recent_motion_fit": {
+            "fit_updates": 0,
+            "unsupported_updates": 614,
+            "maximum_samples": 3,
+            "independent_dense_batch": true
+          }
+        },
+        "measurement_enclosure": {
+          "passed": true,
+          "acquired_measurements": 615,
+          "associated_updates": 614,
+          "cached_tracks": 614,
+          "maximum_containment_deficit_m": 1.3100631690576847e-14,
+          "maximum_nonminimal_slack_m": 1.1324274851176597e-14,
+          "maximum_extension_above_smoothed_radius_m": 0.021944647651723992,
+          "exact_boundary_witnesses": true,
+          "physical_unseen_shape_coverage_claimed": false
+        },
+        "planar_sweeps": {
+          "passed": true,
+          "acquired_sweeps": 651,
+          "complete_empty_sweeps": 35,
+          "acquired_rays": 468720,
+          "bound_original_points": 10041,
+          "maximum_angular_gap_rad": 0.008738783459221189,
+          "sensor_only": true
+        },
+        "pose_occupancy": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "verified_knots": 50389,
+          "sigma": 3.0,
+          "maximum_added_radius_m": 1.647486125710736,
+          "localization": {
+            "verified_ticks": 1301,
+            "maximum_state_difference": 1.4210854715202004e-14,
+            "maximum_covariance_difference": 5.204170427930421e-18,
+            "accepted_headings": 326,
+            "compensated_fixes": 0,
+            "replayed_heading_corrections": 0,
+            "heading_health_counts": {}
+          },
+          "continuous_guard_uses_unexpanded_nominal": true,
+          "actor_truth_used": false,
+          "confidence_calibrated": false
+        },
+        "cold_motion": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "expanded_forecasts": 4,
+          "confirmations": 1,
+          "maximum_reachable_extra_radius_m": 121.0765048559572,
+          "maximum_speed_m_s": 15.0,
+          "first_acquisitions_scored": true,
+          "nominal_centers_preserved": true,
+          "actor_truth_used": false,
+          "maximum_speed_calibrated": false
+        },
+        "recent_velocity_hypotheses": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "verified_point_discs": 424309,
+          "maximum_retained_samples": 9,
+          "maximum_velocity_difference_m_s": 0.08924642022467406,
+          "window_s": 0.8,
+          "maximum_samples_per_identity": 32,
+          "actor_truth_used": false,
+          "confidence_calibrated": false,
+          "cached_acquisitions_not_renewed": true,
+          "nominal_centers_preserved": true
+        },
+        "checked_approach": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "adoptions": [
+            {
+              "time_s": 5.9,
+              "supporting_acquisitions": 3,
+              "first_acquisition_s": 5.7,
+              "last_acquisition_s": 5.9,
+              "proposal_end_progress_m": 47.78315279668532,
+              "proposal_endpoint": {
+                "x": 47.709444155402615,
+                "y": 6.8738489434602315
+              },
+              "proposal_lateral_target_m": 3.9,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "adopted": true
+            },
+            {
+              "time_s": 13.8,
+              "supporting_acquisitions": 3,
+              "first_acquisition_s": 13.600000000000001,
+              "last_acquisition_s": 13.8,
+              "proposal_end_progress_m": 45.87171772590623,
+              "proposal_endpoint": {
+                "x": 45.76988454499709,
+                "y": 7.1495622413933
+              },
+              "proposal_lateral_target_m": 3.9,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "adopted": true
+            }
+          ],
+          "certified_adopted_paths": 2,
+          "interval_bounds": 146,
+          "cached_acquisitions_cannot_authorize": true,
+          "actor_truth_used": false,
+          "counterfactual_candidate_optimality_verified": false
+        },
+        "stopping_certificates": {
+          "passed": true,
+          "verified_control_ticks": 1301,
+          "certified_checked_stops": 1224,
+          "certified_searched_stops": 62,
+          "interval_bounds": 55915,
+          "all_search_directions_checked": true,
+          "minimum_stationary_tail_s": 8.0,
+          "actor_truth_used": false,
+          "counterfactual_optimality_verified": false
+        },
+        "targets": {
+          "side_candidate_m": 3.9,
+          "side_control_ticks": 748,
+          "verified_control_ticks": 1301
+        },
+        "directional_certificates": {
+          "passed": true,
+          "active": true,
+          "certified_paths": 1296,
+          "interval_bounds": 55915,
+          "actor_truth_used": false,
+          "uncertainty_calibrated": false
+        },
+        "motion_metrics": {
+          "measured_departures_s": [
+            0.30000000000000004,
+            6.15
+          ],
+          "measured_settles_s": [
+            5.65,
+            13.350000000000001
+          ],
+          "nonzero_lateral_side_changes": 0,
+          "emergency_entries": 2,
+          "definition": "Measured-speed hysteresis: depart >=0.5 m/s, settle <=0.2 m/s; includes initial departure."
+        },
+        "storage": {
+          "replay/outputs.jsonl": {
+            "path": "replay/outputs.jsonl.xz",
+            "sha256": "5a801cfe6bd5bf973f926c1a540ba43801d6ba0f63e778bbafbe6b7165ca0828",
+            "stored_sha256": "d44785f21ab74fe720a91bd5ed7114044c742c0c35312915c04950e821bf383f",
+            "encoding": "xz"
+          },
+          "replay/replay.json": {
+            "path": "replay/replay.json.xz",
+            "sha256": "24136c8acf5b8cfdc01f5d45f8c1426b00e892b5de8b82a012ed5ad6ed357566",
+            "stored_sha256": "163a215824a317e3e2822ba110583d437103d836c1b70231b618e16d285e4851",
+            "encoding": "xz"
+          },
+          "run/run.json": {
+            "path": "run/run.json.xz",
+            "sha256": "bf31e34b60d74cceab9fd3e62e2211b91ea53fdb769e158a9fb1a638ecf5a4ad",
+            "stored_sha256": "b816c85a443f5f40006cca996b828e058dddd7e51efa2a829638ef6d52e0a065",
+            "encoding": "xz"
+          },
+          "run/sensors.jsonl": {
+            "path": "run/sensors.jsonl.xz",
+            "sha256": "8d688b1cd42ef0356a836fb090a066fda013950e5c7f90000c7a1b1bb59fda89",
+            "stored_sha256": "44a25a45f329e659b5f46de07d87a6f51bcfbf73ae86f3060b668b2a3e9ec709",
+            "encoding": "xz"
+          },
+          "run/summary.json": {
+            "path": "run/summary.json.xz",
+            "sha256": "9bf5381c72cb3e9448c419873e7c7832058103258b4c7db0d596e3751d0a7a0b",
+            "stored_sha256": "dfce85625219bf4aa262670e6b80d14f3744f5d841aad547a1610fb4b93a9e85",
+            "encoding": "xz"
+          }
+        }
+      },
+      "candidate": {
+        "plant": "rne-dynamic",
+        "world": "mission",
+        "mode": "heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops",
+        "seed": 42,
+        "cohort": "stop-search",
+        "family": "heading",
+        "heading": true,
+        "kind": "base",
+        "parent_mode": "heading-search",
+        "parent_scenario": "frozen/033.json",
+        "baseline_scenario": "frozen/016.json",
+        "sweep_mode": "recover",
+        "qualification_family": "missions",
+        "cold_baseline_scenario": "frozen/047.json",
+        "velocity_baseline_scenario": "frozen/047.json",
+        "approach_baseline_scenario": "frozen/047.json",
+        "later_baseline_scenario": "frozen/047.json",
+        "scenario": "frozen/047.json",
+        "sha256": "abe9c14f4b2518485242563b8f492b07c783f023f03368d501b9f10d044f16fb",
+        "source": "scenarios/mission.json",
+        "source_sha256": "68ff3bb4db1734669d290350535b9998cc8323b5462eec26815539540282fd5e",
+        "passed": false,
+        "recordings": "episodes/rne-dynamic/mission-heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops-seed-42",
+        "run_exit_code": 1,
+        "replay_exit_code": 0,
+        "summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 42,
+          "simulated_seconds": 65.0,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 10.754130021306855,
+          "localization_rmse": 0.04841462539142824,
+          "localization_max_error": 0.17230913629881034,
+          "final_speed": 0.0,
+          "progress": 45.75108393245687,
+          "emergency_steps": 5,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "replay": {
+          "source": "rne-dynamic-rapier-lidar",
+          "ticks": 1301,
+          "verified": true
+        },
+        "expected_run_exit_code": 1,
+        "failed_gates": [
+          "source_acceptance"
+        ],
+        "driving_passed": false,
+        "motion_predictions": {
+          "verified": true,
+          "forecasts": 1229,
+          "braking_forecasts": 0,
+          "confirmed_slow_forecasts": 0,
+          "unconfirmed_slow_forecasts": 1229,
+          "uncertain_slow_forecasts": 0,
+          "stale_fallbacks": 0,
+          "reacceleration_fallbacks": 586,
+          "intermediate_braking_vetoes": 0,
+          "max_forecast_deceleration_m_s2": 0.0,
+          "aged_forecasts": 614,
+          "rebased_moving_forecasts": 0,
+          "max_epoch_age_s": 0.05000000000001137,
+          "current_epoch_reconstruction_verified": true,
+          "enveloped_forecasts": 1229
+        },
+        "speed_profiles": {
+          "verified": true,
+          "active_trajectories": 1296,
+          "stationary_holds": 1224,
+          "max_acceleration_m_s2": 2.0000000000000107,
+          "max_deceleration_m_s2": 2.5000000000000036
+        },
+        "independent_clearance": {
+          "full_tick_coverage": true,
+          "minimum_swept_clearance_m": 10.754130021306855,
+          "contact_intervals": 0
+        },
+        "coverage": {
+          "horizons": {
+            "0.2": {
+              "eligible": 613,
+              "matched": 613,
+              "covered": 613,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 2,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "1.0": {
+              "eligible": 605,
+              "matched": 605,
+              "covered": 605,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 10,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "2.0": {
+              "eligible": 595,
+              "matched": 595,
+              "covered": 595,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 20,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "4.0": {
+              "eligible": 575,
+              "matched": 575,
+              "covered": 575,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 40,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            },
+            "8.0": {
+              "eligible": 535,
+              "matched": 535,
+              "covered": 535,
+              "unmatched": 0,
+              "actor_absent": 0,
+              "censored": 80,
+              "maximum_shortfall_m": 0.0,
+              "coverage_fraction": 1.0,
+              "passed": true
+            }
+          },
+          "passed": true,
+          "acquired_identities": 615,
+          "evaluation_only": true
+        },
+        "rmse_m": 0.04841462539142822,
+        "maximum_error_m": 0.17230913629881034,
+        "maximum_yaw_rad": 0.016106973815708893,
+        "acquired_forecasts_verified": true,
+        "planning_progress": {
+          "passed": true,
+          "enabled": true,
+          "verified_control_ticks": 1301,
+          "blocked_control_ticks": 803,
+          "intervals": [
+            {
+              "detected_at_control_s": 22.5,
+              "first_supporting_acquisition_s": 20.5,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "cleared_at_control_s": 24.400000000000002
+            },
+            {
+              "detected_at_control_s": 26.8,
+              "first_supporting_acquisition_s": 24.8,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "cleared_at_control_s": null
+            }
+          ],
+          "final_state": "StationaryForecastBlocked",
+          "sensor_only": true,
+          "global_infeasibility_claimed": false
+        },
+        "forecast_consistency": {
+          "passed": true,
+          "verified_control_ticks": 1301,
+          "acquisitions": 651,
+          "checked_measurements": 614,
+          "unmonitored_measurements": 1,
+          "missed_measurements": 0,
+          "missed_acquisitions": 0,
+          "cached_control_ticks": 650,
+          "hold_entries": 0,
+          "braking_control_ticks": 0,
+          "recoveries": [],
+          "first_miss": null,
+          "maximum_shortfall_m": 0.0,
+          "final_state": "Observing",
+          "final_held_identities": [],
+          "sensor_only": true,
+          "reference_horizons_respected": true,
+          "physical_uncertainty_calibrated": false,
+          "clear_sweep_recoveries": [],
+          "clear_qualifying_acquisitions": 2
+        },
+        "forecast_hold_physics": {
+          "passed": true,
+          "intervals": [],
+          "scored_intervals": 0,
+          "censored_intervals": 0
+        },
+        "road_containment": {
+          "minimum_actual_road_margin_m": 0.1433732031361501,
+          "violations": 0,
+          "samples": 1301
+        },
+        "sparse_circles": {
+          "acquisitions": 651,
+          "detections": 615,
+          "sparse_fits": 0,
+          "sparse_fallbacks": 0,
+          "dense_detections": 615,
+          "passed": true,
+          "maximum_center_difference_m": 2.847716647714797e-14,
+          "maximum_radius_difference_m": 2.2648549702353193e-14,
+          "original_returns_used": true,
+          "independent_centered_2x2_fit": true,
+          "physical_shape_confidence_claimed": false
+        },
+        "track_motion": {
+          "passed": true,
+          "ticks": 1301,
+          "births": 1,
+          "updates": 614,
+          "cached_ticks": 650,
+          "confirmations": [],
+          "maximum_position_difference_m": 2.1320907500235726e-14,
+          "maximum_velocity_difference_m_s": 1.575197931068783e-15,
+          "independent_batch_fit": true,
+          "clustering_association_checked_by_sensor_replay": true,
+          "recent_motion_fit": {
+            "fit_updates": 0,
+            "unsupported_updates": 614,
+            "maximum_samples": 3,
+            "independent_dense_batch": true
+          }
+        },
+        "measurement_enclosure": {
+          "passed": true,
+          "acquired_measurements": 615,
+          "associated_updates": 614,
+          "cached_tracks": 614,
+          "maximum_containment_deficit_m": 1.6431300764452317e-14,
+          "maximum_nonminimal_slack_m": 1.6209256159527285e-14,
+          "maximum_extension_above_smoothed_radius_m": 0.021944647651723992,
+          "exact_boundary_witnesses": true,
+          "physical_unseen_shape_coverage_claimed": false
+        },
+        "planar_sweeps": {
+          "passed": true,
+          "acquired_sweeps": 651,
+          "complete_empty_sweeps": 35,
+          "acquired_rays": 468720,
+          "bound_original_points": 9592,
+          "maximum_angular_gap_rad": 0.008738783459221189,
+          "sensor_only": true
+        },
+        "pose_occupancy": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "verified_knots": 50389,
+          "sigma": 3.0,
+          "maximum_added_radius_m": 1.647486125710736,
+          "localization": {
+            "verified_ticks": 1301,
+            "maximum_state_difference": 7.105427357601002e-15,
+            "maximum_covariance_difference": 6.938893903907228e-18,
+            "accepted_headings": 326,
+            "compensated_fixes": 0,
+            "replayed_heading_corrections": 0,
+            "heading_health_counts": {}
+          },
+          "continuous_guard_uses_unexpanded_nominal": true,
+          "actor_truth_used": false,
+          "confidence_calibrated": false
+        },
+        "cold_motion": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "expanded_forecasts": 4,
+          "confirmations": 1,
+          "maximum_reachable_extra_radius_m": 121.0765048559572,
+          "maximum_speed_m_s": 15.0,
+          "first_acquisitions_scored": true,
+          "nominal_centers_preserved": true,
+          "actor_truth_used": false,
+          "maximum_speed_calibrated": false
+        },
+        "recent_velocity_hypotheses": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "verified_point_discs": 424309,
+          "maximum_retained_samples": 9,
+          "maximum_velocity_difference_m_s": 0.08924642022467406,
+          "window_s": 0.8,
+          "maximum_samples_per_identity": 32,
+          "actor_truth_used": false,
+          "confidence_calibrated": false,
+          "cached_acquisitions_not_renewed": true,
+          "nominal_centers_preserved": true
+        },
+        "checked_approach": {
+          "passed": true,
+          "verified_ticks": 1301,
+          "adoptions": [
+            {
+              "time_s": 5.9,
+              "supporting_acquisitions": 3,
+              "first_acquisition_s": 5.7,
+              "last_acquisition_s": 5.9,
+              "proposal_end_progress_m": 47.78315279668532,
+              "proposal_endpoint": {
+                "x": 47.709444155402615,
+                "y": 6.8738489434602315
+              },
+              "proposal_lateral_target_m": 3.9,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "adopted": true
+            },
+            {
+              "time_s": 13.600000000000001,
+              "supporting_acquisitions": 3,
+              "first_acquisition_s": 13.4,
+              "last_acquisition_s": 13.600000000000001,
+              "proposal_end_progress_m": 46.045562228315944,
+              "proposal_endpoint": {
+                "x": 45.94341961374987,
+                "y": 7.095747385237836
+              },
+              "proposal_lateral_target_m": 3.9,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "adopted": true
+            },
+            {
+              "time_s": 14.0,
+              "supporting_acquisitions": 3,
+              "first_acquisition_s": 13.8,
+              "last_acquisition_s": 14.0,
+              "proposal_end_progress_m": 46.10737395270182,
+              "proposal_endpoint": {
+                "x": 46.00535122647187,
+                "y": 7.116222785905706
+              },
+              "proposal_lateral_target_m": 3.9,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "adopted": true
+            },
+            {
+              "time_s": 24.400000000000002,
+              "supporting_acquisitions": 3,
+              "first_acquisition_s": 24.200000000000003,
+              "last_acquisition_s": 24.400000000000002,
+              "proposal_end_progress_m": 46.412937735862585,
+              "proposal_endpoint": {
+                "x": 46.32608252350696,
+                "y": 7.055509512845433
+              },
+              "proposal_lateral_target_m": 3.9,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "adopted": true
+            }
+          ],
+          "certified_adopted_paths": 4,
+          "interval_bounds": 235,
+          "cached_acquisitions_cannot_authorize": true,
+          "actor_truth_used": false,
+          "counterfactual_candidate_optimality_verified": false
+        },
+        "stopping_certificates": {
+          "passed": true,
+          "verified_control_ticks": 1301,
+          "certified_checked_stops": 1224,
+          "certified_searched_stops": 72,
+          "interval_bounds": 55962,
+          "all_search_directions_checked": true,
+          "minimum_stationary_tail_s": 8.0,
+          "actor_truth_used": false,
+          "counterfactual_optimality_verified": false
+        },
+        "targets": {
+          "side_candidate_m": 3.9,
+          "side_control_ticks": 768,
+          "verified_control_ticks": 1301
+        },
+        "directional_certificates": {
+          "passed": true,
+          "active": true,
+          "certified_paths": 1296,
+          "interval_bounds": 55962,
+          "actor_truth_used": false,
+          "uncertainty_calibrated": false
+        },
+        "motion_metrics": {
+          "measured_departures_s": [
+            0.30000000000000004,
+            6.15
+          ],
+          "measured_settles_s": [
+            5.65,
+            13.350000000000001
+          ],
+          "nonzero_lateral_side_changes": 0,
+          "emergency_entries": 2,
+          "definition": "Measured-speed hysteresis: depart >=0.5 m/s, settle <=0.2 m/s; includes initial departure."
+        },
+        "storage": {
+          "replay/outputs.jsonl": {
+            "path": "replay/outputs.jsonl.xz",
+            "sha256": "4c1be4699e33c970a18e154b1b9930adb8928247c18146b508b656dc1b511e89",
+            "stored_sha256": "768d92bb85514e2cae0baf902cae568c4a8f2cdfd8c1a64a4b98e3bc56580c76",
+            "encoding": "xz"
+          },
+          "replay/replay.json": {
+            "path": "replay/replay.json.xz",
+            "sha256": "24136c8acf5b8cfdc01f5d45f8c1426b00e892b5de8b82a012ed5ad6ed357566",
+            "stored_sha256": "163a215824a317e3e2822ba110583d437103d836c1b70231b618e16d285e4851",
+            "encoding": "xz"
+          },
+          "run/run.json": {
+            "path": "run/run.json.xz",
+            "sha256": "68c375c8e8b89dca92025c785ef39c280402f21d09fdf7558cbf3771ef824260",
+            "stored_sha256": "6a120d55d753f554f385ccccffce8b2fcf44e7cebd57f907e5ef0cac7eafa282",
+            "encoding": "xz"
+          },
+          "run/sensors.jsonl": {
+            "path": "run/sensors.jsonl.xz",
+            "sha256": "80bb2d0d5c978decc47b13a8a5333db1942d6cc49690fef8ffacd594e984ae52",
+            "stored_sha256": "afe1861587999b0f5eda4ef19bde233ed694febee9b173f3afe9a8fb88d32ae2",
+            "encoding": "xz"
+          },
+          "run/summary.json": {
+            "path": "run/summary.json.xz",
+            "sha256": "4abd0911e8ccd4a555d820ce886bdd5166ac98505995d356a5063794f0d6ac74",
+            "stored_sha256": "4899c46a1ba89903cc3810597ad500b286b8cf8f4cbc91b3fafe239bac0408e1",
+            "encoding": "xz"
+          }
+        }
+      },
+      "comparison": {
+        "regression_passed": true,
+        "new_failed_gates": [],
+        "baseline_failed_gates": [
+          "source_acceptance"
+        ],
+        "coverage": {
+          "0.2": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 613,
+            "after_eligible": 613
+          },
+          "1.0": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 605,
+            "after_eligible": 605
+          },
+          "2.0": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 595,
+            "after_eligible": 595
+          },
+          "4.0": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 575,
+            "after_eligible": 575
+          },
+          "8.0": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 535,
+            "after_eligible": 535
+          }
+        }
+      }
+    }
+  ],
+  "no_new_failed_gates": true,
+  "arrivals": 0
+}

@@ -149,6 +149,9 @@ pub struct PipelineConfig {
     pub search_obstruction_stops: bool,
     #[serde(default, skip_serializing_if = "is_false")]
     pub replan_checked_approaches: bool,
+    /// Experimental progress floor; absent preserves historical 2 m admission.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub checked_approach_min_progress_m: Option<f64>,
     /// Check farther existing stopping endpoints without withdrawing a retained stop.
     #[serde(default, skip_serializing_if = "is_false")]
     pub search_later_obstruction_stops: bool,
@@ -245,6 +248,7 @@ impl PipelineConfig {
             settle_obstruction_stops: false,
             search_obstruction_stops: false,
             replan_checked_approaches: false,
+            checked_approach_min_progress_m: None,
             search_later_obstruction_stops: false,
             lateral_candidate_margin_m: None,
             refine_lateral_candidates: false,
@@ -268,6 +272,13 @@ impl PipelineConfig {
         }
     }
     pub fn validate(&self) -> Result<(), String> {
+        if self.checked_approach_min_progress_m.is_some_and(|value| {
+            !self.replan_checked_approaches || !value.is_finite() || !(0.5..=2.).contains(&value)
+        }) {
+            return Err(
+                "checked approach progress requires enabled replanning and 0.5..=2 m".into(),
+            );
+        }
         if self.search_later_obstruction_stops && !self.replan_checked_approaches {
             return Err("later stop search requires acquired checked approach replanning".into());
         }
@@ -801,6 +812,7 @@ impl DrivingPipeline {
         planner.settle_obstruction_stops = config.settle_obstruction_stops;
         planner.search_obstruction_stops = config.search_obstruction_stops;
         planner.replan_checked_approaches = config.replan_checked_approaches;
+        planner.checked_approach_min_progress_m = config.checked_approach_min_progress_m;
         planner.search_later_obstruction_stops = config.search_later_obstruction_stops;
         planner.lateral_candidate_margin_m = config.lateral_candidate_margin_m;
         planner.refine_lateral_candidates = config.refine_lateral_candidates;
