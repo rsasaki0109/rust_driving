@@ -4,6 +4,17 @@ RustDriving's long-term target is a practical independent autonomous driving OSS
 
 The near-term user goal is a **50% engineering maturity estimate**. [Capability waypoints and evidence requirements](maturity.md) define the development direction; the percentage is subjective and does not imply road safety or parity. The current estimate is about 29%; this remains a subjective simulation-prototype estimate. Bounded turn-rule routing and richer intersection recordings add reproducible behavior, while general driving, perception accuracy and planar/terrain limits remain.
 
+The [acquired chassis motion correction](chassis-acquisition.md) repairs body
+reference and endpoint sampling in the experimental native acquired-motion
+path. It substantially reduces measured forecast error on the unchanged
+viewed inputs, while the first original mission still fails its deadline.
+All 48 comparisons retain prior gates, with 20 arrivals and 36 strict passes;
+exact historical replays and existing-mode byte controls pass.
+Next address complete passing feasibility under the retained uncertainty
+budgets and collect independent calibration groups; improved viewed forecast
+error alone does not expand the operating domain. M1 remains in progress at
+about 29%.
+
 [OSM export preservation](osm-export.md) prevents geographic input loss and
 partial successful-looking map exports. Fresh destinations and complete staged
 files now precede report publication. [Actual byte bounds and explicit options](osm-input.md)

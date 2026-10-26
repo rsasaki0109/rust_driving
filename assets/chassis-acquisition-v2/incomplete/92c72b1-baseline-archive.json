@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "source": "92c72b1c473f0b6209f09c4ce1ff9508026b2d40",
+  "run": 40294008604,
+  "job": 121475929031,
+  "artifact": 12637717087,
+  "artifact_sha256": "2f42f3432a097bdb2bf94a7e68004c14ce90310c6c65105037a65432f7174e51",
+  "canary_complete": true,
+  "canary_passed": true,
+  "full_qualification_complete": false,
+  "full_case_executions": 0,
+  "failure_stage": "unchanged baseline archive construction",
+  "error": "git archive requested .cargo, which is absent from the pinned baseline tree",
+  "adoption": false,
+  "acceptance_gates_changed": false,
+  "resume_workflow_source": "7ade752d08d096ee5ca410bfd553fc38b7a62bec",
+  "resume_run": 40295079674,
+  "tested_driver_unchanged": true
+}

@@ -138,15 +138,72 @@ impl Ekf {
     /// remains body heading; state speed is course speed. No tire-slip estimate.
     /// Zero offset preserves the original predictor exactly.
     pub fn predict_chassis(&mut self, odom: Odometry, dt: f64, rear_axle_offset_m: f64) {
-        if !rear_axle_offset_m.is_finite() || rear_axle_offset_m < 0.0 {
-            return;
-        }
         if rear_axle_offset_m == 0.0 {
             self.predict(odom, dt);
             return;
         }
+        self.predict_chassis_step(odom, dt, rear_axle_offset_m, None);
+    }
+
+    /// Integrate adjacent instantaneous endpoint measurements using trapezoidal
+    /// body rates. Current course speed remains the latest measured speed.
+    /// Missing interval endpoints and numeric failure leave the filter unchanged.
+    pub fn predict_chassis_instantaneous(
+        &mut self,
+        previous: Odometry,
+        current: Odometry,
+        dt: f64,
+        rear_axle_offset_m: f64,
+    ) -> Result<(), String> {
+        if !dt.is_finite()
+            || dt <= 0.0
+            || !rear_axle_offset_m.is_finite()
+            || rear_axle_offset_m <= 0.0
+            || [
+                previous.stamp,
+                current.stamp,
+                previous.speed,
+                current.speed,
+                previous.yaw_rate,
+                current.yaw_rate,
+            ]
+            .iter()
+            .any(|v| !v.is_finite())
+            || previous.stamp < 0.0
+            || current.stamp <= previous.stamp
+            || ((current.stamp - previous.stamp) - dt).abs() > 1e-9
+        {
+            return Err("instantaneous chassis motion requires adjacent finite endpoints".into());
+        }
+        let average = Odometry {
+            stamp: current.stamp,
+            speed: previous.speed.max(0.0) * 0.5 + current.speed.max(0.0) * 0.5,
+            yaw_rate: previous.yaw_rate * 0.5 + current.yaw_rate * 0.5,
+        };
+        let endpoint_speed = current
+            .speed
+            .max(0.0)
+            .hypot(rear_axle_offset_m * current.yaw_rate);
+        if !endpoint_speed.is_finite()
+            || !self.predict_chassis_step(average, dt, rear_axle_offset_m, Some(endpoint_speed))
+        {
+            return Err("instantaneous chassis prediction exceeded finite numeric support".into());
+        }
+        Ok(())
+    }
+
+    fn predict_chassis_step(
+        &mut self,
+        odom: Odometry,
+        dt: f64,
+        rear_axle_offset_m: f64,
+        endpoint_speed: Option<f64>,
+    ) -> bool {
+        if !rear_axle_offset_m.is_finite() || rear_axle_offset_m < 0.0 {
+            return false;
+        }
         if !dt.is_finite() || dt <= 0.0 || !odom.speed.is_finite() || !odom.yaw_rate.is_finite() {
-            return;
+            return false;
         }
         let yaw = self.state.pose.yaw;
         let v = odom.speed.max(0.0);
@@ -159,9 +216,9 @@ impl Ekf {
         .scaled(dt);
         let position = self.state.pose.position.plus(displacement);
         let next_yaw = wrap_angle(yaw + odom.yaw_rate * dt);
-        let speed = v.hypot(lateral);
+        let speed = endpoint_speed.unwrap_or_else(|| v.hypot(lateral));
         if !position.finite() || !next_yaw.is_finite() || !speed.is_finite() {
-            return;
+            return false;
         }
         let f = [
             [1.0, 0.0, -displacement.y],
@@ -182,7 +239,7 @@ impl Ekf {
             row[i] += [0.015, 0.015, 0.0005][i] * dt;
         }
         if next.iter().flatten().any(|value| !value.is_finite()) {
-            return;
+            return false;
         }
         self.state = EgoState {
             pose: Pose {
@@ -192,6 +249,7 @@ impl Ekf {
             speed,
         };
         self.covariance = next;
+        true
     }
     /// Joint fixed-map x/y/body-yaw correction with conservative observation
     /// floors, a wrapped-yaw innovation gate and Joseph covariance update.
@@ -796,6 +854,166 @@ mod tests {
         assert_eq!(e.state().speed, 0.0);
         assert_eq!(e.covariance, before);
         assert_eq!(e.last_gnss, f64::NEG_INFINITY);
+    }
+
+    #[test]
+    fn instantaneous_chassis_rates_integrate_yaw_but_retain_current_course_speed() {
+        for rotation in [-0.8, 0.0, 1.1] {
+            let initial = Pose {
+                position: Vec2::new(12.0, -7.0),
+                yaw: rotation,
+            };
+            let mut filter = Ekf::new(initial);
+            let dt = 0.05;
+            let previous = Odometry {
+                stamp: 2.0,
+                speed: 1.0,
+                yaw_rate: -0.6,
+            };
+            let current = Odometry {
+                stamp: 2.05,
+                speed: 5.0,
+                yaw_rate: 1.0,
+            };
+            filter
+                .predict_chassis_instantaneous(previous, current, dt, 1.5)
+                .unwrap();
+            // Independent dense integration of time-linear measured body rates.
+            let count = 10_000;
+            let mut integral = Vec2::default();
+            for i in 0..count {
+                let t = (i as f64 + 0.5) * dt / count as f64;
+                let wheel = 1.0 + 4.0 * t / dt;
+                let rate = -0.6 + 1.6 * t / dt;
+                let yaw = rotation - 0.6 * t + 0.8 * t * t / dt;
+                integral = integral.plus(
+                    Vec2::new(
+                        wheel * yaw.cos() - 1.5 * rate * yaw.sin(),
+                        wheel * yaw.sin() + 1.5 * rate * yaw.cos(),
+                    )
+                    .scaled(dt / count as f64),
+                );
+            }
+            let error = filter
+                .state()
+                .pose
+                .position
+                .distance(initial.position.plus(integral));
+            assert!(error < 0.001, "time-linear quadrature error {error}");
+            assert!((wrap_angle(filter.state().pose.yaw - rotation) - 0.01).abs() < 1e-12);
+            assert!((filter.state().speed - 5.0_f64.hypot(1.5)).abs() < 1e-12);
+            let mut held = Ekf::new(initial);
+            held.predict_chassis(current, dt, 1.5);
+            assert!(
+                held.state()
+                    .pose
+                    .position
+                    .distance(filter.state().pose.position)
+                    > 0.05
+            );
+        }
+    }
+
+    #[test]
+    fn constant_instantaneous_chassis_rates_preserve_held_chassis_bits() {
+        let mut held = Ekf::new(Pose::default());
+        let mut sampled = Ekf::new(Pose::default());
+        for index in 1..=50 {
+            let first = Odometry {
+                stamp: (index - 1) as f64 * 0.05,
+                speed: 3.0,
+                yaw_rate: 0.4,
+            };
+            let last = Odometry {
+                stamp: index as f64 * 0.05,
+                ..first
+            };
+            held.predict_chassis(last, 0.05, 1.5);
+            sampled
+                .predict_chassis_instantaneous(first, last, 0.05, 1.5)
+                .unwrap();
+            assert_eq!(held.state().pose.position, sampled.state().pose.position);
+            assert_eq!(
+                held.state().pose.yaw.to_bits(),
+                sampled.state().pose.yaw.to_bits()
+            );
+            assert_eq!(
+                held.state().speed.to_bits(),
+                sampled.state().speed.to_bits()
+            );
+            assert_eq!(held.covariance, sampled.covariance);
+        }
+    }
+
+    #[test]
+    fn invalid_instantaneous_endpoints_cannot_partially_mutate_the_filter() {
+        let previous = Odometry {
+            stamp: 0.0,
+            speed: 2.0,
+            yaw_rate: 0.2,
+        };
+        let current = Odometry {
+            stamp: 0.05,
+            ..previous
+        };
+        let cases = [
+            (previous, current, 0.1, 1.5),
+            (previous, previous, 0.05, 1.5),
+            (
+                Odometry {
+                    stamp: -0.05,
+                    ..previous
+                },
+                previous,
+                0.05,
+                1.5,
+            ),
+            (
+                Odometry {
+                    speed: f64::NAN,
+                    ..previous
+                },
+                current,
+                0.05,
+                1.5,
+            ),
+            (
+                previous,
+                Odometry {
+                    yaw_rate: f64::INFINITY,
+                    ..current
+                },
+                0.05,
+                1.5,
+            ),
+            (previous, current, f64::NAN, 1.5),
+            (previous, current, 0.05, 0.0),
+            (previous, current, 0.05, -1.0),
+            (previous, current, 0.05, f64::NAN),
+            (
+                previous,
+                Odometry {
+                    speed: f64::MAX,
+                    yaw_rate: f64::MAX,
+                    ..current
+                },
+                0.05,
+                1.5,
+            ),
+        ];
+        for (first, last, dt, offset) in cases {
+            let mut filter = Ekf::new(Pose::default());
+            let covariance = filter.covariance;
+            assert!(
+                filter
+                    .predict_chassis_instantaneous(first, last, dt, offset)
+                    .is_err()
+            );
+            assert_eq!(filter.state().pose.position, Vec2::default());
+            assert_eq!(filter.state().pose.yaw, 0.0);
+            assert_eq!(filter.state().speed, 0.0);
+            assert_eq!(filter.covariance, covariance);
+        }
     }
     #[test]
     fn chassis_covariance_stays_symmetric_and_positive_under_repeated_corrections() {

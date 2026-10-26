@@ -1,0 +1,111 @@
+name: Chassis acquisition qualification
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: chassis-acquisition-${{ github.ref }}
+  cancel-in-progress: false
+env:
+  CARGO_INCREMENTAL: '0'
+jobs:
+  contracts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: workspace-ubuntu24-rust190-v1-${{ hashFiles('Cargo.lock', 'rust-toolchain.toml', '.cargo/config.toml') }}
+      - name: Install the pinned workspace toolchain
+        run: rustup toolchain install 1.90.0 --profile minimal --component rustfmt --component clippy
+      - name: Verify the workspace and original scenario replays
+        run: bash scripts/check.sh
+  qualify:
+    needs: contracts
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash
+        working-directory: rust_drive
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: rust_drive
+      - uses: actions/checkout@v4
+        with:
+          repository: rsasaki0109/RobotNativeEngine
+          ref: df6007aa40315e81d12ae00fc1f60369e393a178
+          path: RobotNativeEngine
+          sparse-checkout: |
+            crates
+            third_party
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache/restore@v4
+        id: native-cache
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            rust_drive/target
+            rust_drive/integrations/rne/target
+          key: native-city-ubuntu-24.04-rust190-195-df6007a-v1-${{ hashFiles('rust_drive/Cargo.lock', 'rust_drive/integrations/rne/Cargo.lock') }}
+      - name: Build actual pipeline, fixed-input inspector and unchanged native engine
+        run: |
+          rustup toolchain install 1.90.0 --profile minimal
+          rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy
+          test "$(git -C ../RobotNativeEngine rev-parse HEAD)" = "$(cat integrations/rne/rne-revision.txt)"
+          cargo +1.90.0 build --release --locked --bin rustdriving
+          cargo +1.90.0 build --release --locked -p rustdriving-pipeline --example inspect_chassis_inputs
+          cargo +1.95.0 fmt --manifest-path integrations/rne/Cargo.toml --check
+          cargo +1.95.0 build --release --locked --manifest-path integrations/rne/Cargo.toml
+      - uses: actions/cache/save@v4
+        if: steps.native-cache.outputs.cache-hit != 'true'
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            rust_drive/target
+            rust_drive/integrations/rne/target
+          key: ${{ steps.native-cache.outputs.cache-primary-key }}
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '12624662660'
+          run-id: '40258418216'
+          github-token: ${{ github.token }}
+          path: rust_drive/retained-evidence
+          merge-multiple: true
+      - name: Build the exact unchanged main native baseline after the canary
+        run: |
+          git fetch --no-tags origin 6fd7e8a1e8f87e8effce36ce27449bafed393aa3 8550e1a2b1d06703d05036a625609e21b9fa0cf6
+          git diff --exit-code 8550e1a2b1d06703d05036a625609e21b9fa0cf6 6fd7e8a1e8f87e8effce36ce27449bafed393aa3 -- crates Cargo.toml Cargo.lock rust-toolchain.toml integrations/rne
+          mkdir -p "$RUNNER_TEMP/chassis-baseline/rust_drive"
+          git archive 6fd7e8a1e8f87e8effce36ce27449bafed393aa3 Cargo.toml Cargo.lock rust-toolchain.toml crates integrations/rne scenarios | tar -x -C "$RUNNER_TEMP/chassis-baseline/rust_drive"
+          ln -s "$GITHUB_WORKSPACE/RobotNativeEngine" "$RUNNER_TEMP/chassis-baseline/RobotNativeEngine"
+          cargo +1.95.0 build --release --locked --manifest-path "$RUNNER_TEMP/chassis-baseline/rust_drive/integrations/rne/Cargo.toml" --target-dir integrations/rne/target
+          cp integrations/rne/target/release/rustdriving-rne "$RUNNER_TEMP/chassis-baseline/rustdriving-rne"
+          cargo +1.95.0 build --release --locked --manifest-path integrations/rne/Cargo.toml
+      - name: Qualify every original case, historical log and default control
+        env:
+          RUSTDRIVING_TESTED_SOURCE: ${{ github.sha }}
+        run: |
+          python scripts/check_chassis_acquisition.py --stage full --evidence retained-evidence --output artifacts/chassis-qualification --binary target/release/rustdriving --native-binary integrations/rne/target/release/rustdriving-rne --example-binary target/release/examples/inspect_chassis_inputs --baseline-native "$RUNNER_TEMP/chassis-baseline/rustdriving-rne"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: chassis-acquisition-qualification
+          path: rust_drive/artifacts/chassis-qualification
+          if-no-files-found: warn
+          compression-level: 1

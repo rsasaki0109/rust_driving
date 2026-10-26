@@ -1,0 +1,15 @@
+{
+  "source": "92c72b1c473f0b6209f09c4ce1ff9508026b2d40",
+  "path": "assets/chassis-acquisition-v2/qualifications/92c72b1c473f0b6209f09c4ce1ff9508026b2d40.json",
+  "stage": "full",
+  "complete": true,
+  "passed": true,
+  "contracts_passed": true,
+  "contracts_job": 121475928949,
+  "run": 40295079674,
+  "adopted": false,
+  "repair_qualification_passed": true,
+  "original_full_adoption_gate_passed": false,
+  "result_publication_source": "73bf7924919083a9673c3657e2178d73cea7c9bc",
+  "result_publication_run": 40297566338
+}

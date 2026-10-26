@@ -78,6 +78,8 @@ def reconstruct(config, ticks):
     health_counts = {}
     for tick in ticks:
         inp, out = tick['input'], tick['expected']; now = inp['time']
+        if previous is None:
+            oracle.seed_motion(inp.get('odometry'), now)
         if previous is not None:
             wheel = inp.get('odometry')
             if wheel is None or now-wheel['stamp'] > .15+1e-9 or now-previous > .25+1e-9:

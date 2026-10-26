@@ -95,6 +95,10 @@ jobs:
         run: python scripts/test_lane_resume_speeds.py
       - name: Check closure-aware mapped speed scoring
         run: python scripts/test_navigation_speeds.py
+      - name: Reject incomplete chassis qualification success publication
+        run: python scripts/test_chassis_acquisition_publication.py
+      - name: Check instantaneous chassis sampling and acquired endpoint coverage
+        run: python scripts/test_instantaneous_odometry.py
       - name: Check acquisition-time GNSS reconstruction
         run: python scripts/test_gnss_latency.py
       - name: Check correlated GNSS calibration oracle and frozen paired controls

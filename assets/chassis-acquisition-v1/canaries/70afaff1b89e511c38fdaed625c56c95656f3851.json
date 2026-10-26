@@ -1,0 +1,901 @@
+{
+  "source": "70afaff1b89e511c38fdaed625c56c95656f3851",
+  "baseline_source": "6fd7e8a1e8f87e8effce36ce27449bafed393aa3",
+  "baseline_recorded_source": "8550e1a2b1d06703d05036a625609e21b9fa0cf6",
+  "stage": "canary",
+  "complete": true,
+  "passed": false,
+  "binaries": {
+    "reference-2d": "24471fc2f73af1137b3b3a1580336e7f4c71d97c22b6af9326c5b79e37bec2d6",
+    "rne-dynamic": "7fd8a49f2a474a39067ac0ef74c771f36d008e49db4b7980abcbd0a4f2b07f6d"
+  },
+  "baseline_report_sha256": "e7a921b753f66fec5e042cbb210d038a36ad5660f768a48fb8e8884ef57adea4",
+  "physics_noise_goals_deadlines_budgets_changed": false,
+  "cases": [
+    {
+      "plant": "rne-dynamic",
+      "world": "mission",
+      "mode": "heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops",
+      "seed": 7,
+      "cohort": "stop-search",
+      "family": "heading",
+      "heading": true,
+      "kind": "base",
+      "parent_mode": "heading-search",
+      "parent_scenario": "frozen/023.json",
+      "baseline_scenario": "frozen/011.json",
+      "sweep_mode": "recover",
+      "qualification_family": "missions",
+      "cold_baseline_scenario": "frozen/046.json",
+      "velocity_baseline_scenario": "frozen/046.json",
+      "approach_baseline_scenario": "frozen/046.json",
+      "later_baseline_scenario": "frozen/046.json",
+      "scenario": "frozen/046.json",
+      "sha256": "d75d3c061685b7b55cf25bfdb5450e3b9cdc591a4db5067c2e9c1c5a859ae4c3",
+      "source": "scenarios/mission.json",
+      "source_sha256": "68ff3bb4db1734669d290350535b9998cc8323b5462eec26815539540282fd5e",
+      "passed": false,
+      "recordings": "episodes/rne-dynamic/mission-heading-search-recover-sparse-recent-motion-progress-pose-cold-velocity-history-checked-reapproach-later-stops-seed-7",
+      "run_exit_code": 1,
+      "replay_exit_code": 0,
+      "summary": {
+        "scenario": "Curved-road obstacle avoidance",
+        "seed": 7,
+        "simulated_seconds": 65.0,
+        "steps": 1301,
+        "reached_goal": false,
+        "collisions": 0,
+        "road_violations": 0,
+        "min_clearance": 11.608797837280049,
+        "localization_rmse": 0.05334920343420215,
+        "localization_max_error": 0.15026792888881907,
+        "final_speed": 0.0,
+        "progress": 44.83165026130202,
+        "emergency_steps": 5,
+        "avoidance_steps": 0,
+        "max_tracks": 1,
+        "passed": false,
+        "failures": [
+          "goal not reached within duration"
+        ]
+      },
+      "replay": {
+        "source": "rne-dynamic-rapier-lidar",
+        "ticks": 1301,
+        "verified": true
+      },
+      "expected_run_exit_code": 1,
+      "failed_gates": [
+        "source_acceptance"
+      ],
+      "driving_passed": false,
+      "motion_predictions": {
+        "verified": true,
+        "forecasts": 1229,
+        "braking_forecasts": 0,
+        "confirmed_slow_forecasts": 0,
+        "unconfirmed_slow_forecasts": 1225,
+        "uncertain_slow_forecasts": 0,
+        "stale_fallbacks": 0,
+        "reacceleration_fallbacks": 625,
+        "intermediate_braking_vetoes": 0,
+        "max_forecast_deceleration_m_s2": 0.0,
+        "aged_forecasts": 614,
+        "rebased_moving_forecasts": 2,
+        "max_epoch_age_s": 0.05000000000001137,
+        "current_epoch_reconstruction_verified": true,
+        "enveloped_forecasts": 1229
+      },
+      "speed_profiles": {
+        "verified": true,
+        "active_trajectories": 1296,
+        "stationary_holds": 1224,
+        "max_acceleration_m_s2": 2.0000000000000107,
+        "max_deceleration_m_s2": 2.5000000000000027
+      },
+      "independent_clearance": {
+        "full_tick_coverage": true,
+        "minimum_swept_clearance_m": 11.608797837280049,
+        "contact_intervals": 0
+      },
+      "coverage": {
+        "horizons": {
+          "0.2": {
+            "eligible": 613,
+            "matched": 613,
+            "covered": 613,
+            "unmatched": 0,
+            "actor_absent": 0,
+            "censored": 2,
+            "maximum_shortfall_m": 0.0,
+            "coverage_fraction": 1.0,
+            "passed": true
+          },
+          "1.0": {
+            "eligible": 605,
+            "matched": 605,
+            "covered": 605,
+            "unmatched": 0,
+            "actor_absent": 0,
+            "censored": 10,
+            "maximum_shortfall_m": 0.0,
+            "coverage_fraction": 1.0,
+            "passed": true
+          },
+          "2.0": {
+            "eligible": 595,
+            "matched": 595,
+            "covered": 595,
+            "unmatched": 0,
+            "actor_absent": 0,
+            "censored": 20,
+            "maximum_shortfall_m": 0.0,
+            "coverage_fraction": 1.0,
+            "passed": true
+          },
+          "4.0": {
+            "eligible": 575,
+            "matched": 575,
+            "covered": 575,
+            "unmatched": 0,
+            "actor_absent": 0,
+            "censored": 40,
+            "maximum_shortfall_m": 0.0,
+            "coverage_fraction": 1.0,
+            "passed": true
+          },
+          "8.0": {
+            "eligible": 535,
+            "matched": 535,
+            "covered": 535,
+            "unmatched": 0,
+            "actor_absent": 0,
+            "censored": 80,
+            "maximum_shortfall_m": 0.0,
+            "coverage_fraction": 1.0,
+            "passed": true
+          }
+        },
+        "passed": true,
+        "acquired_identities": 615,
+        "evaluation_only": true
+      },
+      "rmse_m": 0.05334920343420217,
+      "maximum_error_m": 0.15026792888881907,
+      "maximum_yaw_rad": 0.01721897959534414,
+      "acquired_forecasts_verified": true,
+      "planning_progress": {
+        "passed": true,
+        "enabled": true,
+        "verified_control_ticks": 1301,
+        "blocked_control_ticks": 989,
+        "intervals": [
+          {
+            "detected_at_control_s": 15.600000000000001,
+            "first_supporting_acquisition_s": 13.600000000000001,
+            "blocking_prediction_ids": [
+              1
+            ],
+            "cleared_at_control_s": null
+          }
+        ],
+        "final_state": "StationaryForecastBlocked",
+        "sensor_only": true,
+        "global_infeasibility_claimed": false
+      },
+      "forecast_consistency": {
+        "passed": true,
+        "verified_control_ticks": 1301,
+        "acquisitions": 651,
+        "checked_measurements": 614,
+        "unmonitored_measurements": 1,
+        "missed_measurements": 0,
+        "missed_acquisitions": 0,
+        "cached_control_ticks": 650,
+        "hold_entries": 0,
+        "braking_control_ticks": 0,
+        "recoveries": [],
+        "first_miss": null,
+        "maximum_shortfall_m": 0.0,
+        "final_state": "Observing",
+        "final_held_identities": [],
+        "sensor_only": true,
+        "reference_horizons_respected": true,
+        "physical_uncertainty_calibrated": false,
+        "clear_sweep_recoveries": [],
+        "clear_qualifying_acquisitions": 2
+      },
+      "forecast_hold_physics": {
+        "passed": true,
+        "intervals": [],
+        "scored_intervals": 0,
+        "censored_intervals": 0
+      },
+      "road_containment": {
+        "minimum_actual_road_margin_m": 0.10563532712726964,
+        "violations": 0,
+        "samples": 1301
+      },
+      "sparse_circles": {
+        "acquisitions": 651,
+        "detections": 615,
+        "sparse_fits": 0,
+        "sparse_fallbacks": 0,
+        "dense_detections": 615,
+        "passed": true,
+        "maximum_center_difference_m": 4.291152022490169e-14,
+        "maximum_radius_difference_m": 3.863576125695545e-14,
+        "original_returns_used": true,
+        "independent_centered_2x2_fit": true,
+        "physical_shape_confidence_claimed": false
+      },
+      "track_motion": {
+        "passed": true,
+        "ticks": 1301,
+        "births": 1,
+        "updates": 614,
+        "cached_ticks": 650,
+        "confirmations": [],
+        "maximum_position_difference_m": 1.4238583238573986e-14,
+        "maximum_velocity_difference_m_s": 1.0342676826437537e-15,
+        "independent_batch_fit": true,
+        "clustering_association_checked_by_sensor_replay": true,
+        "recent_motion_fit": {
+          "fit_updates": 8,
+          "unsupported_updates": 606,
+          "maximum_samples": 3,
+          "independent_dense_batch": true
+        }
+      },
+      "measurement_enclosure": {
+        "passed": true,
+        "acquired_measurements": 615,
+        "associated_updates": 614,
+        "cached_tracks": 614,
+        "maximum_containment_deficit_m": 1.5765166949677223e-14,
+        "maximum_nonminimal_slack_m": 9.103828801926284e-15,
+        "maximum_extension_above_smoothed_radius_m": 0.028573359328344816,
+        "exact_boundary_witnesses": true,
+        "physical_unseen_shape_coverage_claimed": false
+      },
+      "planar_sweeps": {
+        "passed": true,
+        "acquired_sweeps": 651,
+        "complete_empty_sweeps": 35,
+        "acquired_rays": 468720,
+        "bound_original_points": 9625,
+        "maximum_angular_gap_rad": 0.008738783459221189,
+        "sensor_only": true
+      },
+      "pose_occupancy": {
+        "passed": true,
+        "verified_ticks": 1301,
+        "verified_knots": 50389,
+        "sigma": 3.0,
+        "maximum_added_radius_m": 1.6408187103350726,
+        "localization": {
+          "verified_ticks": 1301,
+          "maximum_state_difference": 1.4210854715202004e-14,
+          "maximum_covariance_difference": 6.938893903907228e-18,
+          "accepted_headings": 326,
+          "compensated_fixes": 0,
+          "replayed_heading_corrections": 0,
+          "heading_health_counts": {}
+        },
+        "continuous_guard_uses_unexpanded_nominal": true,
+        "actor_truth_used": false,
+        "confidence_calibrated": false
+      },
+      "cold_motion": {
+        "passed": true,
+        "verified_ticks": 1301,
+        "expanded_forecasts": 4,
+        "confirmations": 1,
+        "maximum_reachable_extra_radius_m": 121.14084769257725,
+        "maximum_speed_m_s": 15.0,
+        "first_acquisitions_scored": true,
+        "nominal_centers_preserved": true,
+        "actor_truth_used": false,
+        "maximum_speed_calibrated": false
+      },
+      "recent_velocity_hypotheses": {
+        "passed": true,
+        "verified_ticks": 1301,
+        "verified_point_discs": 424309,
+        "maximum_retained_samples": 9,
+        "maximum_velocity_difference_m_s": 1.2388242817971418,
+        "window_s": 0.8,
+        "maximum_samples_per_identity": 32,
+        "actor_truth_used": false,
+        "confidence_calibrated": false,
+        "cached_acquisitions_not_renewed": true,
+        "nominal_centers_preserved": true
+      },
+      "checked_approach": {
+        "passed": true,
+        "verified_ticks": 1301,
+        "adoptions": [
+          {
+            "time_s": 6.1000000000000005,
+            "supporting_acquisitions": 3,
+            "first_acquisition_s": 5.9,
+            "last_acquisition_s": 6.1000000000000005,
+            "proposal_end_progress_m": 48.19406573936109,
+            "proposal_endpoint": {
+              "x": 48.135075853731436,
+              "y": 6.8675469893831105
+            },
+            "proposal_lateral_target_m": 3.9,
+            "blocking_prediction_ids": [
+              1
+            ],
+            "adopted": true
+          }
+        ],
+        "certified_adopted_paths": 1,
+        "interval_bounds": 101,
+        "cached_acquisitions_cannot_authorize": true,
+        "actor_truth_used": false,
+        "counterfactual_candidate_optimality_verified": false
+      },
+      "stopping_certificates": {
+        "passed": true,
+        "verified_control_ticks": 1301,
+        "certified_checked_stops": 1224,
+        "certified_searched_stops": 63,
+        "interval_bounds": 55979,
+        "all_search_directions_checked": true,
+        "minimum_stationary_tail_s": 8.0,
+        "actor_truth_used": false,
+        "counterfactual_optimality_verified": false
+      },
+      "targets": {
+        "side_candidate_m": 3.9,
+        "side_control_ticks": 737,
+        "verified_control_ticks": 1301
+      },
+      "directional_certificates": {
+        "passed": true,
+        "active": true,
+        "certified_paths": 1296,
+        "interval_bounds": 55979,
+        "actor_truth_used": false,
+        "uncertainty_calibrated": false
+      },
+      "forecast_radius_use": {
+        "joint_nonconformity": 0.8798269426756457,
+        "joint_observed_covered": true,
+        "eligible_origins": 535,
+        "right_censored_origins": 80,
+        "unmatched_origins": 0,
+        "absent_actor_horizon_samples": 0,
+        "acquired_identities": 615,
+        "horizons": {
+          "0.2": {
+            "eligible": 535,
+            "matched": 535,
+            "covered": 535,
+            "unmatched": 0,
+            "actor_absent": 0,
+            "worst_utilization": {
+              "origin_s": 4.4,
+              "acquisition_s": 4.4,
+              "prediction_id": 1,
+              "actor_id": 0,
+              "required_extra_radius_m": 0.6087358130018643,
+              "published_extra_radius_m": 1.3941174686999385,
+              "world_pose_padding_m": 1.036794576245439,
+              "score": 0.4366459976787544
+            },
+            "required_extra_radius_m": {
+              "count": 535,
+              "minimum": 0.0,
+              "median": 0.0,
+              "p95": 0.14741118364335426,
+              "maximum": 0.6496365607149717
+            },
+            "published_extra_radius_m": {
+              "count": 535,
+              "minimum": 0.6709555833125512,
+              "median": 0.7829135644371719,
+              "p95": 1.4339160320749593,
+              "maximum": 4.693751872681511
+            },
+            "unused_radius_m": {
+              "count": 535,
+              "minimum": 0.5448784576373278,
+              "median": 0.7601049773366718,
+              "p95": 1.3127961433904582,
+              "maximum": 4.369489169942817
+            },
+            "declared_cv_error_radius_m": {
+              "count": 535,
+              "minimum": 0.262,
+              "median": 0.262,
+              "p95": 0.262,
+              "maximum": 0.262
+            },
+            "world_pose_padding_m": {
+              "count": 535,
+              "minimum": 0.4089555833125512,
+              "median": 0.5209135644371718,
+              "p95": 1.1224120335303753,
+              "maximum": 1.4890103151019496
+            },
+            "coverage_fraction": 1.0
+          },
+          "1.0": {
+            "eligible": 535,
+            "matched": 535,
+            "covered": 535,
+            "unmatched": 0,
+            "actor_absent": 0,
+            "worst_utilization": {
+              "origin_s": 4.4,
+              "acquisition_s": 4.4,
+              "prediction_id": 1,
+              "actor_id": 0,
+              "required_extra_radius_m": 1.2270137027056212,
+              "published_extra_radius_m": 2.023983712733303,
+              "world_pose_padding_m": 1.0373692504608047,
+              "score": 0.6062369449844001
+            },
+            "required_extra_radius_m": {
+              "count": 535,
+              "minimum": 0.0,
+              "median": 0.0,
+              "p95": 0.157294080937755,
+              "maximum": 1.2270137027056212
+            },
+            "published_extra_radius_m": {
+              "count": 535,
+              "minimum": 0.9587596020204038,
+              "median": 1.0708594353722949,
+              "p95": 1.8042438564462726,
+              "maximum": 16.71212604844967
+            },
+            "unused_radius_m": {
+              "count": 535,
+              "minimum": 0.7969700100276818,
+              "median": 1.0448454963707334,
+              "p95": 1.568097812308306,
+              "maximum": 16.38644042049592
+            },
+            "declared_cv_error_radius_m": {
+              "count": 535,
+              "minimum": 0.55,
+              "median": 0.55,
+              "p95": 0.55,
+              "maximum": 0.55
+            },
+            "world_pose_padding_m": {
+              "count": 535,
+              "minimum": 0.40875960202040373,
+              "median": 0.5208594353722948,
+              "p95": 1.1224120335303753,
+              "maximum": 1.4884182605518743
+            },
+            "coverage_fraction": 1.0
+          },
+          "2.0": {
+            "eligible": 535,
+            "matched": 535,
+            "covered": 535,
+            "unmatched": 0,
+            "actor_absent": 0,
+            "worst_utilization": {
+              "origin_s": 4.4,
+              "acquisition_s": 4.4,
+              "prediction_id": 1,
+              "actor_id": 0,
+              "required_extra_radius_m": 1.999924938371195,
+              "published_extra_radius_m": 2.8116106015951354,
+              "world_pose_padding_m": 1.038381677050138,
+              "score": 0.7113093602778991
+            },
+            "required_extra_radius_m": {
+              "count": 535,
+              "minimum": 0.0,
+              "median": 0.0,
+              "p95": 0.3151408143761725,
+              "maximum": 1.999924938371195
+            },
+            "published_extra_radius_m": {
+              "count": 535,
+              "minimum": 1.4081054587263913,
+              "median": 1.5207908981550293,
+              "p95": 2.2707680783631883,
+              "maximum": 31.735093789420784
+            },
+            "unused_radius_m": {
+              "count": 535,
+              "minimum": 0.8116856632239404,
+              "median": 1.4878264556735188,
+              "p95": 1.9690792714883683,
+              "maximum": 31.4064666286647
+            },
+            "declared_cv_error_radius_m": {
+              "count": 535,
+              "minimum": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "maximum": 1.0
+            },
+            "world_pose_padding_m": {
+              "count": 535,
+              "minimum": 0.4081054587263912,
+              "median": 0.5207908981550293,
+              "p95": 1.1224120335303753,
+              "maximum": 1.487678213625198
+            },
+            "coverage_fraction": 1.0
+          },
+          "4.0": {
+            "eligible": 535,
+            "matched": 535,
+            "covered": 535,
+            "unmatched": 0,
+            "actor_absent": 0,
+            "worst_utilization": {
+              "origin_s": 4.4,
+              "acquisition_s": 4.4,
+              "prediction_id": 1,
+              "actor_id": 0,
+              "required_extra_radius_m": 3.545790397465577,
+              "published_extra_radius_m": 4.387840686802256,
+              "world_pose_padding_m": 1.0413828377122618,
+              "score": 0.8080946074752903
+            },
+            "required_extra_radius_m": {
+              "count": 535,
+              "minimum": 0.0,
+              "median": 0.0,
+              "p95": 0.5728671595257517,
+              "maximum": 3.545790397465577
+            },
+            "published_extra_radius_m": {
+              "count": 535,
+              "minimum": 2.6063069827746874,
+              "median": 2.7206104505766615,
+              "p95": 3.474759516948689,
+              "maximum": 61.781029342366764
+            },
+            "unused_radius_m": {
+              "count": 535,
+              "minimum": 0.8420502893366786,
+              "median": 2.6581839137879983,
+              "p95": 3.0455018039131643,
+              "maximum": 61.44275359667096
+            },
+            "declared_cv_error_radius_m": {
+              "count": 535,
+              "minimum": 2.2,
+              "median": 2.2,
+              "p95": 2.2,
+              "maximum": 2.2
+            },
+            "world_pose_padding_m": {
+              "count": 535,
+              "minimum": 0.40630698277468724,
+              "median": 0.5206104505766614,
+              "p95": 1.1224120335303753,
+              "maximum": 1.4861981907755855
+            },
+            "coverage_fraction": 1.0
+          },
+          "8.0": {
+            "eligible": 535,
+            "matched": 535,
+            "covered": 535,
+            "unmatched": 0,
+            "actor_absent": 0,
+            "worst_utilization": {
+              "origin_s": 4.4,
+              "acquisition_s": 4.4,
+              "prediction_id": 1,
+              "actor_id": 0,
+              "required_extra_radius_m": 6.637555882238186,
+              "published_extra_radius_m": 7.544160743762501,
+              "world_pose_padding_m": 1.0512450455825135,
+              "score": 0.8798269426756457
+            },
+            "required_extra_radius_m": {
+              "count": 535,
+              "minimum": 0.0,
+              "median": 0.0018663474878339859,
+              "p95": 1.2861523449074774,
+              "maximum": 6.637555882238186
+            },
+            "published_extra_radius_m": {
+              "count": 535,
+              "minimum": 6.202725058738988,
+              "median": 6.320191836457322,
+              "p95": 7.071798647649926,
+              "maximum": 121.87290073326487
+            },
+            "unused_radius_m": {
+              "count": 535,
+              "minimum": 0.9066048615243147,
+              "median": 6.21072382133725,
+              "p95": 6.515779875078756,
+              "maximum": 121.50154149053733
+            },
+            "declared_cv_error_radius_m": {
+              "count": 535,
+              "minimum": 5.800000000000001,
+              "median": 5.800000000000001,
+              "p95": 5.800000000000001,
+              "maximum": 5.800000000000001
+            },
+            "world_pose_padding_m": {
+              "count": 535,
+              "minimum": 0.4027250587389869,
+              "median": 0.5201918364573221,
+              "p95": 1.1307288411369023,
+              "maximum": 1.483238430082528
+            },
+            "coverage_fraction": 1.0
+          }
+        },
+        "first_stationary_checked_stop": {
+          "time_s": 5.9,
+          "route_progress_m": 18.211210332727834,
+          "declared_cv_error_radius_m": 5.800000000000001,
+          "origin_s": 5.9,
+          "acquisition_s": 5.9,
+          "prediction_id": 1,
+          "actor_id": 0,
+          "required_extra_radius_m": 1.7103351064444081,
+          "published_extra_radius_m": 7.105627152303882,
+          "world_pose_padding_m": 1.3056271523038812,
+          "score": 0.24070149893663648
+        },
+        "original_summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 7,
+          "simulated_seconds": 65.0,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 11.608797837280049,
+          "localization_rmse": 0.05334920343420215,
+          "localization_max_error": 0.15026792888881907,
+          "final_speed": 0.0,
+          "progress": 44.83165026130202,
+          "emergency_steps": 5,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "evaluation_only": true,
+        "association_uses_future": false,
+        "operational_policy_changed": false,
+        "confidence_established": false
+      },
+      "healthy_emergency_transitions": 4,
+      "storage": {
+        "replay/outputs.jsonl": {
+          "path": "replay/outputs.jsonl.xz",
+          "sha256": "cb54ea52e957328ad481591504adb1aaa1c7fe0e6f4c3fb33464ec129565d462",
+          "stored_sha256": "95d2331c804c0bb212025f5c46be612d1ca70424057bdc9856306f2983c9e711",
+          "encoding": "xz"
+        },
+        "replay/replay.json": {
+          "path": "replay/replay.json.xz",
+          "sha256": "24136c8acf5b8cfdc01f5d45f8c1426b00e892b5de8b82a012ed5ad6ed357566",
+          "stored_sha256": "163a215824a317e3e2822ba110583d437103d836c1b70231b618e16d285e4851",
+          "encoding": "xz"
+        },
+        "run/run.json": {
+          "path": "run/run.json.xz",
+          "sha256": "803494d7992265304c2031c34c753a531ac329343482ef1db195231c73cf08e8",
+          "stored_sha256": "675d57fc2d93ddf13dcd56856e9aa6d0c03a4a4d2e736f8bcb6b79bafe3a5a6b",
+          "encoding": "xz"
+        },
+        "run/sensors.jsonl": {
+          "path": "run/sensors.jsonl.xz",
+          "sha256": "0294ba21a071b049ab25acd75d30947ac495d661010b6283d2287b0cb34809a2",
+          "stored_sha256": "240159f074a07c3af359add4b0d059f7aeff78aa7216035e165ba992ad917ed8",
+          "encoding": "xz"
+        },
+        "run/summary.json": {
+          "path": "run/summary.json.xz",
+          "sha256": "e36753dd4d0ed0311475d81945985f81c842f8bab21921bd28b61e26c89e6fdd",
+          "stored_sha256": "194b083424b2b053dbdfc98c58071ea0fd5b14476e79ad9f874f6ca34be7580d",
+          "encoding": "xz"
+        }
+      },
+      "comparison": {
+        "regression_passed": true,
+        "new_failed_gates": [],
+        "baseline_failed_gates": [
+          "source_acceptance"
+        ],
+        "coverage": {
+          "0.2": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 613,
+            "after_eligible": 613
+          },
+          "1.0": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 605,
+            "after_eligible": 605
+          },
+          "2.0": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 595,
+            "after_eligible": 595
+          },
+          "4.0": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 575,
+            "after_eligible": 575
+          },
+          "8.0": {
+            "before": 1.0,
+            "after": 1.0,
+            "before_eligible": 535,
+            "after_eligible": 535
+          }
+        }
+      }
+    }
+  ],
+  "default_policy_changed": false,
+  "new_scenario_flag": false,
+  "truth_operational_input": false,
+  "fixed_inputs": {
+    "passed": false,
+    "cases": [
+      {
+        "seed": 7,
+        "input_sha256": "814c7f737e5a91b36073388b09d4c4070057d385964a10444fd3cde329ed1bde",
+        "required_eight_second_radius_m": {
+          "old": {
+            "count": 535,
+            "minimum": 0.0,
+            "median": 0.009626780488216413,
+            "p95": 1.7224936902364867,
+            "maximum": 8.542303717117793
+          },
+          "calibrated": {
+            "count": 535,
+            "minimum": 0.0,
+            "median": 0.007336650283039425,
+            "p95": 1.5549486683273932,
+            "maximum": 6.682684626171525
+          }
+        },
+        "at_five_seconds": {
+          "old": {
+            "track": {
+              "id": 1,
+              "position": {
+                "x": 57.91570262379413,
+                "y": 2.889066694911334
+              },
+              "velocity": {
+                "x": 0.05701494844650499,
+                "y": -1.1152920973212086
+              },
+              "radius": 1.1440103715896917,
+              "last_seen": 5.0
+            },
+            "forecast_endpoint": {
+              "x": 58.37182221136618,
+              "y": -6.033270083658335
+            },
+            "required_extra_radius_m": 8.542303717117793,
+            "published_extra_radius_m": 11.97092135594673
+          },
+          "calibrated": {
+            "track": {
+              "id": 1,
+              "last_seen": 5.0,
+              "position": {
+                "x": 57.866951821586085,
+                "y": 3.0571391467498477
+              },
+              "radius": 1.1343204491094396,
+              "velocity": {
+                "x": -0.12468250233632261,
+                "y": -0.6077960124906614
+              }
+            },
+            "forecast_endpoint": {
+              "x": 56.869491802895496,
+              "y": -1.8052289531754435
+            },
+            "required_extra_radius_m": 4.42008796049725,
+            "published_extra_radius_m": 12.315162471944264
+          }
+        },
+        "passed": false,
+        "closed_loop": false,
+        "original_replay_verified": true,
+        "actor_truth_evaluation_only": true
+      },
+      {
+        "seed": 42,
+        "input_sha256": "f1bf2669572ebc24c40a70f789116add7e3494fcbeca1e4d9de2a4d262723efe",
+        "required_eight_second_radius_m": {
+          "old": {
+            "count": 535,
+            "minimum": 0.0,
+            "median": 0.024106488507458446,
+            "p95": 1.2710119043856745,
+            "maximum": 2.121849338464721
+          },
+          "calibrated": {
+            "count": 535,
+            "minimum": 0.0,
+            "median": 0.022809032885593217,
+            "p95": 0.587683374226998,
+            "maximum": 1.7526855782524569
+          }
+        },
+        "at_five_seconds": {
+          "old": {
+            "track": {
+              "id": 1,
+              "position": {
+                "x": 57.79846447020991,
+                "y": 2.6645318100724578
+              },
+              "velocity": {
+                "x": -0.0689970685051164,
+                "y": -0.0011002111029692094
+              },
+              "radius": 1.1265193033362155,
+              "last_seen": 5.0
+            },
+            "forecast_endpoint": {
+              "x": 57.24648792216897,
+              "y": 2.655730121248704
+            },
+            "required_extra_radius_m": 0.4950740975375083,
+            "published_extra_radius_m": 6.784129458936631
+          },
+          "calibrated": {
+            "track": {
+              "id": 1,
+              "last_seen": 5.0,
+              "position": {
+                "x": 57.7987087975149,
+                "y": 2.6621418403878327
+              },
+              "radius": 1.1265173990827229,
+              "velocity": {
+                "x": -0.06865111380162729,
+                "y": -0.004964762928830371
+              }
+            },
+            "forecast_endpoint": {
+              "x": 57.249499887101884,
+              "y": 2.62242373695719
+            },
+            "required_extra_radius_m": 0.4920293600357506,
+            "published_extra_radius_m": 6.784177246724524
+          }
+        },
+        "passed": true,
+        "closed_loop": false,
+        "original_replay_verified": true,
+        "actor_truth_evaluation_only": true
+      }
+    ]
+  },
+  "full_qualification_complete": false,
+  "strict_passes": 0,
+  "arrivals": 0,
+  "original_full_adoption_gate_passed": false
+}

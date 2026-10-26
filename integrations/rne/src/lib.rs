@@ -326,13 +326,28 @@ impl RneBackend {
             return Err("friction/lag calibration requires --plant dynamic".into());
         }
         let mut config = pipeline_config(&scenario);
-        // Dynamic RNE reports a chassis/COM pose, not a rear-axle pose. This
-        // opt-in low-speed model uses declared plant geometry and noisy odometry.
+        // Dynamic RNE reports a chassis/COM pose. Acquired-motion fitting also
+        // needs that declared body reference on the original road geometry:
+        // otherwise ego lateral motion can be differentiated as object motion.
+        if plant == Plant::Dynamic
+            && (scenario.local_route_geometry
+                || scenario.gnss_latency_compensation
+                || scenario.fit_recent_track_motion)
+        {
+            config.rear_axle_offset_m = Some(VehicleDynamics::default().rear_axle_m);
+            // The 20 Hz observations are endpoint rates after ten physics
+            // substeps, not rates held over the preceding sensor interval.
+            config.instantaneous_odometry = scenario.fit_recent_track_motion
+                && !config.local_route_geometry
+                && !config.gnss_latency_compensation
+                && !config.heading_latency_compensation
+                && config.localization_map.is_none()
+                && config.relocalization.is_none();
+        }
         if (scenario.local_route_geometry || scenario.gnss_latency_compensation)
             && plant == Plant::Dynamic
         {
             config.local_route_geometry = true;
-            config.rear_axle_offset_m = Some(VehicleDynamics::default().rear_axle_m);
             config.motion_limits.get_or_insert(MotionLimits {
                 max_acceleration_m_s2: 2.0,
                 max_deceleration_m_s2: 2.5,
@@ -2323,6 +2338,29 @@ mod tests {
             }
         }
     }
+    #[test]
+    fn acquired_motion_records_chassis_calibration_without_changing_road_geometry() {
+        for plant in [Plant::Kinematic, Plant::Dynamic] {
+            for fitting in [false, true] {
+                let mut input = scenario("mission");
+                input.fit_recent_track_motion = fitting;
+                input.enclose_track_measurements = fitting;
+                let backend = RneBackend::new(input, 7, plant).unwrap();
+                assert!(!backend.config.local_route_geometry);
+                assert!(backend.config.motion_limits.is_none());
+                assert_eq!(
+                    backend.config.instantaneous_odometry,
+                    fitting && plant == Plant::Dynamic
+                );
+                assert_eq!(
+                    backend.config.rear_axle_offset_m,
+                    (fitting && plant == Plant::Dynamic)
+                        .then_some(VehicleDynamics::default().rear_axle_m)
+                );
+            }
+        }
+    }
+
     #[test]
     fn delayed_gnss_keeps_native_chassis_accuracy_during_obstacle_passing() {
         for seed in [1, 7, 42] {
