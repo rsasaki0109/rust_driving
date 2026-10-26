@@ -1,0 +1,9 @@
+{
+  "source": "92c72b1c473f0b6209f09c4ce1ff9508026b2d40",
+  "path": "assets/chassis-acquisition-v2/canaries/92c72b1c473f0b6209f09c4ce1ff9508026b2d40.json",
+  "stage": "canary",
+  "complete": true,
+  "passed": true,
+  "contracts_passed": true,
+  "adopted": false
+}
