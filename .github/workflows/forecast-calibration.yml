@@ -1,0 +1,54 @@
+name: Grouped forecast calibration
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: forecast-calibration-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  contracts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+          components: rustfmt,clippy
+      - name: Run independent temporal and dependence controls
+        run: python scripts/test_forecast_calibration.py
+      - name: Run the pinned workspace and original scenario replays
+        run: bash scripts/check.sh
+  analysis:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify recorded driver equivalence and analytic controls
+        run: |
+          git fetch --no-tags --depth=1 origin 8550e1a2b1d06703d05036a625609e21b9fa0cf6
+          git diff --exit-code 8550e1a2b1d06703d05036a625609e21b9fa0cf6 HEAD -- crates Cargo.lock rust-toolchain.toml integrations/rne
+          python scripts/test_forecast_calibration.py
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '12624662660'
+          run-id: '40258418216'
+          github-token: ${{ github.token }}
+          path: retained-directional-evidence
+          merge-multiple: true
+      - name: Reinspect all 48 stored cases without altering any source outcome
+        run: |
+          python scripts/check_forecast_calibration.py --evidence retained-directional-evidence --output artifacts/forecast-calibration/report.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: forecast-calibration-analysis
+          path: artifacts/forecast-calibration
+          if-no-files-found: warn

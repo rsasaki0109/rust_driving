@@ -59,7 +59,12 @@ reference seed-7 mission. The original all-case strict and mission-arrival gate
 remains separate. Reports retain every failed case and distinguish bounded
 regression qualification from full adoption.
 
-Standard reference and native CI also invokes the later-stop suite with\n\`--verify-directional-reserves\`, retaining the independent path certificates\nfor subsequent driving changes. This is a validation-tool option, not a\nscenario or driver setting.\n\nThe source-only policy and unchanged budgets are recorded in
+Standard reference and native CI also invokes the later-stop suite with
+`--verify-directional-reserves`, retaining the independent path certificates
+for subsequent driving changes. This is a validation-tool option, not a
+scenario or driver setting.
+
+The source-only policy and unchanged budgets are recorded in
 [`directional-reserve-v1.json`](../integrations/planning/directional-reserve-v1.json).
 The paired qualification workflow at the recorded tested-source commit runs the pinned workspace check,
 analytic controls and paired source comparison. Evidence is retained by tested
@@ -98,3 +103,7 @@ each case's gains and losses. The first complete report and paired workflow are
 preserved at its recorded tested-source commit; the temporary workflow publisher
 is excluded from the maintained tree. Standard CI retains the independent
 checker on both plants.
+
+The [offline calibration audit](forecast-calibration.md) measures recorded
+radius use across complete observation windows and groups all repeated cases
+by seed. Its retrospective cohort cannot establish a finite 99% threshold.

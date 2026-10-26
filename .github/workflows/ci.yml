@@ -31,6 +31,8 @@ jobs:
         run: python scripts/test_prediction_evidence.py
       - name: Check declared forecast envelope containment and failure scoring
         run: python scripts/test_forecast_envelope.py
+      - name: Check whole-episode forecast calibration and dependence groups
+        run: python scripts/test_forecast_calibration.py
       - name: Check pose covariance occupancy and corrupt padding rejection
         run: python scripts/test_pose_forecasts.py
       - name: Check cold motion clocks, reachable occupancy and corrupt support rejection
