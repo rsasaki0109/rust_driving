@@ -1,8 +1,5 @@
 name: Grouped forecast calibration
 on:
-  push:
-    branches: [feat/grouped-forecast-calibration]
-    paths: ['scripts/forecast_calibration.py','scripts/check_forecast_calibration.py','scripts/test_forecast_calibration.py','scripts/check.sh','integrations/planning/forecast-calibration-v1.json','.github/workflows/forecast-calibration.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -55,43 +52,3 @@ jobs:
           name: forecast-calibration-analysis
           path: artifacts/forecast-calibration
           if-no-files-found: warn
-  preserve:
-    if: needs.contracts.result == 'success' && needs.analysis.result == 'success' && github.ref_name == 'feat/grouped-forecast-calibration'
-    needs: [contracts,analysis]
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
-        with:
-          name: forecast-calibration-analysis
-          path: retained-analysis
-      - name: Preserve the first source-keyed analysis with a branch lease
-        env:
-          RUSTDRIVING_ANALYSIS_SOURCE: ${{ github.sha }}
-        run: |
-          python - <<'PY'
-          import hashlib,json,os
-          from pathlib import Path
-          source=os.environ['RUSTDRIVING_ANALYSIS_SOURCE']
-          raw=Path('retained-analysis/report.json').read_bytes()
-          report=json.loads(raw)
-          assert report['complete'] and report['cases_verified']==48
-          assert report['simulation_rerun'] is False and report['operational_policy_changed'] is False
-          assert report['confidence_established'] is False
-          folder=Path('assets/forecast-calibration-v1/canaries')
-          folder.mkdir(parents=True,exist_ok=True)
-          target=folder/(source+'.json')
-          with target.open('xb') as stream:stream.write(raw)
-          pointer=dict(analysis_source=source,path=str(target),sha256=hashlib.sha256(raw).hexdigest(),
-                       complete=True,cases=48,operational_change=False,confidence_established=False)
-          Path('assets/forecast-calibration-v1/latest.json').write_text(json.dumps(pointer,indent=2)+'\n')
-          PY
-          test "$GITHUB_REF_NAME" = 'feat/grouped-forecast-calibration'
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add assets/forecast-calibration-v1
-          git commit -m 'Preserve grouped forecast calibration with original outcomes'
-          git push --force-with-lease="refs/heads/feat/grouped-forecast-calibration:$RUSTDRIVING_ANALYSIS_SOURCE" origin HEAD:refs/heads/feat/grouped-forecast-calibration

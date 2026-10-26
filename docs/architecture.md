@@ -455,6 +455,11 @@ same declared budget; nominal reserves are never reduced. Independent angular
 support and accelerated-path certificates check this policy.
 [Directional reserve model and regression qualification](directional-reserves.md).
 
+The offline [forecast calibration audit](forecast-calibration.md) scores complete
+observation windows and groups repeated worlds and plants by seed. It retains
+original coverage and driving failures; the viewed split has no finite 99%
+calibration threshold and never changes operational forecasts.
+
 Optional `search_obstruction_stops` requires `settle_obstruction_stops`. After
 ordinary collision retiming fails, it checks at most 16 earlier reachable stops
 with the same collision sweep and eight-second stationary tail. A selected moving
