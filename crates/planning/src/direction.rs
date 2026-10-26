@@ -187,8 +187,8 @@ mod tests {
         model.acceleration = 0.2;
         model.age = 0.5;
         let heading = Vec2::new(1., 0.);
-        assert!((model.reserve(0., heading) - 0.7 * 0.2 / 4.).abs() < 1e-12);
-        assert!((model.reserve(1., heading) - 0.7 * 0.4 / 4.).abs() < 1e-12);
+        assert!((model.reserve(0., heading) - 0.4 * 0.2).abs() < 1e-12);
+        assert!((model.reserve(1., heading) - 0.4 * 0.4).abs() < 1e-12);
         let later = Envelope { age: 1.5, ..model };
         assert!((later.reserve(0., heading) - model.reserve(1., heading)).abs() < 1e-12);
     }

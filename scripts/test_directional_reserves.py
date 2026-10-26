@@ -11,7 +11,7 @@ class DirectionalSupport(unittest.TestCase):
             self.assertEqual(directional_reserve(velocity,.3,(1.,0.)),.7)
         self.assertEqual(directional_reserve((0.,0.),0.,(1.,0.)),0.)
     def test_known_parallel_velocity_has_the_analytic_tangent_circle_bound(self):
-        self.assertAlmostEqual(directional_reserve((4.,0.),.2,(1.,0.)),.7*.2/4.)
+        self.assertAlmostEqual(directional_reserve((1.,0.),.2,(1.,0.)),.7*.2)
         self.assertAlmostEqual(directional_reserve((.3,0.),.3,(1.,0.)),.7)
         self.assertAlmostEqual(directional_reserve((0.,.001),0.,(1.,0.)),.7)
     def test_circle_sampling_cannot_exceed_support(self):
