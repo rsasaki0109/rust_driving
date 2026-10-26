@@ -1,0 +1,71 @@
+name: Inspect original mission stall conflicts
+on:
+  push:
+    branches: [feat/stall-conflict-witnesses]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: workspace-ubuntu24-rust190-v1-${{ hashFiles('Cargo.lock', 'rust-toolchain.toml', '.cargo/config.toml') }}
+      - run: rustup toolchain install 1.90.0 --profile minimal --component rustfmt --component clippy
+      - name: Required workspace verification
+        run: bash scripts/check.sh
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/test_stall_conflicts.py
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '12638847273'
+          run-id: '40295079674'
+          github-token: ${{ github.token }}
+          path: retained-chassis
+          merge-multiple: true
+      - run: python scripts/inspect_stall_conflicts.py --evidence retained-chassis --output artifacts/stall-conflicts.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stall-conflicts
+          path: artifacts/stall-conflicts.json
+  retain:
+    needs: [verify,inspect]
+    if: github.ref == 'refs/heads/feat/stall-conflict-witnesses'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: stall-conflicts
+          path: retained
+      - name: Preserve source-keyed diagnosis
+        env:
+          DIAG_SOURCE: ${{ github.sha }}
+        run: |
+          mkdir -p assets/stall-conflicts
+          cp retained/stall-conflicts.json "assets/stall-conflicts/$DIAG_SOURCE.json"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/stall-conflicts
+          git commit -m 'Retain original mission conflict witnesses'
+          git push --force-with-lease="refs/heads/feat/stall-conflict-witnesses:$DIAG_SOURCE" origin HEAD:refs/heads/feat/stall-conflict-witnesses
