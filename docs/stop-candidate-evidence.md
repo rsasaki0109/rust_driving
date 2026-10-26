@@ -51,7 +51,7 @@ Each probe selects the +3.9 m-side checked stop. Its travel takes about
 directional-clearance checker accepts each selected proposal under the recorded
 forecast semantics. Those semantics hold the final prediction sample beyond
 eight seconds; this does not establish physical uncertainty coverage after the
-forecast horizon. Rejected alternatives can have much longer arrival times
+forecast horizon. Other, unselected alternatives can have much longer arrival times
 (for example, the native seed-42 center stop); they are not selected.
 
 This establishes one concrete admission barrier at the inspected snapshots:
