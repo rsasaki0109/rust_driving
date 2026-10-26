@@ -449,6 +449,12 @@ inspection checks all selected checked stops, including their kinematic
 integrals and complete stationary tails, without using actor truth.
 [Model, independent certificates and remaining mission limits](later-stops.md).
 
+Checked approaches also retain the empirical transverse reserve over the supplied
+world-velocity error disc. Acquisition age and future acceleration consume the
+same declared budget; nominal reserves are never reduced. Independent angular
+support and accelerated-path certificates check this policy.
+[Directional reserve model and regression qualification](directional-reserves.md).
+
 Optional `search_obstruction_stops` requires `settle_obstruction_stops`. After
 ordinary collision retiming fails, it checks at most 16 earlier reachable stops
 with the same collision sweep and eight-second stationary tail. A selected moving

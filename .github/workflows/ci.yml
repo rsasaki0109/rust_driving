@@ -246,7 +246,7 @@ jobs:
         run: python scripts/check_checked_approaches.py --plant reference-2d --output artifacts/checked-approaches
       - name: Qualify reference later stopping search against unchanged gates
         shell: bash
-        run: python scripts/check_later_stops.py --plant reference-2d --output artifacts/later-stops
+        run: python scripts/check_later_stops.py --plant reference-2d --output artifacts/later-stops --verify-directional-reserves
       - name: Verify stop-sign obligations after measured localization recovery
         shell: bash
         run: python scripts/check_stop_relocalization.py --plant reference-2d --smoke --output artifacts/stop-relocalization
@@ -1279,7 +1279,7 @@ jobs:
         run: python3 scripts/check_checked_approaches.py --plant rne-dynamic --output artifacts/checked-approaches-native
       - name: Qualify native later stopping search against unchanged gates
         working-directory: rust_drive
-        run: python3 scripts/check_later_stops.py --plant rne-dynamic --output artifacts/later-stops-native
+        run: python3 scripts/check_later_stops.py --plant rne-dynamic --output artifacts/later-stops-native --verify-directional-reserves
       - name: Verify native stop-sign obligations after measured localization recovery
         working-directory: rust_drive
         run: python3 scripts/check_stop_relocalization.py --plant rne-dynamic --smoke --output artifacts/stop-relocalization-native
