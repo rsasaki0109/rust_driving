@@ -1,9 +1,11 @@
 {
   "source": "92c72b1c473f0b6209f09c4ce1ff9508026b2d40",
-  "path": "assets/chassis-acquisition-v2/canaries/92c72b1c473f0b6209f09c4ce1ff9508026b2d40.json",
-  "stage": "canary",
+  "path": "assets/chassis-acquisition-v2/qualifications/92c72b1c473f0b6209f09c4ce1ff9508026b2d40.json",
+  "stage": "full",
   "complete": true,
   "passed": true,
   "contracts_passed": true,
+  "contracts_job": 121475928949,
+  "run": 40295079674,
   "adopted": false
 }
