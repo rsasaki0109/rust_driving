@@ -1,6 +1,6 @@
 //! Piecewise-linear, synchronized circular sweeps for candidate trajectory validation.
-use rustdriving_core::{Prediction, TrajectoryPoint, Vec2};
 use super::direction::Envelope;
+use rustdriving_core::{Prediction, TrajectoryPoint, Vec2};
 
 /// Earliest contact under the supplied time parameterization. Inputs are validated by
 /// the planner. Prediction knots are linearly interpolated, then held at the last point.
@@ -29,7 +29,14 @@ pub(super) fn with_minimum_clearance(
     held_heading: Vec2,
     minimum_clearance: f64,
 ) -> Option<f64> {
-    with_motion_direction(path, object, vehicle_radius, held_heading, minimum_clearance, None)
+    with_motion_direction(
+        path,
+        object,
+        vehicle_radius,
+        held_heading,
+        minimum_clearance,
+        None,
+    )
 }
 
 pub(super) fn with_motion_direction(
@@ -221,15 +228,41 @@ mod tests {
         use super::super::direction::Context;
         use rustdriving_core::{ForecastEnvelopeConfig, Track};
         let context = Context::observe(
-            ForecastEnvelopeConfig { position_error_m: 0., velocity_error_m_s: 0., acceleration_error_m_s2: 0. },
-            &[Track { id: 1, position: Vec2::default(), velocity: Vec2::default(), radius: 0.5, last_seen: 0. }],
+            ForecastEnvelopeConfig {
+                position_error_m: 0.,
+                velocity_error_m_s: 0.,
+                acceleration_error_m_s2: 0.,
+            },
+            &[Track {
+                id: 1,
+                position: Vec2::default(),
+                velocity: Vec2::default(),
+                radius: 0.5,
+                last_seen: 0.,
+            }],
             0.,
         );
         let ego = path(Vec2::default(), Vec2::default(), [0., 1.]);
-        let object = Prediction { id: 1, radius: 0.5, positions: vec![Vec2::new(1.8, 0.), Vec2::new(1.8, 0.01)], dt: 1., additional_radius_m: vec![] };
+        let object = Prediction {
+            id: 1,
+            radius: 0.5,
+            positions: vec![Vec2::new(1.8, 0.), Vec2::new(1.8, 0.01)],
+            dt: 1.,
+            additional_radius_m: vec![],
+        };
         let heading = Vec2::new(1., 0.);
         assert_eq!(first_contact_time(&ego, &object, 1., heading), Some(0.));
-        assert_eq!(with_motion_direction(&ego, &object, 1., heading, 0., Some(context.for_prediction(1))), Some(0.));
+        assert_eq!(
+            with_motion_direction(
+                &ego,
+                &object,
+                1.,
+                heading,
+                0.,
+                Some(context.for_prediction(1))
+            ),
+            Some(0.)
+        );
     }
 
     #[test]

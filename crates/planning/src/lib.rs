@@ -1,9 +1,9 @@
 //! Receding-horizon lateral lattice with time-indexed collision envelopes.
 mod checked_approach;
 mod collision;
-mod direction;
 mod corners;
 mod diagnostics;
+mod direction;
 mod geometry;
 mod speed;
 mod speed_zones;
@@ -447,7 +447,9 @@ impl LatticePlanner {
                                 self.vehicle.radius,
                                 rustdriving_core::Vec2::new(ego.pose.yaw.cos(), ego.pose.yaw.sin()),
                                 REFINED_CANDIDATE_CLEARANCE_M,
-                                self.motion_directions.as_ref().map(|context| context.for_prediction(object.id)),
+                                self.motion_directions
+                                    .as_ref()
+                                    .map(|context| context.for_prediction(object.id)),
                             )
                             .is_some()
                         })
@@ -610,16 +612,25 @@ impl LatticePlanner {
                                 self.vehicle.radius,
                                 heading,
                                 REFINED_CANDIDATE_CLEARANCE_M,
-                                self.motion_directions.as_ref().map(|context| context.for_prediction(object.id)),
+                                self.motion_directions
+                                    .as_ref()
+                                    .map(|context| context.for_prediction(object.id)),
                             )
                         } else if let Some(context) = &self.motion_directions {
-                                collision::with_motion_direction(
-                                    path, object, self.vehicle.radius, heading, 0.,
-                                    Some(context.for_prediction(object.id)),
-                                )
+                            collision::with_motion_direction(
+                                path,
+                                object,
+                                self.vehicle.radius,
+                                heading,
+                                0.,
+                                Some(context.for_prediction(object.id)),
+                            )
                         } else {
                             collision::first_contact_time(
-                                path, object, self.vehicle.radius, heading,
+                                path,
+                                object,
+                                self.vehicle.radius,
+                                heading,
                             )
                         }
                     })
@@ -645,7 +656,9 @@ impl LatticePlanner {
                             self.vehicle.radius,
                             heading,
                             floor,
-                            self.motion_directions.as_ref().map(|context| context.for_prediction(object.id)),
+                            self.motion_directions
+                                .as_ref()
+                                .map(|context| context.for_prediction(object.id)),
                         )
                         .map(|time| PlanningForecastConflict {
                             prediction_id: object.id,

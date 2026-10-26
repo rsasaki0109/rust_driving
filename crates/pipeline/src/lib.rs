@@ -1746,7 +1746,11 @@ impl DrivingPipeline {
             },
         );
         self.planner.observe_motion_directions(
-            if self.config.replan_checked_approaches { self.config.forecast_envelope } else { None },
+            if self.config.replan_checked_approaches {
+                self.config.forecast_envelope
+            } else {
+                None
+            },
             &self.tracks,
             input.time,
         );
