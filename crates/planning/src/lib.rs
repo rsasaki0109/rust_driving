@@ -1089,7 +1089,12 @@ mod tests {
         let probe = planner.inspect_stopping_proposals(ego, &route, std::slice::from_ref(&object));
         assert!(!probe.attempts.is_empty());
         assert!(probe.attempts.len() <= 294);
-        assert!(probe.attempts.iter().all(|a| a.hold_end_s - a.hold_start_s >= 8. - 1e-9));
+        assert!(
+            probe
+                .attempts
+                .iter()
+                .all(|a| a.hold_end_s - a.hold_start_s >= 8. - 1e-9)
+        );
         assert!(probe.attempts.iter().any(|a| a.first_contact_s.is_none()));
         let actual = planner.plan(ego, &route, std::slice::from_ref(&object));
         let expected = untouched.plan(ego, &route, &[object]);

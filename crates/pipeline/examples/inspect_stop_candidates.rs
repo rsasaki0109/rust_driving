@@ -14,7 +14,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Err("invalid inspection time".into());
     }
     let mut reader = BufReader::new(File::open(&args[1])?);
-    let mut output = OpenOptions::new().write(true).create_new(true).open(&args[2])?;
+    let mut output = OpenOptions::new()
+        .write(true)
+        .create_new(true)
+        .open(&args[2])?;
     let mut pipeline = None;
     let mut ticks = 0_usize;
     let mut inspected = 0_usize;
@@ -33,13 +36,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 if pipeline.is_some() || ticks != 0 || header.schema_version != LOG_SCHEMA_VERSION {
                     return Err("invalid sensor header".into());
                 }
-                if !header.config.replan_checked_approaches || !header.config.record_planning_diagnostics {
+                if !header.config.replan_checked_approaches
+                    || !header.config.record_planning_diagnostics
+                {
                     return Err("captured checked approaches required".into());
                 }
                 pipeline = Some(DrivingPipeline::new(header.config.clone())?);
-                serde_json::to_writer(&mut output, &serde_json::json!({
-                    "kind":"configuration", "config":header.config, "closed_loop":false
-                }))?;
+                serde_json::to_writer(
+                    &mut output,
+                    &serde_json::json!({
+                        "kind":"configuration", "config":header.config, "closed_loop":false
+                    }),
+                )?;
                 output.write_all(b"\n")?;
             }
             LogRecord::Tick { tick } => {
@@ -50,22 +58,31 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         return Err("inspection requires a healthy stationary tick".into());
                     }
                     inspected += 1;
-                    driver.step_with_planner_inspection(&tick.input, &mut |planner, ego, route, objects| {
-                        let probe = planner.inspect_stopping_proposals(ego, route, objects);
-                        let here = route.project(ego.pose.position).0;
-                        let attempts: Vec<_> = probe.attempts.iter().map(|a| serde_json::json!({
-                            "candidate_index":a.candidate_index,
-                            "end_progress_m":a.end_progress_m,
-                            "progress_gain_m":a.end_progress_m-here,
-                            "hold_start_s":a.hold_start_s,
-                            "hold_end_s":a.hold_end_s,
-                            "first_contact_s":a.first_contact_s
-                        })).collect();
-                        evidence = Some(serde_json::json!({
-                            "initial_progress_m":here, "trajectory":probe.trajectory,
-                            "planning_diagnostics":probe.diagnostics, "attempts":attempts
-                        }));
-                    })?
+                    driver.step_with_planner_inspection(
+                        &tick.input,
+                        &mut |planner, ego, route, objects| {
+                            let probe = planner.inspect_stopping_proposals(ego, route, objects);
+                            let here = route.project(ego.pose.position).0;
+                            let attempts: Vec<_> = probe
+                                .attempts
+                                .iter()
+                                .map(|a| {
+                                    serde_json::json!({
+                                        "candidate_index":a.candidate_index,
+                                        "end_progress_m":a.end_progress_m,
+                                        "progress_gain_m":a.end_progress_m-here,
+                                        "hold_start_s":a.hold_start_s,
+                                        "hold_end_s":a.hold_end_s,
+                                        "first_contact_s":a.first_contact_s
+                                    })
+                                })
+                                .collect();
+                            evidence = Some(serde_json::json!({
+                                "initial_progress_m":here, "trajectory":probe.trajectory,
+                                "planning_diagnostics":probe.diagnostics, "attempts":attempts
+                            }));
+                        },
+                    )?
                 } else {
                     driver.step(&tick.input)?
                 };
@@ -73,9 +90,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     return Err(format!("original sensor replay differs at tick {ticks}").into());
                 }
                 if let Some(probe) = evidence {
-                    serde_json::to_writer(&mut output, &serde_json::json!({
-                        "kind":"probe", "time":tick.input.time, "original":actual, "probe":probe
-                    }))?;
+                    serde_json::to_writer(
+                        &mut output,
+                        &serde_json::json!({
+                            "kind":"probe", "time":tick.input.time, "original":actual, "probe":probe
+                        }),
+                    )?;
                     output.write_all(b"\n")?;
                 }
                 ticks += 1;
@@ -91,9 +111,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if !ended {
         return Err("missing sensor footer".into());
     }
-    serde_json::to_writer(&mut output, &serde_json::json!({
-        "kind":"end", "ticks":ticks, "legacy_verified":true, "closed_loop":false
-    }))?;
+    serde_json::to_writer(
+        &mut output,
+        &serde_json::json!({
+            "kind":"end", "ticks":ticks, "legacy_verified":true, "closed_loop":false
+        }),
+    )?;
     output.write_all(b"\n")?;
     Ok(())
 }
