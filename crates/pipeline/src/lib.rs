@@ -495,12 +495,11 @@ impl PipelineConfig {
             return Err("invalid calibrated motion limits".into());
         }
         if self.rear_axle_offset_m.is_some_and(|offset| {
-            !offset.is_finite()
-                || offset <= 0.0
-                || offset >= self.vehicle.wheelbase
+            !offset.is_finite() || offset <= 0.0 || offset >= self.vehicle.wheelbase
         }) {
             return Err(
-                "chassis reference requires a finite positive rear-axle offset below wheelbase".into(),
+                "chassis reference requires a finite positive rear-axle offset below wheelbase"
+                    .into(),
             );
         }
         if self.local_route_geometry {

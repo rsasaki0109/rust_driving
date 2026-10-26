@@ -11,7 +11,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     let offset: f64 = args[3].parse()?;
     let mut reader = BufReader::new(File::open(&args[1])?);
-    let mut output = OpenOptions::new().write(true).create_new(true).open(&args[2])?;
+    let mut output = OpenOptions::new()
+        .write(true)
+        .create_new(true)
+        .open(&args[2])?;
     let (mut baseline, mut corrected) = (None, None);
     let mut ticks = 0_usize;
     let mut ended = false;
@@ -26,8 +29,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
         match serde_json::from_str::<LogRecord>(&line)? {
             LogRecord::Header { header } => {
-                if baseline.is_some() || ticks != 0 || header.schema_version != LOG_SCHEMA_VERSION
-                    || header.source != "rne-dynamic" || header.config.rear_axle_offset_m.is_some()
+                if baseline.is_some()
+                    || ticks != 0
+                    || header.schema_version != LOG_SCHEMA_VERSION
+                    || header.source != "rne-dynamic"
+                    || header.config.rear_axle_offset_m.is_some()
                     || header.config.local_route_geometry
                 {
                     return Err("inspection requires one original nonlocal native header".into());
@@ -38,21 +44,33 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 calibrated.validate()?;
                 baseline = Some(DrivingPipeline::new(header.config.clone())?);
                 corrected = Some(DrivingPipeline::new(calibrated.clone())?);
-                serde_json::to_writer(&mut output, &serde_json::json!({
-                    "kind":"configuration", "original_config":header.config,
-                    "counterfactual_config":calibrated, "closed_loop":false
-                }))?;
+                serde_json::to_writer(
+                    &mut output,
+                    &serde_json::json!({
+                        "kind":"configuration", "original_config":header.config,
+                        "counterfactual_config":calibrated, "closed_loop":false
+                    }),
+                )?;
                 output.write_all(b"\n")?;
             }
             LogRecord::Tick { tick } => {
-                let actual = baseline.as_mut().ok_or("tick before header")?.step(&tick.input)?;
+                let actual = baseline
+                    .as_mut()
+                    .ok_or("tick before header")?
+                    .step(&tick.input)?;
                 if serde_json::to_vec(&actual)? != serde_json::to_vec(&tick.expected)? {
                     return Err(format!("original sensor replay differs at tick {ticks}").into());
                 }
-                let counterfactual = corrected.as_mut().ok_or("missing counterfactual")?.step(&tick.input)?;
-                serde_json::to_writer(&mut output, &serde_json::json!({
-                    "kind":"tick", "counterfactual":counterfactual
-                }))?;
+                let counterfactual = corrected
+                    .as_mut()
+                    .ok_or("missing counterfactual")?
+                    .step(&tick.input)?;
+                serde_json::to_writer(
+                    &mut output,
+                    &serde_json::json!({
+                        "kind":"tick", "counterfactual":counterfactual
+                    }),
+                )?;
                 output.write_all(b"\n")?;
                 ticks += 1;
             }
@@ -67,9 +85,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if !ended {
         return Err("missing input count footer".into());
     }
-    serde_json::to_writer(&mut output, &serde_json::json!({
-        "kind":"end", "ticks":ticks, "legacy_verified":true, "closed_loop":false
-    }))?;
+    serde_json::to_writer(
+        &mut output,
+        &serde_json::json!({
+            "kind":"end", "ticks":ticks, "legacy_verified":true, "closed_loop":false
+        }),
+    )?;
     output.write_all(b"\n")?;
     output.flush()?;
     Ok(())
