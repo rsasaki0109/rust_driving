@@ -1,0 +1,172 @@
+name: Directional reserve regressions
+on:
+  push:
+    branches: [fix/stable-motion-direction-reserves]
+    paths: ['crates/planning/**','crates/pipeline/src/lib.rs','scripts/*directional*','scripts/check.sh','integrations/planning/directional-reserve-v1.json','.github/workflows/directional-reserves.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: directional-reserves-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  CARGO_INCREMENTAL: '0'
+  RUSTDRIVING_BASE_SOURCE: '390e3147c94b81bd34e0269ab4671b1729e574e8'
+jobs:
+  format:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    outputs:
+      source: ${{ steps.source.outputs.commit }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+          components: rustfmt
+      - id: source
+        name: Format only authored Rust and identify the exact tested source
+        env:
+          RUSTDRIVING_EXPECTED_HEAD: ${{ github.sha }}
+        run: |
+          cargo fmt --all
+          python - <<'PY'
+          import subprocess
+          changes=set(subprocess.check_output(['git','diff','--name-only'],text=True).splitlines())
+          assert changes<=set(['crates/planning/src/direction.rs','crates/planning/src/collision.rs','crates/planning/src/lib.rs','crates/pipeline/src/lib.rs']),changes
+          PY
+          if ! git diff --quiet; then
+            test "$GITHUB_REF_NAME" = 'fix/stable-motion-direction-reserves'
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add crates/planning/src/direction.rs crates/planning/src/collision.rs crates/planning/src/lib.rs crates/pipeline/src/lib.rs
+            git commit -m 'Format uncertainty-supported directional reserves'
+            git push --force-with-lease="refs/heads/fix/stable-motion-direction-reserves:$RUSTDRIVING_EXPECTED_HEAD" origin HEAD:refs/heads/fix/stable-motion-direction-reserves
+          fi
+          echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+  contracts:
+    needs: format
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.format.outputs.source }}
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+          components: rustfmt,clippy
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify pinned workspace, analytic controls and original scenario replays
+        run: bash scripts/check.sh
+  qualification:
+    needs: format
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    defaults:
+      run:
+        shell: bash
+        working-directory: rust_driving
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.format.outputs.source }}
+          path: rust_driving
+      - uses: actions/checkout@v4
+        with:
+          repository: rsasaki0109/RobotNativeEngine
+          ref: df6007aa40315e81d12ae00fc1f60369e393a178
+          path: RobotNativeEngine
+          sparse-checkout: |
+            crates
+            third_party
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the unchanged reference/native toolchains
+        run: |
+          rustup toolchain install 1.90.0 --profile minimal --component clippy
+          rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy
+          test "$(git -C ../RobotNativeEngine rev-parse HEAD)" = "$(cat integrations/rne/rne-revision.txt)"
+      - name: Stage the exact old sources in a separate archive directory
+        run: |
+          git fetch --no-tags --depth=1 origin "$RUSTDRIVING_BASE_SOURCE"
+          python - <<'PY'
+          import io,os,subprocess,tarfile
+          from pathlib import Path
+          parent=Path(os.environ['RUNNER_TEMP'])/'direction-baseline'
+          output=parent/'rust_driving';output.mkdir(parents=True)
+          (parent/'RobotNativeEngine').symlink_to(Path(os.environ['GITHUB_WORKSPACE'])/'RobotNativeEngine',target_is_directory=True)
+          paths=['Cargo.toml','Cargo.lock','rust-toolchain.toml','crates','integrations/rne']
+          if subprocess.run(['git','cat-file','-e',os.environ['RUSTDRIVING_BASE_SOURCE']+':.cargo'],capture_output=True).returncode==0:paths.append('.cargo')
+          raw=subprocess.check_output(['git','archive',os.environ['RUSTDRIVING_BASE_SOURCE'],*paths])
+          with tarfile.open(fileobj=io.BytesIO(raw)) as archive:archive.extractall(output,filter='data')
+          print('Staged unchanged baseline source',os.environ['RUSTDRIVING_BASE_SOURCE'])
+          PY
+      - name: Build all four actual reference/native executables
+        run: |
+          cargo +1.90.0 build --release --locked --bin rustdriving
+          cargo +1.90.0 build --release --locked --manifest-path "$RUNNER_TEMP/direction-baseline/rust_driving/Cargo.toml" --bin rustdriving
+          cargo +1.95.0 fmt --manifest-path integrations/rne/Cargo.toml --check
+          cargo +1.95.0 clippy --release --manifest-path integrations/rne/Cargo.toml --all-targets --locked -- -D warnings
+          cargo +1.95.0 build --release --locked --manifest-path integrations/rne/Cargo.toml
+          cargo +1.95.0 build --release --locked --manifest-path "$RUNNER_TEMP/direction-baseline/rust_driving/integrations/rne/Cargo.toml"
+      - name: Compare every original cohort input and independently certify actual new paths
+        env:
+          RUSTDRIVING_TESTED_SOURCE: ${{ needs.format.outputs.source }}
+        run: |
+          python scripts/check_directional_reserves.py --output artifacts/directional-reserve --baseline-binary "$RUNNER_TEMP/direction-baseline/rust_driving/target/release/rustdriving" --binary target/release/rustdriving --baseline-native "$RUNNER_TEMP/direction-baseline/rust_driving/integrations/rne/target/release/rustdriving-rne" --native-binary integrations/rne/target/release/rustdriving-rne
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: directional-reserve-comparison
+          path: rust_driving/artifacts/directional-reserve
+          if-no-files-found: warn
+          compression-level: 1
+  preserve:
+    if: always() && needs.format.result == 'success'
+    needs: [format,contracts,qualification]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.format.outputs.source }}
+      - uses: actions/download-artifact@v4
+        if: needs.qualification.result != 'skipped'
+        with:
+          name: directional-reserve-comparison
+          path: retained-directional-evidence
+      - name: Preserve completed or incomplete evidence without changing first results
+        env:
+          RUSTDRIVING_TESTED_SOURCE: ${{ needs.format.outputs.source }}
+          RUSTDRIVING_CONTRACT_RESULT: ${{ needs.contracts.result }}
+          RUSTDRIVING_QUALIFICATION_RESULT: ${{ needs.qualification.result }}
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          report=Path('retained-directional-evidence/report.json')
+          if not report.is_file():raise SystemExit('No case report was produced; build/control failure remains in job logs.')
+          data=json.loads(report.read_text());source=os.environ['RUSTDRIVING_TESTED_SOURCE']
+          assert data['source_commit']==source
+          folder=Path('assets/directional-reserve-v1/canaries');folder.mkdir(parents=True,exist_ok=True)
+          target=folder/(source+'.json')
+          with target.open('xb') as destination:destination.write(report.read_bytes())
+          index=dict(source_commit=source,path=str(target),comparison_passed=data['passed'],
+              complete=data['complete'],contracts_passed=os.environ['RUSTDRIVING_CONTRACT_RESULT']=='success',
+              adopted=False,original_full_adoption_gate_passed=data.get('original_full_adoption_gate_passed',False))
+          Path('assets/directional-reserve-v1/latest.json').write_text(json.dumps(index,indent=2)+'\n')
+          PY
+          test "$GITHUB_REF_NAME" = 'fix/stable-motion-direction-reserves'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/directional-reserve-v1
+          git commit -m 'Retain all paired directional-reserve cases and failed adoption gates'
+          git push --force-with-lease="refs/heads/fix/stable-motion-direction-reserves:$RUSTDRIVING_TESTED_SOURCE" origin HEAD:refs/heads/fix/stable-motion-direction-reserves

@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "baseline_source": "390e3147c94b81bd34e0269ab4671b1729e574e8",
+  "enabled_scope": "Existing replan_checked_approaches configuration with its existing forecast_envelope; no new flag or recording field.",
+  "policy": "For each world-frame track, retain its acquisition age. At future t use a velocity disc centered at the acquired velocity with radius velocity_error_m_s + acceleration_error_m_s2 * (age+t). Maximize the existing empirical transverse reserve over this disc and take the maximum with the original nominal-forecast reserve. Keep original base time reserve, occupied radii, side corridor, braking authority and full stationary tail.",
+  "guards": "Missing, duplicated, future or invalid active direction context fails closed. None retains the original collision policy.",
+  "physical_claim": false,
+  "uncertainty_calibrated": false,
+  "preliminary": true,
+  "qualified": false,
+  "unchanged": [
+    "all 48 original later-stop inputs",
+    "65-second mission deadlines",
+    "physical clearance and road reserve",
+    "motion/pose/cold/recent-velocity budgets",
+    "99-percent forecast coverage and sample counts",
+    "eight-second stop tails",
+    "existing failed cases and original expected goals"
+  ],
+  "acceptance": [
+    "Exact default run stream identity against baseline source",
+    "Independent trigonometric velocity-disc support and accelerated full-path certificates",
+    "All reference and native original cohort cases retained",
+    "No new failed physical/forecast gates and no lost baseline goal arrivals",
+    "Reference seed-7 mission emergency control steps do not exceed the measured baseline",
+    "Pinned workspace check and directly affected native checks pass"
+  ],
+  "full_adoption": "The original all-case strict/arrival gate remains separate; fixing directional stability does not claim original mission completion or increase maturity automatically."
+}
