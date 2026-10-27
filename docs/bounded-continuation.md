@@ -131,7 +131,7 @@ hosted `bash scripts/check.sh` in [run 40427966547](https://github.com/rsasaki01
 on formatted source `b67403afcc418b1dbea42309c8b969963723ccee`.
 Local checks did not run.
 
-## Planner-owned candidate checks (validation pending)
+## Planner-owned candidate checks (validated)
 
 `LatticePlanner::checked_continuation_candidate` now supplies the constrained
 generator with the planner's speed limits, vehicle radius and current scene
@@ -153,3 +153,22 @@ corner. The method only returns a checked Yield candidate; it does not mutate
 live maneuver/stop commitments, adopt that candidate or send commands. Pipeline
 selection, diagnostic recording, replay audits and closed-loop comparison remain
 before this becomes a driving-policy change.
+
+The planner adapter passed twenty module tests and hosted `bash scripts/check.sh`
+in [run 40429454279](https://github.com/rsasaki0109/rust_driving/actions/runs/40429454279)
+on formatted source `aaba94b103b75039c4dcc12a5a2bdfc731f0af36`.
+
+## Shared admission and exact start (validation pending)
+
+The candidate entry now shares ordinary planning's configuration validation,
+including checked-approach option dependencies and numerical bounds. Previously,
+setting only `replan_checked_approaches` could generate a candidate despite the
+ordinary planner rejecting that configuration. Candidate fixtures now enable the
+required stop-retention/search and lateral-margin options.
+
+The trajectory must also start at the supplied ego position within 1e-7 metres,
+instead of allowing a 0.2 m gap that the complete-path sweep did not cover.
+Two regression tests compare rejection of ten invalid configurations across both
+entry points, verify sticky revocation after repair, and distinguish an exact
+start from 0.1 m longitudinal/lateral shifts. The projection-progress tolerance
+remains separate. These changes do not enable live candidate selection.

@@ -451,6 +451,7 @@ impl crate::LatticePlanner {
         objects: &[rustdriving_core::Prediction],
     ) -> Option<rustdriving_core::Trajectory> {
         if !self.replan_checked_approaches
+            || self.invalid_configuration()
             || self.approach_clock != Some((observation.now_s, observation.acquisition_s))
             || !ego.pose.position.finite()
             || !ego.pose.yaw.is_finite()
@@ -462,7 +463,7 @@ impl crate::LatticePlanner {
             || route.half_width <= self.vehicle.radius
             || geometry
                 .first()
-                .is_none_or(|p| p.distance(ego.pose.position) > 0.2)
+                .is_none_or(|p| p.distance(ego.pose.position) > 1e-7)
             || observation
                 .blocking_ids
                 .iter()
@@ -1067,6 +1068,9 @@ mod tests {
             .collect();
         let mut planner = crate::LatticePlanner {
             replan_checked_approaches: true,
+            search_obstruction_stops: true,
+            settle_obstruction_stops: true,
+            lateral_candidate_margin_m: Some(0.1),
             ..crate::LatticePlanner::default()
         };
         planner.observe_checked_approach_scene(0.3, Some(0.3));
@@ -1122,6 +1126,9 @@ mod tests {
         let line = vec![Vec2::new(10., 3.9), Vec2::new(11.5, 3.9)];
         let mut planner = crate::LatticePlanner {
             replan_checked_approaches: true,
+            search_obstruction_stops: true,
+            settle_obstruction_stops: true,
+            lateral_candidate_margin_m: Some(0.1),
             ..crate::LatticePlanner::default()
         };
         let mut ego = rustdriving_core::EgoState::default();
@@ -1179,5 +1186,96 @@ mod tests {
             point(Vec2::new(5., 5.), 10.),
         ];
         assert!(corridor_contains(&route, &following, 0.8));
+    }
+
+    #[test]
+    fn candidate_cannot_bypass_ordinary_configuration_rejection() {
+        use rustdriving_core::Planner;
+        let route = Route::new(vec![Vec2::new(0., 0.), Vec2::new(20., 0.)], 6.).unwrap();
+        let line = vec![Vec2::new(10., 3.9), Vec2::new(11.5, 3.9)];
+        let mut ego = rustdriving_core::EgoState::default();
+        ego.pose.position = line[0];
+        ego.speed = 0.21;
+        let objects = [rustdriving_core::Prediction {
+            id: 7,
+            positions: vec![Vec2::new(100., 100.); 41],
+            radius: 0.5,
+            dt: 0.2,
+            additional_radius_m: vec![],
+        }];
+        for case in 0..10 {
+            let mut planner = crate::LatticePlanner {
+                replan_checked_approaches: true,
+                search_obstruction_stops: true,
+                settle_obstruction_stops: true,
+                lateral_candidate_margin_m: Some(0.1),
+                ..crate::LatticePlanner::default()
+            };
+            planner.observe_checked_approach_scene(0.3, Some(0.3));
+            let valid = planner.clone();
+            match case {
+                0 => planner.search_obstruction_stops = false,
+                1 => planner.settle_obstruction_stops = false,
+                2 => planner.lateral_candidate_margin_m = None,
+                3 => planner.lateral_candidate_margin_m = Some(f64::NAN),
+                4 => planner.lateral_candidate_margin_m = Some(1.1),
+                5 => planner.checked_approach_min_progress_m = Some(0.1),
+                6 => planner.cruise_speed = f64::NAN,
+                7 => planner.max_acceleration_m_s2 = 0.,
+                8 => planner.max_deceleration_m_s2 = -1.,
+                _ => planner.max_lateral_acceleration_m_s2 = Some(0.),
+            }
+            let ordinary = planner.clone().plan(ego, &route, &objects);
+            assert_eq!(ordinary.mode, rustdriving_core::DrivingMode::Emergency);
+            assert!(ordinary.points.is_empty());
+            let mut permit =
+                ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 1.).unwrap();
+            assert!(planner.checked_continuation_candidate(
+                &mut permit, &observation(0.3), &line, ego, &route, &objects
+            ).is_none());
+            assert!(permit.endpoint_bound().is_none());
+            // Repairing settings cannot revive the old authorization.
+            assert!(valid.checked_continuation_candidate(
+                &mut permit, &observation(0.3), &line, ego, &route, &objects
+            ).is_none());
+        }
+    }
+
+    #[test]
+    fn candidate_certificate_must_start_at_measured_ego_position() {
+        let route = Route::new(vec![Vec2::new(0., 0.), Vec2::new(20., 0.)], 6.).unwrap();
+        let mut planner = crate::LatticePlanner {
+            replan_checked_approaches: true,
+            search_obstruction_stops: true,
+            settle_obstruction_stops: true,
+            lateral_candidate_margin_m: Some(0.1),
+            ..crate::LatticePlanner::default()
+        };
+        planner.observe_checked_approach_scene(0.3, Some(0.3));
+        let mut ego = rustdriving_core::EgoState::default();
+        ego.pose.position = Vec2::new(10., 3.9);
+        ego.speed = 0.21;
+        let objects = [rustdriving_core::Prediction {
+            id: 7,
+            positions: vec![Vec2::new(100., 100.); 41],
+            radius: 0.5,
+            dt: 0.2,
+            additional_radius_m: vec![],
+        }];
+        for offset in [Vec2::default(), Vec2::new(0.1, 0.), Vec2::new(0., -0.1)] {
+            let line = vec![ego.pose.position.plus(offset), Vec2::new(11.5, 3.9)];
+            let mut permit =
+                ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 1.).unwrap();
+            let result = planner.checked_continuation_candidate(
+                &mut permit, &observation(0.3), &line, ego, &route, &objects
+            );
+            if offset == Vec2::default() {
+                let path = result.unwrap();
+                assert_eq!(path.points[0].position, ego.pose.position);
+            } else {
+                assert!(result.is_none());
+                assert!(permit.endpoint_bound().is_none());
+            }
+        }
     }
 }

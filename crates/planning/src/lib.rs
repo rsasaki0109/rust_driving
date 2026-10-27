@@ -146,6 +146,36 @@ impl Default for LatticePlanner {
     }
 }
 impl LatticePlanner {
+    // Keep ordinary and experimental candidate admission identical.
+    fn invalid_configuration(&self) -> bool {
+        !self.cruise_speed.is_finite()
+            || self.cruise_speed <= 0.0
+            || (self.search_obstruction_stops && !self.settle_obstruction_stops)
+            || self.checked_approach_min_progress_m.is_some_and(|value| {
+                !self.replan_checked_approaches
+                    || !value.is_finite()
+                    || !(0.5..=2.).contains(&value)
+            })
+            || (self.search_later_obstruction_stops && !self.replan_checked_approaches)
+            || (self.replan_checked_approaches
+                && !(self.search_obstruction_stops
+                    && self.settle_obstruction_stops
+                    && self.lateral_candidate_margin_m.is_some()))
+            || (self.refine_lateral_candidates && self.lateral_candidate_margin_m.is_none())
+            || !self.max_acceleration_m_s2.is_finite()
+            || self.max_acceleration_m_s2 <= 0.0
+            || !self.max_deceleration_m_s2.is_finite()
+            || self.max_deceleration_m_s2 <= 0.0
+            || self.speed_zones.len() > 128
+            || self.speed_zones.iter().any(|zone| !zone.valid())
+            || self
+                .lateral_candidate_margin_m
+                .is_some_and(|margin| !margin.is_finite() || !(0.1..=1.0).contains(&margin))
+            || self
+                .max_lateral_acceleration_m_s2
+                .is_some_and(|a| !a.is_finite() || a <= 0.0)
+    }
+
     /// Inspect the ordinary checked-approach probe before the two-meter and
     /// acquisition-confirmation gates. All braking and hold sweeps remain active.
     /// The live planner's commitments, evidence credit and diagnostics are untouched.
@@ -355,32 +385,7 @@ impl LatticePlanner {
         if !ego.speed.is_finite()
             || !ego.pose.position.finite()
             || !ego.pose.yaw.is_finite()
-            || !self.cruise_speed.is_finite()
-            || self.cruise_speed <= 0.0
-            || (self.search_obstruction_stops && !self.settle_obstruction_stops)
-            || self.checked_approach_min_progress_m.is_some_and(|value| {
-                !self.replan_checked_approaches
-                    || !value.is_finite()
-                    || !(0.5..=2.).contains(&value)
-            })
-            || (self.search_later_obstruction_stops && !self.replan_checked_approaches)
-            || (self.replan_checked_approaches
-                && !(self.search_obstruction_stops
-                    && self.settle_obstruction_stops
-                    && self.lateral_candidate_margin_m.is_some()))
-            || (self.refine_lateral_candidates && self.lateral_candidate_margin_m.is_none())
-            || !self.max_acceleration_m_s2.is_finite()
-            || self.max_acceleration_m_s2 <= 0.0
-            || !self.max_deceleration_m_s2.is_finite()
-            || self.max_deceleration_m_s2 <= 0.0
-            || self.speed_zones.len() > 128
-            || self.speed_zones.iter().any(|zone| !zone.valid())
-            || self
-                .lateral_candidate_margin_m
-                .is_some_and(|margin| !margin.is_finite() || !(0.1..=1.0).contains(&margin))
-            || self
-                .max_lateral_acceleration_m_s2
-                .is_some_and(|a| !a.is_finite() || a <= 0.0)
+            || self.invalid_configuration()
             || objects.iter().any(|object| {
                 object.positions.is_empty()
                     || !object.dt.is_finite()
