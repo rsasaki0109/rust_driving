@@ -63,7 +63,9 @@ pub(super) fn profile(
     samples: usize,
     mut clear: impl FnMut(&[TrajectoryPoint]) -> bool,
 ) -> Option<(Vec<TrajectoryPoint>, bool)> {
-    if ![16, 64].contains(&samples) { return None; }
+    if ![16, 64].contains(&samples) {
+        return None;
+    }
     if let Some(path) = speed::profile(geometry, initial_speed, limits, Some(proposed_stop))
         && clear(&path)
     {
@@ -282,7 +284,6 @@ mod tests {
         }
     }
 
-
     #[test]
     fn dense_search_visits_short_stops_without_changing_profile_or_hold_rules() {
         let geometry = line();
@@ -314,8 +315,12 @@ mod tests {
         assert_eq!(ordinary.last(), dense.last());
         assert!(!ordinary.iter().any(|s| (0.5..1.).contains(s)));
         assert!(dense.iter().any(|s| (0.5..1.).contains(s)));
-        assert!(profile(&geometry, 0., &limits(), 30., true, 63,
-            |_| panic!("unsupported search size")).is_none());
+        assert!(
+            profile(&geometry, 0., &limits(), 30., true, 63, |_| panic!(
+                "unsupported search size"
+            ))
+            .is_none()
+        );
     }
 
     #[test]

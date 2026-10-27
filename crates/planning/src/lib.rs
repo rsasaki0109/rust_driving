@@ -246,13 +246,18 @@ impl LatticePlanner {
         Some(probe.inspect_stopping_proposals(ego, route, objects))
     }
 
-
     /// Offline bounded search-density experiment; never changes the live planner.
     pub fn inspect_stopping_proposals_with_samples(
-        &self, ego: EgoState, route: &Route, objects: &[Prediction], samples: usize,
+        &self,
+        ego: EgoState,
+        route: &Route,
+        objects: &[Prediction],
+        samples: usize,
     ) -> Option<StopProbe> {
-        if ![16, 64].contains(&samples) || !ego.speed.is_finite()
-            || !(0.0..=0.2).contains(&ego.speed) {
+        if ![16, 64].contains(&samples)
+            || !ego.speed.is_finite()
+            || !(0.0..=0.2).contains(&ego.speed)
+        {
             return None;
         }
         let mut probe = self.clone();
@@ -1293,16 +1298,32 @@ mod tests {
         let object = obstacle();
         let mut untouched = planner.clone();
         let probe = planner.inspect_stopping_proposals(ego, &route, std::slice::from_ref(&object));
-        let same = planner.inspect_stopping_proposals_with_samples(
-            ego, &route, std::slice::from_ref(&object), 16).unwrap();
-        assert_eq!(format!("{:?}", probe.attempts), format!("{:?}", same.attempts));
-        let _ = planner.inspect_stopping_proposals_with_samples(
-            ego, &route, std::slice::from_ref(&object), 64).unwrap();
+        let same = planner
+            .inspect_stopping_proposals_with_samples(ego, &route, std::slice::from_ref(&object), 16)
+            .unwrap();
+        assert_eq!(
+            format!("{:?}", probe.attempts),
+            format!("{:?}", same.attempts)
+        );
+        let _ = planner
+            .inspect_stopping_proposals_with_samples(ego, &route, std::slice::from_ref(&object), 64)
+            .unwrap();
         assert!(planner.inspection_stop_samples.is_none());
         let again = planner.inspect_stopping_proposals(ego, &route, std::slice::from_ref(&object));
-        assert_eq!(format!("{:?}", probe.attempts), format!("{:?}", again.attempts));
-        assert!(planner.inspect_stopping_proposals_with_samples(
-            ego, &route, std::slice::from_ref(&object), 63).is_none());
+        assert_eq!(
+            format!("{:?}", probe.attempts),
+            format!("{:?}", again.attempts)
+        );
+        assert!(
+            planner
+                .inspect_stopping_proposals_with_samples(
+                    ego,
+                    &route,
+                    std::slice::from_ref(&object),
+                    63
+                )
+                .is_none()
+        );
         assert!(!probe.attempts.is_empty());
         assert!(probe.attempts.len() <= 294);
         assert!(
