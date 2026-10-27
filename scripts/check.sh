@@ -33,6 +33,7 @@ python3 scripts/test_stop_search.py
 python3 scripts/test_road_width.py
 python3 scripts/test_refined_lateral.py
 python3 scripts/test_stop_candidate_evidence.py
+python3 scripts/test_forecast_corridor.py
 python3 scripts/test_stall_conflicts.py
 python3 scripts/test_planning_diagnostics.py
 python3 scripts/test_planning_progress.py

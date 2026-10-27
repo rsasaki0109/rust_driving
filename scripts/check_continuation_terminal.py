@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import subprocess
 from stop_candidate_evidence import summarize
+from inspect_forecast_corridor import inspect as inspect_corridor
 
 SOURCE = 'd73f28a4cc0ad0d809a0d6a0a8029b3030aba153'
 ROOT = Path(__file__).resolve().parents[1]
@@ -133,6 +134,9 @@ def main():
                 receipt['join_scale_comparison'].append(dict(scale=variant['scale'],
                     search=search, selected=None if chosen is None else diagnostic['candidates'][chosen],
                     candidates=diagnostic['candidates'], operational_policy_changed=False))
+            receipt['forecast_corridor'] = inspect_corridor(
+                metadata['route'], metadata['predictions'], config['vehicle']['radius'],
+                probe['initial_progress_m'])
             result['cases'].append(receipt)
             save()
             print(json.dumps(receipt, allow_nan=False), flush=True)
