@@ -436,7 +436,6 @@ fn continuous_progress_contains(
 
 /// A planner-owned candidate entry point; does not adopt or execute its result.
 impl crate::LatticePlanner {
-
     /// Generate continuation geometry from the planner's retained lateral maneuver.
     /// This is still a read-only candidate probe, not a policy selection or command.
     /// The permit's adoption and frame ownership must be verified by the caller.
@@ -474,8 +473,11 @@ impl crate::LatticePlanner {
             }
             let target = observation.lateral_target_m;
             let (start, offset, transition) = self.maneuver_start?;
-            if !start.is_finite() || !offset.is_finite() || !transition.is_finite()
-                || transition <= 0. || !self.previous_lateral.is_finite()
+            if !start.is_finite()
+                || !offset.is_finite()
+                || !transition.is_finite()
+                || transition <= 0.
+                || !self.previous_lateral.is_finite()
                 || (self.previous_lateral - target).abs() >= 0.01
             {
                 return None;
@@ -487,10 +489,13 @@ impl crate::LatticePlanner {
             } else {
                 route
             };
-            let side = (planning_route.half_width - self.vehicle.radius
-                - self.lateral_candidate_margin_m?).clamp(0., 4.);
+            let side = (planning_route.half_width
+                - self.vehicle.radius
+                - self.lateral_candidate_margin_m?)
+                .clamp(0., 4.);
             let index = [0., 1., -1., 0.875, -0.875, 0.75, -0.75, 0.5, -0.5]
-                .iter().position(|fraction| (target - side * fraction).abs() < 1e-7)?;
+                .iter()
+                .position(|fraction| (target - side * fraction).abs() < 1e-7)?;
             if index >= 3 && !self.refine_lateral_candidates {
                 return None;
             }
@@ -503,16 +508,15 @@ impl crate::LatticePlanner {
             // its own route. The subsequent complete certificate enforces the
             // original bound continuously, even when those arcs differ.
             let available = end_progress - route.project(ego.pose.position).0;
-            let horizon = available.min(40.).min((planning_route.length() - progress - 1.).max(0.));
+            let horizon = available
+                .min(40.)
+                .min((planning_route.length() - progress - 1.).max(0.));
             if !horizon.is_finite() || horizon <= 0. {
                 return None;
             }
-            let (geometry, _) = self.candidate_geometry(
-                ego, planning_route, route, horizon, (target, index >= 3),
-            )?;
-            self.checked_continuation_candidate(
-                permit, observation, &geometry, ego, route, objects,
-            )
+            let (geometry, _) =
+                self.candidate_geometry(ego, planning_route, route, horizon, (target, index >= 3))?;
+            self.checked_continuation_candidate(permit, observation, &geometry, ego, route, objects)
         })();
         if candidate.is_none() {
             permit.revoke();
@@ -1386,7 +1390,12 @@ mod tests {
         }
     }
 
-    fn maneuver_fixture() -> (crate::LatticePlanner, Route, rustdriving_core::EgoState, Vec<rustdriving_core::Prediction>) {
+    fn maneuver_fixture() -> (
+        crate::LatticePlanner,
+        Route,
+        rustdriving_core::EgoState,
+        Vec<rustdriving_core::Prediction>,
+    ) {
         let planner = crate::LatticePlanner {
             replan_checked_approaches: true,
             search_obstruction_stops: true,
@@ -1399,7 +1408,8 @@ mod tests {
         let route = Route::new(
             vec![Vec2::new(0., 0.), Vec2::new(20., 0.)],
             planner.vehicle.radius + 3.9 + 0.2,
-        ).unwrap();
+        )
+        .unwrap();
         let mut ego = rustdriving_core::EgoState::default();
         ego.pose.position = Vec2::new(10., 3.9);
         ego.speed = 0.21;
@@ -1427,15 +1437,18 @@ mod tests {
                 let mut observed = observation(now);
                 observed.progress_m = ego.pose.position.x;
                 planner.observe_checked_approach_scene(now, Some(now));
-                let path = planner.checked_maneuver_continuation(
-                    &mut permit, &observed, ego, &route, &objects,
-                ).unwrap();
+                let path = planner
+                    .checked_maneuver_continuation(&mut permit, &observed, ego, &route, &objects)
+                    .unwrap();
                 assert_eq!(path.points[0].position, ego.pose.position);
                 assert_eq!(path.points[0].speed, speed);
                 assert_eq!(path.lateral_target, 3.9);
                 assert!(path.points.iter().any(|p| p.speed > 0.7));
-                assert!(path.points.iter().all(|p| (p.position.y - 3.9).abs() < 1e-8
-                    && p.position.x < 12.));
+                assert!(
+                    path.points
+                        .iter()
+                        .all(|p| (p.position.y - 3.9).abs() < 1e-8 && p.position.x < 12.)
+                );
                 assert_eq!(permit.endpoint_bound(), Some((Vec2::new(12., 3.9), 12.)));
                 assert_eq!(planner.maneuver_start, Some((0., 3.9, 10.)));
                 assert!(!planner.obstruction_stop_requested);
@@ -1457,9 +1470,17 @@ mod tests {
             }
             let mut permit =
                 ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 1.).unwrap();
-            assert!(planner.checked_maneuver_continuation(
-                &mut permit, &observation(0.3), ego, &route, &objects,
-            ).is_none());
+            assert!(
+                planner
+                    .checked_maneuver_continuation(
+                        &mut permit,
+                        &observation(0.3),
+                        ego,
+                        &route,
+                        &objects,
+                    )
+                    .is_none()
+            );
             assert!(permit.endpoint_bound().is_none());
         }
     }
@@ -1469,12 +1490,21 @@ mod tests {
         let (mut planner, route, ego, mut objects) = maneuver_fixture();
         planner.observe_checked_approach_scene(0.3, Some(0.3));
         objects[0].positions = (0..=40)
-            .map(|i| Vec2::new(11., 12. - i as f64 * 0.4)).collect();
+            .map(|i| Vec2::new(11., 12. - i as f64 * 0.4))
+            .collect();
         let mut permit =
             ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 1.).unwrap();
-        assert!(planner.checked_maneuver_continuation(
-            &mut permit, &observation(0.3), ego, &route, &objects,
-        ).is_none());
+        assert!(
+            planner
+                .checked_maneuver_continuation(
+                    &mut permit,
+                    &observation(0.3),
+                    ego,
+                    &route,
+                    &objects,
+                )
+                .is_none()
+        );
         assert!(permit.endpoint_bound().is_none());
         assert_eq!(planner.maneuver_start, Some((0., 3.9, 10.)));
     }

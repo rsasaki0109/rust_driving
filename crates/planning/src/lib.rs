@@ -372,7 +372,6 @@ impl Planner for LatticePlanner {
     }
 }
 impl LatticePlanner {
-
     // Shared anchored geometry for ordinary candidates and continuation probes.
     // The supplied corridor is unchanged even when a local planning route is fitted.
     fn candidate_geometry(
@@ -386,100 +385,101 @@ impl LatticePlanner {
         let (target, refined) = candidate;
         let (s, lateral) = route.project(ego.pose.position);
         let side = self.lateral_candidate_margin_m.map_or(3.5, |margin| {
-            (route.half_width - self.vehicle.radius - margin)
-                .clamp(0.0, if self.replan_checked_approaches { 4.0 } else { 3.5 })
+            (route.half_width - self.vehicle.radius - margin).clamp(
+                0.0,
+                if self.replan_checked_approaches {
+                    4.0
+                } else {
+                    3.5
+                },
+            )
         });
         let fitted_chassis_recovery =
             self.local_route_geometry && !self.point_reference_recovery && side < 3.5;
-            let transition = transition_distance(
-                ego.speed,
-                target - lateral,
-                self.max_lateral_acceleration_m_s2,
-            );
-            let (start_s, start_lateral, transition) =
-                if (target - self.previous_lateral).abs() < 0.01 {
-                    self.maneuver_start.unwrap_or((s, lateral, transition))
-                } else {
-                    (s, lateral, transition)
-                };
-            let anchored_offset = |distance| {
-                start_lateral
-                    + (target - start_lateral) * quintic((s + distance - start_s) / transition)
-            };
-            let base = |distance| {
-                if self.local_route_geometry {
-                    route.sample(s + distance, anchored_offset(distance)).0
-                } else {
-                    geometry::sample(route, s + distance, anchored_offset(distance))
-                }
-            };
-            let base_initial = base(0.0);
-            let base_tangent = base(0.01).minus(base_initial).scaled(100.0);
-            let position_error = ego.pose.position.minus(base_initial);
-            let desired_tangent =
-                rustdriving_core::Vec2::new(ego.pose.yaw.cos(), ego.pose.yaw.sin())
-                    .scaled(base_tangent.x.hypot(base_tangent.y));
-            let tangent_error = desired_tangent.minus(base_tangent);
-            // Retain the maneuver's original completion arc. Reapplying its
-            // whole transition at every local side-path tick would continually
-            // defer correction of the remaining tracking error. A wheelbase
-            // floor leaves a finite recovery span after the anchor has passed.
-            let correction_transition = if self.local_route_geometry
-                && (self.point_reference_recovery
-                    || ((fitted_chassis_recovery || refined) && s >= start_s + transition))
-                && target.abs() > 0.1
-            {
-                // Reuse the quintic's existing second-derivative bound for
-                // the residual shift as well. A short recovery span must not
-                // ignore the configured plant's lateral acceleration budget.
-                let recovery_floor =
-                    self.max_lateral_acceleration_m_s2
-                        .map_or(self.vehicle.wheelbase, |limit| {
-                            self.vehicle.wheelbase.max(
-                                ego.speed
-                                    * (6.0 * position_error.x.hypot(position_error.y) / limit)
-                                        .sqrt(),
-                            )
-                        });
-                let recovery = (start_s + transition - s).max(recovery_floor);
-                if self.point_reference_recovery {
-                    recovery.min(transition)
-                } else {
-                    // A temporary center brake can increase the residual while
-                    // preserving the passing intent. Its recovery may need more
-                    // room than the original shift, under the same speed limits.
-                    recovery
-                }
+        let transition = transition_distance(
+            ego.speed,
+            target - lateral,
+            self.max_lateral_acceleration_m_s2,
+        );
+        let (start_s, start_lateral, transition) = if (target - self.previous_lateral).abs() < 0.01
+        {
+            self.maneuver_start.unwrap_or((s, lateral, transition))
+        } else {
+            (s, lateral, transition)
+        };
+        let anchored_offset = |distance| {
+            start_lateral
+                + (target - start_lateral) * quintic((s + distance - start_s) / transition)
+        };
+        let base = |distance| {
+            if self.local_route_geometry {
+                route.sample(s + distance, anchored_offset(distance)).0
             } else {
-                transition
-            };
-            let mut geometry = Vec::new();
-            for i in 0..=80 {
-                let ds = horizon * i as f64 / 80.0;
-                let position = if i == 0 {
-                    ego.pose.position
-                } else {
-                    base(ds)
-                        .plus(position_error.scaled(1.0 - quintic(ds / correction_transition)))
-                        .plus(
-                            tangent_error
-                                .scaled(geometry::heading_weight(ds, correction_transition)),
-                        )
-                };
-                // Interpolation and heading correction may leave the supplied corridor;
-                // check the actual candidate against the unchanged route evaluator.
-                let corridor_radius = route.half_width - self.vehicle.radius;
-                // Distance to any point on the centerline is an upper bound on
-                // nearest-centerline distance. Most samples can be accepted with
-                // this bound; ambiguous ones still use the full corridor projection.
-                let reference = supplied_route.sample(s + ds, 0.0).0;
-                if position.distance(reference) > corridor_radius
-                    && supplied_route.project(position).1.abs() > corridor_radius
-                {
-                    return None;
-                }
-                geometry.push(position);
+                geometry::sample(route, s + distance, anchored_offset(distance))
             }
+        };
+        let base_initial = base(0.0);
+        let base_tangent = base(0.01).minus(base_initial).scaled(100.0);
+        let position_error = ego.pose.position.minus(base_initial);
+        let desired_tangent = rustdriving_core::Vec2::new(ego.pose.yaw.cos(), ego.pose.yaw.sin())
+            .scaled(base_tangent.x.hypot(base_tangent.y));
+        let tangent_error = desired_tangent.minus(base_tangent);
+        // Retain the maneuver's original completion arc. Reapplying its
+        // whole transition at every local side-path tick would continually
+        // defer correction of the remaining tracking error. A wheelbase
+        // floor leaves a finite recovery span after the anchor has passed.
+        let correction_transition = if self.local_route_geometry
+            && (self.point_reference_recovery
+                || ((fitted_chassis_recovery || refined) && s >= start_s + transition))
+            && target.abs() > 0.1
+        {
+            // Reuse the quintic's existing second-derivative bound for
+            // the residual shift as well. A short recovery span must not
+            // ignore the configured plant's lateral acceleration budget.
+            let recovery_floor =
+                self.max_lateral_acceleration_m_s2
+                    .map_or(self.vehicle.wheelbase, |limit| {
+                        self.vehicle.wheelbase.max(
+                            ego.speed
+                                * (6.0 * position_error.x.hypot(position_error.y) / limit).sqrt(),
+                        )
+                    });
+            let recovery = (start_s + transition - s).max(recovery_floor);
+            if self.point_reference_recovery {
+                recovery.min(transition)
+            } else {
+                // A temporary center brake can increase the residual while
+                // preserving the passing intent. Its recovery may need more
+                // room than the original shift, under the same speed limits.
+                recovery
+            }
+        } else {
+            transition
+        };
+        let mut geometry = Vec::new();
+        for i in 0..=80 {
+            let ds = horizon * i as f64 / 80.0;
+            let position = if i == 0 {
+                ego.pose.position
+            } else {
+                base(ds)
+                    .plus(position_error.scaled(1.0 - quintic(ds / correction_transition)))
+                    .plus(tangent_error.scaled(geometry::heading_weight(ds, correction_transition)))
+            };
+            // Interpolation and heading correction may leave the supplied corridor;
+            // check the actual candidate against the unchanged route evaluator.
+            let corridor_radius = route.half_width - self.vehicle.radius;
+            // Distance to any point on the centerline is an upper bound on
+            // nearest-centerline distance. Most samples can be accepted with
+            // this bound; ambiguous ones still use the full corridor projection.
+            let reference = supplied_route.sample(s + ds, 0.0).0;
+            if position.distance(reference) > corridor_radius
+                && supplied_route.project(position).1.abs() > corridor_radius
+            {
+                return None;
+            }
+            geometry.push(position);
+        }
 
         Some((geometry, base_tangent))
     }
@@ -647,9 +647,9 @@ impl LatticePlanner {
                 trace.reject(CandidateDisposition::OppositeSideDuringPass);
                 continue;
             }
-            let Some((geometry, base_tangent)) = self.candidate_geometry(
-                ego, route, supplied_route, horizon, (target, refined),
-            ) else {
+            let Some((geometry, base_tangent)) =
+                self.candidate_geometry(ego, route, supplied_route, horizon, (target, refined))
+            else {
                 trace.reject(CandidateDisposition::GeometryOutsideCorridor);
                 continue;
             };
