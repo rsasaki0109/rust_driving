@@ -142,28 +142,37 @@ fn result_inspection_preserves_outputs_replay_and_live_state_through_faults() {
         let input = frame(i);
         let expected = plain.step(&input).unwrap();
         let mut raw = None;
-        let actual = observed.step_with_planner_result_inspection(
-            &input,
-            &mut |planner, ego, route, predictions, trajectory| {
-                calls += 1;
-                saw_predictions |= !predictions.is_empty();
-                raw = Some(trajectory.clone());
-                let diagnostics = planner.diagnostics().expect("post-plan diagnostics");
-                if let Some(index) = diagnostics.selected_candidate {
-                    assert_eq!(diagnostics.candidates[index as usize].lateral_target_m,
-                        trajectory.lateral_target);
-                }
-                // Destructive experimental changes affect only this clone.
-                let mut shadow = planner.clone();
-                shadow.reset_route_state();
-                shadow.cruise_speed = 0.5;
-                let _ = shadow.plan(ego, route, predictions);
-            },
-        ).unwrap();
-        assert_eq!(serde_json::to_vec(&actual).unwrap(), serde_json::to_vec(&expected).unwrap());
+        let actual = observed
+            .step_with_planner_result_inspection(
+                &input,
+                &mut |planner, ego, route, predictions, trajectory| {
+                    calls += 1;
+                    saw_predictions |= !predictions.is_empty();
+                    raw = Some(trajectory.clone());
+                    let diagnostics = planner.diagnostics().expect("post-plan diagnostics");
+                    if let Some(index) = diagnostics.selected_candidate {
+                        assert_eq!(
+                            diagnostics.candidates[index as usize].lateral_target_m,
+                            trajectory.lateral_target
+                        );
+                    }
+                    // Destructive experimental changes affect only this clone.
+                    let mut shadow = planner.clone();
+                    shadow.reset_route_state();
+                    shadow.cruise_speed = 0.5;
+                    let _ = shadow.plan(ego, route, predictions);
+                },
+            )
+            .unwrap();
+        assert_eq!(
+            serde_json::to_vec(&actual).unwrap(),
+            serde_json::to_vec(&expected).unwrap()
+        );
         let raw = raw.expect("one result callback for this ordinary sensor step");
-        assert_eq!(serde_json::to_value(&raw.points).unwrap(),
-            serde_json::to_value(&actual.trajectory.points).unwrap());
+        assert_eq!(
+            serde_json::to_value(&raw.points).unwrap(),
+            serde_json::to_value(&actual.trajectory.points).unwrap()
+        );
         assert_eq!(raw.lateral_target, actual.trajectory.lateral_target);
         // Health may override raw mode after inspection.
         if i == 8 {
@@ -176,7 +185,11 @@ fn result_inspection_preserves_outputs_replay_and_live_state_through_faults() {
     assert!(saw_predictions);
     let mut bytes = vec![];
     log.write(&mut bytes).unwrap();
-    assert!(verify(std::io::Cursor::new(bytes), vec![]).unwrap().verified);
+    assert!(
+        verify(std::io::Cursor::new(bytes), vec![])
+            .unwrap()
+            .verified
+    );
 }
 
 #[test]
@@ -186,9 +199,13 @@ fn invalid_clock_does_not_invoke_result_inspection_or_advance_pipeline() {
     plain.step(&frame(0)).unwrap();
     observed.step(&frame(0)).unwrap();
     let mut calls = 0;
-    assert!(observed.step_with_planner_result_inspection(
-        &frame(0), &mut |_, _, _, _, _| { calls += 1; },
-    ).is_err());
+    assert!(
+        observed
+            .step_with_planner_result_inspection(&frame(0), &mut |_, _, _, _, _| {
+                calls += 1;
+            },)
+            .is_err()
+    );
     assert_eq!(calls, 0);
     assert_eq!(
         serde_json::to_vec(&plain.step(&frame(1)).unwrap()).unwrap(),

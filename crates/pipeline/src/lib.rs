@@ -66,7 +66,6 @@ pub type PlannerInspection<'a> = dyn FnMut(&LatticePlanner, EgoState, &Route, &[
 pub type PlannerResultInspection<'a> =
     dyn FnMut(&LatticePlanner, EgoState, &Route, &[Prediction], &Trajectory) + 'a;
 
-
 /// Conservative, externally calibrated planning limits, independent of simulator truth.
 #[derive(Clone, Copy, Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
