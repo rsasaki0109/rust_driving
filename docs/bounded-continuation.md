@@ -322,3 +322,30 @@ restricts that comparison to later ticks with measured speed at most 0.32 m/s.
 These counters do not establish acceleration command, physical progress or
 closed-loop safety. Three unit tests cover accounting, rejection/revocation and
 ten corrupted evidence cases. They join the required workspace check script.
+
+## Explicit planner selection (validation pending)
+
+`LatticePlanner::plan_with_continuation` is an explicit experimental entry
+point. It regenerates and certifies the whole retained-maneuver candidate before
+committing any planning state. Acceptance replaces the earlier immediate-stop
+request: obstruction requested/active flags and the searched-stop anchor clear,
+while the newly certified yield endpoint is recorded in planning-route coordinates.
+The maneuver anchor, permit endpoint and deadline are preserved.
+
+Acceptance returns `ContinuationSelection` with prior stop flags, acquired
+clock, expiry, original/selected progress, target and blocker identities.
+Ordinary lattice diagnostics and old adoption diagnostics are cleared so they
+cannot falsely describe the selected continuation. The caller must retain this
+new selection evidence. Rejection or expiry revokes the permit and calls the
+ordinary planner, preserving its emergency/braking behavior.
+
+Two planner tests check successful state replacement and unchanged ordinary
+fallback for expiry/conflict. A pipeline-crate integration test runs the actual
+adoption sequence, explicit selection and PurePursuit controller, requiring
+positive bounded acceleration and retained emergency rejection. This is a
+prescribed-state planner/controller test, not a closed-loop plant simulation.
+
+The default DrivingPipeline still uses ordinary `plan`; no configuration flag
+enables this entry yet. Pipeline selection diagnostics, route/health ownership,
+regulatory guards and paired reference/native closed-loop qualification remain
+required before enabling it in driving scenarios.

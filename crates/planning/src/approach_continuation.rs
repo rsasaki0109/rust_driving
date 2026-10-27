@@ -1,4 +1,5 @@
-//! Experimental stopping-profile construction; not connected to the driving policy.
+//! Experimental bounded continuation generation and explicit planner selection.
+//! The default driving pipeline does not enable continuation selection.
 //! A caller must separately own fresh approach authorization and supply the full
 //! current-scene collision/road certificate. A returned profile grants no authority.
 use crate::speed;
@@ -443,8 +444,88 @@ fn continuous_progress_contains(
         .all(|p| certify(p[0].position, p[1].position, &permitted, &forbidden, 10))
 }
 
-/// A planner-owned candidate entry point; does not adopt or execute its result.
+/// Evidence returned only when a continuation is selected instead of ordinary planning.
+#[derive(Clone, Debug)]
+pub struct ContinuationSelection {
+    pub now_s: f64,
+    pub acquisition_s: f64,
+    pub expires_s: f64,
+    pub original_endpoint: Vec2,
+    pub original_end_progress_m: f64,
+    pub selected_end_progress_m: f64,
+    pub lateral_target_m: f64,
+    pub blocking_ids: Vec<u64>,
+    pub previous_stop_requested: bool,
+    pub previous_stop_active: bool,
+}
+
+/// An explicit experimental selection result. When selected is Some, ordinary
+/// lattice diagnostics are cleared; the caller must record this separate evidence.
+pub struct ContinuationPlan {
+    pub trajectory: rustdriving_core::Trajectory,
+    pub selected: Option<ContinuationSelection>,
+}
+
+/// Planner-owned inspection and explicit experimental selection entry points.
 impl crate::LatticePlanner {
+
+    /// Select a freshly certified continuation and commit its stopping state
+    /// atomically, or run the unchanged ordinary planner on failure.
+    /// This explicit API is not called by the default driving pipeline. Its
+    /// caller must retain selection evidence and apply all normal health and
+    /// regulatory command guards. The supplied route follows Planner's contract.
+    pub fn plan_with_continuation(
+        &mut self,
+        permit: &mut ContinuationPermit,
+        observation: &ContinuationObservation<'_>,
+        ego: rustdriving_core::EgoState,
+        route: &Route,
+        objects: &[rustdriving_core::Prediction],
+    ) -> ContinuationPlan {
+        if let Some(trajectory) =
+            self.checked_maneuver_continuation(permit, observation, ego, route, objects)
+        {
+            let endpoint = trajectory.points.last().expect("certified stopped profile").position;
+            let stop = if self.local_route_geometry {
+                crate::corners::fit(route, self.vehicle).ok().map(|r| r.project(endpoint).0)
+            } else {
+                Some(route.project(endpoint).0)
+            };
+            if let Some(stop) = stop.filter(|s| s.is_finite()) {
+                let selected = ContinuationSelection {
+                    now_s: observation.now_s,
+                    acquisition_s: observation.acquisition_s.expect("certified scene clock"),
+                    expires_s: permit.expires_s,
+                    original_endpoint: permit.endpoint,
+                    original_end_progress_m: permit.end_progress_m,
+                    selected_end_progress_m: route.project(endpoint).0,
+                    lateral_target_m: trajectory.lateral_target,
+                    blocking_ids: permit.blocking_ids.clone(),
+                    previous_stop_requested: self.obstruction_stop_requested,
+                    previous_stop_active: self.obstruction_stop_active,
+                };
+                // The accepted complete stop replaces the earlier immediate
+                // braking commitment; retaining its flags would suppress control
+                // acceleration despite the newly certified speed envelope.
+                self.obstruction_stop_requested = false;
+                self.obstruction_stop_active = false;
+                self.searched_stop_s = None;
+                self.yield_stop_s = Some(stop);
+                self.prefer_stop_progress = false;
+                self.continuation_adoption = None;
+                self.approach_confirmation.reset();
+                self.diagnostics = None;
+                self.stop_attempts.clear();
+                return ContinuationPlan { trajectory, selected: Some(selected) };
+            }
+            permit.revoke();
+        }
+        ContinuationPlan {
+            trajectory: rustdriving_core::Planner::plan(self, ego, route, objects),
+            selected: None,
+        }
+    }
+
     /// Consume the latest actual plan adoption once, during its control tick.
     /// A failed request also consumes the witness; observations cannot renew it.
     /// The caller owns health and route/localization generations. This does not
@@ -1775,5 +1856,80 @@ mod tests {
                 .checked_maneuver_continuation(&mut permit, &observed, ego, &route, &objects,)
                 .is_none()
         );
+    }
+
+    #[test]
+    fn selected_continuation_replaces_braking_commitment_without_renewing_permit() {
+        let (mut planner, route, mut ego, objects) = actual_adoption_fixture();
+        let status = planner.checked_approach_diagnostics().clone();
+        let mut observed = observation(0.2);
+        observed.lateral_target_m = status.proposal_lateral_target_m.unwrap();
+        observed.blocking_ids = &status.blocking_prediction_ids;
+        let mut permit = planner.take_continuation_permit(&observed, 1.).unwrap();
+        let bound = permit.endpoint_bound();
+        let anchor = planner.maneuver_start;
+        planner.obstruction_stop_requested = true;
+        planner.obstruction_stop_active = true;
+        planner.searched_stop_s = Some(10.);
+        planner.yield_stop_s = Some(10.);
+        observed.now_s = 0.3;
+        observed.acquisition_s = Some(0.3);
+        planner.observe_checked_approach_scene(0.3, Some(0.3));
+        ego.speed = 0.21;
+        let result = planner.plan_with_continuation(
+            &mut permit, &observed, ego, &route, &objects,
+        );
+        let selected = result.selected.unwrap();
+        assert!(selected.previous_stop_requested && selected.previous_stop_active);
+        assert!(!planner.braking_obstruction_stop());
+        assert!(!planner.holding_obstruction_stop());
+        assert!(planner.searched_stop_s.is_none());
+        assert!(planner.yield_stop_s.unwrap() > 10.);
+        assert!(result.trajectory.points.iter().any(|p| p.speed > 0.7));
+        assert_eq!(permit.endpoint_bound(), bound);
+        assert_eq!(selected.expires_s, 1.2);
+        assert!(selected.selected_end_progress_m <= selected.original_end_progress_m);
+        assert_eq!(planner.maneuver_start, anchor);
+        assert!(planner.diagnostics().is_none());
+        assert!(!planner.checked_approach_diagnostics().adopted);
+        assert!(planner.take_continuation_permit(&observed, 8.).is_none());
+    }
+
+    #[test]
+    fn failed_selection_reproduces_ordinary_planning_and_stop_state() {
+        use rustdriving_core::Planner;
+        for expired in [false, true] {
+            let (mut planner, route, mut ego, mut objects) = actual_adoption_fixture();
+            let status = planner.checked_approach_diagnostics().clone();
+            let mut observed = observation(0.2);
+            observed.lateral_target_m = status.proposal_lateral_target_m.unwrap();
+            observed.blocking_ids = &status.blocking_prediction_ids;
+            let mut permit = planner.take_continuation_permit(&observed, 1.).unwrap();
+            observed.now_s = if expired { 1.2 } else { 0.3 };
+            observed.acquisition_s = Some(observed.now_s);
+            planner.observe_checked_approach_scene(observed.now_s, observed.acquisition_s);
+            ego.speed = 0.21;
+            if !expired { objects[0].positions = vec![ego.pose.position; 41]; }
+            planner.obstruction_stop_requested = true;
+            let mut ordinary = planner.clone();
+            let expected = ordinary.plan(ego, &route, &objects);
+            let result = planner.plan_with_continuation(
+                &mut permit, &observed, ego, &route, &objects,
+            );
+            assert!(result.selected.is_none());
+            assert!(permit.endpoint_bound().is_none());
+            assert_eq!(result.trajectory.mode, expected.mode);
+            assert_eq!(result.trajectory.lateral_target, expected.lateral_target);
+            assert_eq!(result.trajectory.points.len(), expected.points.len());
+            for (a, b) in result.trajectory.points.iter().zip(&expected.points) {
+                assert_eq!(a.position, b.position);
+                assert_eq!(a.speed, b.speed);
+                assert_eq!(a.time, b.time);
+            }
+            assert_eq!(planner.braking_obstruction_stop(), ordinary.braking_obstruction_stop());
+            assert_eq!(planner.holding_obstruction_stop(), ordinary.holding_obstruction_stop());
+            assert_eq!(planner.yield_stop_s, ordinary.yield_stop_s);
+            assert_eq!(planner.maneuver_start, ordinary.maneuver_start);
+        }
     }
 }
