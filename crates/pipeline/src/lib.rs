@@ -1933,7 +1933,8 @@ impl DrivingPipeline {
         }
         let command = if health.is_empty() {
             let mut requested = if continuation.is_some() {
-                self.controller.control_with_sample_hold(motion_estimate, &trajectory, dt)
+                self.controller
+                    .control_with_sample_hold(motion_estimate, &trajectory, dt)
             } else {
                 self.controller.control(motion_estimate, &trajectory, dt)
             };
