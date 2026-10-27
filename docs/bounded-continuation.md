@@ -306,3 +306,19 @@ complete report are not evidence of a successful comparison.
 The dedicated workflow runs required checks first, then downloads the retained
 paired artifact and executes this inspection. No result or mission improvement
 is claimed until that execution completes.
+
+## Comparative probe audit (validation pending)
+
+The Python report now independently recounts adoptions, grants, attempts and
+candidate records from retained JSONL rather than trusting only the Rust footer.
+It rejects missing/misordered records, invalid numeric/boolean state, a candidate
+without a live healthy permit, renewed endpoint bounds, resumed probes without
+a new adoption, and candidates at or beyond the immutable eight-second deadline.
+It also checks initial speed, monotonic profile time and the full stopped tail.
+
+Descriptive counters separate candidates on the adoption tick from later ticks,
+and count peak speeds more than 0.1 m/s above the original plan. A separate count
+restricts that comparison to later ticks with measured speed at most 0.32 m/s.
+These counters do not establish acceleration command, physical progress or
+closed-loop safety. Three unit tests cover accounting, rejection/revocation and
+ten corrupted evidence cases. They join the required workspace check script.

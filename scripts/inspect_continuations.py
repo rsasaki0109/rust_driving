@@ -8,6 +8,7 @@ import lzma
 import subprocess
 import tempfile
 from check_forecast_calibration import read_retained
+from inspect_continuation_probes import inspect
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = '75d6c3fe11b5194ba522708f23a3a5c3eb43de46'
@@ -57,12 +58,14 @@ def main():
                 raw = output.read_bytes()
                 if json.loads(raw.splitlines()[-1]) != summary:
                     raise ValueError('inspection footer differs from stdout')
+                metrics = inspect([json.loads(line) for line in raw.splitlines()])
                 encoded = lzma.compress(raw)
                 packed = output.with_suffix(output.suffix+'.xz')
                 packed.write_bytes(encoded)
                 output.unlink()
                 entry = dict(plant=case['plant'], seed=case['seed'], variant=variant,
                     sensor_sha256=hashlib.sha256(sensors).hexdigest(), summary=summary,
+                    comparative_audit=metrics,
                     inspection=dict(path=packed.name, encoding='xz',
                         sha256=hashlib.sha256(raw).hexdigest(),
                         stored_sha256=hashlib.sha256(encoded).hexdigest()))

@@ -18,6 +18,7 @@ python3 scripts/test_cold_motion.py
 python3 scripts/test_velocity_hypotheses.py
 python3 scripts/test_checked_approaches.py
 python3 scripts/test_approach_execution.py
+python3 scripts/test_continuation_probes.py
 python3 scripts/test_later_stops.py
 python3 scripts/test_track_initialization.py
 python3 scripts/test_recent_track_motion.py
