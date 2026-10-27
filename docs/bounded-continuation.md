@@ -386,3 +386,31 @@ the disabled policy to detect regressions.
 CLI/scenario propagation, independent auditing of selected continuation records
 and closed-loop reference/native qualification remain before deployment or
 default enablement. No arrival or maturity improvement is claimed.
+
+The opt-in pipeline integration, ownership/withdrawal tests, no-adoption
+invariance and hosted `bash scripts/check.sh` passed in
+[run 40446333595](https://github.com/rsasaki0109/rust_driving/actions/runs/40446333595)
+on formatted source `5118f099148c98970ef6fd04ce06c4fdfdf7fa96`.
+The disabled-policy frozen shadow comparison also completed successfully.
+
+## Scenario propagation and reference experiment (execution pending)
+
+Scenario JSON now accepts `continue_checked_approaches`, omitted/false by default,
+and the shared `pipeline_config` passes it to both reference and RNE adapters.
+Preflight uses the pipeline's fixed-route/captured-approach requirements; a
+roundtrip test checks absent/enabled/mistyped settings and missing prerequisites.
+Existing scenarios do not enable it. RNE's use of the shared adapter is source
+inspection, not fresh native qualification.
+
+`check_continuation_reference.py` runs fresh reference missions for seeds 7/42,
+pairing the frozen 0.5 m approach policy against that identical scenario plus
+the continuation option. The disabled control must reproduce the retained PR #58
+candidate sensor SHA exactly. Both runs must replay every new sensor tick; reports
+retain physical simulator summaries and selected/positive-acceleration/emergency
+tick counts. Original goals, duration, physics and sensing remain unchanged.
+
+This first closed-loop execution is explicitly exploratory. The report always
+sets adoption/full-cohort/independent-continuation-qualification false. Native
+comparison and independent certificates for selected continuation records remain
+outstanding even if physical summaries improve. Partial reports or failed
+control/replay checks do not establish a successful comparison.
