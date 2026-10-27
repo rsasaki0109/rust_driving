@@ -1,10 +1,47 @@
 # Bounded continuation profile primitive
 
+## Current status
+
+The sections below retain the historical implementation stages and their validation
+limits. Current exploratory results are bound to source
+`967d65c0268564be63acea8421b484a17acab860` in
+[run 40460294531](https://github.com/rsasaki0109/rust_driving/actions/runs/40460294531).
+Hosted `bash scripts/check.sh`, all frozen replays, both paired plants, execution
+traces and the independent recorded-ownership audit passed. All 574 selected ticks
+across four enabled missions bound to four actual adoptions. No selected tick had a
+final guard override. This ownership audit is not an independent collision certificate.
+
+All four selection spans ended before expiry (0.65–1.10 s remaining at the last
+selection). The next tick requested an ordinary checked stop, with estimated speed
+0.97–1.64 m/s; every final five-second window contained 101 checked-stop decisions.
+The original endpoint was nearly reached, and all four missions remained incomplete.
+These observations rule out expiry at the transition, but do not isolate which
+candidate certificate rejected the next continuation.
+
+### Sample-hold control follow-up (pending validation)
+
+The ordinary controller uses only the first trajectory segment's acceleration.
+A 10 ms acceleration segment followed by braking can therefore command acceleration
+for a full 50 ms control tick, overrunning the scheduled speed and distance.
+The new `control_with_sample_hold` entry takes the minimum segment acceleration
+over the command interval while retaining the existing PI feedback and guards.
+Only selected continuation ticks use it; ordinary planning/control remains unchanged.
+It anticipates braking within a tick without extending permit time or endpoint bounds.
+This is a conservative feedforward experiment, not a proof of complete tracking
+safety or a demonstrated fix for the terminal stall.
+
+Two control tests cover an analytically integrated sub-tick switch, a switch exactly
+at the interval boundary, and malformed clocks. The existing paired workflow checks
+both plants, frozen disabled controls and full replay. Results of this follow-up
+are pending; no local executor is available.
+
+## Historical implementation stages
+
 The recorded restart investigation identified a current-speed cap in earlier
 stopping fallback at nine of ten candidate restarts. This first implementation
 adds an experimental profile constructor in `planning::approach_continuation`.
 Ordinary driving remains the default. An opt-in fixed-route pipeline integration
-is now implemented below but awaits validation; mission stalls are not yet resolved.
+has passed exploratory reference/RNE comparisons; mission stalls are not yet resolved.
 
 The caller supplies a bounded path geometry, initial speed, maximum stopping
 arc distance and positive speed/acceleration/braking bounds. Up to sixteen
