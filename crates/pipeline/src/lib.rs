@@ -284,9 +284,12 @@ impl PipelineConfig {
     }
     pub fn validate(&self) -> Result<(), String> {
         if self.continue_checked_approaches
-            && (!self.replan_checked_approaches || !self.record_planning_diagnostics
-                || self.navigation.is_some() || self.lane_change.is_some()
-                || !self.stop_lines.is_empty() || !self.stop_signs.is_empty()
+            && (!self.replan_checked_approaches
+                || !self.record_planning_diagnostics
+                || self.navigation.is_some()
+                || self.lane_change.is_some()
+                || !self.stop_lines.is_empty()
+                || !self.stop_signs.is_empty()
                 || !self.yield_intersections.is_empty())
         {
             return Err("continuation requires captured checked approaches on a fixed route without mapped traffic duties".into());

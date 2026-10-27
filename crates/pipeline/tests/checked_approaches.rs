@@ -114,7 +114,12 @@ fn sensor_replay_binds_the_new_confirmation_record_and_its_header_policy() {
 #[test]
 fn continuation_is_opt_in_and_requires_captured_fixed_route_approaches() {
     let legacy = config();
-    assert!(serde_json::to_value(&legacy).unwrap().get("continue_checked_approaches").is_none());
+    assert!(
+        serde_json::to_value(&legacy)
+            .unwrap()
+            .get("continue_checked_approaches")
+            .is_none()
+    );
     let mut enabled = legacy.clone();
     enabled.continue_checked_approaches = true;
     assert!(DrivingPipeline::new(enabled.clone()).is_err());
@@ -122,7 +127,8 @@ fn continuation_is_opt_in_and_requires_captured_fixed_route_approaches() {
     assert!(DrivingPipeline::new(enabled.clone()).is_ok());
     enabled.replan_checked_approaches = false;
     assert!(DrivingPipeline::new(enabled).is_err());
-    let decoded: PipelineConfig = serde_json::from_value(serde_json::to_value(legacy).unwrap()).unwrap();
+    let decoded: PipelineConfig =
+        serde_json::from_value(serde_json::to_value(legacy).unwrap()).unwrap();
     assert!(!decoded.continue_checked_approaches);
 }
 
@@ -142,15 +148,25 @@ fn enabled_continuation_without_adoption_preserves_outputs_and_fault_braking() {
             "odometry":{"stamp":time,"speed":0.,"yaw_rate":0.},
             "gnss":{"stamp":time,"position":{"x":0.,"y":0.},"variance":0.02},
             "lidar":{"stamp":time,"points":[]}, "lidar_failed":i==5
-        })).unwrap();
+        }))
+        .unwrap();
         let expected = plain.step(&frame).unwrap();
         let actual = driver.step(&frame).unwrap();
         assert!(actual.continuation.is_none());
-        assert_eq!(serde_json::to_vec(&actual).unwrap(), serde_json::to_vec(&expected).unwrap());
-        if i == 5 { assert!(actual.command.acceleration <= -5.99); }
+        assert_eq!(
+            serde_json::to_vec(&actual).unwrap(),
+            serde_json::to_vec(&expected).unwrap()
+        );
+        if i == 5 {
+            assert!(actual.command.acceleration <= -5.99);
+        }
         log.record(frame, actual);
     }
     let mut bytes = vec![];
     log.write(&mut bytes).unwrap();
-    assert!(verify(std::io::Cursor::new(bytes), vec![]).unwrap().verified);
+    assert!(
+        verify(std::io::Cursor::new(bytes), vec![])
+            .unwrap()
+            .verified
+    );
 }

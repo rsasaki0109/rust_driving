@@ -24,11 +24,14 @@ pub struct ContinuationDiagnostic {
 impl From<ContinuationSelection> for ContinuationDiagnostic {
     fn from(s: ContinuationSelection) -> Self {
         Self {
-            now_s: s.now_s, acquisition_s: s.acquisition_s, expires_s: s.expires_s,
+            now_s: s.now_s,
+            acquisition_s: s.acquisition_s,
+            expires_s: s.expires_s,
             original_endpoint: s.original_endpoint,
             original_end_progress_m: s.original_end_progress_m,
             selected_end_progress_m: s.selected_end_progress_m,
-            lateral_target_m: s.lateral_target_m, blocking_ids: s.blocking_ids,
+            lateral_target_m: s.lateral_target_m,
+            blocking_ids: s.blocking_ids,
             previous_stop_requested: s.previous_stop_requested,
             previous_stop_active: s.previous_stop_active,
         }
@@ -55,54 +58,92 @@ pub(super) struct Context<'a> {
     pub objects: &'a [Prediction],
 }
 impl ContinuationDriver {
-    pub fn clear(&mut self) { self.active = None; }
+    pub fn clear(&mut self) {
+        self.active = None;
+    }
 
     pub fn plan(
         &mut self,
         planner: &mut LatticePlanner,
         context: Context<'_>,
     ) -> (Trajectory, Option<ContinuationDiagnostic>) {
-        let Context { enabled, eligible, now, epoch, ego, route, objects } = context;
+        let Context {
+            enabled,
+            eligible,
+            now,
+            epoch,
+            ego,
+            route,
+            objects,
+        } = context;
         if !enabled || !eligible {
             self.clear();
             return (planner.plan(ego, route, objects), None);
         }
         if self.active.as_ref().is_some_and(|a| {
-            a.epoch != epoch || a.route.points != route.points
-                || a.route.half_width != route.half_width || a.route.lengths != route.lengths
+            a.epoch != epoch
+                || a.route.points != route.points
+                || a.route.half_width != route.half_width
+                || a.route.lengths != route.lengths
         }) {
             self.clear();
         }
-        let acquisition = planner.checked_approach_scene_clock()
-            .filter(|(time, _)| *time == now).and_then(|(_, stamp)| stamp);
+        let acquisition = planner
+            .checked_approach_scene_clock()
+            .filter(|(time, _)| *time == now)
+            .and_then(|(_, stamp)| stamp);
         let progress = route.project(ego.pose.position).0;
         let (trajectory, selected) = if let Some(active) = self.active.as_mut() {
             let observed = ContinuationObservation {
-                now_s: now, acquisition_s: acquisition, localization_generation: epoch,
-                route_generation: 0, blocking_ids: &active.ids,
-                lateral_target_m: active.target, progress_m: progress, healthy: eligible,
+                now_s: now,
+                acquisition_s: acquisition,
+                localization_generation: epoch,
+                route_generation: 0,
+                blocking_ids: &active.ids,
+                lateral_target_m: active.target,
+                progress_m: progress,
+                healthy: eligible,
             };
-            let result = planner.plan_with_continuation(
-                &mut active.permit, &observed, ego, route, objects,
-            );
-            (result.trajectory, result.selected.map(ContinuationDiagnostic::from))
+            let result =
+                planner.plan_with_continuation(&mut active.permit, &observed, ego, route, objects);
+            (
+                result.trajectory,
+                result.selected.map(ContinuationDiagnostic::from),
+            )
         } else {
             (planner.plan(ego, route, objects), None)
         };
-        if self.active.as_ref().is_some_and(|a| a.permit.endpoint_bound().is_none()) {
+        if self
+            .active
+            .as_ref()
+            .is_some_and(|a| a.permit.endpoint_bound().is_none())
+        {
             self.clear();
         }
         let record = planner.checked_approach_diagnostics().clone();
         if record.adopted {
-            let target = record.proposal_lateral_target_m.expect("actual adopted target");
+            let target = record
+                .proposal_lateral_target_m
+                .expect("actual adopted target");
             let observed = ContinuationObservation {
-                now_s: now, acquisition_s: acquisition, localization_generation: epoch,
-                route_generation: 0, blocking_ids: &record.blocking_prediction_ids,
-                lateral_target_m: target, progress_m: progress, healthy: eligible,
+                now_s: now,
+                acquisition_s: acquisition,
+                localization_generation: epoch,
+                route_generation: 0,
+                blocking_ids: &record.blocking_prediction_ids,
+                lateral_target_m: target,
+                progress_m: progress,
+                healthy: eligible,
             };
-            self.active = planner.take_continuation_permit(&observed, 8.).map(|permit| Active {
-                permit, route: route.clone(), epoch, ids: record.blocking_prediction_ids, target,
-            });
+            self.active = planner
+                .take_continuation_permit(&observed, 8.)
+                .map(|permit| Active {
+                    permit,
+                    route: route.clone(),
+                    epoch,
+                    ids: record.blocking_prediction_ids,
+                    target,
+                });
         }
         (trajectory, selected)
     }
@@ -113,33 +154,63 @@ mod tests {
     use super::*;
     use rustdriving_core::DrivingMode;
 
-    fn adopted() -> (ContinuationDriver, LatticePlanner, Route, EgoState, Vec<Prediction>) {
+    fn adopted() -> (
+        ContinuationDriver,
+        LatticePlanner,
+        Route,
+        EgoState,
+        Vec<Prediction>,
+    ) {
         let mut planner = LatticePlanner::default();
         planner.settle_obstruction_stops = true;
         planner.search_obstruction_stops = true;
         planner.replan_checked_approaches = true;
         planner.lateral_candidate_margin_m = Some(0.35);
         let narrow = Route::new(vec![Vec2::default(), Vec2::new(100., 0.)], 2.1).unwrap();
-        let mut object = Prediction { id: 7, positions: vec![Vec2::new(18., 0.); 41],
-            radius: 1., dt: 0.2, additional_radius_m: vec![] };
-        let mut ego = EgoState { speed: 8., ..EgoState::default() };
-        assert_eq!(planner.plan(ego, &narrow, std::slice::from_ref(&object)).mode, DrivingMode::Emergency);
+        let mut object = Prediction {
+            id: 7,
+            positions: vec![Vec2::new(18., 0.); 41],
+            radius: 1.,
+            dt: 0.2,
+            additional_radius_m: vec![],
+        };
+        let mut ego = EgoState {
+            speed: 8.,
+            ..EgoState::default()
+        };
+        assert_eq!(
+            planner
+                .plan(ego, &narrow, std::slice::from_ref(&object))
+                .mode,
+            DrivingMode::Emergency
+        );
         ego.pose.position.x = 10.;
         ego.speed = 0.;
         planner.plan(ego, &narrow, std::slice::from_ref(&object));
         let route = Route::new(narrow.points.clone(), 5.5).unwrap();
         object.positions = vec![Vec2::new(50., 0.); 41];
-        object.additional_radius_m = (0..=40).map(|i| {
-            let t = i as f64 * 0.2;
-            0.2 + 0.3 * t + 0.05 * t * t
-        }).collect();
+        object.additional_radius_m = (0..=40)
+            .map(|i| {
+                let t = i as f64 * 0.2;
+                0.2 + 0.3 * t + 0.05 * t * t
+            })
+            .collect();
         let objects = vec![object];
         let mut driver = ContinuationDriver::default();
         for now in [0., 0.1, 0.2] {
             planner.observe_checked_approach_scene(now, Some(now));
-            let (_, selected) = driver.plan(&mut planner, Context {
-                enabled: true, eligible: true, now, epoch: 0, ego, route: &route, objects: &objects,
-            });
+            let (_, selected) = driver.plan(
+                &mut planner,
+                Context {
+                    enabled: true,
+                    eligible: true,
+                    now,
+                    epoch: 0,
+                    ego,
+                    route: &route,
+                    objects: &objects,
+                },
+            );
             assert!(selected.is_none());
         }
         assert!(driver.active.is_some());
@@ -152,9 +223,18 @@ mod tests {
         ego.speed = 0.21;
         for now in [0.3, 0.4] {
             planner.observe_checked_approach_scene(now, Some(now));
-            let (path, selected) = driver.plan(&mut planner, Context {
-                enabled: true, eligible: true, now, epoch: 0, ego, route: &route, objects: &objects,
-            });
+            let (path, selected) = driver.plan(
+                &mut planner,
+                Context {
+                    enabled: true,
+                    eligible: true,
+                    now,
+                    epoch: 0,
+                    ego,
+                    route: &route,
+                    objects: &objects,
+                },
+            );
             let selected = selected.unwrap();
             assert_eq!(selected.now_s, now);
             assert_eq!(selected.expires_s, 8.2);
@@ -173,18 +253,37 @@ mod tests {
         for case in 0..5 {
             let (mut driver, mut planner, mut route, mut ego, objects) = adopted();
             ego.speed = 0.21;
-            if case == 2 { route.half_width += 0.1; }
+            if case == 2 {
+                route.half_width += 0.1;
+            }
             planner.observe_checked_approach_scene(0.3, if case == 3 { None } else { Some(0.3) });
-            let (_, selected) = driver.plan(&mut planner, Context {
-                enabled: case != 4, eligible: case != 0, now: 0.3,
-                epoch: u64::from(case == 1), ego, route: &route, objects: &objects,
-            });
+            let (_, selected) = driver.plan(
+                &mut planner,
+                Context {
+                    enabled: case != 4,
+                    eligible: case != 0,
+                    now: 0.3,
+                    epoch: u64::from(case == 1),
+                    ego,
+                    route: &route,
+                    objects: &objects,
+                },
+            );
             assert!(selected.is_none());
             assert!(driver.active.is_none());
             planner.observe_checked_approach_scene(0.4, Some(0.4));
-            let (_, selected) = driver.plan(&mut planner, Context {
-                enabled: true, eligible: true, now: 0.4, epoch: 0, ego, route: &route, objects: &objects,
-            });
+            let (_, selected) = driver.plan(
+                &mut planner,
+                Context {
+                    enabled: true,
+                    eligible: true,
+                    now: 0.4,
+                    epoch: 0,
+                    ego,
+                    route: &route,
+                    objects: &objects,
+                },
+            );
             assert!(selected.is_none());
         }
     }
