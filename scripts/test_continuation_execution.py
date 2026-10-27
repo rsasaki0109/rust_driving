@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import copy
 import unittest
-from inspect_continuation_execution import inspect
+from inspect_continuation_execution import inspect, held_command_comparison
 from test_approach_execution import tick
 
 
@@ -44,6 +44,31 @@ class ContinuationExecutionTests(unittest.TestCase):
         self.assertEqual(result['spans'], [])
         self.assertEqual(result['selected_ticks'], 0)
         self.assertEqual(result['terminal_dispositions'], {'CheckedStop': 3})
+
+    def test_hold_comparison_resolves_sub_tick_braking(self):
+        out = selected(.1)['expected']
+        out['trajectory']['points'] = [
+            dict(time=0., speed=1.), dict(time=.01, speed=1.02),
+            dict(time=.418, speed=0.), dict(time=8.418, speed=0.)]
+        old = held_command_comparison(out, .05)
+        self.assertAlmostEqual(old['planned_end_speed_m_s'], .92)
+        self.assertAlmostEqual(old['held_command_end_speed_m_s'], 1.1)
+        self.assertAlmostEqual(old['excess_end_speed_m_s'], .18)
+        self.assertTrue(old['crosses_profile_knot'])
+        out['command']['acceleration'] = -2.5
+        revised = held_command_comparison(out, .05)
+        self.assertAlmostEqual(revised['held_command_end_speed_m_s'], .875)
+        self.assertLess(revised['excess_end_speed_m_s'], 0)
+        self.assertFalse(held_command_comparison(out, .01)['crosses_profile_knot'])
+        self.assertEqual(held_command_comparison(out, 1.)['planned_end_speed_m_s'], 0.)
+
+    def test_hold_comparison_rejects_missing_horizon_and_bad_profile(self):
+        out = selected(.1)['expected']
+        for dt in [0., -1., float('nan'), 2.]:
+            with self.subTest(dt=dt):
+                with self.assertRaises(ValueError): held_command_comparison(out, dt)
+        out['trajectory']['points'][1]['time'] = 0.
+        with self.assertRaises(ValueError): held_command_comparison(out, .05)
 
     def test_invalid_clocks_and_expired_selection_rejected(self):
         wrong = selected(.1)
