@@ -1541,7 +1541,9 @@ mod tests {
     }
 
     fn actual_adoption_fixture() -> (
-        crate::LatticePlanner, Route, rustdriving_core::EgoState,
+        crate::LatticePlanner,
+        Route,
+        rustdriving_core::EgoState,
         Vec<rustdriving_core::Prediction>,
     ) {
         use rustdriving_core::{DrivingMode, EgoState, Planner};
@@ -1554,32 +1556,51 @@ mod tests {
         };
         let narrow = Route::new(vec![Vec2::default(), Vec2::new(100., 0.)], 2.1).unwrap();
         let mut obstacle = rustdriving_core::Prediction {
-            id: 7, positions: vec![Vec2::new(18., 0.); 41],
-            radius: 1., dt: 0.2, additional_radius_m: vec![],
+            id: 7,
+            positions: vec![Vec2::new(18., 0.); 41],
+            radius: 1.,
+            dt: 0.2,
+            additional_radius_m: vec![],
         };
-        let mut ego = EgoState { speed: 8., ..EgoState::default() };
-        assert_eq!(planner.plan(ego, &narrow, std::slice::from_ref(&obstacle)).mode, DrivingMode::Emergency);
+        let mut ego = EgoState {
+            speed: 8.,
+            ..EgoState::default()
+        };
+        assert_eq!(
+            planner
+                .plan(ego, &narrow, std::slice::from_ref(&obstacle))
+                .mode,
+            DrivingMode::Emergency
+        );
         ego.pose.position.x = 10.;
         ego.speed = 0.;
         planner.plan(ego, &narrow, std::slice::from_ref(&obstacle));
         assert!(planner.holding_obstruction_stop());
         let wide = Route::new(narrow.points.clone(), 5.5).unwrap();
         obstacle.positions = vec![Vec2::new(50., 0.); 41];
-        obstacle.additional_radius_m = (0..=40).map(|i| {
-            let t = i as f64 * 0.2;
-            0.2 + 0.3 * t + 0.05 * t * t
-        }).collect();
+        obstacle.additional_radius_m = (0..=40)
+            .map(|i| {
+                let t = i as f64 * 0.2;
+                0.2 + 0.3 * t + 0.05 * t * t
+            })
+            .collect();
         let objects = vec![obstacle];
         for now in [0., 0.1, 0.2] {
             planner.observe_checked_approach_scene(now, Some(now));
             let path = planner.plan(ego, &wide, &objects);
             if now < 0.2 {
                 assert!(!planner.checked_approach_diagnostics().adopted);
-                assert!(planner.take_continuation_permit(&observation(now), 1.).is_none());
+                assert!(
+                    planner
+                        .take_continuation_permit(&observation(now), 1.)
+                        .is_none()
+                );
             } else {
                 assert!(planner.checked_approach_diagnostics().adopted);
-                assert_eq!(planner.checked_approach_diagnostics().proposal_endpoint,
-                    Some(path.points.last().unwrap().position));
+                assert_eq!(
+                    planner.checked_approach_diagnostics().proposal_endpoint,
+                    Some(path.points.last().unwrap().position)
+                );
             }
         }
         (planner, wide, ego, objects)
@@ -1593,9 +1614,13 @@ mod tests {
         observed.lateral_target_m = status.proposal_lateral_target_m.unwrap();
         observed.blocking_ids = &status.blocking_prediction_ids;
         let permit = planner.take_continuation_permit(&observed, 1.).unwrap();
-        assert_eq!(permit.endpoint_bound(), Some((
-            status.proposal_endpoint.unwrap(), status.proposal_end_progress_m.unwrap(),
-        )));
+        assert_eq!(
+            permit.endpoint_bound(),
+            Some((
+                status.proposal_endpoint.unwrap(),
+                status.proposal_end_progress_m.unwrap(),
+            ))
+        );
         assert!(planner.take_continuation_permit(&observed, 8.).is_none());
         // Consuming a continuation witness does not rewrite recorded adoption.
         assert_eq!(planner.checked_approach_diagnostics(), &status);
@@ -1612,7 +1637,9 @@ mod tests {
             observed.blocking_ids = &status.blocking_prediction_ids;
             match case {
                 0 => planner.reset_route_state(),
-                1 => { planner.plan(ego, &route, &objects); }
+                1 => {
+                    planner.plan(ego, &route, &objects);
+                }
                 2 => planner.observe_checked_approach_scene(0.25, Some(0.2)),
                 3 => observed.progress_m += 0.1,
                 4 => observed.healthy = false,
@@ -1633,6 +1660,10 @@ mod tests {
         planner.observe_checked_approach_scene(0.2, Some(0.2));
         // Even an adopted-looking diagnostic is not the internal plan witness.
         planner.approach_confirmation.diagnostics = adoption();
-        assert!(planner.take_continuation_permit(&observation(0.2), 1.).is_none());
+        assert!(
+            planner
+                .take_continuation_permit(&observation(0.2), 1.)
+                .is_none()
+        );
     }
 }
