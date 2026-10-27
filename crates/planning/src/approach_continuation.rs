@@ -327,8 +327,12 @@ impl ContinuationPermit {
                 }) {
                     return false;
                 }
-                continuous_progress_contains(route, path, observation.progress_m-0.2, end_progress)
-                    && certify(path)
+                continuous_progress_contains(
+                    route,
+                    path,
+                    observation.progress_m - 0.2,
+                    end_progress,
+                ) && certify(path)
             },
         );
         if result.is_none() {
@@ -342,7 +346,6 @@ impl ContinuationPermit {
         self.valid.then_some((self.endpoint, self.end_progress_m))
     }
 }
-
 
 // Route projection can jump to another branch between trajectory knots. Prove
 // continuous containment by comparing distance to permitted/forbidden subroutes.
@@ -361,16 +364,18 @@ fn continuous_progress_contains(
     let mut forbidden = Vec::new();
     for (i, pair) in route.points.windows(2).enumerate() {
         let start = route.lengths[i];
-        let end = route.lengths[i+1];
+        let end = route.lengths[i + 1];
         let mut cuts = vec![start, end];
         for bound in [lower, upper] {
-            if bound > start && bound < end { cuts.push(bound); }
+            if bound > start && bound < end {
+                cuts.push(bound);
+            }
         }
         cuts.sort_by(f64::total_cmp);
-        let at = |s: f64| pair[0].plus(pair[1].minus(pair[0]).scaled((s-start)/(end-start)));
+        let at = |s: f64| pair[0].plus(pair[1].minus(pair[0]).scaled((s - start) / (end - start)));
         for interval in cuts.windows(2) {
             let segment = (at(interval[0]), at(interval[1]));
-            let middle = interval[0] + (interval[1]-interval[0])/2.;
+            let middle = interval[0] + (interval[1] - interval[0]) / 2.;
             if middle >= lower && middle <= upper {
                 permitted.push(segment);
             } else {
@@ -378,35 +383,55 @@ fn continuous_progress_contains(
             }
         }
     }
-    if permitted.is_empty() { return false; }
-    if forbidden.is_empty() { return true; }
-    fn distance(point: Vec2, segments: &[(Vec2, Vec2)]) -> f64 {
-        segments.iter().map(|(a,b)| {
-            let delta = b.minus(*a);
-            let length = a.distance(*b);
-            if length == 0. { return point.distance(*a); }
-            let unit = delta.scaled(1./length);
-            let offset = point.minus(*a);
-            let along = (offset.x*unit.x+offset.y*unit.y).clamp(0.,length);
-            point.distance(a.plus(unit.scaled(along)))
-        }).fold(f64::INFINITY, f64::min)
+    if permitted.is_empty() {
+        return false;
     }
-    fn certify(a: Vec2, b: Vec2, permitted: &[(Vec2,Vec2)], forbidden: &[(Vec2,Vec2)], depth: u8) -> bool {
+    if forbidden.is_empty() {
+        return true;
+    }
+    fn distance(point: Vec2, segments: &[(Vec2, Vec2)]) -> f64 {
+        segments
+            .iter()
+            .map(|(a, b)| {
+                let delta = b.minus(*a);
+                let length = a.distance(*b);
+                if length == 0. {
+                    return point.distance(*a);
+                }
+                let unit = delta.scaled(1. / length);
+                let offset = point.minus(*a);
+                let along = (offset.x * unit.x + offset.y * unit.y).clamp(0., length);
+                point.distance(a.plus(unit.scaled(along)))
+            })
+            .fold(f64::INFINITY, f64::min)
+    }
+    fn certify(
+        a: Vec2,
+        b: Vec2,
+        permitted: &[(Vec2, Vec2)],
+        forbidden: &[(Vec2, Vec2)],
+        depth: u8,
+    ) -> bool {
         let middle = a.plus(b.minus(a).scaled(0.5));
-        let radius = a.distance(b)/2.;
+        let radius = a.distance(b) / 2.;
         let inside = distance(middle, permitted);
         let outside = distance(middle, forbidden);
         if !radius.is_finite() || !inside.is_finite() || !outside.is_finite() {
             return false;
         }
         // A scale-aware numerical margin rejects ambiguous boundary ties.
-        let margin = 1e-10*(1.+inside+outside+radius);
-        if inside+radius+margin < outside-radius { return true; }
-        if inside+margin >= outside || depth == 0 { return false; }
-        certify(a,middle,permitted,forbidden,depth-1)
-            && certify(middle,b,permitted,forbidden,depth-1)
+        let margin = 1e-10 * (1. + inside + outside + radius);
+        if inside + radius + margin < outside - radius {
+            return true;
+        }
+        if inside + margin >= outside || depth == 0 {
+            return false;
+        }
+        certify(a, middle, permitted, forbidden, depth - 1)
+            && certify(middle, b, permitted, forbidden, depth - 1)
     }
-    path.windows(2).all(|p| certify(p[0].position,p[1].position,&permitted,&forbidden,10))
+    path.windows(2)
+        .all(|p| certify(p[0].position, p[1].position, &permitted, &forbidden, 10))
 }
 
 #[cfg(test)]
@@ -851,32 +876,58 @@ mod tests {
     }
     #[test]
     fn continuous_progress_rejects_shortcut_between_valid_knots() {
-        let route = Route::new(vec![
-            Vec2::new(0.,0.), Vec2::new(0.,10.), Vec2::new(10.,10.),
-            Vec2::new(10.,0.), Vec2::new(1.,0.)
-        ], 6.).unwrap();
+        let route = Route::new(
+            vec![
+                Vec2::new(0., 0.),
+                Vec2::new(0., 10.),
+                Vec2::new(10., 10.),
+                Vec2::new(10., 0.),
+                Vec2::new(1., 0.),
+            ],
+            6.,
+        )
+        .unwrap();
         let path = vec![
-            TrajectoryPoint { position: Vec2::new(0.,1.), speed: 1., time: 0. },
-            TrajectoryPoint { position: Vec2::new(10.,1.), speed: 1., time: 10. },
+            TrajectoryPoint {
+                position: Vec2::new(0., 1.),
+                speed: 1.,
+                time: 0.,
+            },
+            TrajectoryPoint {
+                position: Vec2::new(10., 1.),
+                speed: 1.,
+                time: 10.,
+            },
         ];
         assert!(path.iter().all(|p| route.project(p.position).0 < 30.));
         // The interior lies nearest the return leg, beyond authorized progress.
-        assert!(route.project(Vec2::new(5.,1.)).0 > 30.);
-        assert!(!continuous_progress_contains(&route,&path,0.,30.));
+        assert!(route.project(Vec2::new(5., 1.)).0 > 30.);
+        assert!(!continuous_progress_contains(&route, &path, 0., 30.));
     }
 
     #[test]
     fn continuous_progress_accepts_offset_interior_and_rejects_ambiguous_boundary() {
-        let route = Route::new(vec![Vec2::new(0.,0.),Vec2::new(20.,0.)],6.).unwrap();
+        let route = Route::new(vec![Vec2::new(0., 0.), Vec2::new(20., 0.)], 6.).unwrap();
         let mut path = vec![
-            TrajectoryPoint { position: Vec2::new(10.,3.9), speed: 1., time: 0. },
-            TrajectoryPoint { position: Vec2::new(11.5,3.9), speed: 0., time: 3. },
-            TrajectoryPoint { position: Vec2::new(11.5,3.9), speed: 0., time: 11. },
+            TrajectoryPoint {
+                position: Vec2::new(10., 3.9),
+                speed: 1.,
+                time: 0.,
+            },
+            TrajectoryPoint {
+                position: Vec2::new(11.5, 3.9),
+                speed: 0.,
+                time: 3.,
+            },
+            TrajectoryPoint {
+                position: Vec2::new(11.5, 3.9),
+                speed: 0.,
+                time: 11.,
+            },
         ];
-        assert!(continuous_progress_contains(&route,&path,9.8,12.));
+        assert!(continuous_progress_contains(&route, &path, 9.8, 12.));
         path[1].position.x = 12.;
         path[2].position.x = 12.;
-        assert!(!continuous_progress_contains(&route,&path,9.8,12.));
+        assert!(!continuous_progress_contains(&route, &path, 9.8, 12.));
     }
-
 }
