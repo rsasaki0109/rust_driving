@@ -20,10 +20,24 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           if ! git diff --quiet; then
-            git add crates/planning/src/approach_continuation.rs crates/planning/src/lib.rs crates/pipeline/src/lib.rs crates/pipeline/tests/planning_diagnostics.rs
+            git add crates/planning/src/approach_continuation.rs crates/planning/src/lib.rs crates/pipeline/src/lib.rs crates/pipeline/tests/planning_diagnostics.rs crates/pipeline/examples/inspect_continuations.rs
             git commit -m 'Format experimental bounded continuation profiles'
             git push --force-with-lease="refs/heads/feat/bounded-continuation-profile:$EXPECTED_SOURCE" origin HEAD:refs/heads/feat/bounded-continuation-profile
           fi
           git rev-parse HEAD
       - name: Required workspace checks including continuation tests
         run: bash scripts/check.sh
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '12650721879'
+          run-id: '40319988642'
+          github-token: ${{ github.token }}
+          path: retained-small-approaches
+          merge-multiple: true
+      - name: Replay frozen paired logs with shadow continuation probes
+        run: python scripts/inspect_continuations.py --evidence retained-small-approaches --output artifacts/continuation-shadow
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: continuation-shadow
+          path: artifacts/continuation-shadow

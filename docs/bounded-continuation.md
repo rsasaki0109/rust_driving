@@ -256,7 +256,7 @@ The adoption-to-candidate integration passed thirty module tests and hosted
 [run 40439048247](https://github.com/rsasaki0109/rust_driving/actions/runs/40439048247)
 on formatted source `973679a9cf51e7982fc41b00df0ec23b0b3f0d80`.
 
-## Pipeline result inspection (validation pending)
+## Pipeline result inspection (validated)
 
 `DrivingPipeline::step_with_planner_result_inspection` adds a read-only hook
 immediately after the planner returns, while the effective speed limits, supplied
@@ -274,3 +274,35 @@ pipeline across eighteen sensor steps including LiDAR failure, deliberately
 mutate/replan a shadow clone, verify full sensor replay, and confirm an invalid
 clock invokes no callback or state advance. This enables recorded-log shadow
 comparison; it does not select continuation candidates in live control.
+
+The pipeline result inspection and its output/replay invariance tests passed
+hosted `bash scripts/check.sh` in
+[run 40440374494](https://github.com/rsasaki0109/rust_driving/actions/runs/40440374494)
+on formatted source `23bf7eb47b66b0f36ac6f44caeefabeb3078233d`.
+
+## Frozen-log shadow comparison (execution pending)
+
+The `inspect_continuations` pipeline example verifies every original sensor
+output byte-for-byte before retaining any shadow evidence. A post-plan clone
+consumes actual adoption witnesses and attempts bounded continuations with the
+current scene clock and predictions. Permit observations use the recorded
+localization epoch and a generation incremented whenever the supplied planning
+route changes. Unhealthy/emergency or overridden output cannot authorize a probe.
+
+The original planner still runs normally on every tick. This deliberately measures
+candidate availability after the original policy's decision; it does not simulate
+what subsequent sensing or commitments would have been after executing a candidate.
+Every probe retains ego, route, predictions, original/candidate paths and permit
+status. Candidate collision certificates are production checks, not a new
+independent physical qualification.
+
+`scripts/inspect_continuations.py` requires the frozen PR #58 report byte-for-byte,
+verifies compressed and raw sensor hashes with the existing retained reader, and
+runs both variants for reference/native seeds 7/42. It retains compressed JSONL
+evidence with hashes plus compact counts. Missing/count-mismatched sensor footers
+and any original-output mismatch fail the run. Partial outputs without a final
+complete report are not evidence of a successful comparison.
+
+The dedicated workflow runs required checks first, then downloads the retained
+paired artifact and executes this inspection. No result or mission improvement
+is claimed until that execution completes.

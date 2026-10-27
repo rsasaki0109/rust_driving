@@ -231,6 +231,12 @@ impl LatticePlanner {
         self.approach_clock = Some((now, scene));
     }
 
+    /// Current control/acquisition clock, including unavailable scene evidence.
+    /// Read-only context for offline continuation inspection.
+    pub fn checked_approach_scene_clock(&self) -> Option<(f64, Option<f64>)> {
+        self.approach_clock
+    }
+
     pub fn checked_approach_diagnostics(&self) -> &rustdriving_core::CheckedApproachDiagnostics {
         &self.approach_confirmation.diagnostics
     }
