@@ -91,6 +91,7 @@ pub struct LatticePlanner {
     /// Optional curvature-derived speed limit; None retains the baseline behavior.
     pub max_lateral_acceleration_m_s2: Option<f64>,
     inspection_join_scale: Option<f64>,
+    inspection_stop_samples: Option<usize>,
     previous_lateral: f64,
     maneuver_start: Option<(f64, f64, f64)>,
     yield_stop_s: Option<f64>,
@@ -146,6 +147,7 @@ impl Default for LatticePlanner {
             max_deceleration_m_s2: 2.5,
             max_lateral_acceleration_m_s2: None,
             inspection_join_scale: None,
+            inspection_stop_samples: None,
             previous_lateral: 0.0,
             maneuver_start: None,
             yield_stop_s: None,
@@ -241,6 +243,20 @@ impl LatticePlanner {
         }
         let mut probe = self.clone();
         probe.inspection_join_scale = Some(scale);
+        Some(probe.inspect_stopping_proposals(ego, route, objects))
+    }
+
+
+    /// Offline bounded search-density experiment; never changes the live planner.
+    pub fn inspect_stopping_proposals_with_samples(
+        &self, ego: EgoState, route: &Route, objects: &[Prediction], samples: usize,
+    ) -> Option<StopProbe> {
+        if ![16, 64].contains(&samples) || !ego.speed.is_finite()
+            || !(0.0..=0.2).contains(&ego.speed) {
+            return None;
+        }
+        let mut probe = self.clone();
+        probe.inspection_stop_samples = Some(samples);
         Some(probe.inspect_stopping_proposals(ego, route, objects))
     }
 
@@ -926,6 +942,7 @@ impl LatticePlanner {
                             &stopping_limits,
                             stop,
                             self.search_obstruction_stops && !hold_requested,
+                            self.inspection_stop_samples.unwrap_or(16),
                             |path| !contact(path).is_finite(),
                         )
                         .map(|(path, used)| (path, used, used && ego.speed > 0.2))
@@ -1276,6 +1293,16 @@ mod tests {
         let object = obstacle();
         let mut untouched = planner.clone();
         let probe = planner.inspect_stopping_proposals(ego, &route, std::slice::from_ref(&object));
+        let same = planner.inspect_stopping_proposals_with_samples(
+            ego, &route, std::slice::from_ref(&object), 16).unwrap();
+        assert_eq!(format!("{:?}", probe.attempts), format!("{:?}", same.attempts));
+        let _ = planner.inspect_stopping_proposals_with_samples(
+            ego, &route, std::slice::from_ref(&object), 64).unwrap();
+        assert!(planner.inspection_stop_samples.is_none());
+        let again = planner.inspect_stopping_proposals(ego, &route, std::slice::from_ref(&object));
+        assert_eq!(format!("{:?}", probe.attempts), format!("{:?}", again.attempts));
+        assert!(planner.inspect_stopping_proposals_with_samples(
+            ego, &route, std::slice::from_ref(&object), 63).is_none());
         assert!(!probe.attempts.is_empty());
         assert!(probe.attempts.len() <= 294);
         assert!(

@@ -20,7 +20,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           if ! git diff --quiet; then
-            git add crates/planning/src/collision.rs crates/pipeline/examples/inspect_stop_candidates.rs crates/control/src/lib.rs crates/planning/src/approach_continuation.rs crates/planning/src/lib.rs crates/pipeline/src/lib.rs crates/pipeline/tests/planning_diagnostics.rs crates/pipeline/examples/inspect_continuations.rs crates/pipeline/tests/continuation_selection.rs crates/pipeline/src/continuation.rs crates/pipeline/tests/checked_approaches.rs crates/sim/src/lib.rs crates/sim/tests/scenario_validation.rs
+            git add crates/planning/src/stopping.rs crates/planning/src/collision.rs crates/pipeline/examples/inspect_stop_candidates.rs crates/control/src/lib.rs crates/planning/src/approach_continuation.rs crates/planning/src/lib.rs crates/pipeline/src/lib.rs crates/pipeline/tests/planning_diagnostics.rs crates/pipeline/examples/inspect_continuations.rs crates/pipeline/tests/continuation_selection.rs crates/pipeline/src/continuation.rs crates/pipeline/tests/checked_approaches.rs crates/sim/src/lib.rs crates/sim/tests/scenario_validation.rs
             git commit -m 'Format experimental bounded continuation profiles'
             git push --force-with-lease="refs/heads/feat/bounded-continuation-profile:$EXPECTED_SOURCE" origin HEAD:refs/heads/feat/bounded-continuation-profile
           fi

@@ -110,6 +110,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                                 serde_json::json!({"scale":scale, "probe":describe(candidate)})
                             }).collect();
                             original["join_scale_probes"] = serde_json::json!(scaled);
+                            let densities: Vec<_> = [16, 64].into_iter().map(|samples| {
+                                let candidate = planner.inspect_stopping_proposals_with_samples(
+                                    ego, route, objects, samples).expect("healthy stationary probe");
+                                serde_json::json!({"samples":samples, "probe":describe(candidate)})
+                            }).collect();
+                            original["stop_density_probes"] = serde_json::json!(densities);
                             evidence = Some(original);
                         },
                     )?

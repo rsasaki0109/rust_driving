@@ -151,6 +151,28 @@ def main():
                 receipt['join_scale_comparison'].append(dict(scale=variant['scale'],
                     search=search, selected=None if chosen is None else diagnostic['candidates'][chosen],
                     candidates=diagnostic['candidates'], operational_policy_changed=False))
+            densities = probe['stop_density_probes']
+            if [v['samples'] for v in densities] != [16, 64]:
+                raise ValueError('stop density cohort changed')
+            receipt['stop_density_comparison'] = []
+            for variant in densities:
+                changed = variant['probe']
+                if variant['samples'] == 16 and any(changed[k] != probe[k] for k in
+                    ['initial_progress_m', 'trajectory', 'planning_diagnostics', 'attempts']):
+                    raise ValueError('default stop density changed ordinary probe')
+                attempts = changed['attempts']
+                eligible = [a for a in attempts if a['progress_gain_m'] >=
+                    config['checked_approach_min_progress_m']]
+                clear = [a for a in eligible if a['first_contact_s'] is None]
+                receipt['stop_density_comparison'].append(dict(
+                    samples=variant['samples'], attempt_count=len(attempts),
+                    clear_at_configured_minimum=len(clear),
+                    minimum_searched_forward_gain_m=min(
+                        (a['progress_gain_m'] for a in eligible), default=None),
+                    shortest_clear_attempts=sorted(clear,
+                        key=lambda a: a['progress_gain_m'])[:3],
+                    candidates=changed['planning_diagnostics']['candidates'],
+                    operational_policy_changed=False))
             receipt['forecast_corridor'] = inspect_corridor(
                 metadata['route'], metadata['predictions'], config['vehicle']['radius'],
                 probe['initial_progress_m'])
