@@ -209,10 +209,16 @@ impl LatticePlanner {
     /// Only the position/heading join span changes; maneuver anchors, targets,
     /// forecast inputs and complete stopping checks retain their existing rules.
     pub fn inspect_stopping_proposals_with_join_scale(
-        &self, ego: EgoState, route: &Route, objects: &[Prediction], scale: f64,
+        &self,
+        ego: EgoState,
+        route: &Route,
+        objects: &[Prediction],
+        scale: f64,
     ) -> Option<StopProbe> {
-        if ![0.5, 1.0, 2.0].contains(&scale) || !ego.speed.is_finite()
-            || !(0.0..=0.2).contains(&ego.speed) {
+        if ![0.5, 1.0, 2.0].contains(&scale)
+            || !ego.speed.is_finite()
+            || !(0.0..=0.2).contains(&ego.speed)
+        {
             return None;
         }
         let mut probe = self.clone();
@@ -491,7 +497,8 @@ impl LatticePlanner {
         } else {
             transition
         };
-        let correction_transition = self.inspection_join_scale
+        let correction_transition = self
+            .inspection_join_scale
             .map_or(correction_transition, |scale| correction_transition * scale);
         let mut geometry = Vec::new();
         for i in 0..=80 {
@@ -1150,31 +1157,59 @@ mod tests {
             maneuver_start: Some((0., 0., 10.)),
             ..LatticePlanner::default()
         };
-        let original = planner.candidate_geometry(ego, &route, &route, 20., (3.5, false)).unwrap().0;
+        let original = planner
+            .candidate_geometry(ego, &route, &route, 20., (3.5, false))
+            .unwrap()
+            .0;
         for scale in [0.5, 1., 2.] {
             let mut clone = planner.clone();
             clone.inspection_join_scale = Some(scale);
-            let path = clone.candidate_geometry(ego, &route, &route, 20., (3.5, false)).unwrap().0;
+            let path = clone
+                .candidate_geometry(ego, &route, &route, 20., (3.5, false))
+                .unwrap()
+                .0;
             assert_eq!(path[0], ego.pose.position);
             assert_eq!(clone.maneuver_start, planner.maneuver_start);
             assert_eq!(clone.previous_lateral, planner.previous_lateral);
-            if scale == 1. { assert_eq!(path, original); }
-            else { assert_ne!(path, original); }
-            let base = planner.inspect_stopping_proposals(ego, &route, &[obstacle()]);
-            let changed = planner.inspect_stopping_proposals_with_join_scale(ego, &route, &[obstacle()], scale).unwrap();
             if scale == 1. {
-                assert_eq!(format!("{:?}", base.trajectory), format!("{:?}", changed.trajectory));
-                assert_eq!(format!("{:?}", base.attempts), format!("{:?}", changed.attempts));
+                assert_eq!(path, original);
+            } else {
+                assert_ne!(path, original);
+            }
+            let base = planner.inspect_stopping_proposals(ego, &route, &[obstacle()]);
+            let changed = planner
+                .inspect_stopping_proposals_with_join_scale(ego, &route, &[obstacle()], scale)
+                .unwrap();
+            if scale == 1. {
+                assert_eq!(
+                    format!("{:?}", base.trajectory),
+                    format!("{:?}", changed.trajectory)
+                );
+                assert_eq!(
+                    format!("{:?}", base.attempts),
+                    format!("{:?}", changed.attempts)
+                );
             }
             assert!(planner.inspection_join_scale.is_none());
             let again = planner.inspect_stopping_proposals(ego, &route, &[obstacle()]);
-            assert_eq!(format!("{:?}", base.trajectory), format!("{:?}", again.trajectory));
+            assert_eq!(
+                format!("{:?}", base.trajectory),
+                format!("{:?}", again.trajectory)
+            );
         }
         for scale in [0., 0.25, 3., f64::NAN] {
-            assert!(planner.inspect_stopping_proposals_with_join_scale(ego, &route, &[], scale).is_none());
+            assert!(
+                planner
+                    .inspect_stopping_proposals_with_join_scale(ego, &route, &[], scale)
+                    .is_none()
+            );
         }
         ego.speed = 0.21;
-        assert!(planner.inspect_stopping_proposals_with_join_scale(ego, &route, &[], 1.).is_none());
+        assert!(
+            planner
+                .inspect_stopping_proposals_with_join_scale(ego, &route, &[], 1.)
+                .is_none()
+        );
     }
 
     fn obstacle() -> Prediction {
