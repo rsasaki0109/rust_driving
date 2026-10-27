@@ -794,14 +794,28 @@ impl LatticePlanner {
                         hold_start_s: pair[0].time,
                         hold_end_s: pair[1].time,
                         first_contact_s: first.is_finite().then_some(first),
-                        contact: objects.iter().filter_map(|object| {
-                            collision::inspect_contact(
-                                path, object, self.vehicle.radius,
-                                rustdriving_core::Vec2::new(ego.pose.yaw.cos(), ego.pose.yaw.sin()),
-                                if refined { REFINED_CANDIDATE_CLEARANCE_M } else { 0. },
-                                self.motion_directions.as_ref().map(|c| c.for_prediction(object.id)),
-                            )
-                        }).min_by(|a, b| a.time_s.total_cmp(&b.time_s)),
+                        contact: objects
+                            .iter()
+                            .filter_map(|object| {
+                                collision::inspect_contact(
+                                    path,
+                                    object,
+                                    self.vehicle.radius,
+                                    rustdriving_core::Vec2::new(
+                                        ego.pose.yaw.cos(),
+                                        ego.pose.yaw.sin(),
+                                    ),
+                                    if refined {
+                                        REFINED_CANDIDATE_CLEARANCE_M
+                                    } else {
+                                        0.
+                                    },
+                                    self.motion_directions
+                                        .as_ref()
+                                        .map(|c| c.for_prediction(object.id)),
+                                )
+                            })
+                            .min_by(|a, b| a.time_s.total_cmp(&b.time_s)),
                     });
                 }
                 first
@@ -1272,10 +1286,15 @@ mod tests {
         );
         assert!(probe.attempts.iter().any(|a| a.first_contact_s.is_none()));
         for attempt in &probe.attempts {
-            assert_eq!(attempt.first_contact_s, attempt.contact.as_ref().map(|c| c.time_s));
+            assert_eq!(
+                attempt.first_contact_s,
+                attempt.contact.as_ref().map(|c| c.time_s)
+            );
             if let Some(c) = &attempt.contact {
                 assert!(c.time_s >= c.interval_start_s && c.time_s <= c.interval_end_s);
-                assert!(c.ego_position.distance(c.prediction_position) <= c.combined_radius_m + 1e-8);
+                assert!(
+                    c.ego_position.distance(c.prediction_position) <= c.combined_radius_m + 1e-8
+                );
             }
         }
         let actual = planner.plan(ego, &route, std::slice::from_ref(&object));
