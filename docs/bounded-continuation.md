@@ -104,7 +104,7 @@ only the components in isolation. The permit and combined constructor passed all
 on formatted source `102383a9c61cf96f0baa41c1f26c14bbbaead415`.
 No local checks ran.
 
-## Continuous authorized-range check (validation pending)
+## Continuous authorized-range check (validated)
 
 The combined constructor now also checks progress containment between trajectory
 knots before invoking the caller certificate. A folding route can have two
@@ -125,3 +125,31 @@ Two tests cover a U-shaped shortcut whose endpoint-only checks pass and an
 offset straight segment with both accepted interior and rejected boundary tie.
 The existing combined tests continue to check expiry and certificate failure.
 The live planner remains unchanged pending integration and closed-loop comparison.
+
+The continuous authorized-range extension passed seventeen module tests and
+hosted `bash scripts/check.sh` in [run 40427966547](https://github.com/rsasaki0109/rust_driving/actions/runs/40427966547),
+on formatted source `b67403afcc418b1dbea42309c8b969963723ccee`.
+Local checks did not run.
+
+## Planner-owned candidate checks (validation pending)
+
+`LatticePlanner::checked_continuation_candidate` now supplies the constrained
+generator with the planner's speed limits, vehicle radius and current scene
+clock. The recorded observation must match that clock, every authorized blocker
+must still be present, and malformed/duplicate prediction inputs reject.
+A changed context revokes eligibility before a candidate can be returned.
+
+The candidate certificate uses the existing directional collision sweep for
+every prediction through the full stationary tail, with the conservative
+one-metre refined-clearance floor. A separate bounded 1-Lipschitz distance check
+certifies continuous road-corridor containment, including the vehicle radius.
+Unresolved corner intervals reject. This closes the generic callback gap for
+candidate generation; the API still trusts the caller's verified adoption and
+frame generations.
+
+Three tests cover a clear candidate versus a moving obstacle crossing during
+the hold, mismatched scene clocks/missing blockers, and a shortcut across a road
+corner. The method only returns a checked Yield candidate; it does not mutate
+live maneuver/stop commitments, adopt that candidate or send commands. Pipeline
+selection, diagnostic recording, replay audits and closed-loop comparison remain
+before this becomes a driving-policy change.

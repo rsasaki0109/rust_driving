@@ -434,6 +434,95 @@ fn continuous_progress_contains(
         .all(|p| certify(p[0].position, p[1].position, &permitted, &forbidden, 10))
 }
 
+
+/// A planner-owned candidate entry point; does not adopt or execute its result.
+impl crate::LatticePlanner {
+    /// Use current planner scene context and the ordinary directional collision
+    /// sweep, including the complete stationary tail. The one-metre refined
+    /// clearance floor is conservatively applied to every continuation.
+    /// The caller remains responsible for supplying a verified adoption and
+    /// matching frame generations, and for committing/recording an accepted plan.
+    pub fn checked_continuation_candidate(
+        &self,
+        permit: &mut ContinuationPermit,
+        observation: &ContinuationObservation<'_>,
+        geometry: &[Vec2],
+        ego: rustdriving_core::EgoState,
+        route: &Route,
+        objects: &[rustdriving_core::Prediction],
+    ) -> Option<rustdriving_core::Trajectory> {
+        if !self.replan_checked_approaches
+            || self.approach_clock != Some((observation.now_s, observation.acquisition_s))
+            || !ego.pose.position.finite() || !ego.pose.yaw.is_finite()
+            || !ego.speed.is_finite() || ego.speed < 0.
+            || !self.vehicle.radius.is_finite() || self.vehicle.radius <= 0.
+            || !route.half_width.is_finite() || route.half_width <= self.vehicle.radius
+            || geometry.first().is_none_or(|p| p.distance(ego.pose.position) > 0.2)
+            || observation.blocking_ids.iter().any(|id| !objects.iter().any(|o| o.id == *id))
+            || objects.iter().enumerate().any(|(i,o)| {
+                objects[..i].iter().any(|previous| previous.id == o.id)
+                    || o.positions.is_empty() || !o.dt.is_finite() || o.dt <= 0.
+                    || !(o.dt*(o.positions.len()-1) as f64).is_finite()
+                    || !o.valid_radii() || o.positions.iter().any(|p| !p.finite())
+            })
+        {
+            permit.revoke();
+            return None;
+        }
+        let bounds = ContinuationBounds {
+            maximum_distance_m: geometry.windows(2).map(|p| p[0].distance(p[1])).sum(),
+            cruise_m_s: self.cruise_speed,
+            acceleration_m_s2: self.max_acceleration_m_s2,
+            deceleration_m_s2: self.max_deceleration_m_s2,
+        };
+        let constraints = ProfileConstraints {
+            route_speed_zones: Some((route, &self.speed_zones, self.vehicle.radius)),
+            lateral_acceleration_m_s2: self.max_lateral_acceleration_m_s2,
+        };
+        let heading = Vec2::new(ego.pose.yaw.cos(),ego.pose.yaw.sin());
+        let points = permit.certified_profile(observation, geometry, ego.speed, &bounds, &constraints, |path| {
+            corridor_contains(route,path,route.half_width-self.vehicle.radius)
+                && objects.iter().all(|object| {
+                    crate::collision::with_motion_direction(
+                        path,object,self.vehicle.radius,heading,crate::REFINED_CANDIDATE_CLEARANCE_M,
+                        self.motion_directions.as_ref().map(|context| context.for_prediction(object.id)),
+                    ).is_none()
+                })
+        })?;
+        Some(rustdriving_core::Trajectory {
+            points, mode: rustdriving_core::DrivingMode::Yield,
+            lateral_target: observation.lateral_target_m,
+        })
+    }
+}
+
+// Distance to the route polyline is 1-Lipschitz. A whole interval must fit;
+// uncertain intervals reject at the finite subdivision budget.
+fn corridor_contains(route: &Route, path: &[TrajectoryPoint], radius: f64) -> bool {
+    fn distance(point: Vec2, route: &Route) -> f64 {
+        route.points.windows(2).map(|p| {
+            let delta = p[1].minus(p[0]);
+            let length = p[0].distance(p[1]);
+            let unit = delta.scaled(1./length);
+            let offset = point.minus(p[0]);
+            let along = (offset.x*unit.x+offset.y*unit.y).clamp(0.,length);
+            point.distance(p[0].plus(unit.scaled(along)))
+        }).fold(f64::INFINITY,f64::min)
+    }
+    fn fits(a: Vec2,b: Vec2,route: &Route,radius: f64,depth: u8) -> bool {
+        let middle = a.plus(b.minus(a).scaled(0.5));
+        let distance = distance(middle,route);
+        let half = a.distance(b)/2.;
+        if !distance.is_finite() || !half.is_finite() { return false; }
+        let margin = 1e-10*(1.+distance+half+radius);
+        if distance+half+margin < radius { return true; }
+        if distance+margin >= radius || depth==0 { return false; }
+        fits(a,middle,route,radius,depth-1) && fits(middle,b,route,radius,depth-1)
+    }
+    radius.is_finite() && radius>0. && path.len()>=2
+        && path.windows(2).all(|p| fits(p[0].position,p[1].position,route,radius,10))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -930,4 +1019,57 @@ mod tests {
         path[2].position.x = 12.;
         assert!(!continuous_progress_contains(&route, &path, 9.8, 12.));
     }
+    #[test]
+    fn planner_candidate_uses_current_scene_and_complete_collision_certificate() {
+        let route = Route::new(vec![Vec2::new(0.,0.),Vec2::new(20.,0.)],6.).unwrap();
+        let line: Vec<_> = (0..=15).map(|i| Vec2::new(10.+i as f64*0.1,3.9)).collect();
+        let mut planner = crate::LatticePlanner { replan_checked_approaches: true, ..crate::LatticePlanner::default() };
+        planner.observe_checked_approach_scene(0.3,Some(0.3));
+        let mut ego = rustdriving_core::EgoState::default();
+        ego.pose.position = line[0];
+        ego.speed = 0.21;
+        let safe = rustdriving_core::Prediction {
+            id: 7, positions: vec![Vec2::new(100.,100.);41], radius: 0.5, dt: 0.2, additional_radius_m: vec![],
+        };
+        let mut permit = ContinuationPermit::from_adoption(&adoption(),&observation(0.2),1.).unwrap();
+        let path = planner.checked_continuation_candidate(&mut permit,&observation(0.3),&line,ego,&route,std::slice::from_ref(&safe)).unwrap();
+        assert!(path.points.iter().any(|p| p.speed>0.7));
+        let moving = rustdriving_core::Prediction {
+            positions: (0..=40).map(|i| Vec2::new(11.,12.-i as f64*0.4)).collect(), ..safe
+        };
+        let mut permit = ContinuationPermit::from_adoption(&adoption(),&observation(0.2),1.).unwrap();
+        assert!(planner.checked_continuation_candidate(&mut permit,&observation(0.3),&line,ego,&route,&[moving]).is_none());
+        assert!(permit.endpoint_bound().is_none());
+    }
+
+    #[test]
+    fn planner_candidate_rejects_mismatched_scene_and_missing_blocker() {
+        let route = Route::new(vec![Vec2::new(0.,0.),Vec2::new(20.,0.)],6.).unwrap();
+        let line = vec![Vec2::new(10.,3.9),Vec2::new(11.5,3.9)];
+        let mut planner = crate::LatticePlanner { replan_checked_approaches: true, ..crate::LatticePlanner::default() };
+        let mut ego = rustdriving_core::EgoState::default();
+        ego.pose.position = line[0];
+        ego.speed = 0.21;
+        let safe = rustdriving_core::Prediction {
+            id: 7, positions: vec![Vec2::new(100.,100.);41], radius: 0.5, dt: 0.2, additional_radius_m: vec![],
+        };
+        for clock in [None,Some(0.2),Some(0.3)] {
+            planner.observe_checked_approach_scene(0.3,clock);
+            let mut permit = ContinuationPermit::from_adoption(&adoption(),&observation(0.2),1.).unwrap();
+            let objects = if clock == Some(0.3) { &[][..] } else { std::slice::from_ref(&safe) };
+            assert!(planner.checked_continuation_candidate(&mut permit,&observation(0.3),&line,ego,&route,objects).is_none());
+            assert!(permit.endpoint_bound().is_none());
+        }
+    }
+
+    #[test]
+    fn continuous_corridor_rejects_cut_across_inside_corner() {
+        let route = Route::new(vec![Vec2::new(0.,0.),Vec2::new(0.,5.),Vec2::new(5.,5.)],1.).unwrap();
+        let point = |position,time| TrajectoryPoint {position,speed:1.,time};
+        let shortcut = vec![point(Vec2::new(0.,0.),0.),point(Vec2::new(5.,5.),10.)];
+        assert!(!corridor_contains(&route,&shortcut,0.8));
+        let following = vec![point(Vec2::new(0.,0.),0.),point(Vec2::new(0.,5.),5.),point(Vec2::new(5.,5.),10.)];
+        assert!(corridor_contains(&route,&following,0.8));
+    }
+
 }
