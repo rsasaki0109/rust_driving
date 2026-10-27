@@ -27,6 +27,29 @@ jobs:
           git rev-parse HEAD
       - name: Required workspace checks including continuation tests
         run: bash scripts/check.sh
+      - name: Build terminal stop inspector
+        run: cargo build --release --locked -p rustdriving-pipeline --example inspect_stop_candidates
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '12715837371'
+          run-id: '40463350780'
+          github-token: ${{ github.token }}
+          path: retained-continuation-reference
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '12716327405'
+          run-id: '40463350780'
+          github-token: ${{ github.token }}
+          path: retained-continuation-native
+          merge-multiple: true
+      - name: Inspect frozen terminal continuation stops
+        run: python scripts/check_continuation_terminal.py --reference retained-continuation-reference --native retained-continuation-native --output artifacts/continuation-terminal
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: continuation-terminal
+          path: artifacts/continuation-terminal
       - uses: actions/download-artifact@v4
         with:
           artifact-ids: '12650721879'
