@@ -12,21 +12,34 @@ fn selected_continuation_reaches_controller_as_positive_acceleration() {
     planner.lateral_candidate_margin_m = Some(0.35);
     let narrow = Route::new(vec![Vec2::default(), Vec2::new(100., 0.)], 2.1).unwrap();
     let mut object = Prediction {
-        id: 7, positions: vec![Vec2::new(18., 0.); 41],
-        radius: 1., dt: 0.2, additional_radius_m: vec![],
+        id: 7,
+        positions: vec![Vec2::new(18., 0.); 41],
+        radius: 1.,
+        dt: 0.2,
+        additional_radius_m: vec![],
     };
-    let mut ego = EgoState { speed: 8., ..EgoState::default() };
-    assert_eq!(planner.plan(ego, &narrow, std::slice::from_ref(&object)).mode, DrivingMode::Emergency);
+    let mut ego = EgoState {
+        speed: 8.,
+        ..EgoState::default()
+    };
+    assert_eq!(
+        planner
+            .plan(ego, &narrow, std::slice::from_ref(&object))
+            .mode,
+        DrivingMode::Emergency
+    );
     ego.pose.position.x = 10.;
     ego.speed = 0.;
     planner.plan(ego, &narrow, std::slice::from_ref(&object));
     assert!(planner.holding_obstruction_stop());
     let route = Route::new(narrow.points.clone(), 5.5).unwrap();
     object.positions = vec![Vec2::new(50., 0.); 41];
-    object.additional_radius_m = (0..=40).map(|i| {
-        let t = i as f64 * 0.2;
-        0.2 + 0.3 * t + 0.05 * t * t
-    }).collect();
+    object.additional_radius_m = (0..=40)
+        .map(|i| {
+            let t = i as f64 * 0.2;
+            0.2 + 0.3 * t + 0.05 * t * t
+        })
+        .collect();
     for now in [0., 0.1, 0.2] {
         planner.observe_checked_approach_scene(now, Some(now));
         planner.plan(ego, &route, std::slice::from_ref(&object));
@@ -34,11 +47,14 @@ fn selected_continuation_reaches_controller_as_positive_acceleration() {
     let status = planner.checked_approach_diagnostics().clone();
     assert!(status.adopted);
     let mut observed = ContinuationObservation {
-        now_s: 0.2, acquisition_s: Some(0.2),
-        localization_generation: 0, route_generation: 0,
+        now_s: 0.2,
+        acquisition_s: Some(0.2),
+        localization_generation: 0,
+        route_generation: 0,
         blocking_ids: &status.blocking_prediction_ids,
         lateral_target_m: status.proposal_lateral_target_m.unwrap(),
-        progress_m: 10., healthy: true,
+        progress_m: 10.,
+        healthy: true,
     };
     let mut permit = planner.take_continuation_permit(&observed, 1.).unwrap();
     observed.now_s = 0.3;
@@ -46,7 +62,11 @@ fn selected_continuation_reaches_controller_as_positive_acceleration() {
     planner.observe_checked_approach_scene(0.3, Some(0.3));
     ego.speed = 0.21;
     let result = planner.plan_with_continuation(
-        &mut permit, &observed, ego, &route, std::slice::from_ref(&object),
+        &mut permit,
+        &observed,
+        ego,
+        &route,
+        std::slice::from_ref(&object),
     );
     assert!(result.selected.is_some());
     assert!(!planner.braking_obstruction_stop());

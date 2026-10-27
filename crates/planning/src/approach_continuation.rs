@@ -468,7 +468,6 @@ pub struct ContinuationPlan {
 
 /// Planner-owned inspection and explicit experimental selection entry points.
 impl crate::LatticePlanner {
-
     /// Select a freshly certified continuation and commit its stopping state
     /// atomically, or run the unchanged ordinary planner on failure.
     /// This explicit API is not called by the default driving pipeline. Its
@@ -485,9 +484,15 @@ impl crate::LatticePlanner {
         if let Some(trajectory) =
             self.checked_maneuver_continuation(permit, observation, ego, route, objects)
         {
-            let endpoint = trajectory.points.last().expect("certified stopped profile").position;
+            let endpoint = trajectory
+                .points
+                .last()
+                .expect("certified stopped profile")
+                .position;
             let stop = if self.local_route_geometry {
-                crate::corners::fit(route, self.vehicle).ok().map(|r| r.project(endpoint).0)
+                crate::corners::fit(route, self.vehicle)
+                    .ok()
+                    .map(|r| r.project(endpoint).0)
             } else {
                 Some(route.project(endpoint).0)
             };
@@ -516,7 +521,10 @@ impl crate::LatticePlanner {
                 self.approach_confirmation.reset();
                 self.diagnostics = None;
                 self.stop_attempts.clear();
-                return ContinuationPlan { trajectory, selected: Some(selected) };
+                return ContinuationPlan {
+                    trajectory,
+                    selected: Some(selected),
+                };
             }
             permit.revoke();
         }
@@ -1876,9 +1884,7 @@ mod tests {
         observed.acquisition_s = Some(0.3);
         planner.observe_checked_approach_scene(0.3, Some(0.3));
         ego.speed = 0.21;
-        let result = planner.plan_with_continuation(
-            &mut permit, &observed, ego, &route, &objects,
-        );
+        let result = planner.plan_with_continuation(&mut permit, &observed, ego, &route, &objects);
         let selected = result.selected.unwrap();
         assert!(selected.previous_stop_requested && selected.previous_stop_active);
         assert!(!planner.braking_obstruction_stop());
@@ -1909,13 +1915,14 @@ mod tests {
             observed.acquisition_s = Some(observed.now_s);
             planner.observe_checked_approach_scene(observed.now_s, observed.acquisition_s);
             ego.speed = 0.21;
-            if !expired { objects[0].positions = vec![ego.pose.position; 41]; }
+            if !expired {
+                objects[0].positions = vec![ego.pose.position; 41];
+            }
             planner.obstruction_stop_requested = true;
             let mut ordinary = planner.clone();
             let expected = ordinary.plan(ego, &route, &objects);
-            let result = planner.plan_with_continuation(
-                &mut permit, &observed, ego, &route, &objects,
-            );
+            let result =
+                planner.plan_with_continuation(&mut permit, &observed, ego, &route, &objects);
             assert!(result.selected.is_none());
             assert!(permit.endpoint_bound().is_none());
             assert_eq!(result.trajectory.mode, expected.mode);
@@ -1926,8 +1933,14 @@ mod tests {
                 assert_eq!(a.speed, b.speed);
                 assert_eq!(a.time, b.time);
             }
-            assert_eq!(planner.braking_obstruction_stop(), ordinary.braking_obstruction_stop());
-            assert_eq!(planner.holding_obstruction_stop(), ordinary.holding_obstruction_stop());
+            assert_eq!(
+                planner.braking_obstruction_stop(),
+                ordinary.braking_obstruction_stop()
+            );
+            assert_eq!(
+                planner.holding_obstruction_stop(),
+                ordinary.holding_obstruction_stop()
+            );
             assert_eq!(planner.yield_stop_s, ordinary.yield_stop_s);
             assert_eq!(planner.maneuver_start, ordinary.maneuver_start);
         }
