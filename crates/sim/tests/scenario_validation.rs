@@ -48,14 +48,25 @@ fn continuation_scenario_policy_roundtrips_and_reaches_shared_pipeline_config() 
         serde_json::from_str(include_str!("../../../scenarios/blocked.json")).unwrap();
     let legacy: Scenario = serde_json::from_value(value.clone()).unwrap();
     assert!(!legacy.continue_checked_approaches);
-    assert!(serde_json::to_value(&legacy).unwrap().get("continue_checked_approaches").is_none());
+    assert!(
+        serde_json::to_value(&legacy)
+            .unwrap()
+            .get("continue_checked_approaches")
+            .is_none()
+    );
     value["continue_checked_approaches"] = serde_json::json!(true);
     let unsupported: Scenario = serde_json::from_value(value.clone()).unwrap();
     assert!(unsupported.validate().is_err());
-    for key in ["fit_recent_track_motion", "enclose_track_measurements",
-        "forecast_consistency_guard", "forecast_recent_velocity_hypotheses",
-        "settle_obstruction_stops", "search_obstruction_stops",
-        "replan_checked_approaches", "record_planning_diagnostics"] {
+    for key in [
+        "fit_recent_track_motion",
+        "enclose_track_measurements",
+        "forecast_consistency_guard",
+        "forecast_recent_velocity_hypotheses",
+        "settle_obstruction_stops",
+        "search_obstruction_stops",
+        "replan_checked_approaches",
+        "record_planning_diagnostics",
+    ] {
         value[key] = serde_json::json!(true);
     }
     value["forecast_cold_max_speed_m_s"] = serde_json::json!(15.);
