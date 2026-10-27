@@ -85,6 +85,32 @@ def main():
                 returned_endpoint=(probe['trajectory']['points'][-1]['position'] if probe['trajectory']['points'] else None),
                 original_checked_approach=ticks[-1]['expected'].get('checked_approach'),
                 candidates=diagnostic['candidates'])
+            alternative = probe['point_reference_recovery_probe']
+            alternate_attempts = alternative['attempts']
+            alternate_search = summarize(alternate_attempts) if alternate_attempts else dict(
+                sweep_counts={}, maximum_clear_progress_gain_m=None,
+                global_infeasibility_proven=False, confirmation_authorized=False)
+            alternate_search.update(attempt_count=len(alternate_attempts),
+                configured_minimum_progress_m=config['checked_approach_min_progress_m'],
+                clear_at_configured_minimum=sum(a['first_contact_s'] is None
+                    and a['progress_gain_m'] >= config['checked_approach_min_progress_m']
+                    for a in alternate_attempts))
+            metadata = probe['geometry_comparison']
+            if (metadata['original_point_reference_recovery'] != (config.get('rear_axle_offset_m') is None)
+                or metadata['local_route_geometry'] != config.get('local_route_geometry', False)
+                or metadata['policy_changed'] != (config.get('rear_axle_offset_m') is not None)
+                or metadata['probe_point_reference_recovery'] is not True
+                or metadata['closed_loop'] is not False):
+                raise ValueError('geometry probe policy provenance mismatch')
+            alternate_diagnostic = alternative['planning_diagnostics']
+            alternate_index = alternate_diagnostic['selected_candidate']
+            receipt['geometry_comparison'] = dict(
+                policy_changed=metadata['policy_changed'],
+                local_route_geometry=metadata['local_route_geometry'],
+                operational_policy_changed=False,
+                point_reference_recovery=dict(search=alternate_search,
+                    selected=None if alternate_index is None else alternate_diagnostic['candidates'][alternate_index],
+                    candidates=alternate_diagnostic['candidates']))
             result['cases'].append(receipt)
             save()
             print(json.dumps(receipt, allow_nan=False), flush=True)

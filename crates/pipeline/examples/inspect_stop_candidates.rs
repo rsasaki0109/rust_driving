@@ -61,12 +61,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     driver.step_with_planner_inspection(
                         &tick.input,
                         &mut |planner, ego, route, objects| {
-                            let probe = planner.inspect_stopping_proposals(ego, route, objects);
                             let here = route.project(ego.pose.position).0;
-                            let attempts: Vec<_> = probe
-                                .attempts
-                                .iter()
-                                .map(|a| {
+                            let describe = |probe: rustdriving_planning::StopProbe| {
+                                let attempts: Vec<_> = probe.attempts.iter().map(|a| {
                                     serde_json::json!({
                                         "candidate_index":a.candidate_index,
                                         "end_progress_m":a.end_progress_m,
@@ -75,12 +72,28 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                                         "hold_end_s":a.hold_end_s,
                                         "first_contact_s":a.first_contact_s
                                     })
+                                }).collect();
+                                serde_json::json!({
+                                    "initial_progress_m":here, "trajectory":probe.trajectory,
+                                    "planning_diagnostics":probe.diagnostics, "attempts":attempts
                                 })
-                                .collect();
-                            evidence = Some(serde_json::json!({
-                                "initial_progress_m":here, "trajectory":probe.trajectory,
-                                "planning_diagnostics":probe.diagnostics, "attempts":attempts
-                            }));
+                            };
+                            let mut original = describe(planner.inspect_stopping_proposals(ego, route, objects));
+                            // Only a clone changes geometry policy. All current scene,
+                            // speed, road, side-commitment and stop checks remain active.
+                            let mut recovery = planner.clone();
+                            recovery.point_reference_recovery = true;
+                            original["point_reference_recovery_probe"] = describe(
+                                recovery.inspect_stopping_proposals(ego, route, objects));
+                            original["geometry_comparison"] = serde_json::json!({
+                                "local_route_geometry":planner.local_route_geometry,
+                                "original_point_reference_recovery":planner.point_reference_recovery,
+                                "probe_point_reference_recovery":true,
+                                "policy_changed":!planner.point_reference_recovery,
+                                "ego":ego, "route":route, "predictions":objects,
+                                "closed_loop":false
+                            });
+                            evidence = Some(original);
                         },
                     )?
                 } else {
