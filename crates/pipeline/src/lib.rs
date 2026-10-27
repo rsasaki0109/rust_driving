@@ -1,4 +1,6 @@
 //! Shared sensor-to-command stack. No simulator, truth objects or physical world types.
+mod continuation;
+pub use continuation::ContinuationDiagnostic;
 mod gnss_recovery;
 mod ground;
 mod heading;
@@ -154,6 +156,9 @@ pub struct PipelineConfig {
     pub search_obstruction_stops: bool,
     #[serde(default, skip_serializing_if = "is_false")]
     pub replan_checked_approaches: bool,
+    /// Experimental fixed-route continuation; absent preserves existing behavior.
+    #[serde(default, skip_serializing_if = "is_false")]
+    pub continue_checked_approaches: bool,
     /// Experimental progress floor; absent preserves historical 2 m admission.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub checked_approach_min_progress_m: Option<f64>,
@@ -253,6 +258,7 @@ impl PipelineConfig {
             settle_obstruction_stops: false,
             search_obstruction_stops: false,
             replan_checked_approaches: false,
+            continue_checked_approaches: false,
             checked_approach_min_progress_m: None,
             search_later_obstruction_stops: false,
             lateral_candidate_margin_m: None,
@@ -277,6 +283,14 @@ impl PipelineConfig {
         }
     }
     pub fn validate(&self) -> Result<(), String> {
+        if self.continue_checked_approaches
+            && (!self.replan_checked_approaches || !self.record_planning_diagnostics
+                || self.navigation.is_some() || self.lane_change.is_some()
+                || !self.stop_lines.is_empty() || !self.stop_signs.is_empty()
+                || !self.yield_intersections.is_empty())
+        {
+            return Err("continuation requires captured checked approaches on a fixed route without mapped traffic duties".into());
+        }
         if self.checked_approach_min_progress_m.is_some_and(|value| {
             !self.replan_checked_approaches || !value.is_finite() || !(0.5..=2.).contains(&value)
         }) {
@@ -741,6 +755,9 @@ pub struct PipelineOutput {
     pub recent_velocity_hypotheses: Option<VelocityHypothesisDiagnostics>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub checked_approach: Option<CheckedApproachDiagnostics>,
+    /// Selected continuation before final health/command guards.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub continuation: Option<ContinuationDiagnostic>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub planning_progress: Option<PlanningProgress>,
     /// Planner proposal only; final faults and mapped duties can override it.
@@ -764,6 +781,7 @@ pub struct DrivingPipeline {
     recent_velocity_hypotheses: Option<RecentVelocityHypotheses>,
     forecast_consistency: Option<ForecastConsistencyGuard>,
     planner: LatticePlanner,
+    continuation: continuation::ContinuationDriver,
     planning_progress: planning_progress::ProgressMonitor,
     controller: PurePursuit,
     grid: OccupancyGrid,
@@ -938,6 +956,7 @@ impl DrivingPipeline {
             recent_velocity_hypotheses,
             forecast_consistency,
             planner,
+            continuation: continuation::ContinuationDriver::default(),
             planning_progress: planning_progress::ProgressMonitor::default(),
             controller,
             grid,
@@ -1848,10 +1867,17 @@ impl DrivingPipeline {
                 &predictions,
             );
         }
-        let mut trajectory = self.planner.plan(
-            motion_estimate,
-            stop_route.as_ref().unwrap_or(&self.config.route),
-            &predictions,
+        let (mut trajectory, continuation) = self.continuation.plan(
+            &mut self.planner,
+            continuation::Context {
+                enabled: self.config.continue_checked_approaches,
+                eligible: health.is_empty() && stop_route.is_none(),
+                now: input.time,
+                epoch: self.localization_epoch,
+                ego: motion_estimate,
+                route: stop_route.as_ref().unwrap_or(&self.config.route),
+                objects: &predictions,
+            },
         );
         if let Some(inspect) = result_inspection {
             inspect(
@@ -1950,6 +1976,7 @@ impl DrivingPipeline {
             || trajectory.mode == DrivingMode::Emergency
             || command.acceleration <= -5.99;
         if emergency {
+            self.continuation.clear();
             self.controller.reset_emergency_state();
             trajectory.mode = DrivingMode::Emergency;
         }
@@ -2034,6 +2061,7 @@ impl DrivingPipeline {
                 .config
                 .replan_checked_approaches
                 .then(|| self.planner.checked_approach_diagnostics().clone()),
+            continuation,
             planning_progress,
             planning_diagnostics: self
                 .config

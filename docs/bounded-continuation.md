@@ -3,7 +3,8 @@
 The recorded restart investigation identified a current-speed cap in earlier
 stopping fallback at nine of ten candidate restarts. This first implementation
 adds an experimental profile constructor in `planning::approach_continuation`.
-It is **not connected to the live planner** and does not resolve mission stalls.
+Ordinary driving remains the default. An opt-in fixed-route pipeline integration
+is now implemented below but awaits validation; mission stalls are not yet resolved.
 
 The caller supplies a bounded path geometry, initial speed, maximum stopping
 arc distance and positive speed/acceleration/braking bounds. Up to sixteen
@@ -349,3 +350,39 @@ The default DrivingPipeline still uses ordinary `plan`; no configuration flag
 enables this entry yet. Pipeline selection diagnostics, route/health ownership,
 regulatory guards and paired reference/native closed-loop qualification remain
 required before enabling it in driving scenarios.
+
+The explicit-selection planner/controller tests and hosted `bash scripts/check.sh`
+passed in [run 40444176103](https://github.com/rsasaki0109/rust_driving/actions/runs/40444176103)
+on formatted source `41fdd88ece96fc0b7841fee13285566c49f9c57e`.
+The frozen-log shadow comparison also completed successfully in that run.
+
+## Opt-in pipeline ownership (validation pending)
+
+`PipelineConfig.continue_checked_approaches` defaults false and is omitted from
+legacy headers. Enabling it requires checked approaches and recorded planning
+diagnostics, and currently rejects navigation, lane changes and mapped traffic
+duties. This deliberately limits the initial integration to fixed-route scenarios.
+
+A private pipeline owner captures one-time permits from actual ordinary adoptions,
+then calls explicit continuation selection on subsequent ticks. The current
+health, scene clock, route geometry and localization epoch qualify each use.
+Health/policy loss, changed route/epoch or failed certification withdraw state.
+A final emergency command clears any remaining permit; existing command guards
+still run after trajectory selection. Localization resets construct a fresh owner.
+
+Accepted selections are serialized as optional `PipelineOutput.continuation`
+evidence, including original/selected progress, deadline, acquisition, target,
+blockers and prior stop flags. This describes the planner selection before final
+command guards, not proof that the vehicle executed the path. Ordinary lattice
+diagnostics remain absent on a selected continuation; callers/auditors must read
+the new evidence instead.
+
+Four tests cover ownership across ticks with immutable deadline, invalidation by
+health/epoch/route/scene/policy, opt-in header/configuration requirements, and
+unchanged no-adoption output plus fault braking and sensor replay. Existing
+selection/controller tests remain. The retained eight-log comparison still uses
+the disabled policy to detect regressions.
+
+CLI/scenario propagation, independent auditing of selected continuation records
+and closed-loop reference/native qualification remain before deployment or
+default enablement. No arrival or maturity improvement is claimed.
