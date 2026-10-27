@@ -205,7 +205,7 @@ The retained-maneuver extension passed twenty-five module tests and hosted
 [run 40433466438](https://github.com/rsasaki0109/rust_driving/actions/runs/40433466438)
 on formatted source `d0e1c0206792b232419bffbebd8e97a03fe98fad`.
 
-## Actual adoption witness (validation pending)
+## Actual adoption witness (validated)
 
 The planner now records a private witness only when its actual `plan` call
 adopts and returns a newly confirmed stopping approach.
@@ -226,3 +226,27 @@ The caller still supplies health and route/localization generations and must
 request the permit in the adoption control tick. Low-level `from_adoption`
 remains available for offline research with caller-verified records. Live
 continuation selection and diagnostic/replay integration are not enabled.
+
+The adoption-witness extension passed twenty-eight module tests and hosted
+`bash scripts/check.sh` in
+[run 40436521064](https://github.com/rsasaki0109/rust_driving/actions/runs/40436521064)
+on formatted source `7642177b1f22dcd9909f1e0d41537b153c178e62`.
+
+## Adoption-to-candidate integration (validation pending)
+
+Centerline continuation no longer requires a prior lateral-shift anchor: the
+ordinary planner can remain at target zero without ever setting one. Side
+continuations still require their retained anchor; any present malformed anchor
+rejects. The shared geometry helper already defines the unanchored center case.
+
+A new test connects an actual three-acquisition adoption to one-time permit
+issuance and next-tick continuation generation at 0.21 m/s. Independent dense
+samples reconstruct constant-acceleration motion and the fixture's forecast
+radius interpolation, checking braking/acceleration limits, road width, original
+progress bounds and clearance through the complete eight-second hold. A later
+conflicting scene must revoke that same permit permanently. A separate regression
+covers an unanchored centerline explicitly.
+
+This is a composed planner test with prescribed ego state, not closed-loop
+vehicle control or evidence of mission recovery. Live selection, replay output
+and paired mission qualification remain outstanding.

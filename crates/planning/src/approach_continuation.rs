@@ -503,13 +503,15 @@ impl crate::LatticePlanner {
                 return None;
             }
             let target = observation.lateral_target_m;
-            let (start, offset, transition) = self.maneuver_start?;
-            if !start.is_finite()
-                || !offset.is_finite()
-                || !transition.is_finite()
-                || transition <= 0.
-                || !self.previous_lateral.is_finite()
+            if !self.previous_lateral.is_finite()
                 || (self.previous_lateral - target).abs() >= 0.01
+                || self.maneuver_start.is_some_and(|(start, offset, transition)| {
+                    !start.is_finite() || !offset.is_finite()
+                        || !transition.is_finite() || transition <= 0.
+                })
+                // A centerline plan need not ever have initiated a lateral shift.
+                // Side continuations still require their retained maneuver anchor.
+                || (self.maneuver_start.is_none() && target.abs() >= 0.01)
             {
                 return None;
             }
@@ -1665,5 +1667,102 @@ mod tests {
                 .take_continuation_permit(&observation(0.2), 1.)
                 .is_none()
         );
+    }
+
+    #[test]
+    fn centerline_continuation_does_not_require_a_previous_lateral_shift() {
+        let (mut planner, route, mut ego, objects) = maneuver_fixture();
+        planner.previous_lateral = 0.;
+        planner.maneuver_start = None;
+        ego.pose.position.y = 0.;
+        let mut record = adoption();
+        record.proposal_lateral_target_m = Some(0.);
+        record.proposal_endpoint = Some(Vec2::new(12., 0.));
+        let mut observed = observation(0.2);
+        observed.lateral_target_m = 0.;
+        let mut permit = ContinuationPermit::from_adoption(&record, &observed, 1.).unwrap();
+        observed.now_s = 0.3;
+        observed.acquisition_s = Some(0.3);
+        planner.observe_checked_approach_scene(0.3, Some(0.3));
+        let path = planner.checked_maneuver_continuation(
+            &mut permit, &observed, ego, &route, &objects,
+        ).unwrap();
+        assert!(path.points.iter().all(|p| p.position.y.abs() < 1e-10));
+        assert!(path.points.iter().any(|p| p.speed > 0.7));
+        assert!(planner.maneuver_start.is_none());
+    }
+
+    #[test]
+    fn actual_adoption_flows_into_independently_sampled_continuation() {
+        let (mut planner, route, mut ego, objects) = actual_adoption_fixture();
+        let status = planner.checked_approach_diagnostics().clone();
+        let mut observed = observation(0.2);
+        observed.lateral_target_m = status.proposal_lateral_target_m.unwrap();
+        observed.blocking_ids = &status.blocking_prediction_ids;
+        let mut permit = planner.take_continuation_permit(&observed, 1.).unwrap();
+        let bound = permit.endpoint_bound().unwrap();
+        let anchor = planner.maneuver_start;
+        ego.speed = 0.21;
+        observed.now_s = 0.3;
+        observed.acquisition_s = Some(0.3);
+        planner.observe_checked_approach_scene(0.3, Some(0.3));
+        let path = planner.checked_maneuver_continuation(
+            &mut permit, &observed, ego, &route, &objects,
+        ).expect("actual confirmed approach should produce a checked continuation");
+        assert_eq!(path.points[0].position, ego.pose.position);
+        assert_eq!(path.points[0].speed, ego.speed);
+        assert!(path.points.iter().any(|p| p.speed > 0.7));
+        let tail = path.points.windows(2).next_back().unwrap();
+        assert_eq!(tail[0].position, tail[1].position);
+        assert_eq!(tail[0].speed, 0.);
+        assert_eq!(tail[1].speed, 0.);
+        assert!(tail[1].time - tail[0].time >= 8. - 1e-9);
+        // Independent dense samples reconstruct accelerated motion and forecast
+        // radius interpolation; no production collision/projection helper is used.
+        for pair in path.points.windows(2) {
+            let a = pair[0];
+            let b = pair[1];
+            let duration = b.time - a.time;
+            let length = a.position.distance(b.position);
+            assert!(duration > 0.);
+            let acceleration = (b.speed - a.speed) / duration;
+            assert!(acceleration <= planner.max_acceleration_m_s2 + 1e-8);
+            assert!(acceleration >= -planner.max_deceleration_m_s2 - 1e-8);
+            assert!((0.5 * (a.speed + b.speed) * duration - length).abs() < 1e-7);
+            for i in 0..=100 {
+                let dt = duration * i as f64 / 100.;
+                let arc = a.speed * dt + 0.5 * acceleration * dt * dt;
+                let position = if length > 0. {
+                    a.position.plus(b.position.minus(a.position).scaled(arc / length))
+                } else { a.position };
+                let knot = ((a.time + dt) / 0.2).clamp(0., 40.);
+                let k = knot.floor() as usize;
+                let next = (k + 1).min(40);
+                let radius = 1. + objects[0].additional_radius_m[k]
+                    + (objects[0].additional_radius_m[next]
+                        - objects[0].additional_radius_m[k]) * (knot - k as f64);
+                assert!(position.distance(Vec2::new(50., 0.))
+                    >= planner.vehicle.radius + radius + crate::REFINED_CANDIDATE_CLEARANCE_M - 1e-8);
+                assert!(position.y.abs() + planner.vehicle.radius <= route.half_width + 1e-8);
+                assert!(position.x >= ego.pose.position.x - 0.2 && position.x <= bound.1 + 1e-8);
+            }
+        }
+        assert_eq!(permit.endpoint_bound(), Some(bound));
+        assert_eq!(planner.maneuver_start, anchor);
+        assert_eq!(planner.checked_approach_diagnostics(), &status);
+
+        // A new conflicting scene must revoke this same real adoption's permit.
+        let mut blocked = objects.clone();
+        blocked[0].positions = vec![ego.pose.position; 41];
+        observed.now_s = 0.4;
+        observed.acquisition_s = Some(0.4);
+        planner.observe_checked_approach_scene(0.4, Some(0.4));
+        assert!(planner.checked_maneuver_continuation(
+            &mut permit, &observed, ego, &route, &blocked,
+        ).is_none());
+        assert!(permit.endpoint_bound().is_none());
+        assert!(planner.checked_maneuver_continuation(
+            &mut permit, &observed, ego, &route, &objects,
+        ).is_none());
     }
 }
