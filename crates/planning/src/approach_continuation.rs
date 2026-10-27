@@ -1230,14 +1230,32 @@ mod tests {
             assert!(ordinary.points.is_empty());
             let mut permit =
                 ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 1.).unwrap();
-            assert!(planner.checked_continuation_candidate(
-                &mut permit, &observation(0.3), &line, ego, &route, &objects
-            ).is_none());
+            assert!(
+                planner
+                    .checked_continuation_candidate(
+                        &mut permit,
+                        &observation(0.3),
+                        &line,
+                        ego,
+                        &route,
+                        &objects
+                    )
+                    .is_none()
+            );
             assert!(permit.endpoint_bound().is_none());
             // Repairing settings cannot revive the old authorization.
-            assert!(valid.checked_continuation_candidate(
-                &mut permit, &observation(0.3), &line, ego, &route, &objects
-            ).is_none());
+            assert!(
+                valid
+                    .checked_continuation_candidate(
+                        &mut permit,
+                        &observation(0.3),
+                        &line,
+                        ego,
+                        &route,
+                        &objects
+                    )
+                    .is_none()
+            );
         }
     }
 
@@ -1267,7 +1285,12 @@ mod tests {
             let mut permit =
                 ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 1.).unwrap();
             let result = planner.checked_continuation_candidate(
-                &mut permit, &observation(0.3), &line, ego, &route, &objects
+                &mut permit,
+                &observation(0.3),
+                &line,
+                ego,
+                &route,
+                &objects,
             );
             if offset == Vec2::default() {
                 let path = result.unwrap();
