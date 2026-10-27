@@ -1684,9 +1684,9 @@ mod tests {
         observed.now_s = 0.3;
         observed.acquisition_s = Some(0.3);
         planner.observe_checked_approach_scene(0.3, Some(0.3));
-        let path = planner.checked_maneuver_continuation(
-            &mut permit, &observed, ego, &route, &objects,
-        ).unwrap();
+        let path = planner
+            .checked_maneuver_continuation(&mut permit, &observed, ego, &route, &objects)
+            .unwrap();
         assert!(path.points.iter().all(|p| p.position.y.abs() < 1e-10));
         assert!(path.points.iter().any(|p| p.speed > 0.7));
         assert!(planner.maneuver_start.is_none());
@@ -1706,9 +1706,9 @@ mod tests {
         observed.now_s = 0.3;
         observed.acquisition_s = Some(0.3);
         planner.observe_checked_approach_scene(0.3, Some(0.3));
-        let path = planner.checked_maneuver_continuation(
-            &mut permit, &observed, ego, &route, &objects,
-        ).expect("actual confirmed approach should produce a checked continuation");
+        let path = planner
+            .checked_maneuver_continuation(&mut permit, &observed, ego, &route, &objects)
+            .expect("actual confirmed approach should produce a checked continuation");
         assert_eq!(path.points[0].position, ego.pose.position);
         assert_eq!(path.points[0].speed, ego.speed);
         assert!(path.points.iter().any(|p| p.speed > 0.7));
@@ -1733,16 +1733,23 @@ mod tests {
                 let dt = duration * i as f64 / 100.;
                 let arc = a.speed * dt + 0.5 * acceleration * dt * dt;
                 let position = if length > 0. {
-                    a.position.plus(b.position.minus(a.position).scaled(arc / length))
-                } else { a.position };
+                    a.position
+                        .plus(b.position.minus(a.position).scaled(arc / length))
+                } else {
+                    a.position
+                };
                 let knot = ((a.time + dt) / 0.2).clamp(0., 40.);
                 let k = knot.floor() as usize;
                 let next = (k + 1).min(40);
-                let radius = 1. + objects[0].additional_radius_m[k]
-                    + (objects[0].additional_radius_m[next]
-                        - objects[0].additional_radius_m[k]) * (knot - k as f64);
-                assert!(position.distance(Vec2::new(50., 0.))
-                    >= planner.vehicle.radius + radius + crate::REFINED_CANDIDATE_CLEARANCE_M - 1e-8);
+                let radius = 1.
+                    + objects[0].additional_radius_m[k]
+                    + (objects[0].additional_radius_m[next] - objects[0].additional_radius_m[k])
+                        * (knot - k as f64);
+                assert!(
+                    position.distance(Vec2::new(50., 0.))
+                        >= planner.vehicle.radius + radius + crate::REFINED_CANDIDATE_CLEARANCE_M
+                            - 1e-8
+                );
                 assert!(position.y.abs() + planner.vehicle.radius <= route.half_width + 1e-8);
                 assert!(position.x >= ego.pose.position.x - 0.2 && position.x <= bound.1 + 1e-8);
             }
@@ -1757,12 +1764,16 @@ mod tests {
         observed.now_s = 0.4;
         observed.acquisition_s = Some(0.4);
         planner.observe_checked_approach_scene(0.4, Some(0.4));
-        assert!(planner.checked_maneuver_continuation(
-            &mut permit, &observed, ego, &route, &blocked,
-        ).is_none());
+        assert!(
+            planner
+                .checked_maneuver_continuation(&mut permit, &observed, ego, &route, &blocked,)
+                .is_none()
+        );
         assert!(permit.endpoint_bound().is_none());
-        assert!(planner.checked_maneuver_continuation(
-            &mut permit, &observed, ego, &route, &objects,
-        ).is_none());
+        assert!(
+            planner
+                .checked_maneuver_continuation(&mut permit, &observed, ego, &route, &objects,)
+                .is_none()
+        );
     }
 }
