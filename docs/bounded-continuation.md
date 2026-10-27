@@ -55,7 +55,7 @@ a radius-two bend and invalid constraints. Neither entry point is wired into the
 live planner yet; fresh continuation ownership and full scene/road certificates
 remain prerequisites for that integration.
 
-## Continuation lifetime (validation pending)
+## Continuation lifetime (validated)
 
 `ContinuationPermit` records the endpoint, route progress, lateral target,
 blocker identities, localization/route generations and immutable expiry of an
@@ -81,7 +81,7 @@ This state machine and the profile constructor still require live-planner
 integration with complete current-scene and road certificates. No new driving
 behavior or closed-loop improvement is claimed.
 
-## Combined eligibility and certified generation (validation pending)
+## Combined eligibility and certified generation (validated before continuous-range extension)
 
 `ContinuationPermit::certified_profile` connects the permit and constrained
 constructor. Eligibility is checked before candidate generation. A route is
@@ -99,5 +99,29 @@ to the live planner.
 Three new tests exercise valid generation followed by stale observations,
 complete certificate rejection followed by restored inputs, oversized proposed
 distance and an unrelated candidate start. This tests composition rather than
-only the components in isolation. Both the previous permit addition and this
-composition still require their hosted workflow results to be reviewed.
+only the components in isolation. The permit and combined constructor passed all fifteen module tests and hosted
+`bash scripts/check.sh` in [run 40421778930](https://github.com/rsasaki0109/rust_driving/actions/runs/40421778930),
+on formatted source `102383a9c61cf96f0baa41c1f26c14bbbaead415`.
+No local checks ran.
+
+## Continuous authorized-range check (validation pending)
+
+The combined constructor now also checks progress containment between trajectory
+knots before invoking the caller certificate. A folding route can have two
+authorized endpoint projections while the segment interior projects onto an
+unauthorized return leg; checking knots alone cannot exclude that shortcut.
+
+Split the supplied route at the authorized progress boundaries into permitted
+and forbidden subroutes. At each candidate segment midpoint, distance to either
+fixed subroute is 1-Lipschitz. Midpoint distance plus/minus half the segment length
+therefore bounds the whole interval. Accept an interval only when its upper
+distance bound to permitted geometry is strictly below its lower bound to
+forbidden geometry, with a numerical margin. Otherwise subdivide, at most ten
+levels; unresolved comparisons reject. Stationary tails are checked too.
+This is conservative: touching a progress boundary can reject an otherwise
+usable path. It does not certify road width or obstacle clearance.
+
+Two tests cover a U-shaped shortcut whose endpoint-only checks pass and an
+offset straight segment with both accepted interior and rejected boundary tie.
+The existing combined tests continue to check expiry and certificate failure.
+The live planner remains unchanged pending integration and closed-loop comparison.
