@@ -178,7 +178,7 @@ The admission follow-up passed twenty-two module tests and hosted
 [run 40431380588](https://github.com/rsasaki0109/rust_driving/actions/runs/40431380588),
 on formatted source `f6c3187be3df2b41bf630260f3476161a57a147d`.
 
-## Retained-maneuver geometry (validation pending)
+## Retained-maneuver geometry (validated)
 
 `checked_maneuver_continuation` generates its own geometry using the same
 anchored lateral-transition, heading correction and local-route recovery helper
@@ -199,3 +199,30 @@ closed-loop vehicle simulation. The method leaves maneuver and stop commitments
 unchanged and still requires caller-owned adoption/frame verification.
 Live selection, recorded diagnostics and paired closed-loop comparison remain
 unimplemented; no mission recovery is claimed.
+
+The retained-maneuver extension passed twenty-five module tests and hosted
+`bash scripts/check.sh` in
+[run 40433466438](https://github.com/rsasaki0109/rust_driving/actions/runs/40433466438)
+on formatted source `d0e1c0206792b232419bffbebd8e97a03fe98fad`.
+
+## Actual adoption witness (validation pending)
+
+The planner now records a private witness only when its actual `plan` call
+adopts and returns a newly confirmed stopping approach.
+`take_continuation_permit` consumes this witness once and checks the original
+control/acquisition clocks and exact supplied-route ego progress before creating
+a permit from the planner-owned confirmation record. A failed request consumes
+the witness too. Every new plan and route reset clears an unconsumed witness.
+Taking a permit leaves the published adoption diagnostics unchanged.
+
+Three tests use the actual emergency/hold/three-acquisition adoption sequence
+rather than fabricated permit records. They cover single issuance, invalidation
+by replan/reset/changed clock/bad progress/unhealthy request, and refusal to issue
+from an adopted-looking diagnostic alone. The cloneable planner's witness is
+local to each planner instance; cloning is for independent simulation branches,
+not a global uniqueness mechanism.
+
+The caller still supplies health and route/localization generations and must
+request the permit in the adoption control tick. Low-level `from_adoption`
+remains available for offline research with caller-verified records. Live
+continuation selection and diagnostic/replay integration are not enabled.

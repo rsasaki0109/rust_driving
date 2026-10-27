@@ -85,6 +85,7 @@ pub struct LatticePlanner {
     diagnostics: Option<PlanningDiagnostics>,
     approach_clock: Option<(f64, Option<f64>)>,
     approach_confirmation: checked_approach::Confirmation,
+    continuation_adoption: Option<approach_continuation::AdoptionWitness>,
     prefer_stop_progress: bool,
     motion_directions: Option<direction::Context>,
     record_stop_attempts: bool,
@@ -138,6 +139,7 @@ impl Default for LatticePlanner {
             diagnostics: None,
             approach_clock: None,
             approach_confirmation: checked_approach::Confirmation::default(),
+            continuation_adoption: None,
             prefer_stop_progress: false,
             motion_directions: None,
             record_stop_attempts: false,
@@ -245,6 +247,7 @@ impl LatticePlanner {
         self.refinement_support = None;
         self.diagnostics = None;
         self.approach_confirmation.reset();
+        self.continuation_adoption = None;
     }
 
     /// Supply the last accepted scene acquisition, never the control clock.
@@ -296,6 +299,7 @@ impl LatticePlanner {
 }
 impl Planner for LatticePlanner {
     fn plan(&mut self, ego: EgoState, route: &Route, objects: &[Prediction]) -> Trajectory {
+        self.continuation_adoption = None;
         if !self.replan_checked_approaches {
             return self.plan_inner(ego, route, objects);
         }
@@ -362,6 +366,14 @@ impl Planner for LatticePlanner {
             let (probe, path) = alternative.expect("confirmed checked proposal");
             *self = probe;
             self.approach_confirmation = confirmation;
+            if let Some((now, acquisition)) = self.approach_clock {
+                self.continuation_adoption = Some(approach_continuation::AdoptionWitness {
+                    now,
+                    acquisition,
+                    progress: route.project(ego.pose.position).0,
+                    record: self.approach_confirmation.diagnostics.clone(),
+                });
+            }
             result = path;
         }
         self.diagnostics_enabled = capture;

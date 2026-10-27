@@ -169,6 +169,15 @@ pub struct ContinuationObservation<'a> {
     pub healthy: bool,
 }
 
+// Written only when plan() actually returns a newly confirmed stopping approach.
+#[derive(Clone)]
+pub(super) struct AdoptionWitness {
+    pub now: f64,
+    pub acquisition: Option<f64>,
+    pub progress: f64,
+    pub record: rustdriving_core::CheckedApproachDiagnostics,
+}
+
 /// Bounded lifetime of an existing checked adoption, not a collision certificate.
 /// Construction requires the caller's independently verified adoption record.
 /// Every proposed path still needs current-scene, road and full-stop checks.
@@ -436,6 +445,28 @@ fn continuous_progress_contains(
 
 /// A planner-owned candidate entry point; does not adopt or execute its result.
 impl crate::LatticePlanner {
+    /// Consume the latest actual plan adoption once, during its control tick.
+    /// A failed request also consumes the witness; observations cannot renew it.
+    /// The caller owns health and route/localization generations. This does not
+    /// select a continuation or replace its current-scene collision certificate.
+    pub fn take_continuation_permit(
+        &mut self,
+        observation: &ContinuationObservation<'_>,
+        maximum_duration_s: f64,
+    ) -> Option<ContinuationPermit> {
+        let witness = self.continuation_adoption.take()?;
+        if !self.replan_checked_approaches
+            || self.invalid_configuration()
+            || self.approach_clock != Some((witness.now, witness.acquisition))
+            || observation.now_s != witness.now
+            || observation.acquisition_s != witness.acquisition
+            || observation.progress_m != witness.progress
+        {
+            return None;
+        }
+        ContinuationPermit::from_adoption(&witness.record, observation, maximum_duration_s)
+    }
+
     /// Generate continuation geometry from the planner's retained lateral maneuver.
     /// This is still a read-only candidate probe, not a policy selection or command.
     /// The permit's adoption and frame ownership must be verified by the caller.
@@ -1507,5 +1538,101 @@ mod tests {
         );
         assert!(permit.endpoint_bound().is_none());
         assert_eq!(planner.maneuver_start, Some((0., 3.9, 10.)));
+    }
+
+    fn actual_adoption_fixture() -> (
+        crate::LatticePlanner, Route, rustdriving_core::EgoState,
+        Vec<rustdriving_core::Prediction>,
+    ) {
+        use rustdriving_core::{DrivingMode, EgoState, Planner};
+        let mut planner = crate::LatticePlanner {
+            settle_obstruction_stops: true,
+            search_obstruction_stops: true,
+            replan_checked_approaches: true,
+            lateral_candidate_margin_m: Some(0.35),
+            ..crate::LatticePlanner::default()
+        };
+        let narrow = Route::new(vec![Vec2::default(), Vec2::new(100., 0.)], 2.1).unwrap();
+        let mut obstacle = rustdriving_core::Prediction {
+            id: 7, positions: vec![Vec2::new(18., 0.); 41],
+            radius: 1., dt: 0.2, additional_radius_m: vec![],
+        };
+        let mut ego = EgoState { speed: 8., ..EgoState::default() };
+        assert_eq!(planner.plan(ego, &narrow, std::slice::from_ref(&obstacle)).mode, DrivingMode::Emergency);
+        ego.pose.position.x = 10.;
+        ego.speed = 0.;
+        planner.plan(ego, &narrow, std::slice::from_ref(&obstacle));
+        assert!(planner.holding_obstruction_stop());
+        let wide = Route::new(narrow.points.clone(), 5.5).unwrap();
+        obstacle.positions = vec![Vec2::new(50., 0.); 41];
+        obstacle.additional_radius_m = (0..=40).map(|i| {
+            let t = i as f64 * 0.2;
+            0.2 + 0.3 * t + 0.05 * t * t
+        }).collect();
+        let objects = vec![obstacle];
+        for now in [0., 0.1, 0.2] {
+            planner.observe_checked_approach_scene(now, Some(now));
+            let path = planner.plan(ego, &wide, &objects);
+            if now < 0.2 {
+                assert!(!planner.checked_approach_diagnostics().adopted);
+                assert!(planner.take_continuation_permit(&observation(now), 1.).is_none());
+            } else {
+                assert!(planner.checked_approach_diagnostics().adopted);
+                assert_eq!(planner.checked_approach_diagnostics().proposal_endpoint,
+                    Some(path.points.last().unwrap().position));
+            }
+        }
+        (planner, wide, ego, objects)
+    }
+
+    #[test]
+    fn actual_planner_adoption_issues_only_one_permit() {
+        let (mut planner, _, _, _) = actual_adoption_fixture();
+        let status = planner.checked_approach_diagnostics().clone();
+        let mut observed = observation(0.2);
+        observed.lateral_target_m = status.proposal_lateral_target_m.unwrap();
+        observed.blocking_ids = &status.blocking_prediction_ids;
+        let permit = planner.take_continuation_permit(&observed, 1.).unwrap();
+        assert_eq!(permit.endpoint_bound(), Some((
+            status.proposal_endpoint.unwrap(), status.proposal_end_progress_m.unwrap(),
+        )));
+        assert!(planner.take_continuation_permit(&observed, 8.).is_none());
+        // Consuming a continuation witness does not rewrite recorded adoption.
+        assert_eq!(planner.checked_approach_diagnostics(), &status);
+    }
+
+    #[test]
+    fn actual_adoption_witness_cannot_survive_replan_reset_or_bad_request() {
+        use rustdriving_core::Planner;
+        for case in 0..6 {
+            let (mut planner, route, ego, objects) = actual_adoption_fixture();
+            let status = planner.checked_approach_diagnostics().clone();
+            let mut observed = observation(0.2);
+            observed.lateral_target_m = status.proposal_lateral_target_m.unwrap();
+            observed.blocking_ids = &status.blocking_prediction_ids;
+            match case {
+                0 => planner.reset_route_state(),
+                1 => { planner.plan(ego, &route, &objects); }
+                2 => planner.observe_checked_approach_scene(0.25, Some(0.2)),
+                3 => observed.progress_m += 0.1,
+                4 => observed.healthy = false,
+                _ => observed.now_s = 0.25,
+            }
+            assert!(planner.take_continuation_permit(&observed, 1.).is_none());
+            planner.observe_checked_approach_scene(0.2, Some(0.2));
+            observed = observation(0.2);
+            observed.lateral_target_m = status.proposal_lateral_target_m.unwrap();
+            observed.blocking_ids = &status.blocking_prediction_ids;
+            assert!(planner.take_continuation_permit(&observed, 1.).is_none());
+        }
+    }
+
+    #[test]
+    fn diagnostic_record_alone_cannot_issue_planner_permit() {
+        let (mut planner, _, _, _) = maneuver_fixture();
+        planner.observe_checked_approach_scene(0.2, Some(0.2));
+        // Even an adopted-looking diagnostic is not the internal plan witness.
+        planner.approach_confirmation.diagnostics = adoption();
+        assert!(planner.take_continuation_permit(&observation(0.2), 1.).is_none());
     }
 }
