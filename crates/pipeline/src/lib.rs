@@ -60,6 +60,12 @@ use traffic_controls::{
 
 /// Offline inspection at the exact planner call boundary; inputs are immutable.
 pub type PlannerInspection<'a> = dyn FnMut(&LatticePlanner, EgoState, &Route, &[Prediction]) + 'a;
+/// Offline inspection immediately after planning, before regulatory/health output
+/// overrides. The trajectory is the raw planner result, not a final command.
+/// Clone the planner for experiments; all live inputs are immutable.
+pub type PlannerResultInspection<'a> =
+    dyn FnMut(&LatticePlanner, EgoState, &Route, &[Prediction], &Trajectory) + 'a;
+
 
 /// Conservative, externally calibrated planning limits, independent of simulator truth.
 #[derive(Clone, Copy, Debug, Serialize, Deserialize)]
@@ -963,7 +969,7 @@ impl DrivingPipeline {
     /// Clock errors return Err before mutation; callers must apply emergency braking on Err.
     /// Invalid or missing sensor data produces a finite emergency command with diagnostics.
     pub fn step(&mut self, input: &SensorFrame) -> Result<PipelineOutput, String> {
-        self.step_inspected(input, None)
+        self.step_inspected(input, None, None)
     }
 
     /// Run the same sensor step with a read-only planner inspection callback.
@@ -973,13 +979,25 @@ impl DrivingPipeline {
         input: &SensorFrame,
         inspection: &mut PlannerInspection<'_>,
     ) -> Result<PipelineOutput, String> {
-        self.step_inspected(input, Some(inspection))
+        self.step_inspected(input, Some(inspection), None)
+    }
+
+    /// Observe a completed planner decision without changing the sensor step.
+    /// A callback can inspect a cloned planner's adoption witness, but cannot
+    /// select a candidate or mutate live commitments. Later output guards still run.
+    pub fn step_with_planner_result_inspection(
+        &mut self,
+        input: &SensorFrame,
+        inspection: &mut PlannerResultInspection<'_>,
+    ) -> Result<PipelineOutput, String> {
+        self.step_inspected(input, None, Some(inspection))
     }
 
     fn step_inspected(
         &mut self,
         input: &SensorFrame,
         inspection: Option<&mut PlannerInspection<'_>>,
+        result_inspection: Option<&mut PlannerResultInspection<'_>>,
     ) -> Result<PipelineOutput, String> {
         if !input.time.is_finite()
             || input.time < 0.0
@@ -1836,6 +1854,15 @@ impl DrivingPipeline {
             stop_route.as_ref().unwrap_or(&self.config.route),
             &predictions,
         );
+        if let Some(inspect) = result_inspection {
+            inspect(
+                &self.planner,
+                motion_estimate,
+                stop_route.as_ref().unwrap_or(&self.config.route),
+                &predictions,
+                &trajectory,
+            );
+        }
         self.planner.cruise_speed = configured_cruise;
         if self.navigator.as_ref().is_some_and(|nav| {
             matches!(

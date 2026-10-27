@@ -232,7 +232,7 @@ The adoption-witness extension passed twenty-eight module tests and hosted
 [run 40436521064](https://github.com/rsasaki0109/rust_driving/actions/runs/40436521064)
 on formatted source `7642177b1f22dcd9909f1e0d41537b153c178e62`.
 
-## Adoption-to-candidate integration (validation pending)
+## Adoption-to-candidate integration (validated)
 
 Centerline continuation no longer requires a prior lateral-shift anchor: the
 ordinary planner can remain at target zero without ever setting one. Side
@@ -250,3 +250,27 @@ covers an unanchored centerline explicitly.
 This is a composed planner test with prescribed ego state, not closed-loop
 vehicle control or evidence of mission recovery. Live selection, replay output
 and paired mission qualification remain outstanding.
+
+The adoption-to-candidate integration passed thirty module tests and hosted
+`bash scripts/check.sh` in
+[run 40439048247](https://github.com/rsasaki0109/rust_driving/actions/runs/40439048247)
+on formatted source `973679a9cf51e7982fc41b00df0ec23b0b3f0d80`.
+
+## Pipeline result inspection (validation pending)
+
+`DrivingPipeline::step_with_planner_result_inspection` adds a read-only hook
+immediately after the planner returns, while the effective speed limits, supplied
+planning route and acquisition-owned predictions still match that call. A probe
+can clone the planner and inspect/consume the clone's adoption witness without
+changing the live instance. The existing pre-plan inspection API is preserved.
+
+The callback sees the raw planner trajectory, before later regulatory mode
+overrides and health/command guards. It is not the final executable output and
+cannot replace it. Early-return localization transitions may omit planning and
+therefore the callback; invalid clocks reject before invoking it.
+
+Two integration tests compare every serialized output against an uninspected
+pipeline across eighteen sensor steps including LiDAR failure, deliberately
+mutate/replan a shadow clone, verify full sensor replay, and confirm an invalid
+clock invokes no callback or state advance. This enables recorded-log shadow
+comparison; it does not select continuation candidates in live control.

@@ -20,7 +20,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           if ! git diff --quiet; then
-            git add crates/planning/src/approach_continuation.rs crates/planning/src/lib.rs
+            git add crates/planning/src/approach_continuation.rs crates/planning/src/lib.rs crates/pipeline/src/lib.rs crates/pipeline/tests/planning_diagnostics.rs
             git commit -m 'Format experimental bounded continuation profiles'
             git push --force-with-lease="refs/heads/feat/bounded-continuation-profile:$EXPECTED_SOURCE" origin HEAD:refs/heads/feat/bounded-continuation-profile
           fi
