@@ -111,6 +111,28 @@ def main():
                 point_reference_recovery=dict(search=alternate_search,
                     selected=None if alternate_index is None else alternate_diagnostic['candidates'][alternate_index],
                     candidates=alternate_diagnostic['candidates']))
+            scales = probe['join_scale_probes']
+            if [r['scale'] for r in scales] != [.5, 1., 2.]:
+                raise ValueError('join scale cohort changed')
+            receipt['join_scale_comparison'] = []
+            for variant in scales:
+                changed = variant['probe']
+                if variant['scale'] == 1. and any(changed[k] != probe[k] for k in
+                    ['initial_progress_m', 'trajectory', 'planning_diagnostics', 'attempts']):
+                    raise ValueError('unit join scale changed ordinary probe')
+                attempts = changed['attempts']
+                search = summarize(attempts) if attempts else dict(sweep_counts={},
+                    maximum_clear_progress_gain_m=None, global_infeasibility_proven=False,
+                    confirmation_authorized=False)
+                search.update(attempt_count=len(attempts),
+                    configured_minimum_progress_m=config['checked_approach_min_progress_m'],
+                    clear_at_configured_minimum=sum(a['first_contact_s'] is None and
+                        a['progress_gain_m'] >= config['checked_approach_min_progress_m'] for a in attempts))
+                diagnostic = changed['planning_diagnostics']
+                chosen = diagnostic['selected_candidate']
+                receipt['join_scale_comparison'].append(dict(scale=variant['scale'],
+                    search=search, selected=None if chosen is None else diagnostic['candidates'][chosen],
+                    candidates=diagnostic['candidates'], operational_policy_changed=False))
             result['cases'].append(receipt)
             save()
             print(json.dumps(receipt, allow_nan=False), flush=True)

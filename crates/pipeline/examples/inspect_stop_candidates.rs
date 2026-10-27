@@ -93,6 +93,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                                 "ego":ego, "route":route, "predictions":objects,
                                 "closed_loop":false
                             });
+                            let scaled: Vec<_> = [0.5, 1., 2.].into_iter().map(|scale| {
+                                let candidate = planner.inspect_stopping_proposals_with_join_scale(
+                                    ego, route, objects, scale).expect("healthy stationary probe");
+                                serde_json::json!({"scale":scale, "probe":describe(candidate)})
+                            }).collect();
+                            original["join_scale_probes"] = serde_json::json!(scaled);
                             evidence = Some(original);
                         },
                     )?
