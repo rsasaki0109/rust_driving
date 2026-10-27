@@ -436,6 +436,90 @@ fn continuous_progress_contains(
 
 /// A planner-owned candidate entry point; does not adopt or execute its result.
 impl crate::LatticePlanner {
+
+    /// Generate continuation geometry from the planner's retained lateral maneuver.
+    /// This is still a read-only candidate probe, not a policy selection or command.
+    /// The permit's adoption and frame ownership must be verified by the caller.
+    pub fn checked_maneuver_continuation(
+        &self,
+        permit: &mut ContinuationPermit,
+        observation: &ContinuationObservation<'_>,
+        ego: rustdriving_core::EgoState,
+        route: &Route,
+        objects: &[rustdriving_core::Prediction],
+    ) -> Option<rustdriving_core::Trajectory> {
+        let candidate = (|| {
+            if self.invalid_configuration()
+                || !self.replan_checked_approaches
+                || !ego.pose.position.finite()
+                || !ego.pose.yaw.is_finite()
+                || !ego.speed.is_finite()
+                || ego.speed < 0.
+                || !self.vehicle.radius.is_finite()
+                || self.vehicle.radius <= 0.
+                || !self.vehicle.wheelbase.is_finite()
+                || self.vehicle.wheelbase <= 0.
+                || !route.half_width.is_finite()
+                || route.half_width <= self.vehicle.radius
+                || route.points.iter().any(|p| !p.finite())
+                || route.points.windows(2).any(|p| {
+                    let length = p[0].distance(p[1]);
+                    !length.is_finite() || length <= 0.
+                })
+                || !Route::new(route.points.clone(), route.half_width)
+                    .is_ok_and(|r| r.lengths == route.lengths && r.length().is_finite())
+                || !permit.observe(observation)
+            {
+                return None;
+            }
+            let target = observation.lateral_target_m;
+            let (start, offset, transition) = self.maneuver_start?;
+            if !start.is_finite() || !offset.is_finite() || !transition.is_finite()
+                || transition <= 0. || !self.previous_lateral.is_finite()
+                || (self.previous_lateral - target).abs() >= 0.01
+            {
+                return None;
+            }
+            let fitted;
+            let planning_route = if self.local_route_geometry {
+                fitted = crate::corners::fit(route, self.vehicle).ok()?;
+                &fitted
+            } else {
+                route
+            };
+            let side = (planning_route.half_width - self.vehicle.radius
+                - self.lateral_candidate_margin_m?).clamp(0., 4.);
+            let index = [0., 1., -1., 0.875, -0.875, 0.75, -0.75, 0.5, -0.5]
+                .iter().position(|fraction| (target - side * fraction).abs() < 1e-7)?;
+            if index >= 3 && !self.refine_lateral_candidates {
+                return None;
+            }
+            let (progress, lateral) = planning_route.project(ego.pose.position);
+            if target * lateral < 0. && lateral.abs() > 1. {
+                return None;
+            }
+            let (_, end_progress) = permit.endpoint_bound()?;
+            // The permit uses the supplied route's arc; the planning horizon uses
+            // its own route. The subsequent complete certificate enforces the
+            // original bound continuously, even when those arcs differ.
+            let available = end_progress - route.project(ego.pose.position).0;
+            let horizon = available.min(40.).min((planning_route.length() - progress - 1.).max(0.));
+            if !horizon.is_finite() || horizon <= 0. {
+                return None;
+            }
+            let (geometry, _) = self.candidate_geometry(
+                ego, planning_route, route, horizon, (target, index >= 3),
+            )?;
+            self.checked_continuation_candidate(
+                permit, observation, &geometry, ego, route, objects,
+            )
+        })();
+        if candidate.is_none() {
+            permit.revoke();
+        }
+        candidate
+    }
+
     /// Use current planner scene context and the ordinary directional collision
     /// sweep, including the complete stationary tail. The one-metre refined
     /// clearance floor is conservatively applied to every continuation.
@@ -1300,5 +1384,98 @@ mod tests {
                 assert!(permit.endpoint_bound().is_none());
             }
         }
+    }
+
+    fn maneuver_fixture() -> (crate::LatticePlanner, Route, rustdriving_core::EgoState, Vec<rustdriving_core::Prediction>) {
+        let planner = crate::LatticePlanner {
+            replan_checked_approaches: true,
+            search_obstruction_stops: true,
+            settle_obstruction_stops: true,
+            lateral_candidate_margin_m: Some(0.2),
+            previous_lateral: 3.9,
+            maneuver_start: Some((0., 3.9, 10.)),
+            ..crate::LatticePlanner::default()
+        };
+        let route = Route::new(
+            vec![Vec2::new(0., 0.), Vec2::new(20., 0.)],
+            planner.vehicle.radius + 3.9 + 0.2,
+        ).unwrap();
+        let mut ego = rustdriving_core::EgoState::default();
+        ego.pose.position = Vec2::new(10., 3.9);
+        ego.speed = 0.21;
+        let objects = vec![rustdriving_core::Prediction {
+            id: 7,
+            positions: vec![Vec2::new(100., 100.); 41],
+            radius: 0.5,
+            dt: 0.2,
+            additional_radius_m: vec![],
+        }];
+        (planner, route, ego, objects)
+    }
+
+    #[test]
+    fn retained_maneuver_generates_reaccelerating_candidates_across_ticks() {
+        for local in [false, true] {
+            let (mut planner, route, mut ego, objects) = maneuver_fixture();
+            planner.local_route_geometry = local;
+            let mut permit =
+                ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 1.).unwrap();
+            for (tick, speed) in [0.19, 0.21, 0.31].into_iter().enumerate() {
+                let now = 0.3 + tick as f64 * 0.1;
+                ego.pose.position.x = 10. + tick as f64 * 0.02;
+                ego.speed = speed;
+                let mut observed = observation(now);
+                observed.progress_m = ego.pose.position.x;
+                planner.observe_checked_approach_scene(now, Some(now));
+                let path = planner.checked_maneuver_continuation(
+                    &mut permit, &observed, ego, &route, &objects,
+                ).unwrap();
+                assert_eq!(path.points[0].position, ego.pose.position);
+                assert_eq!(path.points[0].speed, speed);
+                assert_eq!(path.lateral_target, 3.9);
+                assert!(path.points.iter().any(|p| p.speed > 0.7));
+                assert!(path.points.iter().all(|p| (p.position.y - 3.9).abs() < 1e-8
+                    && p.position.x < 12.));
+                assert_eq!(permit.endpoint_bound(), Some((Vec2::new(12., 3.9), 12.)));
+                assert_eq!(planner.maneuver_start, Some((0., 3.9, 10.)));
+                assert!(!planner.obstruction_stop_requested);
+            }
+        }
+    }
+
+    #[test]
+    fn retained_maneuver_rejects_missing_changed_or_invalid_anchor() {
+        for case in 0..5 {
+            let (mut planner, mut route, ego, objects) = maneuver_fixture();
+            planner.observe_checked_approach_scene(0.3, Some(0.3));
+            match case {
+                0 => planner.maneuver_start = None,
+                1 => planner.previous_lateral = -3.9,
+                2 => planner.maneuver_start = Some((0., 3.9, 0.)),
+                3 => planner.lateral_candidate_margin_m = Some(0.4),
+                _ => route.lengths[1] += 1.,
+            }
+            let mut permit =
+                ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 1.).unwrap();
+            assert!(planner.checked_maneuver_continuation(
+                &mut permit, &observation(0.3), ego, &route, &objects,
+            ).is_none());
+            assert!(permit.endpoint_bound().is_none());
+        }
+    }
+
+    #[test]
+    fn retained_maneuver_still_checks_obstacles_through_full_hold() {
+        let (mut planner, route, ego, mut objects) = maneuver_fixture();
+        planner.observe_checked_approach_scene(0.3, Some(0.3));
+        objects[0].positions = (0..=40)
+            .map(|i| Vec2::new(11., 12. - i as f64 * 0.4)).collect();
+        let mut permit =
+            ContinuationPermit::from_adoption(&adoption(), &observation(0.2), 1.).unwrap();
+        assert!(planner.checked_maneuver_continuation(
+            &mut permit, &observation(0.3), ego, &route, &objects,
+        ).is_none());
+        assert!(permit.endpoint_bound().is_none());
+        assert_eq!(planner.maneuver_start, Some((0., 3.9, 10.)));
     }
 }

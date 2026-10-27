@@ -158,7 +158,7 @@ The planner adapter passed twenty module tests and hosted `bash scripts/check.sh
 in [run 40429454279](https://github.com/rsasaki0109/rust_driving/actions/runs/40429454279)
 on formatted source `aaba94b103b75039c4dcc12a5a2bdfc731f0af36`.
 
-## Shared admission and exact start (validation pending)
+## Shared admission and exact start (validated)
 
 The candidate entry now shares ordinary planning's configuration validation,
 including checked-approach option dependencies and numerical bounds. Previously,
@@ -172,3 +172,30 @@ Two regression tests compare rejection of ten invalid configurations across both
 entry points, verify sticky revocation after repair, and distinguish an exact
 start from 0.1 m longitudinal/lateral shifts. The projection-progress tolerance
 remains separate. These changes do not enable live candidate selection.
+
+The admission follow-up passed twenty-two module tests and hosted
+`bash scripts/check.sh` in
+[run 40431380588](https://github.com/rsasaki0109/rust_driving/actions/runs/40431380588),
+on formatted source `f6c3187be3df2b41bf630260f3476161a57a147d`.
+
+## Retained-maneuver geometry (validation pending)
+
+`checked_maneuver_continuation` generates its own geometry using the same
+anchored lateral-transition, heading correction and local-route recovery helper
+as ordinary planning. It requires an existing finite maneuver anchor, agreement
+with the planner's retained target, and a target in the configured candidate set.
+Missing/changed anchors, changed candidate widths, malformed routes or failed
+scene/corridor certificates revoke the permit.
+
+The horizon is limited by remaining authorized progress and the planning route's
+goal margin; the complete supplied-route progress certificate remains authoritative
+when fitted and supplied route arc lengths differ. This can conservatively reject
+usable geometry. No authorization deadline or endpoint is extended.
+
+Three tests cover repeated candidate generation around the 0.2 m/s threshold with
+both ordinary and local geometry, invalid/changed anchors and a moving obstacle
+during the full hold. Inputs in the multi-tick test are prescribed states, not a
+closed-loop vehicle simulation. The method leaves maneuver and stop commitments
+unchanged and still requires caller-owned adoption/frame verification.
+Live selection, recorded diagnostics and paired closed-loop comparison remain
+unimplemented; no mission recovery is claimed.
