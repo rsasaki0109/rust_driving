@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 import subprocess
 import check_later_stops as parent
+from inspect_continuation_execution import inspect as inspect_execution
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = '75d6c3fe11b5194ba522708f23a3a5c3eb43de46'
@@ -85,7 +86,11 @@ def main():
             if replay_report.get('verified') is not True or replay_report.get('ticks') != len(ticks):
                 raise ValueError('replay report did not verify every tick')
             chosen = [t['expected'] for t in ticks if t['expected'].get('continuation') is not None]
-            pair[variant] = dict(summary=summary,sensor_sha256=sha(raw),verified_ticks=len(ticks),
+            execution = inspect_execution(ticks)
+            if execution['selected_ticks'] != len(chosen):
+                raise ValueError('execution trace selection count disagrees')
+            (folder/'execution.json').write_text(json.dumps(execution, indent=2, allow_nan=False)+'\n')
+            pair[variant] = dict(execution=execution,summary=summary,sensor_sha256=sha(raw),verified_ticks=len(ticks),
                 selected_ticks=len(chosen),
                 selected_positive_acceleration_ticks=sum(o['command']['acceleration']>0 for o in chosen),
                 selected_emergency_ticks=sum(o['emergency'] for o in chosen),
