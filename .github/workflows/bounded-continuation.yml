@@ -48,3 +48,22 @@ jobs:
         with:
           name: continuation-reference
           path: artifacts/continuation-reference
+      - name: Build the pinned native adapter
+        run: |
+          rne_revision=$(cat integrations/rne/rne-revision.txt)
+          git init ../RobotNativeEngine
+          git -C ../RobotNativeEngine remote add origin https://github.com/rsasaki0109/RobotNativeEngine.git
+          git -C ../RobotNativeEngine sparse-checkout init --cone
+          git -C ../RobotNativeEngine sparse-checkout set crates third_party
+          git -C ../RobotNativeEngine fetch --depth 1 origin "$rne_revision"
+          git -C ../RobotNativeEngine checkout --detach FETCH_HEAD
+          test "$(git -C ../RobotNativeEngine rev-parse HEAD)" = "$rne_revision"
+          rustup toolchain install 1.95.0 --profile minimal
+          cargo +1.95.0 build --release --locked --manifest-path integrations/rne/Cargo.toml --jobs 2
+      - name: Exploratory native closed-loop continuation comparison
+        run: python scripts/check_continuation_reference.py --plant rne-dynamic --output artifacts/continuation-native
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: continuation-native
+          path: artifacts/continuation-native

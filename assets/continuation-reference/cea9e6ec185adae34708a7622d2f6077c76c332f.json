@@ -1,0 +1,144 @@
+{
+  "source": "cea9e6ec185adae34708a7622d2f6077c76c332f",
+  "workflow_run": 40452368332,
+  "workflow_job": 122017805989,
+  "provenance": "Transcribed from structured completed-job output; not independently re-audited locally.",
+  "artifact": {
+    "id": 12711511289,
+    "sha256": "ee2e1fc51cdbe6d216f67244add033bbc7715705c083e2ad0ec038a2ab90e758"
+  },
+  "exploratory": true,
+  "adoption_passed": false,
+  "full_cohort_qualified": false,
+  "independent_continuation_certificates_verified": false,
+  "cases": [
+    {
+      "seed": 7,
+      "plant": "reference-2d",
+      "baseline": {
+        "summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 7,
+          "simulated_seconds": 65,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 10.512105991189888,
+          "localization_rmse": 0.048077596107327696,
+          "localization_max_error": 0.13833867833363642,
+          "final_speed": 0,
+          "progress": 45.991831760078774,
+          "emergency_steps": 7,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "sensor_sha256": "1f3b732c02364cfc37587e36ffc340b962f865acf3f35cb6f53158d35698175d",
+        "verified_ticks": 1301,
+        "selected_ticks": 0,
+        "selected_positive_acceleration_ticks": 0,
+        "selected_emergency_ticks": 0,
+        "run_exit_code": 1,
+        "replay_exit_code": 0
+      },
+      "continuation": {
+        "summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 7,
+          "simulated_seconds": 65,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 8.237612431286719,
+          "localization_rmse": 0.05085749353155239,
+          "localization_max_error": 0.13833867833363642,
+          "final_speed": 0,
+          "progress": 48.36850891378021,
+          "emergency_steps": 6,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "sensor_sha256": "a6146ebc2fad0aa1fc7b331ef92119e5a2d7b44cccc30aec05b3edb24a0e4559",
+        "verified_ticks": 1301,
+        "selected_ticks": 142,
+        "selected_positive_acceleration_ticks": 79,
+        "selected_emergency_ticks": 0,
+        "run_exit_code": 1,
+        "replay_exit_code": 0
+      }
+    },
+    {
+      "seed": 42,
+      "plant": "reference-2d",
+      "baseline": {
+        "summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 42,
+          "simulated_seconds": 65,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 10.572651115127815,
+          "localization_rmse": 0.05241543162462636,
+          "localization_max_error": 0.1416902971838823,
+          "final_speed": 0,
+          "progress": 45.90970782264869,
+          "emergency_steps": 7,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "sensor_sha256": "e9f5536f8e64c780cfa533b124badb837f99d793308d9db8eb649590d818879d",
+        "verified_ticks": 1301,
+        "selected_ticks": 0,
+        "selected_positive_acceleration_ticks": 0,
+        "selected_emergency_ticks": 0,
+        "run_exit_code": 1,
+        "replay_exit_code": 0
+      },
+      "continuation": {
+        "summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 42,
+          "simulated_seconds": 65,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 8.16112771224771,
+          "localization_rmse": 0.05290555298556928,
+          "localization_max_error": 0.1416902971838823,
+          "final_speed": 0,
+          "progress": 48.455827612372254,
+          "emergency_steps": 6,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "sensor_sha256": "5e2abbacdd94359a56ea29cb092fd4367bd2be3cfb07785321ba98c975fe0651",
+        "verified_ticks": 1301,
+        "selected_ticks": 138,
+        "selected_positive_acceleration_ticks": 79,
+        "selected_emergency_ticks": 0,
+        "run_exit_code": 1,
+        "replay_exit_code": 0
+      }
+    }
+  ]
+}

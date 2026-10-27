@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Exploratory reference-plant continuation comparison, not adoption qualification."""
+"""Exploratory paired-plant continuation comparison, not adoption qualification."""
 import argparse
 import copy
 import hashlib
@@ -18,18 +18,20 @@ def sha(raw):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--plant', choices=['reference-2d', 'rne-dynamic'], default='reference-2d')
     args = parser.parse_args()
     output = args.output.absolute()
     output.mkdir(parents=True, exist_ok=False)
     binary = ROOT/'target/release/rustdriving'
-    fingerprint = sha(binary.read_bytes())
+    simulation_binary = binary if args.plant == 'reference-2d' else ROOT/'integrations/rne/target/release/rustdriving-rne'
+    fingerprints = {str(p.relative_to(ROOT)): sha(p.read_bytes()) for p in {binary, simulation_binary}}
     canonical = json.loads((ROOT/'assets/small-approaches'/(SOURCE+'.json')).read_bytes())
     if canonical['source'] != SOURCE or not canonical['complete'] or not canonical['contract_passed']:
         raise ValueError('qualified frozen control contract required')
-    controls = {c['seed']:c['candidate'] for c in canonical['cases'] if c['plant']=='reference-2d'}
-    specs = [s for s in parent.specifications(['reference-2d']) if s['world']=='mission']
+    controls = {c['seed']:c['candidate'] for c in canonical['cases'] if c['plant']==args.plant}
+    specs = [s for s in parent.specifications([args.plant]) if s['world']=='mission']
     if len(specs) != 2 or {s['seed'] for s in specs} != {7,42}:
-        raise ValueError('unexpected reference mission cohort')
+        raise ValueError('unexpected paired mission cohort')
     report = dict(source=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),closed_loop=True,
         exploratory=True,adoption_passed=False,full_cohort_qualified=False,
         independent_continuation_certificates_verified=False,complete=False,cases=[])
@@ -41,7 +43,7 @@ def main():
         baseline['checked_approach_min_progress_m'] = 0.5
         if KEY in baseline:
             raise ValueError('frozen control already enables continuation')
-        pair = dict(seed=spec['seed'],plant='reference-2d')
+        pair = dict(seed=spec['seed'],plant=args.plant)
         original_config = None
         for variant in ['baseline','continuation']:
             scenario = copy.deepcopy(baseline)
@@ -51,7 +53,8 @@ def main():
             source = folder/'scenario.json'
             source.write_text(json.dumps(scenario,indent=2)+'\n')
             run = folder/'run'
-            command = subprocess.run([str(binary),'run','--scenario',str(source),
+            plant_args = ['run', '--scenario', str(source)] if args.plant == 'reference-2d' else ['--scenario', str(source), '--plant', 'dynamic']
+            command = subprocess.run([str(simulation_binary), *plant_args,
                 '--seed',str(spec['seed']),'--output',str(run)],capture_output=True,text=True)
             (folder/'run.stdout').write_text(command.stdout)
             (folder/'run.stderr').write_text(command.stderr)
@@ -90,9 +93,9 @@ def main():
         report['cases'].append(pair)
         save()
         print(json.dumps(pair,allow_nan=False),flush=True)
-    if sha(binary.read_bytes()) != fingerprint:
+    if any(sha((ROOT/path).read_bytes()) != digest for path, digest in fingerprints.items()):
         raise ValueError('binary changed during comparison')
-    report.update(complete=True,binary_sha256=fingerprint)
+    report.update(complete=True,binaries_sha256=fingerprints)
     save()
 
 if __name__=='__main__':
