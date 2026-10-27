@@ -70,7 +70,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                                         "progress_gain_m":a.end_progress_m-here,
                                         "hold_start_s":a.hold_start_s,
                                         "hold_end_s":a.hold_end_s,
-                                        "first_contact_s":a.first_contact_s
+                                        "first_contact_s":a.first_contact_s,
+                                        "contact":a.contact.as_ref().map(|c| serde_json::json!({
+                                            "prediction_id":c.prediction_id, "time_s":c.time_s,
+                                            "interval_start_s":c.interval_start_s, "interval_end_s":c.interval_end_s,
+                                            "ego_position":c.ego_position, "prediction_position":c.prediction_position,
+                                            "vehicle_radius_m":c.vehicle_radius_m,
+                                            "forecast_radius_bound_m":c.forecast_radius_bound_m,
+                                            "minimum_clearance_m":c.minimum_clearance_m,
+                                            "effective_margin_m":c.effective_margin_m,
+                                            "acceleration_chord_bound_m":c.acceleration_chord_bound_m,
+                                            "combined_radius_m":c.combined_radius_m
+                                        }))
                                     })
                                 }).collect();
                                 serde_json::json!({

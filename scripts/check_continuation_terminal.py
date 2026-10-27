@@ -75,6 +75,16 @@ def main():
             search['clear_at_configured_minimum'] = sum(
                 a['first_contact_s'] is None and a['progress_gain_m'] >= config['checked_approach_min_progress_m']
                 for a in attempts)
+            for attempt in attempts:
+                contact = attempt['contact']
+                if (None if contact is None else contact['time_s']) != attempt['first_contact_s']:
+                    raise ValueError('contact receipt differs from authoritative sweep')
+                if contact is not None:
+                    combined = (contact['vehicle_radius_m'] + contact['forecast_radius_bound_m']
+                        + max(contact['minimum_clearance_m'], contact['effective_margin_m'])
+                        + contact['acceleration_chord_bound_m'])
+                    if abs(combined - contact['combined_radius_m']) > 1e-9:
+                        raise ValueError('contact radius accounting mismatch')
             diagnostic = probe['planning_diagnostics']
             chosen = diagnostic['selected_candidate']
             selected = None if chosen is None else diagnostic['candidates'][chosen]
@@ -86,6 +96,13 @@ def main():
                 returned_endpoint=(probe['trajectory']['points'][-1]['position'] if probe['trajectory']['points'] else None),
                 original_checked_approach=ticks[-1]['expected'].get('checked_approach'),
                 candidates=diagnostic['candidates'])
+            # Expose both search resolution and rejection evidence near the admission floor.
+            receipt['shortest_forward_attempts'] = [
+                dict(candidate_index=index, attempts=sorted(
+                    [a for a in attempts if a['candidate_index'] == index and
+                     a['progress_gain_m'] >= config['checked_approach_min_progress_m']],
+                    key=lambda a: a['progress_gain_m'])[:3])
+                for index in sorted({a['candidate_index'] for a in attempts})]
             alternative = probe['point_reference_recovery_probe']
             alternate_attempts = alternative['attempts']
             alternate_search = summarize(alternate_attempts) if alternate_attempts else dict(

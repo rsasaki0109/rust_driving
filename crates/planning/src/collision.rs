@@ -96,6 +96,65 @@ pub(super) fn with_motion_direction(
     None
 }
 
+
+/// Revisit the actual sweep intervals only for an offline receipt. The operational
+/// collision routine above remains the authority and is not modified by inspection.
+pub(super) fn inspect_contact(
+    path: &[TrajectoryPoint], object: &Prediction, vehicle_radius: f64,
+    held_heading: Vec2, minimum_clearance: f64, direction: Option<Envelope>,
+) -> Option<super::StopContact> {
+    let time = with_motion_direction(path, object, vehicle_radius, held_heading,
+        minimum_clearance, direction)?;
+    let first = path.first()?;
+    let initial_tangent = path.windows(2)
+        .map(|p| p[1].position.minus(p[0].position))
+        .find(|t| t.x.hypot(t.y) > 1e-6).unwrap_or(held_heading);
+    let receipt = |start, end, ego_position, forecast_radius_bound_m,
+                   effective_margin_m: f64, acceleration_chord_bound_m| super::StopContact {
+        prediction_id: object.id, time_s: time,
+        interval_start_s: start, interval_end_s: end, ego_position,
+        prediction_position: position_at(object, time),
+        vehicle_radius_m: vehicle_radius, forecast_radius_bound_m,
+        minimum_clearance_m: minimum_clearance, effective_margin_m,
+        acceleration_chord_bound_m,
+        combined_radius_m: vehicle_radius + forecast_radius_bound_m
+            + minimum_clearance.max(effective_margin_m) + acceleration_chord_bound_m,
+    };
+    let initial_margin = effective_margin(first.time, velocity_at(object, first.time),
+        initial_tangent, direction);
+    if first.position.distance(position_at(object, first.time))
+        <= vehicle_radius + object.radius_at(first.time) + minimum_clearance.max(initial_margin)
+    {
+        return Some(receipt(first.time, first.time, first.position,
+            object.radius_at(first.time), initial_margin, 0.));
+    }
+    let safety = Safety { vehicle_radius, minimum_clearance, direction };
+    for pair in path.windows(2) {
+        let (a, b) = (&pair[0], &pair[1]);
+        let mut start = a.time;
+        let first_knot = ((start / object.dt).floor() as usize).saturating_add(1);
+        let ends = (first_knot..object.positions.len())
+            .map(|i| i as f64 * object.dt).take_while(|end| *end < b.time)
+            .chain(std::iter::once(b.time));
+        for end in ends {
+            if end <= start { continue; }
+            if segment_contact(a, b, object, safety, start, end, held_heading).is_some() {
+                let fraction = if b.time > a.time { (time - a.time) / (b.time - a.time) } else { 0. };
+                let displacement = b.position.minus(a.position);
+                let tangent = if displacement.x.hypot(displacement.y) > 1e-6 {
+                    displacement
+                } else { held_heading };
+                return Some(receipt(start, end, a.position.plus(displacement.scaled(fraction)),
+                    object.radius_at(start).max(object.radius_at(end)),
+                    effective_margin(end, velocity_at(object, 0.5 * start + 0.5 * end), tangent, direction),
+                    (b.speed - a.speed).abs() * (b.time - a.time) / 8.));
+            }
+            start = end;
+        }
+    }
+    unreachable!("a reported operational contact must have a sweep interval")
+}
+
 fn effective_margin(time: f64, velocity: Vec2, tangent: Vec2, direction: Option<Envelope>) -> f64 {
     let legacy = margin(time, velocity, tangent);
     direction.map_or(legacy, |model| {
@@ -222,6 +281,41 @@ fn contact_fraction(start: Vec2, end: Vec2, radius: f64) -> Option<f64> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn offline_receipt_matches_analytic_entry_and_conservative_hold() {
+        let mut ego = path(Vec2::default(), Vec2::new(10., 0.), [0., 1.]);
+        ego[0].speed = 10.;
+        ego[1].speed = 10.;
+        let object = Prediction { id: 1, radius: 0.5, positions: vec![Vec2::new(5., 0.)],
+            dt: 1., additional_radius_m: vec![] };
+        let c = inspect_contact(&ego, &object, 0.5, Vec2::new(1., 0.), 1., None).unwrap();
+        assert!((c.time_s - 0.3).abs() < 1e-12);
+        assert!((c.ego_position.x - 3.).abs() < 1e-12);
+        assert_eq!(c.combined_radius_m, 2.);
+        assert_eq!(c.acceleration_chord_bound_m, 0.);
+        assert_eq!(c.time_s, with_minimum_clearance(&ego, &object, 0.5, Vec2::new(1., 0.), 1.).unwrap());
+        ego[1].speed = 8.;
+        let curved_time = inspect_contact(&ego, &object, 0.5, Vec2::new(1., 0.), 1., None).unwrap();
+        assert_eq!(curved_time.acceleration_chord_bound_m, 0.25);
+        assert!((curved_time.time_s - 0.275).abs() < 1e-12);
+        let overlap = Prediction { positions: vec![Vec2::default()], ..object.clone() };
+        let initial = inspect_contact(&ego, &overlap, 0.5, Vec2::new(1., 0.), 1., None).unwrap();
+        assert_eq!(initial.time_s, 0.);
+        assert_eq!(initial.interval_end_s, 0.);
+        let hold = path(Vec2::default(), Vec2::default(), [0., 8.]);
+        let growing = Prediction { positions: vec![Vec2::new(5., 0.); 3], dt: 4.,
+            additional_radius_m: vec![0., 2., 4.], ..object };
+        let c = inspect_contact(&hold, &growing, 1., Vec2::new(1., 0.), 0., None).unwrap();
+        assert_eq!(c.time_s, 4.);
+        assert_eq!(c.interval_start_s, 4.);
+        assert_eq!(c.interval_end_s, 8.);
+        assert_eq!(c.forecast_radius_bound_m, 4.5);
+        assert!((c.combined_radius_m - 6.1).abs() < 1e-12);
+        assert_eq!(c.ego_position, Vec2::default());
+        let far = Prediction { positions: vec![Vec2::new(100., 0.)], additional_radius_m: vec![], ..growing };
+        assert!(inspect_contact(&hold, &far, 1., Vec2::new(1., 0.), 0., None).is_none());
+    }
 
     #[test]
     fn directional_context_never_removes_a_nominal_crossing_reserve() {

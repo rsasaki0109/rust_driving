@@ -24,6 +24,24 @@ pub struct StopAttempt {
     pub hold_start_s: f64,
     pub hold_end_s: f64,
     pub first_contact_s: Option<f64>,
+    pub contact: Option<StopContact>,
+}
+/// Offline receipt of the conservative sweep that rejected a stop proposal.
+/// Positions are temporal chords; this is not measured physical contact.
+#[derive(Clone, Debug)]
+pub struct StopContact {
+    pub prediction_id: u64,
+    pub time_s: f64,
+    pub interval_start_s: f64,
+    pub interval_end_s: f64,
+    pub ego_position: rustdriving_core::Vec2,
+    pub prediction_position: rustdriving_core::Vec2,
+    pub vehicle_radius_m: f64,
+    pub forecast_radius_bound_m: f64,
+    pub minimum_clearance_m: f64,
+    pub effective_margin_m: f64,
+    pub acceleration_chord_bound_m: f64,
+    pub combined_radius_m: f64,
 }
 /// Read-only proposal evidence; it is never an authorization to move.
 pub struct StopProbe {
@@ -776,6 +794,14 @@ impl LatticePlanner {
                         hold_start_s: pair[0].time,
                         hold_end_s: pair[1].time,
                         first_contact_s: first.is_finite().then_some(first),
+                        contact: objects.iter().filter_map(|object| {
+                            collision::inspect_contact(
+                                path, object, self.vehicle.radius,
+                                rustdriving_core::Vec2::new(ego.pose.yaw.cos(), ego.pose.yaw.sin()),
+                                if refined { REFINED_CANDIDATE_CLEARANCE_M } else { 0. },
+                                self.motion_directions.as_ref().map(|c| c.for_prediction(object.id)),
+                            )
+                        }).min_by(|a, b| a.time_s.total_cmp(&b.time_s)),
                     });
                 }
                 first
@@ -1245,6 +1271,13 @@ mod tests {
                 .all(|a| a.hold_end_s - a.hold_start_s >= 8. - 1e-9)
         );
         assert!(probe.attempts.iter().any(|a| a.first_contact_s.is_none()));
+        for attempt in &probe.attempts {
+            assert_eq!(attempt.first_contact_s, attempt.contact.as_ref().map(|c| c.time_s));
+            if let Some(c) = &attempt.contact {
+                assert!(c.time_s >= c.interval_start_s && c.time_s <= c.interval_end_s);
+                assert!(c.ego_position.distance(c.prediction_position) <= c.combined_radius_m + 1e-8);
+            }
+        }
         let actual = planner.plan(ego, &route, std::slice::from_ref(&object));
         let expected = untouched.plan(ego, &route, &[object]);
         assert_eq!(actual.mode, expected.mode);
