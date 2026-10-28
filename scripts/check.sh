@@ -17,6 +17,10 @@ python3 scripts/test_pose_forecasts.py
 python3 scripts/test_cold_motion.py
 python3 scripts/test_velocity_hypotheses.py
 python3 scripts/test_checked_approaches.py
+python3 scripts/test_approach_execution.py
+python3 scripts/test_continuation_probes.py
+python3 scripts/test_continuation_execution.py
+python3 scripts/test_continuation_ownership.py
 python3 scripts/test_later_stops.py
 python3 scripts/test_track_initialization.py
 python3 scripts/test_recent_track_motion.py
@@ -29,6 +33,7 @@ python3 scripts/test_stop_search.py
 python3 scripts/test_road_width.py
 python3 scripts/test_refined_lateral.py
 python3 scripts/test_stop_candidate_evidence.py
+python3 scripts/test_forecast_corridor.py
 python3 scripts/test_stall_conflicts.py
 python3 scripts/test_planning_diagnostics.py
 python3 scripts/test_planning_progress.py

@@ -1,0 +1,1274 @@
+{
+  "source": "967d65c0268564be63acea8421b484a17acab860",
+  "run_id": 40460294531,
+  "job_id": 122043013319,
+  "provenance": "Structured completed-job output; no local independent artifact audit.",
+  "independent_collision_certification": false,
+  "cases": [
+    {
+      "seed": 7,
+      "plant": "reference-2d",
+      "baseline": {
+        "ownership_audit": {
+          "passed": true,
+          "selected_ticks": 0,
+          "adoptions": 4,
+          "selected_guarded_ticks": 0,
+          "scope": "Recorded adoption ownership, clocks, frame and immutable bounds only; no independent geometry/collision certificate."
+        },
+        "execution": {
+          "selected_ticks": 0,
+          "spans": [],
+          "terminal": {
+            "time_s": 65,
+            "estimated_speed_m_s": 0,
+            "acceleration_m_s2": -0.5,
+            "emergency": false,
+            "health": [],
+            "mode": "Yield",
+            "peak_planned_speed_m_s": 0,
+            "endpoint": {
+              "x": 45.876349503521496,
+              "y": 7.07878941012238
+            },
+            "continuation": null,
+            "checked_approach": {
+              "supporting_acquisitions": 0,
+              "first_acquisition_s": null,
+              "last_acquisition_s": null,
+              "proposal_end_progress_m": null,
+              "proposal_endpoint": null,
+              "proposal_lateral_target_m": null,
+              "blocking_prediction_ids": [],
+              "adopted": false
+            },
+            "planning_diagnostics_available": true,
+            "selected_disposition": "CheckedStop",
+            "route_progress_m": 45.978591676835165,
+            "obstruction_stop_requested": true,
+            "obstruction_stop_active": true
+          },
+          "terminal_window_s": 5,
+          "terminal_dispositions": {
+            "CheckedStop": 101
+          },
+          "interpretation": "Observed selection boundaries only. Absence does not identify revocation cause; recording end is censored."
+        },
+        "summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 7,
+          "simulated_seconds": 65,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 10.512105991189888,
+          "localization_rmse": 0.048077596107327696,
+          "localization_max_error": 0.13833867833363642,
+          "final_speed": 0,
+          "progress": 45.991831760078774,
+          "emergency_steps": 7,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "sensor_sha256": "1f3b732c02364cfc37587e36ffc340b962f865acf3f35cb6f53158d35698175d",
+        "verified_ticks": 1301,
+        "selected_ticks": 0,
+        "selected_positive_acceleration_ticks": 0,
+        "selected_emergency_ticks": 0,
+        "run_exit_code": 1,
+        "replay_exit_code": 0
+      },
+      "continuation": {
+        "ownership_audit": {
+          "passed": true,
+          "selected_ticks": 142,
+          "adoptions": 1,
+          "selected_guarded_ticks": 0,
+          "scope": "Recorded adoption ownership, clocks, frame and immutable bounds only; no independent geometry/collision certificate."
+        },
+        "execution": {
+          "selected_ticks": 142,
+          "spans": [
+            {
+              "first": {
+                "time_s": 6.8500000000000005,
+                "estimated_speed_m_s": 0.11285958361812343,
+                "acceleration_m_s2": 2,
+                "emergency": false,
+                "health": [],
+                "mode": "Yield",
+                "peak_planned_speed_m_s": 7.392253657709861,
+                "endpoint": {
+                  "x": 46.357756051575734,
+                  "y": 6.889309553952382
+                },
+                "continuation": {
+                  "now_s": 6.8500000000000005,
+                  "acquisition_s": 6.800000000000001,
+                  "expires_s": 14.8,
+                  "original_endpoint": {
+                    "x": 48.31981719096776,
+                    "y": 6.8646011941901275
+                  },
+                  "original_end_progress_m": 48.37883041327398,
+                  "selected_end_progress_m": 46.446208664041855,
+                  "lateral_target_m": 3.9,
+                  "blocking_ids": [
+                    1
+                  ],
+                  "previous_stop_requested": false,
+                  "previous_stop_active": false
+                },
+                "checked_approach": {
+                  "supporting_acquisitions": 0,
+                  "first_acquisition_s": null,
+                  "last_acquisition_s": null,
+                  "proposal_end_progress_m": null,
+                  "proposal_endpoint": null,
+                  "proposal_lateral_target_m": null,
+                  "blocking_prediction_ids": [],
+                  "adopted": false
+                },
+                "planning_diagnostics_available": false,
+                "selected_disposition": null,
+                "route_progress_m": null,
+                "obstruction_stop_requested": null,
+                "obstruction_stop_active": null
+              },
+              "last": {
+                "time_s": 13.9,
+                "estimated_speed_m_s": 0.8592075429138976,
+                "acceleration_m_s2": 1.9999999999999911,
+                "emergency": false,
+                "health": [],
+                "mode": "Yield",
+                "peak_planned_speed_m_s": 0.8840188437200172,
+                "endpoint": {
+                  "x": 48.31547856650561,
+                  "y": 6.960665783931482
+                },
+                "continuation": {
+                  "now_s": 13.9,
+                  "acquisition_s": 13.9,
+                  "expires_s": 14.8,
+                  "original_endpoint": {
+                    "x": 48.31981719096776,
+                    "y": 6.8646011941901275
+                  },
+                  "original_end_progress_m": 48.37883041327398,
+                  "selected_end_progress_m": 48.37283927907439,
+                  "lateral_target_m": 3.9,
+                  "blocking_ids": [
+                    1
+                  ],
+                  "previous_stop_requested": false,
+                  "previous_stop_active": false
+                },
+                "checked_approach": {
+                  "supporting_acquisitions": 0,
+                  "first_acquisition_s": null,
+                  "last_acquisition_s": null,
+                  "proposal_end_progress_m": null,
+                  "proposal_endpoint": null,
+                  "proposal_lateral_target_m": null,
+                  "blocking_prediction_ids": [],
+                  "adopted": false
+                },
+                "planning_diagnostics_available": false,
+                "selected_disposition": null,
+                "route_progress_m": null,
+                "obstruction_stop_requested": null,
+                "obstruction_stop_active": null
+              },
+              "following": {
+                "time_s": 13.950000000000001,
+                "estimated_speed_m_s": 0.9744116638294626,
+                "acceleration_m_s2": -2.4999999999975,
+                "emergency": false,
+                "health": [],
+                "mode": "Yield",
+                "peak_planned_speed_m_s": 0.9744116638294626,
+                "endpoint": {
+                  "x": 48.34697079142459,
+                  "y": 6.959916050975601
+                },
+                "continuation": null,
+                "checked_approach": {
+                  "supporting_acquisitions": 0,
+                  "first_acquisition_s": null,
+                  "last_acquisition_s": null,
+                  "proposal_end_progress_m": null,
+                  "proposal_endpoint": null,
+                  "proposal_lateral_target_m": null,
+                  "blocking_prediction_ids": [],
+                  "adopted": false
+                },
+                "planning_diagnostics_available": true,
+                "selected_disposition": "CheckedStop",
+                "route_progress_m": 48.21444470997968,
+                "obstruction_stop_requested": true,
+                "obstruction_stop_active": false
+              },
+              "previous": {
+                "time_s": 6.800000000000001,
+                "estimated_speed_m_s": 0,
+                "acceleration_m_s2": 2,
+                "emergency": false,
+                "health": [],
+                "mode": "Yield",
+                "peak_planned_speed_m_s": 7.661601530089391,
+                "endpoint": {
+                  "x": 48.31981719096776,
+                  "y": 6.8646011941901275
+                },
+                "continuation": null,
+                "checked_approach": {
+                  "supporting_acquisitions": 3,
+                  "first_acquisition_s": 6.6000000000000005,
+                  "last_acquisition_s": 6.800000000000001,
+                  "proposal_end_progress_m": 48.37883041327398,
+                  "proposal_endpoint": {
+                    "x": 48.31981719096776,
+                    "y": 6.8646011941901275
+                  },
+                  "proposal_lateral_target_m": 3.9,
+                  "blocking_prediction_ids": [
+                    1
+                  ],
+                  "adopted": true
+                },
+                "planning_diagnostics_available": true,
+                "selected_disposition": "CheckedStop",
+                "route_progress_m": 20.382416310695568,
+                "obstruction_stop_requested": false,
+                "obstruction_stop_active": false
+              },
+              "selected_ticks": 142,
+              "positive_acceleration_ticks": 79,
+              "maximum_estimated_speed_m_s": 7.555585954958829,
+              "expiry_remaining_at_last_s": 0.9000000000000004,
+              "end_observation": "selection_absent"
+            }
+          ],
+          "terminal": {
+            "time_s": 65,
+            "estimated_speed_m_s": 0.014052746863785588,
+            "acceleration_m_s2": -2.5000000000000004,
+            "emergency": false,
+            "health": [],
+            "mode": "Yield",
+            "peak_planned_speed_m_s": 0.014052746863785588,
+            "endpoint": {
+              "x": 48.333541322854146,
+              "y": 6.964004384905964
+            },
+            "continuation": null,
+            "checked_approach": {
+              "supporting_acquisitions": 0,
+              "first_acquisition_s": null,
+              "last_acquisition_s": null,
+              "proposal_end_progress_m": null,
+              "proposal_endpoint": null,
+              "proposal_lateral_target_m": null,
+              "blocking_prediction_ids": [],
+              "adopted": false
+            },
+            "planning_diagnostics_available": true,
+            "selected_disposition": "CheckedStop",
+            "route_progress_m": 48.390802413984424,
+            "obstruction_stop_requested": true,
+            "obstruction_stop_active": true
+          },
+          "terminal_window_s": 5,
+          "terminal_dispositions": {
+            "CheckedStop": 101
+          },
+          "interpretation": "Observed selection boundaries only. Absence does not identify revocation cause; recording end is censored."
+        },
+        "summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 7,
+          "simulated_seconds": 65,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 8.237612431286719,
+          "localization_rmse": 0.05085749353155239,
+          "localization_max_error": 0.13833867833363642,
+          "final_speed": 0,
+          "progress": 48.36850891378021,
+          "emergency_steps": 6,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "sensor_sha256": "a6146ebc2fad0aa1fc7b331ef92119e5a2d7b44cccc30aec05b3edb24a0e4559",
+        "verified_ticks": 1301,
+        "selected_ticks": 142,
+        "selected_positive_acceleration_ticks": 79,
+        "selected_emergency_ticks": 0,
+        "run_exit_code": 1,
+        "replay_exit_code": 0
+      }
+    },
+    {
+      "seed": 42,
+      "plant": "reference-2d",
+      "baseline": {
+        "ownership_audit": {
+          "passed": true,
+          "selected_ticks": 0,
+          "adoptions": 2,
+          "selected_guarded_ticks": 0,
+          "scope": "Recorded adoption ownership, clocks, frame and immutable bounds only; no independent geometry/collision certificate."
+        },
+        "execution": {
+          "selected_ticks": 0,
+          "spans": [],
+          "terminal": {
+            "time_s": 65,
+            "estimated_speed_m_s": 0,
+            "acceleration_m_s2": -0.5,
+            "emergency": false,
+            "health": [],
+            "mode": "Yield",
+            "peak_planned_speed_m_s": 0,
+            "endpoint": {
+              "x": 45.80478370566942,
+              "y": 7.0395874585851255
+            },
+            "continuation": null,
+            "checked_approach": {
+              "supporting_acquisitions": 0,
+              "first_acquisition_s": null,
+              "last_acquisition_s": null,
+              "proposal_end_progress_m": null,
+              "proposal_endpoint": null,
+              "proposal_lateral_target_m": null,
+              "blocking_prediction_ids": [],
+              "adopted": false
+            },
+            "planning_diagnostics_available": true,
+            "selected_disposition": "CheckedStop",
+            "route_progress_m": 45.90725462387868,
+            "obstruction_stop_requested": true,
+            "obstruction_stop_active": true
+          },
+          "terminal_window_s": 5,
+          "terminal_dispositions": {
+            "CheckedStop": 101
+          },
+          "interpretation": "Observed selection boundaries only. Absence does not identify revocation cause; recording end is censored."
+        },
+        "summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 42,
+          "simulated_seconds": 65,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 10.572651115127815,
+          "localization_rmse": 0.05241543162462636,
+          "localization_max_error": 0.1416902971838823,
+          "final_speed": 0,
+          "progress": 45.90970782264869,
+          "emergency_steps": 7,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "sensor_sha256": "e9f5536f8e64c780cfa533b124badb837f99d793308d9db8eb649590d818879d",
+        "verified_ticks": 1301,
+        "selected_ticks": 0,
+        "selected_positive_acceleration_ticks": 0,
+        "selected_emergency_ticks": 0,
+        "run_exit_code": 1,
+        "replay_exit_code": 0
+      },
+      "continuation": {
+        "ownership_audit": {
+          "passed": true,
+          "selected_ticks": 138,
+          "adoptions": 1,
+          "selected_guarded_ticks": 0,
+          "scope": "Recorded adoption ownership, clocks, frame and immutable bounds only; no independent geometry/collision certificate."
+        },
+        "execution": {
+          "selected_ticks": 138,
+          "spans": [
+            {
+              "first": {
+                "time_s": 6.45,
+                "estimated_speed_m_s": 0.09247198939436692,
+                "acceleration_m_s2": 1.9999999999999996,
+                "emergency": false,
+                "health": [],
+                "mode": "Yield",
+                "peak_planned_speed_m_s": 7.308655718102667,
+                "endpoint": {
+                  "x": 46.47108776156304,
+                  "y": 6.888272304690091
+                },
+                "continuation": {
+                  "now_s": 6.45,
+                  "acquisition_s": 6.4,
+                  "expires_s": 14.4,
+                  "original_endpoint": {
+                    "x": 48.404742916525855,
+                    "y": 6.863204104639335
+                  },
+                  "original_end_progress_m": 48.46376760506738,
+                  "selected_end_progress_m": 46.5595451081311,
+                  "lateral_target_m": 3.9,
+                  "blocking_ids": [
+                    1
+                  ],
+                  "previous_stop_requested": false,
+                  "previous_stop_active": false
+                },
+                "checked_approach": {
+                  "supporting_acquisitions": 0,
+                  "first_acquisition_s": null,
+                  "last_acquisition_s": null,
+                  "proposal_end_progress_m": null,
+                  "proposal_endpoint": null,
+                  "proposal_lateral_target_m": null,
+                  "blocking_prediction_ids": [],
+                  "adopted": false
+                },
+                "planning_diagnostics_available": false,
+                "selected_disposition": null,
+                "route_progress_m": null,
+                "obstruction_stop_requested": null,
+                "obstruction_stop_active": null
+              },
+              "last": {
+                "time_s": 13.3,
+                "estimated_speed_m_s": 1.3597880627603358,
+                "acceleration_m_s2": 2,
+                "emergency": false,
+                "health": [],
+                "mode": "Yield",
+                "peak_planned_speed_m_s": 1.3776548294005608,
+                "endpoint": {
+                  "x": 48.399106154061776,
+                  "y": 7.011858922447255
+                },
+                "continuation": {
+                  "now_s": 13.3,
+                  "acquisition_s": 13.3,
+                  "expires_s": 14.4,
+                  "original_endpoint": {
+                    "x": 48.404742916525855,
+                    "y": 6.863204104639335
+                  },
+                  "original_end_progress_m": 48.46376760506738,
+                  "selected_end_progress_m": 48.45557351262619,
+                  "lateral_target_m": 3.9,
+                  "blocking_ids": [
+                    1
+                  ],
+                  "previous_stop_requested": false,
+                  "previous_stop_active": false
+                },
+                "checked_approach": {
+                  "supporting_acquisitions": 0,
+                  "first_acquisition_s": null,
+                  "last_acquisition_s": null,
+                  "proposal_end_progress_m": null,
+                  "proposal_endpoint": null,
+                  "proposal_lateral_target_m": null,
+                  "blocking_prediction_ids": [],
+                  "adopted": false
+                },
+                "planning_diagnostics_available": false,
+                "selected_disposition": null,
+                "route_progress_m": null,
+                "obstruction_stop_requested": null,
+                "obstruction_stop_active": null
+              },
+              "following": {
+                "time_s": 13.350000000000001,
+                "estimated_speed_m_s": 1.444035998229328,
+                "acceleration_m_s2": -2.4999999999974993,
+                "emergency": false,
+                "health": [],
+                "mode": "Yield",
+                "peak_planned_speed_m_s": 1.444035998229328,
+                "endpoint": {
+                  "x": 48.3992198806331,
+                  "y": 7.011782639818939
+                },
+                "continuation": null,
+                "checked_approach": {
+                  "supporting_acquisitions": 0,
+                  "first_acquisition_s": null,
+                  "last_acquisition_s": null,
+                  "proposal_end_progress_m": null,
+                  "proposal_endpoint": null,
+                  "proposal_lateral_target_m": null,
+                  "blocking_prediction_ids": [],
+                  "adopted": false
+                },
+                "planning_diagnostics_available": true,
+                "selected_disposition": "CheckedStop",
+                "route_progress_m": 48.053968344098266,
+                "obstruction_stop_requested": true,
+                "obstruction_stop_active": false
+              },
+              "previous": {
+                "time_s": 6.4,
+                "estimated_speed_m_s": 0.002259024806595136,
+                "acceleration_m_s2": 2,
+                "emergency": false,
+                "health": [],
+                "mode": "Yield",
+                "peak_planned_speed_m_s": 7.55432609745753,
+                "endpoint": {
+                  "x": 48.404742916525855,
+                  "y": 6.863204104639335
+                },
+                "continuation": null,
+                "checked_approach": {
+                  "supporting_acquisitions": 3,
+                  "first_acquisition_s": 6.2,
+                  "last_acquisition_s": 6.4,
+                  "proposal_end_progress_m": 48.46376760506738,
+                  "proposal_endpoint": {
+                    "x": 48.404742916525855,
+                    "y": 6.863204104639335
+                  },
+                  "proposal_lateral_target_m": 3.9,
+                  "blocking_prediction_ids": [
+                    1
+                  ],
+                  "adopted": true
+                },
+                "planning_diagnostics_available": true,
+                "selected_disposition": "CheckedStop",
+                "route_progress_m": 20.466113773937238,
+                "obstruction_stop_requested": false,
+                "obstruction_stop_active": false
+              },
+              "selected_ticks": 138,
+              "positive_acceleration_ticks": 79,
+              "maximum_estimated_speed_m_s": 7.5149493361143245,
+              "expiry_remaining_at_last_s": 1.0999999999999996,
+              "end_observation": "selection_absent"
+            }
+          ],
+          "terminal": {
+            "time_s": 65,
+            "estimated_speed_m_s": 0.005200934283658421,
+            "acceleration_m_s2": -2.5,
+            "emergency": false,
+            "health": [],
+            "mode": "Yield",
+            "peak_planned_speed_m_s": 0.005200934283658421,
+            "endpoint": {
+              "x": 48.33718151112694,
+              "y": 6.982512186876641
+            },
+            "continuation": null,
+            "checked_approach": {
+              "supporting_acquisitions": 0,
+              "first_acquisition_s": null,
+              "last_acquisition_s": null,
+              "proposal_end_progress_m": null,
+              "proposal_endpoint": null,
+              "proposal_lateral_target_m": null,
+              "blocking_prediction_ids": [],
+              "adopted": false
+            },
+            "planning_diagnostics_available": true,
+            "selected_disposition": "CheckedStop",
+            "route_progress_m": 48.394157651406026,
+            "obstruction_stop_requested": true,
+            "obstruction_stop_active": true
+          },
+          "terminal_window_s": 5,
+          "terminal_dispositions": {
+            "CheckedStop": 101
+          },
+          "interpretation": "Observed selection boundaries only. Absence does not identify revocation cause; recording end is censored."
+        },
+        "summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 42,
+          "simulated_seconds": 65,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 8.16112771224771,
+          "localization_rmse": 0.05290555298556928,
+          "localization_max_error": 0.1416902971838823,
+          "final_speed": 0,
+          "progress": 48.455827612372254,
+          "emergency_steps": 6,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "sensor_sha256": "5e2abbacdd94359a56ea29cb092fd4367bd2be3cfb07785321ba98c975fe0651",
+        "verified_ticks": 1301,
+        "selected_ticks": 138,
+        "selected_positive_acceleration_ticks": 79,
+        "selected_emergency_ticks": 0,
+        "run_exit_code": 1,
+        "replay_exit_code": 0
+      }
+    },
+    {
+      "seed": 7,
+      "plant": "rne-dynamic",
+      "baseline": {
+        "ownership_audit": {
+          "passed": true,
+          "selected_ticks": 0,
+          "adoptions": 4,
+          "selected_guarded_ticks": 0,
+          "scope": "Recorded adoption ownership, clocks, frame and immutable bounds only; no independent geometry/collision certificate."
+        },
+        "execution": {
+          "selected_ticks": 0,
+          "spans": [],
+          "terminal": {
+            "time_s": 65,
+            "estimated_speed_m_s": 0.0008110350333353936,
+            "acceleration_m_s2": -2.5,
+            "emergency": false,
+            "health": [],
+            "mode": "Yield",
+            "peak_planned_speed_m_s": 0.0008110350333353936,
+            "endpoint": {
+              "x": 45.76090045531087,
+              "y": 7.027456099230919
+            },
+            "continuation": null,
+            "checked_approach": {
+              "supporting_acquisitions": 0,
+              "first_acquisition_s": null,
+              "last_acquisition_s": null,
+              "proposal_end_progress_m": null,
+              "proposal_endpoint": null,
+              "proposal_lateral_target_m": null,
+              "blocking_prediction_ids": [],
+              "adopted": false
+            },
+            "planning_diagnostics_available": true,
+            "selected_disposition": "CheckedStop",
+            "route_progress_m": 45.86344239510518,
+            "obstruction_stop_requested": true,
+            "obstruction_stop_active": true
+          },
+          "terminal_window_s": 5,
+          "terminal_dispositions": {
+            "CheckedStop": 101
+          },
+          "interpretation": "Observed selection boundaries only. Absence does not identify revocation cause; recording end is censored."
+        },
+        "summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 7,
+          "simulated_seconds": 65,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 10.614580260961501,
+          "localization_rmse": 0.05153474123049919,
+          "localization_max_error": 0.1463160575416091,
+          "final_speed": 0,
+          "progress": 45.858094207903974,
+          "emergency_steps": 5,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "sensor_sha256": "444e030db2d0b602a8f7afc60479725caaaf78f5cfe3cc2f65dbbb4236fbbeff",
+        "verified_ticks": 1301,
+        "selected_ticks": 0,
+        "selected_positive_acceleration_ticks": 0,
+        "selected_emergency_ticks": 0,
+        "run_exit_code": 1,
+        "replay_exit_code": 0
+      },
+      "continuation": {
+        "ownership_audit": {
+          "passed": true,
+          "selected_ticks": 147,
+          "adoptions": 1,
+          "selected_guarded_ticks": 0,
+          "scope": "Recorded adoption ownership, clocks, frame and immutable bounds only; no independent geometry/collision certificate."
+        },
+        "execution": {
+          "selected_ticks": 147,
+          "spans": [
+            {
+              "first": {
+                "time_s": 6.8500000000000005,
+                "estimated_speed_m_s": 0.10764775455301125,
+                "acceleration_m_s2": 1.9999999999999996,
+                "emergency": false,
+                "health": [],
+                "mode": "Yield",
+                "peak_planned_speed_m_s": 6,
+                "endpoint": {
+                  "x": 46.13419752589287,
+                  "y": 6.8912066988545595
+                },
+                "continuation": {
+                  "now_s": 6.8500000000000005,
+                  "acquisition_s": 6.800000000000001,
+                  "expires_s": 14.8,
+                  "original_endpoint": {
+                    "x": 48.2276853716834,
+                    "y": 6.866086272353681
+                  },
+                  "original_end_progress_m": 48.28668668066972,
+                  "selected_end_progress_m": 46.22264223264304,
+                  "lateral_target_m": 3.9,
+                  "blocking_ids": [
+                    1
+                  ],
+                  "previous_stop_requested": false,
+                  "previous_stop_active": false
+                },
+                "checked_approach": {
+                  "supporting_acquisitions": 0,
+                  "first_acquisition_s": null,
+                  "last_acquisition_s": null,
+                  "proposal_end_progress_m": null,
+                  "proposal_endpoint": null,
+                  "proposal_lateral_target_m": null,
+                  "blocking_prediction_ids": [],
+                  "adopted": false
+                },
+                "planning_diagnostics_available": false,
+                "selected_disposition": null,
+                "route_progress_m": null,
+                "obstruction_stop_requested": null,
+                "obstruction_stop_active": null
+              },
+              "last": {
+                "time_s": 14.15,
+                "estimated_speed_m_s": 1.540861197111674,
+                "acceleration_m_s2": 1.9999999999999665,
+                "emergency": false,
+                "health": [],
+                "mode": "Yield",
+                "peak_planned_speed_m_s": 1.5520805457361295,
+                "endpoint": {
+                  "x": 48.21255732602665,
+                  "y": 6.921693475129855
+                },
+                "continuation": {
+                  "now_s": 14.15,
+                  "acquisition_s": 14.100000000000001,
+                  "expires_s": 14.8,
+                  "original_endpoint": {
+                    "x": 48.2276853716834,
+                    "y": 6.866086272353681
+                  },
+                  "original_end_progress_m": 48.28668668066972,
+                  "selected_end_progress_m": 48.27060394434302,
+                  "lateral_target_m": 3.9,
+                  "blocking_ids": [
+                    1
+                  ],
+                  "previous_stop_requested": false,
+                  "previous_stop_active": false
+                },
+                "checked_approach": {
+                  "supporting_acquisitions": 0,
+                  "first_acquisition_s": null,
+                  "last_acquisition_s": null,
+                  "proposal_end_progress_m": null,
+                  "proposal_endpoint": null,
+                  "proposal_lateral_target_m": null,
+                  "blocking_prediction_ids": [],
+                  "adopted": false
+                },
+                "planning_diagnostics_available": false,
+                "selected_disposition": null,
+                "route_progress_m": null,
+                "obstruction_stop_requested": null,
+                "obstruction_stop_active": null
+              },
+              "following": {
+                "time_s": 14.200000000000001,
+                "estimated_speed_m_s": 1.6380196042250428,
+                "acceleration_m_s2": -2.5,
+                "emergency": false,
+                "health": [],
+                "mode": "Yield",
+                "peak_planned_speed_m_s": 1.6380196042250428,
+                "endpoint": {
+                  "x": 48.22285886247291,
+                  "y": 6.908800330914468
+                },
+                "continuation": null,
+                "checked_approach": {
+                  "supporting_acquisitions": 0,
+                  "first_acquisition_s": null,
+                  "last_acquisition_s": null,
+                  "proposal_end_progress_m": null,
+                  "proposal_endpoint": null,
+                  "proposal_lateral_target_m": null,
+                  "blocking_prediction_ids": [],
+                  "adopted": false
+                },
+                "planning_diagnostics_available": true,
+                "selected_disposition": "CheckedStop",
+                "route_progress_m": 47.75952902633677,
+                "obstruction_stop_requested": true,
+                "obstruction_stop_active": false
+              },
+              "previous": {
+                "time_s": 6.800000000000001,
+                "estimated_speed_m_s": 0.0008742209459044229,
+                "acceleration_m_s2": 2,
+                "emergency": false,
+                "health": [],
+                "mode": "Yield",
+                "peak_planned_speed_m_s": 6,
+                "endpoint": {
+                  "x": 48.2276853716834,
+                  "y": 6.866086272353681
+                },
+                "continuation": null,
+                "checked_approach": {
+                  "supporting_acquisitions": 3,
+                  "first_acquisition_s": 6.6000000000000005,
+                  "last_acquisition_s": 6.800000000000001,
+                  "proposal_end_progress_m": 48.28668668066972,
+                  "proposal_endpoint": {
+                    "x": 48.2276853716834,
+                    "y": 6.866086272353681
+                  },
+                  "proposal_lateral_target_m": 3.9,
+                  "blocking_prediction_ids": [
+                    1
+                  ],
+                  "adopted": true
+                },
+                "planning_diagnostics_available": true,
+                "selected_disposition": "CheckedStop",
+                "route_progress_m": 18.29161894719301,
+                "obstruction_stop_requested": false,
+                "obstruction_stop_active": false
+              },
+              "selected_ticks": 147,
+              "positive_acceleration_ticks": 85,
+              "maximum_estimated_speed_m_s": 6.061739334004696,
+              "expiry_remaining_at_last_s": 0.6500000000000004,
+              "end_observation": "selection_absent"
+            }
+          ],
+          "terminal": {
+            "time_s": 65,
+            "estimated_speed_m_s": 0.0008110350333353936,
+            "acceleration_m_s2": -2.5,
+            "emergency": false,
+            "health": [],
+            "mode": "Yield",
+            "peak_planned_speed_m_s": 0.0008110350333353936,
+            "endpoint": {
+              "x": 48.24385920047233,
+              "y": 6.983789677078073
+            },
+            "continuation": null,
+            "checked_approach": {
+              "supporting_acquisitions": 0,
+              "first_acquisition_s": null,
+              "last_acquisition_s": null,
+              "proposal_end_progress_m": null,
+              "proposal_endpoint": null,
+              "proposal_lateral_target_m": null,
+              "blocking_prediction_ids": [],
+              "adopted": false
+            },
+            "planning_diagnostics_available": true,
+            "selected_disposition": "CheckedStop",
+            "route_progress_m": 48.30083245353785,
+            "obstruction_stop_requested": true,
+            "obstruction_stop_active": true
+          },
+          "terminal_window_s": 5,
+          "terminal_dispositions": {
+            "CheckedStop": 101
+          },
+          "interpretation": "Observed selection boundaries only. Absence does not identify revocation cause; recording end is censored."
+        },
+        "summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 7,
+          "simulated_seconds": 65,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 8.292095072262784,
+          "localization_rmse": 0.05156704603780333,
+          "localization_max_error": 0.1463160575416091,
+          "final_speed": 0,
+          "progress": 48.2961140115028,
+          "emergency_steps": 5,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "sensor_sha256": "ed64bf80585c1b058402d662ded880623729299f7f411a4497c849be42e4152d",
+        "verified_ticks": 1301,
+        "selected_ticks": 147,
+        "selected_positive_acceleration_ticks": 85,
+        "selected_emergency_ticks": 0,
+        "run_exit_code": 1,
+        "replay_exit_code": 0
+      }
+    },
+    {
+      "seed": 42,
+      "plant": "rne-dynamic",
+      "baseline": {
+        "ownership_audit": {
+          "passed": true,
+          "selected_ticks": 0,
+          "adoptions": 4,
+          "selected_guarded_ticks": 0,
+          "scope": "Recorded adoption ownership, clocks, frame and immutable bounds only; no independent geometry/collision certificate."
+        },
+        "execution": {
+          "selected_ticks": 0,
+          "spans": [],
+          "terminal": {
+            "time_s": 65,
+            "estimated_speed_m_s": 0.001315705526440969,
+            "acceleration_m_s2": -2.4999999999999996,
+            "emergency": false,
+            "health": [],
+            "mode": "Yield",
+            "peak_planned_speed_m_s": 0.001315705526440969,
+            "endpoint": {
+              "x": 45.60591731090598,
+              "y": 7.084497865727364
+            },
+            "continuation": null,
+            "checked_approach": {
+              "supporting_acquisitions": 1,
+              "first_acquisition_s": 65,
+              "last_acquisition_s": 65,
+              "proposal_end_progress_m": 46.248105720461524,
+              "proposal_endpoint": {
+                "x": 46.16151295582411,
+                "y": 7.0835822108217705
+              },
+              "proposal_lateral_target_m": 3.9,
+              "blocking_prediction_ids": [
+                1
+              ],
+              "adopted": false
+            },
+            "planning_diagnostics_available": true,
+            "selected_disposition": "CheckedStop",
+            "route_progress_m": 45.70813055992786,
+            "obstruction_stop_requested": true,
+            "obstruction_stop_active": true
+          },
+          "terminal_window_s": 5,
+          "terminal_dispositions": {
+            "CheckedStop": 101
+          },
+          "interpretation": "Observed selection boundaries only. Absence does not identify revocation cause; recording end is censored."
+        },
+        "summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 42,
+          "simulated_seconds": 65,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 10.754130021306855,
+          "localization_rmse": 0.04841462539142824,
+          "localization_max_error": 0.17230913629881034,
+          "final_speed": 0,
+          "progress": 45.75108393245687,
+          "emergency_steps": 5,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "sensor_sha256": "80bb2d0d5c978decc47b13a8a5333db1942d6cc49690fef8ffacd594e984ae52",
+        "verified_ticks": 1301,
+        "selected_ticks": 0,
+        "selected_positive_acceleration_ticks": 0,
+        "selected_emergency_ticks": 0,
+        "run_exit_code": 1,
+        "replay_exit_code": 0
+      },
+      "continuation": {
+        "ownership_audit": {
+          "passed": true,
+          "selected_ticks": 147,
+          "adoptions": 1,
+          "selected_guarded_ticks": 0,
+          "scope": "Recorded adoption ownership, clocks, frame and immutable bounds only; no independent geometry/collision certificate."
+        },
+        "execution": {
+          "selected_ticks": 147,
+          "spans": [
+            {
+              "first": {
+                "time_s": 5.95,
+                "estimated_speed_m_s": 0.11183470114701446,
+                "acceleration_m_s2": 2,
+                "emergency": false,
+                "health": [],
+                "mode": "Yield",
+                "peak_planned_speed_m_s": 6,
+                "endpoint": {
+                  "x": 45.66410109397147,
+                  "y": 6.894603663079091
+                },
+                "continuation": {
+                  "now_s": 5.95,
+                  "acquisition_s": 5.9,
+                  "expires_s": 13.9,
+                  "original_endpoint": {
+                    "x": 47.709444155402615,
+                    "y": 6.8738489434602315
+                  },
+                  "original_end_progress_m": 47.78315279668532,
+                  "selected_end_progress_m": 45.767415909507584,
+                  "lateral_target_m": 3.9,
+                  "blocking_ids": [
+                    1
+                  ],
+                  "previous_stop_requested": false,
+                  "previous_stop_active": false
+                },
+                "checked_approach": {
+                  "supporting_acquisitions": 0,
+                  "first_acquisition_s": null,
+                  "last_acquisition_s": null,
+                  "proposal_end_progress_m": null,
+                  "proposal_endpoint": null,
+                  "proposal_lateral_target_m": null,
+                  "blocking_prediction_ids": [],
+                  "adopted": false
+                },
+                "planning_diagnostics_available": false,
+                "selected_disposition": null,
+                "route_progress_m": null,
+                "obstruction_stop_requested": null,
+                "obstruction_stop_active": null
+              },
+              "last": {
+                "time_s": 13.25,
+                "estimated_speed_m_s": 1.3867691044841848,
+                "acceleration_m_s2": 2,
+                "emergency": false,
+                "health": [],
+                "mode": "Yield",
+                "peak_planned_speed_m_s": 1.3959484575248753,
+                "endpoint": {
+                  "x": 47.702546284910575,
+                  "y": 7.058099302193598
+                },
+                "continuation": {
+                  "now_s": 13.25,
+                  "acquisition_s": 13.200000000000001,
+                  "expires_s": 13.9,
+                  "original_endpoint": {
+                    "x": 47.709444155402615,
+                    "y": 6.8738489434602315
+                  },
+                  "original_end_progress_m": 47.78315279668532,
+                  "selected_end_progress_m": 47.77378230103386,
+                  "lateral_target_m": 3.9,
+                  "blocking_ids": [
+                    1
+                  ],
+                  "previous_stop_requested": false,
+                  "previous_stop_active": false
+                },
+                "checked_approach": {
+                  "supporting_acquisitions": 0,
+                  "first_acquisition_s": null,
+                  "last_acquisition_s": null,
+                  "proposal_end_progress_m": null,
+                  "proposal_endpoint": null,
+                  "proposal_lateral_target_m": null,
+                  "blocking_prediction_ids": [],
+                  "adopted": false
+                },
+                "planning_diagnostics_available": false,
+                "selected_disposition": null,
+                "route_progress_m": null,
+                "obstruction_stop_requested": null,
+                "obstruction_stop_active": null
+              },
+              "following": {
+                "time_s": 13.3,
+                "estimated_speed_m_s": 1.4932047795800083,
+                "acceleration_m_s2": -2.4999999999974993,
+                "emergency": false,
+                "health": [],
+                "mode": "Yield",
+                "peak_planned_speed_m_s": 1.4932047795800083,
+                "endpoint": {
+                  "x": 47.72647533001163,
+                  "y": 7.058485515769984
+                },
+                "continuation": null,
+                "checked_approach": {
+                  "supporting_acquisitions": 0,
+                  "first_acquisition_s": null,
+                  "last_acquisition_s": null,
+                  "proposal_end_progress_m": null,
+                  "proposal_endpoint": null,
+                  "proposal_lateral_target_m": null,
+                  "blocking_prediction_ids": [],
+                  "adopted": false
+                },
+                "planning_diagnostics_available": true,
+                "selected_disposition": "CheckedStop",
+                "route_progress_m": 47.35177296633508,
+                "obstruction_stop_requested": true,
+                "obstruction_stop_active": false
+              },
+              "previous": {
+                "time_s": 5.9,
+                "estimated_speed_m_s": 0.00002789065866169271,
+                "acceleration_m_s2": 2,
+                "emergency": false,
+                "health": [],
+                "mode": "Yield",
+                "peak_planned_speed_m_s": 6,
+                "endpoint": {
+                  "x": 47.709444155402615,
+                  "y": 6.8738489434602315
+                },
+                "continuation": null,
+                "checked_approach": {
+                  "supporting_acquisitions": 3,
+                  "first_acquisition_s": 5.7,
+                  "last_acquisition_s": 5.9,
+                  "proposal_end_progress_m": 47.78315279668532,
+                  "proposal_endpoint": {
+                    "x": 47.709444155402615,
+                    "y": 6.8738489434602315
+                  },
+                  "proposal_lateral_target_m": 3.9,
+                  "blocking_prediction_ids": [
+                    1
+                  ],
+                  "adopted": true
+                },
+                "planning_diagnostics_available": true,
+                "selected_disposition": "CheckedStop",
+                "route_progress_m": 18.280853530526247,
+                "obstruction_stop_requested": false,
+                "obstruction_stop_active": false
+              },
+              "selected_ticks": 147,
+              "positive_acceleration_ticks": 81,
+              "maximum_estimated_speed_m_s": 6.047923790303367,
+              "expiry_remaining_at_last_s": 0.6500000000000004,
+              "end_observation": "selection_absent"
+            }
+          ],
+          "terminal": {
+            "time_s": 65,
+            "estimated_speed_m_s": 0.001315705526440969,
+            "acceleration_m_s2": -2.4999999999999996,
+            "emergency": false,
+            "health": [],
+            "mode": "Yield",
+            "peak_planned_speed_m_s": 0.001315705526440969,
+            "endpoint": {
+              "x": 47.68919069651147,
+              "y": 7.0482295942675846
+            },
+            "continuation": null,
+            "checked_approach": {
+              "supporting_acquisitions": 0,
+              "first_acquisition_s": null,
+              "last_acquisition_s": null,
+              "proposal_end_progress_m": null,
+              "proposal_endpoint": null,
+              "proposal_lateral_target_m": null,
+              "blocking_prediction_ids": [],
+              "adopted": false
+            },
+            "planning_diagnostics_available": true,
+            "selected_disposition": "CheckedStop",
+            "route_progress_m": 47.76056005371155,
+            "obstruction_stop_requested": true,
+            "obstruction_stop_active": true
+          },
+          "terminal_window_s": 5,
+          "terminal_dispositions": {
+            "CheckedStop": 101
+          },
+          "interpretation": "Observed selection boundaries only. Absence does not identify revocation cause; recording end is censored."
+        },
+        "summary": {
+          "scenario": "Curved-road obstacle avoidance",
+          "seed": 42,
+          "simulated_seconds": 65,
+          "steps": 1301,
+          "reached_goal": false,
+          "collisions": 0,
+          "road_violations": 0,
+          "min_clearance": 8.805100513164941,
+          "localization_rmse": 0.048443736308279736,
+          "localization_max_error": 0.17230913629881034,
+          "final_speed": 0,
+          "progress": 47.80347916899293,
+          "emergency_steps": 6,
+          "avoidance_steps": 0,
+          "max_tracks": 1,
+          "passed": false,
+          "failures": [
+            "goal not reached within duration"
+          ]
+        },
+        "sensor_sha256": "d0a526dceafb3d2741c5a3f306c5b95efa362c733bbb7e144ae51fd78a8aabe6",
+        "verified_ticks": 1301,
+        "selected_ticks": 147,
+        "selected_positive_acceleration_ticks": 81,
+        "selected_emergency_ticks": 0,
+        "run_exit_code": 1,
+        "replay_exit_code": 0
+      }
+    }
+  ]
+}

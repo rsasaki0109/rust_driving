@@ -1,0 +1,92 @@
+name: Bounded continuation profile checks
+on:
+  push:
+    branches: [feat/bounded-continuation-profile]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup toolchain install 1.90.0 --profile minimal --component rustfmt --component clippy
+      - name: Format and pin source
+        env:
+          EXPECTED_SOURCE: ${{ github.sha }}
+        run: |
+          cargo fmt --all
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if ! git diff --quiet; then
+            git add crates/planning/src/stopping.rs crates/planning/src/collision.rs crates/pipeline/examples/inspect_stop_candidates.rs crates/control/src/lib.rs crates/planning/src/approach_continuation.rs crates/planning/src/lib.rs crates/pipeline/src/lib.rs crates/pipeline/tests/planning_diagnostics.rs crates/pipeline/examples/inspect_continuations.rs crates/pipeline/tests/continuation_selection.rs crates/pipeline/src/continuation.rs crates/pipeline/tests/checked_approaches.rs crates/sim/src/lib.rs crates/sim/tests/scenario_validation.rs
+            git commit -m 'Format experimental bounded continuation profiles'
+            git push --force-with-lease="refs/heads/feat/bounded-continuation-profile:$EXPECTED_SOURCE" origin HEAD:refs/heads/feat/bounded-continuation-profile
+          fi
+          git rev-parse HEAD
+      - name: Required workspace checks including continuation tests
+        run: bash scripts/check.sh
+      - name: Build terminal stop inspector
+        run: cargo build --release --locked -p rustdriving-pipeline --example inspect_stop_candidates
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '12715837371'
+          run-id: '40463350780'
+          github-token: ${{ github.token }}
+          path: retained-continuation-reference
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '12716327405'
+          run-id: '40463350780'
+          github-token: ${{ github.token }}
+          path: retained-continuation-native
+          merge-multiple: true
+      - name: Inspect frozen terminal continuation stops
+        run: python scripts/check_continuation_terminal.py --reference retained-continuation-reference --native retained-continuation-native --output artifacts/continuation-terminal
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: continuation-terminal
+          path: artifacts/continuation-terminal
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '12650721879'
+          run-id: '40319988642'
+          github-token: ${{ github.token }}
+          path: retained-small-approaches
+          merge-multiple: true
+      - name: Replay frozen paired logs with shadow continuation probes
+        run: python scripts/inspect_continuations.py --evidence retained-small-approaches --output artifacts/continuation-shadow
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: continuation-shadow
+          path: artifacts/continuation-shadow
+      - name: Exploratory reference closed-loop continuation comparison
+        run: python scripts/check_continuation_reference.py --output artifacts/continuation-reference
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: continuation-reference
+          path: artifacts/continuation-reference
+      - name: Build the pinned native adapter
+        run: |
+          rne_revision=$(cat integrations/rne/rne-revision.txt)
+          git init ../RobotNativeEngine
+          git -C ../RobotNativeEngine remote add origin https://github.com/rsasaki0109/RobotNativeEngine.git
+          git -C ../RobotNativeEngine sparse-checkout init --cone
+          git -C ../RobotNativeEngine sparse-checkout set crates third_party
+          git -C ../RobotNativeEngine fetch --depth 1 origin "$rne_revision"
+          git -C ../RobotNativeEngine checkout --detach FETCH_HEAD
+          test "$(git -C ../RobotNativeEngine rev-parse HEAD)" = "$rne_revision"
+          rustup toolchain install 1.95.0 --profile minimal
+          cargo +1.95.0 build --release --locked --manifest-path integrations/rne/Cargo.toml --jobs 2
+      - name: Exploratory native closed-loop continuation comparison
+        run: python scripts/check_continuation_reference.py --plant rne-dynamic --output artifacts/continuation-native
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: continuation-native
+          path: artifacts/continuation-native

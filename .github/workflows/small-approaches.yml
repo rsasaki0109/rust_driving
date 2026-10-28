@@ -1,0 +1,66 @@
+name: Small checked-approach canary
+on:
+  push:
+    branches: [feat/small-checked-approaches]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  canary:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: rustup toolchain install 1.90.0 --profile minimal --component rustfmt --component clippy
+      - name: Format and pin the tested source
+        env:
+          EXPECTED_SOURCE: ${{ github.sha }}
+        run: |
+          cargo fmt --all
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if ! git diff --quiet; then
+            git add crates/planning/src/checked_approach.rs crates/planning/src/lib.rs crates/pipeline/src/lib.rs crates/sim/src/lib.rs
+            git commit -m 'Format smaller checked-approach configuration'
+            git push --force-with-lease="refs/heads/feat/small-checked-approaches:$EXPECTED_SOURCE" origin HEAD:refs/heads/feat/small-checked-approaches
+          fi
+          echo "ANALYSIS_SOURCE=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+      - name: Required workspace verification
+        run: bash scripts/check.sh
+      - name: Build the pinned native adapter
+        run: |
+          rne_revision=$(cat integrations/rne/rne-revision.txt)
+          git init ../RobotNativeEngine
+          git -C ../RobotNativeEngine remote add origin https://github.com/rsasaki0109/RobotNativeEngine.git
+          git -C ../RobotNativeEngine sparse-checkout init --cone
+          git -C ../RobotNativeEngine sparse-checkout set crates third_party
+          git -C ../RobotNativeEngine fetch --depth 1 origin "$rne_revision"
+          git -C ../RobotNativeEngine checkout --detach FETCH_HEAD
+          test "$(git -C ../RobotNativeEngine rev-parse HEAD)" = "$rne_revision"
+          rustup toolchain install 1.95.0 --profile minimal
+          cargo +1.95.0 build --release --locked --manifest-path integrations/rne/Cargo.toml --jobs 2
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '12638847273'
+          run-id: '40295079674'
+          github-token: ${{ github.token }}
+          path: retained-chassis
+          merge-multiple: true
+      - name: Four paired closed-loop missions
+        run: |
+          python scripts/check_small_approaches.py --evidence retained-chassis --output artifacts/small-approaches --binary target/release/rustdriving --native-binary integrations/rne/target/release/rustdriving-rne
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: small-approach-canary
+          path: artifacts/small-approaches
+      - name: Retain the experimental result
+        run: |
+          mkdir -p assets/small-approaches
+          cp artifacts/small-approaches/report.json "assets/small-approaches/$ANALYSIS_SOURCE.json"
+          git add assets/small-approaches
+          git commit -m 'Retain smaller checked-approach closed-loop canary'
+          git push --force-with-lease="refs/heads/feat/small-checked-approaches:$ANALYSIS_SOURCE" origin HEAD:refs/heads/feat/small-checked-approaches

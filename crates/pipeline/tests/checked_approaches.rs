@@ -110,3 +110,63 @@ fn sensor_replay_binds_the_new_confirmation_record_and_its_header_policy() {
         .supporting_acquisitions = 1;
     assert!(!check(&log));
 }
+
+#[test]
+fn continuation_is_opt_in_and_requires_captured_fixed_route_approaches() {
+    let legacy = config();
+    assert!(
+        serde_json::to_value(&legacy)
+            .unwrap()
+            .get("continue_checked_approaches")
+            .is_none()
+    );
+    let mut enabled = legacy.clone();
+    enabled.continue_checked_approaches = true;
+    assert!(DrivingPipeline::new(enabled.clone()).is_err());
+    enabled.record_planning_diagnostics = true;
+    assert!(DrivingPipeline::new(enabled.clone()).is_ok());
+    enabled.replan_checked_approaches = false;
+    assert!(DrivingPipeline::new(enabled).is_err());
+    let decoded: PipelineConfig =
+        serde_json::from_value(serde_json::to_value(legacy).unwrap()).unwrap();
+    assert!(!decoded.continue_checked_approaches);
+}
+
+#[test]
+fn enabled_continuation_without_adoption_preserves_outputs_and_fault_braking() {
+    let mut legacy = config();
+    legacy.record_planning_diagnostics = true;
+    let mut enabled = legacy.clone();
+    enabled.continue_checked_approaches = true;
+    let mut plain = DrivingPipeline::new(legacy).unwrap();
+    let mut driver = DrivingPipeline::new(enabled.clone()).unwrap();
+    let mut log = SensorLog::new("continuation-no-adoption", enabled);
+    for i in 0..10 {
+        let time = i as f64 * 0.05;
+        let frame: SensorFrame = serde_json::from_value(serde_json::json!({
+            "time":time,
+            "odometry":{"stamp":time,"speed":0.,"yaw_rate":0.},
+            "gnss":{"stamp":time,"position":{"x":0.,"y":0.},"variance":0.02},
+            "lidar":{"stamp":time,"points":[]}, "lidar_failed":i==5
+        }))
+        .unwrap();
+        let expected = plain.step(&frame).unwrap();
+        let actual = driver.step(&frame).unwrap();
+        assert!(actual.continuation.is_none());
+        assert_eq!(
+            serde_json::to_vec(&actual).unwrap(),
+            serde_json::to_vec(&expected).unwrap()
+        );
+        if i == 5 {
+            assert!(actual.command.acceleration <= -5.99);
+        }
+        log.record(frame, actual);
+    }
+    let mut bytes = vec![];
+    log.write(&mut bytes).unwrap();
+    assert!(
+        verify(std::io::Cursor::new(bytes), vec![])
+            .unwrap()
+            .verified
+    );
+}

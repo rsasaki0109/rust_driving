@@ -1,4 +1,5 @@
 //! Receding-horizon lateral lattice with time-indexed collision envelopes.
+pub mod approach_continuation;
 mod checked_approach;
 mod collision;
 mod corners;
@@ -23,6 +24,24 @@ pub struct StopAttempt {
     pub hold_start_s: f64,
     pub hold_end_s: f64,
     pub first_contact_s: Option<f64>,
+    pub contact: Option<StopContact>,
+}
+/// Offline receipt of the conservative sweep that rejected a stop proposal.
+/// Positions are temporal chords; this is not measured physical contact.
+#[derive(Clone, Debug)]
+pub struct StopContact {
+    pub prediction_id: u64,
+    pub time_s: f64,
+    pub interval_start_s: f64,
+    pub interval_end_s: f64,
+    pub ego_position: rustdriving_core::Vec2,
+    pub prediction_position: rustdriving_core::Vec2,
+    pub vehicle_radius_m: f64,
+    pub forecast_radius_bound_m: f64,
+    pub minimum_clearance_m: f64,
+    pub effective_margin_m: f64,
+    pub acceleration_chord_bound_m: f64,
+    pub combined_radius_m: f64,
 }
 /// Read-only proposal evidence; it is never an authorization to move.
 pub struct StopProbe {
@@ -55,6 +74,8 @@ pub struct LatticePlanner {
     pub search_obstruction_stops: bool,
     /// Confirm a newly checked stopping approach using fresh scene acquisitions.
     pub replan_checked_approaches: bool,
+    /// Optional experimental progress floor in [0.5, 2] metres; None retains 2 m.
+    pub checked_approach_min_progress_m: Option<f64>,
     /// Search up to eighty existing farther geometry knots, retaining stop commitments.
     pub search_later_obstruction_stops: bool,
     /// Optional additional road-edge reserve for width-fitted side candidates.
@@ -69,6 +90,8 @@ pub struct LatticePlanner {
     pub max_deceleration_m_s2: f64,
     /// Optional curvature-derived speed limit; None retains the baseline behavior.
     pub max_lateral_acceleration_m_s2: Option<f64>,
+    inspection_join_scale: Option<f64>,
+    inspection_stop_samples: Option<usize>,
     previous_lateral: f64,
     maneuver_start: Option<(f64, f64, f64)>,
     yield_stop_s: Option<f64>,
@@ -82,6 +105,7 @@ pub struct LatticePlanner {
     diagnostics: Option<PlanningDiagnostics>,
     approach_clock: Option<(f64, Option<f64>)>,
     approach_confirmation: checked_approach::Confirmation,
+    continuation_adoption: Option<approach_continuation::AdoptionWitness>,
     prefer_stop_progress: bool,
     motion_directions: Option<direction::Context>,
     record_stop_attempts: bool,
@@ -114,6 +138,7 @@ impl Default for LatticePlanner {
             settle_obstruction_stops: false,
             search_obstruction_stops: false,
             replan_checked_approaches: false,
+            checked_approach_min_progress_m: None,
             search_later_obstruction_stops: false,
             lateral_candidate_margin_m: None,
             refine_lateral_candidates: false,
@@ -121,6 +146,8 @@ impl Default for LatticePlanner {
             max_acceleration_m_s2: 2.0,
             max_deceleration_m_s2: 2.5,
             max_lateral_acceleration_m_s2: None,
+            inspection_join_scale: None,
+            inspection_stop_samples: None,
             previous_lateral: 0.0,
             maneuver_start: None,
             yield_stop_s: None,
@@ -134,6 +161,7 @@ impl Default for LatticePlanner {
             diagnostics: None,
             approach_clock: None,
             approach_confirmation: checked_approach::Confirmation::default(),
+            continuation_adoption: None,
             prefer_stop_progress: false,
             motion_directions: None,
             record_stop_attempts: false,
@@ -142,6 +170,36 @@ impl Default for LatticePlanner {
     }
 }
 impl LatticePlanner {
+    // Keep ordinary and experimental candidate admission identical.
+    fn invalid_configuration(&self) -> bool {
+        !self.cruise_speed.is_finite()
+            || self.cruise_speed <= 0.0
+            || (self.search_obstruction_stops && !self.settle_obstruction_stops)
+            || self.checked_approach_min_progress_m.is_some_and(|value| {
+                !self.replan_checked_approaches
+                    || !value.is_finite()
+                    || !(0.5..=2.).contains(&value)
+            })
+            || (self.search_later_obstruction_stops && !self.replan_checked_approaches)
+            || (self.replan_checked_approaches
+                && !(self.search_obstruction_stops
+                    && self.settle_obstruction_stops
+                    && self.lateral_candidate_margin_m.is_some()))
+            || (self.refine_lateral_candidates && self.lateral_candidate_margin_m.is_none())
+            || !self.max_acceleration_m_s2.is_finite()
+            || self.max_acceleration_m_s2 <= 0.0
+            || !self.max_deceleration_m_s2.is_finite()
+            || self.max_deceleration_m_s2 <= 0.0
+            || self.speed_zones.len() > 128
+            || self.speed_zones.iter().any(|zone| !zone.valid())
+            || self
+                .lateral_candidate_margin_m
+                .is_some_and(|margin| !margin.is_finite() || !(0.1..=1.0).contains(&margin))
+            || self
+                .max_lateral_acceleration_m_s2
+                .is_some_and(|a| !a.is_finite() || a <= 0.0)
+    }
+
     /// Inspect the ordinary checked-approach probe before the two-meter and
     /// acquisition-confirmation gates. All braking and hold sweeps remain active.
     /// The live planner's commitments, evidence credit and diagnostics are untouched.
@@ -165,6 +223,46 @@ impl LatticePlanner {
             diagnostics: probe.diagnostics,
             attempts: probe.stop_attempts,
         }
+    }
+
+    /// Offline geometry experiment on a clone, never a live adoption.
+    /// Only the position/heading join span changes; maneuver anchors, targets,
+    /// forecast inputs and complete stopping checks retain their existing rules.
+    pub fn inspect_stopping_proposals_with_join_scale(
+        &self,
+        ego: EgoState,
+        route: &Route,
+        objects: &[Prediction],
+        scale: f64,
+    ) -> Option<StopProbe> {
+        if ![0.5, 1.0, 2.0].contains(&scale)
+            || !ego.speed.is_finite()
+            || !(0.0..=0.2).contains(&ego.speed)
+        {
+            return None;
+        }
+        let mut probe = self.clone();
+        probe.inspection_join_scale = Some(scale);
+        Some(probe.inspect_stopping_proposals(ego, route, objects))
+    }
+
+    /// Offline bounded search-density experiment; never changes the live planner.
+    pub fn inspect_stopping_proposals_with_samples(
+        &self,
+        ego: EgoState,
+        route: &Route,
+        objects: &[Prediction],
+        samples: usize,
+    ) -> Option<StopProbe> {
+        if ![16, 64].contains(&samples)
+            || !ego.speed.is_finite()
+            || !(0.0..=0.2).contains(&ego.speed)
+        {
+            return None;
+        }
+        let mut probe = self.clone();
+        probe.inspection_stop_samples = Some(samples);
+        Some(probe.inspect_stopping_proposals(ego, route, objects))
     }
 
     /// Supply acquisition-owned world-frame track velocities and declared error
@@ -195,6 +293,12 @@ impl LatticePlanner {
         self.approach_clock = Some((now, scene));
     }
 
+    /// Current control/acquisition clock, including unavailable scene evidence.
+    /// Read-only context for offline continuation inspection.
+    pub fn checked_approach_scene_clock(&self) -> Option<(f64, Option<f64>)> {
+        self.approach_clock
+    }
+
     pub fn checked_approach_diagnostics(&self) -> &rustdriving_core::CheckedApproachDiagnostics {
         &self.approach_confirmation.diagnostics
     }
@@ -211,6 +315,7 @@ impl LatticePlanner {
         self.refinement_support = None;
         self.diagnostics = None;
         self.approach_confirmation.reset();
+        self.continuation_adoption = None;
     }
 
     /// Supply the last accepted scene acquisition, never the control clock.
@@ -262,9 +367,12 @@ impl LatticePlanner {
 }
 impl Planner for LatticePlanner {
     fn plan(&mut self, ego: EgoState, route: &Route, objects: &[Prediction]) -> Trajectory {
+        self.continuation_adoption = None;
         if !self.replan_checked_approaches {
             return self.plan_inner(ego, route, objects);
         }
+        self.approach_confirmation
+            .set_minimum_progress(self.checked_approach_min_progress_m.unwrap_or(2.));
         let capture = self.diagnostics_enabled;
         self.diagnostics_enabled = true;
         let mut result = self.plan_inner(ego, route, objects);
@@ -326,6 +434,14 @@ impl Planner for LatticePlanner {
             let (probe, path) = alternative.expect("confirmed checked proposal");
             *self = probe;
             self.approach_confirmation = confirmation;
+            if let Some((now, acquisition)) = self.approach_clock {
+                self.continuation_adoption = Some(approach_continuation::AdoptionWitness {
+                    now,
+                    acquisition,
+                    progress: route.project(ego.pose.position).0,
+                    record: self.approach_confirmation.diagnostics.clone(),
+                });
+            }
             result = path;
         }
         self.diagnostics_enabled = capture;
@@ -336,6 +452,121 @@ impl Planner for LatticePlanner {
     }
 }
 impl LatticePlanner {
+    // Shared anchored geometry for ordinary candidates and continuation probes.
+    // The supplied corridor is unchanged even when a local planning route is fitted.
+    fn candidate_geometry(
+        &self,
+        ego: EgoState,
+        route: &Route,
+        supplied_route: &Route,
+        horizon: f64,
+        candidate: (f64, bool),
+    ) -> Option<(Vec<rustdriving_core::Vec2>, rustdriving_core::Vec2)> {
+        let (target, refined) = candidate;
+        let (s, lateral) = route.project(ego.pose.position);
+        let side = self.lateral_candidate_margin_m.map_or(3.5, |margin| {
+            (route.half_width - self.vehicle.radius - margin).clamp(
+                0.0,
+                if self.replan_checked_approaches {
+                    4.0
+                } else {
+                    3.5
+                },
+            )
+        });
+        let fitted_chassis_recovery =
+            self.local_route_geometry && !self.point_reference_recovery && side < 3.5;
+        let transition = transition_distance(
+            ego.speed,
+            target - lateral,
+            self.max_lateral_acceleration_m_s2,
+        );
+        let (start_s, start_lateral, transition) = if (target - self.previous_lateral).abs() < 0.01
+        {
+            self.maneuver_start.unwrap_or((s, lateral, transition))
+        } else {
+            (s, lateral, transition)
+        };
+        let anchored_offset = |distance| {
+            start_lateral
+                + (target - start_lateral) * quintic((s + distance - start_s) / transition)
+        };
+        let base = |distance| {
+            if self.local_route_geometry {
+                route.sample(s + distance, anchored_offset(distance)).0
+            } else {
+                geometry::sample(route, s + distance, anchored_offset(distance))
+            }
+        };
+        let base_initial = base(0.0);
+        let base_tangent = base(0.01).minus(base_initial).scaled(100.0);
+        let position_error = ego.pose.position.minus(base_initial);
+        let desired_tangent = rustdriving_core::Vec2::new(ego.pose.yaw.cos(), ego.pose.yaw.sin())
+            .scaled(base_tangent.x.hypot(base_tangent.y));
+        let tangent_error = desired_tangent.minus(base_tangent);
+        // Retain the maneuver's original completion arc. Reapplying its
+        // whole transition at every local side-path tick would continually
+        // defer correction of the remaining tracking error. A wheelbase
+        // floor leaves a finite recovery span after the anchor has passed.
+        let correction_transition = if self.local_route_geometry
+            && (self.point_reference_recovery
+                || ((fitted_chassis_recovery || refined) && s >= start_s + transition))
+            && target.abs() > 0.1
+        {
+            // Reuse the quintic's existing second-derivative bound for
+            // the residual shift as well. A short recovery span must not
+            // ignore the configured plant's lateral acceleration budget.
+            let recovery_floor =
+                self.max_lateral_acceleration_m_s2
+                    .map_or(self.vehicle.wheelbase, |limit| {
+                        self.vehicle.wheelbase.max(
+                            ego.speed
+                                * (6.0 * position_error.x.hypot(position_error.y) / limit).sqrt(),
+                        )
+                    });
+            let recovery = (start_s + transition - s).max(recovery_floor);
+            if self.point_reference_recovery {
+                recovery.min(transition)
+            } else {
+                // A temporary center brake can increase the residual while
+                // preserving the passing intent. Its recovery may need more
+                // room than the original shift, under the same speed limits.
+                recovery
+            }
+        } else {
+            transition
+        };
+        let correction_transition = self
+            .inspection_join_scale
+            .map_or(correction_transition, |scale| correction_transition * scale);
+        let mut geometry = Vec::new();
+        for i in 0..=80 {
+            let ds = horizon * i as f64 / 80.0;
+            let position = if i == 0 {
+                ego.pose.position
+            } else {
+                base(ds)
+                    .plus(position_error.scaled(1.0 - quintic(ds / correction_transition)))
+                    .plus(tangent_error.scaled(geometry::heading_weight(ds, correction_transition)))
+            };
+            // Interpolation and heading correction may leave the supplied corridor;
+            // check the actual candidate against the unchanged route evaluator.
+            let corridor_radius = route.half_width - self.vehicle.radius;
+            // Distance to any point on the centerline is an upper bound on
+            // nearest-centerline distance. Most samples can be accepted with
+            // this bound; ambiguous ones still use the full corridor projection.
+            let reference = supplied_route.sample(s + ds, 0.0).0;
+            if position.distance(reference) > corridor_radius
+                && supplied_route.project(position).1.abs() > corridor_radius
+            {
+                return None;
+            }
+            geometry.push(position);
+        }
+
+        Some((geometry, base_tangent))
+    }
+
     fn plan_inner(&mut self, ego: EgoState, route: &Route, objects: &[Prediction]) -> Trajectory {
         self.diagnostics = None;
         self.stop_attempts.clear();
@@ -349,27 +580,7 @@ impl LatticePlanner {
         if !ego.speed.is_finite()
             || !ego.pose.position.finite()
             || !ego.pose.yaw.is_finite()
-            || !self.cruise_speed.is_finite()
-            || self.cruise_speed <= 0.0
-            || (self.search_obstruction_stops && !self.settle_obstruction_stops)
-            || (self.search_later_obstruction_stops && !self.replan_checked_approaches)
-            || (self.replan_checked_approaches
-                && !(self.search_obstruction_stops
-                    && self.settle_obstruction_stops
-                    && self.lateral_candidate_margin_m.is_some()))
-            || (self.refine_lateral_candidates && self.lateral_candidate_margin_m.is_none())
-            || !self.max_acceleration_m_s2.is_finite()
-            || self.max_acceleration_m_s2 <= 0.0
-            || !self.max_deceleration_m_s2.is_finite()
-            || self.max_deceleration_m_s2 <= 0.0
-            || self.speed_zones.len() > 128
-            || self.speed_zones.iter().any(|zone| !zone.valid())
-            || self
-                .lateral_candidate_margin_m
-                .is_some_and(|margin| !margin.is_finite() || !(0.1..=1.0).contains(&margin))
-            || self
-                .max_lateral_acceleration_m_s2
-                .is_some_and(|a| !a.is_finite() || a <= 0.0)
+            || self.invalid_configuration()
             || objects.iter().any(|object| {
                 object.positions.is_empty()
                     || !object.dt.is_finite()
@@ -519,101 +730,12 @@ impl LatticePlanner {
                 trace.reject(CandidateDisposition::OppositeSideDuringPass);
                 continue;
             }
-            let transition = transition_distance(
-                ego.speed,
-                target - lateral,
-                self.max_lateral_acceleration_m_s2,
-            );
-            let (start_s, start_lateral, transition) =
-                if (target - self.previous_lateral).abs() < 0.01 {
-                    self.maneuver_start.unwrap_or((s, lateral, transition))
-                } else {
-                    (s, lateral, transition)
-                };
-            let anchored_offset = |distance| {
-                start_lateral
-                    + (target - start_lateral) * quintic((s + distance - start_s) / transition)
-            };
-            let base = |distance| {
-                if self.local_route_geometry {
-                    route.sample(s + distance, anchored_offset(distance)).0
-                } else {
-                    geometry::sample(route, s + distance, anchored_offset(distance))
-                }
-            };
-            let base_initial = base(0.0);
-            let base_tangent = base(0.01).minus(base_initial).scaled(100.0);
-            let position_error = ego.pose.position.minus(base_initial);
-            let desired_tangent =
-                rustdriving_core::Vec2::new(ego.pose.yaw.cos(), ego.pose.yaw.sin())
-                    .scaled(base_tangent.x.hypot(base_tangent.y));
-            let tangent_error = desired_tangent.minus(base_tangent);
-            // Retain the maneuver's original completion arc. Reapplying its
-            // whole transition at every local side-path tick would continually
-            // defer correction of the remaining tracking error. A wheelbase
-            // floor leaves a finite recovery span after the anchor has passed.
-            let correction_transition = if self.local_route_geometry
-                && (self.point_reference_recovery
-                    || ((fitted_chassis_recovery || refined) && s >= start_s + transition))
-                && target.abs() > 0.1
-            {
-                // Reuse the quintic's existing second-derivative bound for
-                // the residual shift as well. A short recovery span must not
-                // ignore the configured plant's lateral acceleration budget.
-                let recovery_floor =
-                    self.max_lateral_acceleration_m_s2
-                        .map_or(self.vehicle.wheelbase, |limit| {
-                            self.vehicle.wheelbase.max(
-                                ego.speed
-                                    * (6.0 * position_error.x.hypot(position_error.y) / limit)
-                                        .sqrt(),
-                            )
-                        });
-                let recovery = (start_s + transition - s).max(recovery_floor);
-                if self.point_reference_recovery {
-                    recovery.min(transition)
-                } else {
-                    // A temporary center brake can increase the residual while
-                    // preserving the passing intent. Its recovery may need more
-                    // room than the original shift, under the same speed limits.
-                    recovery
-                }
-            } else {
-                transition
-            };
-            let mut geometry = Vec::new();
-            let mut contained = true;
-            for i in 0..=80 {
-                let ds = horizon * i as f64 / 80.0;
-                let position = if i == 0 {
-                    ego.pose.position
-                } else {
-                    base(ds)
-                        .plus(position_error.scaled(1.0 - quintic(ds / correction_transition)))
-                        .plus(
-                            tangent_error
-                                .scaled(geometry::heading_weight(ds, correction_transition)),
-                        )
-                };
-                // Interpolation and heading correction may leave the supplied corridor;
-                // check the actual candidate against the unchanged route evaluator.
-                let corridor_radius = route.half_width - self.vehicle.radius;
-                // Distance to any point on the centerline is an upper bound on
-                // nearest-centerline distance. Most samples can be accepted with
-                // this bound; ambiguous ones still use the full corridor projection.
-                let reference = supplied_route.sample(s + ds, 0.0).0;
-                if position.distance(reference) > corridor_radius
-                    && supplied_route.project(position).1.abs() > corridor_radius
-                {
-                    contained = false;
-                    break;
-                }
-                geometry.push(position);
-            }
-            if !contained {
+            let Some((geometry, base_tangent)) =
+                self.candidate_geometry(ego, route, supplied_route, horizon, (target, refined))
+            else {
                 trace.reject(CandidateDisposition::GeometryOutsideCorridor);
                 continue;
-            }
+            };
             // Route progress is not arc length when the candidate shifts laterally.
             // Stop at the generated terminal position, rather than truncating a
             // longer candidate using the route's longitudinal distance.
@@ -693,6 +815,28 @@ impl LatticePlanner {
                         hold_start_s: pair[0].time,
                         hold_end_s: pair[1].time,
                         first_contact_s: first.is_finite().then_some(first),
+                        contact: objects
+                            .iter()
+                            .filter_map(|object| {
+                                collision::inspect_contact(
+                                    path,
+                                    object,
+                                    self.vehicle.radius,
+                                    rustdriving_core::Vec2::new(
+                                        ego.pose.yaw.cos(),
+                                        ego.pose.yaw.sin(),
+                                    ),
+                                    if refined {
+                                        REFINED_CANDIDATE_CLEARANCE_M
+                                    } else {
+                                        0.
+                                    },
+                                    self.motion_directions
+                                        .as_ref()
+                                        .map(|c| c.for_prediction(object.id)),
+                                )
+                            })
+                            .min_by(|a, b| a.time_s.total_cmp(&b.time_s)),
                     });
                 }
                 first
@@ -803,6 +947,7 @@ impl LatticePlanner {
                             &stopping_limits,
                             stop,
                             self.search_obstruction_stops && !hold_requested,
+                            self.inspection_stop_samples.unwrap_or(16),
                             |path| !contact(path).is_finite(),
                         )
                         .map(|(path, used)| (path, used, used && ego.speed > 0.2))
@@ -1063,6 +1208,72 @@ mod tests {
     fn road(width: f64) -> Route {
         Route::new(vec![Vec2::new(0.0, 0.0), Vec2::new(100.0, 0.0)], width).unwrap()
     }
+    #[test]
+    fn offline_join_scales_change_nonlocal_geometry_without_mutating_live_state() {
+        let route = road(8.);
+        let mut ego = EgoState::default();
+        ego.pose.position = Vec2::new(40., 1.);
+        ego.pose.yaw = 0.1;
+        let planner = LatticePlanner {
+            previous_lateral: 3.5,
+            maneuver_start: Some((0., 0., 10.)),
+            ..LatticePlanner::default()
+        };
+        let original = planner
+            .candidate_geometry(ego, &route, &route, 20., (3.5, false))
+            .unwrap()
+            .0;
+        for scale in [0.5, 1., 2.] {
+            let mut clone = planner.clone();
+            clone.inspection_join_scale = Some(scale);
+            let path = clone
+                .candidate_geometry(ego, &route, &route, 20., (3.5, false))
+                .unwrap()
+                .0;
+            assert_eq!(path[0], ego.pose.position);
+            assert_eq!(clone.maneuver_start, planner.maneuver_start);
+            assert_eq!(clone.previous_lateral, planner.previous_lateral);
+            if scale == 1. {
+                assert_eq!(path, original);
+            } else {
+                assert_ne!(path, original);
+            }
+            let base = planner.inspect_stopping_proposals(ego, &route, &[obstacle()]);
+            let changed = planner
+                .inspect_stopping_proposals_with_join_scale(ego, &route, &[obstacle()], scale)
+                .unwrap();
+            if scale == 1. {
+                assert_eq!(
+                    format!("{:?}", base.trajectory),
+                    format!("{:?}", changed.trajectory)
+                );
+                assert_eq!(
+                    format!("{:?}", base.attempts),
+                    format!("{:?}", changed.attempts)
+                );
+            }
+            assert!(planner.inspection_join_scale.is_none());
+            let again = planner.inspect_stopping_proposals(ego, &route, &[obstacle()]);
+            assert_eq!(
+                format!("{:?}", base.trajectory),
+                format!("{:?}", again.trajectory)
+            );
+        }
+        for scale in [0., 0.25, 3., f64::NAN] {
+            assert!(
+                planner
+                    .inspect_stopping_proposals_with_join_scale(ego, &route, &[], scale)
+                    .is_none()
+            );
+        }
+        ego.speed = 0.21;
+        assert!(
+            planner
+                .inspect_stopping_proposals_with_join_scale(ego, &route, &[], 1.)
+                .is_none()
+        );
+    }
+
     fn obstacle() -> Prediction {
         Prediction {
             additional_radius_m: vec![],
@@ -1087,6 +1298,32 @@ mod tests {
         let object = obstacle();
         let mut untouched = planner.clone();
         let probe = planner.inspect_stopping_proposals(ego, &route, std::slice::from_ref(&object));
+        let same = planner
+            .inspect_stopping_proposals_with_samples(ego, &route, std::slice::from_ref(&object), 16)
+            .unwrap();
+        assert_eq!(
+            format!("{:?}", probe.attempts),
+            format!("{:?}", same.attempts)
+        );
+        let _ = planner
+            .inspect_stopping_proposals_with_samples(ego, &route, std::slice::from_ref(&object), 64)
+            .unwrap();
+        assert!(planner.inspection_stop_samples.is_none());
+        let again = planner.inspect_stopping_proposals(ego, &route, std::slice::from_ref(&object));
+        assert_eq!(
+            format!("{:?}", probe.attempts),
+            format!("{:?}", again.attempts)
+        );
+        assert!(
+            planner
+                .inspect_stopping_proposals_with_samples(
+                    ego,
+                    &route,
+                    std::slice::from_ref(&object),
+                    63
+                )
+                .is_none()
+        );
         assert!(!probe.attempts.is_empty());
         assert!(probe.attempts.len() <= 294);
         assert!(
@@ -1096,6 +1333,18 @@ mod tests {
                 .all(|a| a.hold_end_s - a.hold_start_s >= 8. - 1e-9)
         );
         assert!(probe.attempts.iter().any(|a| a.first_contact_s.is_none()));
+        for attempt in &probe.attempts {
+            assert_eq!(
+                attempt.first_contact_s,
+                attempt.contact.as_ref().map(|c| c.time_s)
+            );
+            if let Some(c) = &attempt.contact {
+                assert!(c.time_s >= c.interval_start_s && c.time_s <= c.interval_end_s);
+                assert!(
+                    c.ego_position.distance(c.prediction_position) <= c.combined_radius_m + 1e-8
+                );
+            }
+        }
         let actual = planner.plan(ego, &route, std::slice::from_ref(&object));
         let expected = untouched.plan(ego, &route, &[object]);
         assert_eq!(actual.mode, expected.mode);

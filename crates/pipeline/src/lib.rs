@@ -1,4 +1,6 @@
 //! Shared sensor-to-command stack. No simulator, truth objects or physical world types.
+mod continuation;
+pub use continuation::ContinuationDiagnostic;
 mod gnss_recovery;
 mod ground;
 mod heading;
@@ -60,6 +62,11 @@ use traffic_controls::{
 
 /// Offline inspection at the exact planner call boundary; inputs are immutable.
 pub type PlannerInspection<'a> = dyn FnMut(&LatticePlanner, EgoState, &Route, &[Prediction]) + 'a;
+/// Offline inspection immediately after planning, before regulatory/health output
+/// overrides. The trajectory is the raw planner result, not a final command.
+/// Clone the planner for experiments; all live inputs are immutable.
+pub type PlannerResultInspection<'a> =
+    dyn FnMut(&LatticePlanner, EgoState, &Route, &[Prediction], &Trajectory) + 'a;
 
 /// Conservative, externally calibrated planning limits, independent of simulator truth.
 #[derive(Clone, Copy, Debug, Serialize, Deserialize)]
@@ -149,6 +156,12 @@ pub struct PipelineConfig {
     pub search_obstruction_stops: bool,
     #[serde(default, skip_serializing_if = "is_false")]
     pub replan_checked_approaches: bool,
+    /// Experimental fixed-route continuation; absent preserves existing behavior.
+    #[serde(default, skip_serializing_if = "is_false")]
+    pub continue_checked_approaches: bool,
+    /// Experimental progress floor; absent preserves historical 2 m admission.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub checked_approach_min_progress_m: Option<f64>,
     /// Check farther existing stopping endpoints without withdrawing a retained stop.
     #[serde(default, skip_serializing_if = "is_false")]
     pub search_later_obstruction_stops: bool,
@@ -245,6 +258,8 @@ impl PipelineConfig {
             settle_obstruction_stops: false,
             search_obstruction_stops: false,
             replan_checked_approaches: false,
+            continue_checked_approaches: false,
+            checked_approach_min_progress_m: None,
             search_later_obstruction_stops: false,
             lateral_candidate_margin_m: None,
             refine_lateral_candidates: false,
@@ -268,6 +283,24 @@ impl PipelineConfig {
         }
     }
     pub fn validate(&self) -> Result<(), String> {
+        if self.continue_checked_approaches
+            && (!self.replan_checked_approaches
+                || !self.record_planning_diagnostics
+                || self.navigation.is_some()
+                || self.lane_change.is_some()
+                || !self.stop_lines.is_empty()
+                || !self.stop_signs.is_empty()
+                || !self.yield_intersections.is_empty())
+        {
+            return Err("continuation requires captured checked approaches on a fixed route without mapped traffic duties".into());
+        }
+        if self.checked_approach_min_progress_m.is_some_and(|value| {
+            !self.replan_checked_approaches || !value.is_finite() || !(0.5..=2.).contains(&value)
+        }) {
+            return Err(
+                "checked approach progress requires enabled replanning and 0.5..=2 m".into(),
+            );
+        }
         if self.search_later_obstruction_stops && !self.replan_checked_approaches {
             return Err("later stop search requires acquired checked approach replanning".into());
         }
@@ -725,6 +758,9 @@ pub struct PipelineOutput {
     pub recent_velocity_hypotheses: Option<VelocityHypothesisDiagnostics>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub checked_approach: Option<CheckedApproachDiagnostics>,
+    /// Selected continuation before final health/command guards.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub continuation: Option<ContinuationDiagnostic>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub planning_progress: Option<PlanningProgress>,
     /// Planner proposal only; final faults and mapped duties can override it.
@@ -748,6 +784,7 @@ pub struct DrivingPipeline {
     recent_velocity_hypotheses: Option<RecentVelocityHypotheses>,
     forecast_consistency: Option<ForecastConsistencyGuard>,
     planner: LatticePlanner,
+    continuation: continuation::ContinuationDriver,
     planning_progress: planning_progress::ProgressMonitor,
     controller: PurePursuit,
     grid: OccupancyGrid,
@@ -801,6 +838,7 @@ impl DrivingPipeline {
         planner.settle_obstruction_stops = config.settle_obstruction_stops;
         planner.search_obstruction_stops = config.search_obstruction_stops;
         planner.replan_checked_approaches = config.replan_checked_approaches;
+        planner.checked_approach_min_progress_m = config.checked_approach_min_progress_m;
         planner.search_later_obstruction_stops = config.search_later_obstruction_stops;
         planner.lateral_candidate_margin_m = config.lateral_candidate_margin_m;
         planner.refine_lateral_candidates = config.refine_lateral_candidates;
@@ -921,6 +959,7 @@ impl DrivingPipeline {
             recent_velocity_hypotheses,
             forecast_consistency,
             planner,
+            continuation: continuation::ContinuationDriver::default(),
             planning_progress: planning_progress::ProgressMonitor::default(),
             controller,
             grid,
@@ -951,7 +990,7 @@ impl DrivingPipeline {
     /// Clock errors return Err before mutation; callers must apply emergency braking on Err.
     /// Invalid or missing sensor data produces a finite emergency command with diagnostics.
     pub fn step(&mut self, input: &SensorFrame) -> Result<PipelineOutput, String> {
-        self.step_inspected(input, None)
+        self.step_inspected(input, None, None)
     }
 
     /// Run the same sensor step with a read-only planner inspection callback.
@@ -961,13 +1000,25 @@ impl DrivingPipeline {
         input: &SensorFrame,
         inspection: &mut PlannerInspection<'_>,
     ) -> Result<PipelineOutput, String> {
-        self.step_inspected(input, Some(inspection))
+        self.step_inspected(input, Some(inspection), None)
+    }
+
+    /// Observe a completed planner decision without changing the sensor step.
+    /// A callback can inspect a cloned planner's adoption witness, but cannot
+    /// select a candidate or mutate live commitments. Later output guards still run.
+    pub fn step_with_planner_result_inspection(
+        &mut self,
+        input: &SensorFrame,
+        inspection: &mut PlannerResultInspection<'_>,
+    ) -> Result<PipelineOutput, String> {
+        self.step_inspected(input, None, Some(inspection))
     }
 
     fn step_inspected(
         &mut self,
         input: &SensorFrame,
         inspection: Option<&mut PlannerInspection<'_>>,
+        result_inspection: Option<&mut PlannerResultInspection<'_>>,
     ) -> Result<PipelineOutput, String> {
         if !input.time.is_finite()
             || input.time < 0.0
@@ -1819,11 +1870,27 @@ impl DrivingPipeline {
                 &predictions,
             );
         }
-        let mut trajectory = self.planner.plan(
-            motion_estimate,
-            stop_route.as_ref().unwrap_or(&self.config.route),
-            &predictions,
+        let (mut trajectory, continuation) = self.continuation.plan(
+            &mut self.planner,
+            continuation::Context {
+                enabled: self.config.continue_checked_approaches,
+                eligible: health.is_empty() && stop_route.is_none(),
+                now: input.time,
+                epoch: self.localization_epoch,
+                ego: motion_estimate,
+                route: stop_route.as_ref().unwrap_or(&self.config.route),
+                objects: &predictions,
+            },
         );
+        if let Some(inspect) = result_inspection {
+            inspect(
+                &self.planner,
+                motion_estimate,
+                stop_route.as_ref().unwrap_or(&self.config.route),
+                &predictions,
+                &trajectory,
+            );
+        }
         self.planner.cruise_speed = configured_cruise;
         if self.navigator.as_ref().is_some_and(|nav| {
             matches!(
@@ -1865,7 +1932,12 @@ impl DrivingPipeline {
             trajectory.mode = DrivingMode::Yield;
         }
         let command = if health.is_empty() {
-            let mut requested = self.controller.control(motion_estimate, &trajectory, dt);
+            let mut requested = if continuation.is_some() {
+                self.controller
+                    .control_with_sample_hold(motion_estimate, &trajectory, dt)
+            } else {
+                self.controller.control(motion_estimate, &trajectory, dt)
+            };
             if self.planner.braking_obstruction_stop() {
                 requested.acceleration = requested.acceleration.min(0.0);
             }
@@ -1912,6 +1984,7 @@ impl DrivingPipeline {
             || trajectory.mode == DrivingMode::Emergency
             || command.acceleration <= -5.99;
         if emergency {
+            self.continuation.clear();
             self.controller.reset_emergency_state();
             trajectory.mode = DrivingMode::Emergency;
         }
@@ -1996,6 +2069,7 @@ impl DrivingPipeline {
                 .config
                 .replan_checked_approaches
                 .then(|| self.planner.checked_approach_diagnostics().clone()),
+            continuation,
             planning_progress,
             planning_diagnostics: self
                 .config

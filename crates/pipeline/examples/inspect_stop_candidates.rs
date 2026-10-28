@@ -61,26 +61,62 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     driver.step_with_planner_inspection(
                         &tick.input,
                         &mut |planner, ego, route, objects| {
-                            let probe = planner.inspect_stopping_proposals(ego, route, objects);
                             let here = route.project(ego.pose.position).0;
-                            let attempts: Vec<_> = probe
-                                .attempts
-                                .iter()
-                                .map(|a| {
+                            let describe = |probe: rustdriving_planning::StopProbe| {
+                                let attempts: Vec<_> = probe.attempts.iter().map(|a| {
                                     serde_json::json!({
                                         "candidate_index":a.candidate_index,
                                         "end_progress_m":a.end_progress_m,
                                         "progress_gain_m":a.end_progress_m-here,
                                         "hold_start_s":a.hold_start_s,
                                         "hold_end_s":a.hold_end_s,
-                                        "first_contact_s":a.first_contact_s
+                                        "first_contact_s":a.first_contact_s,
+                                        "contact":a.contact.as_ref().map(|c| serde_json::json!({
+                                            "prediction_id":c.prediction_id, "time_s":c.time_s,
+                                            "interval_start_s":c.interval_start_s, "interval_end_s":c.interval_end_s,
+                                            "ego_position":c.ego_position, "prediction_position":c.prediction_position,
+                                            "vehicle_radius_m":c.vehicle_radius_m,
+                                            "forecast_radius_bound_m":c.forecast_radius_bound_m,
+                                            "minimum_clearance_m":c.minimum_clearance_m,
+                                            "effective_margin_m":c.effective_margin_m,
+                                            "acceleration_chord_bound_m":c.acceleration_chord_bound_m,
+                                            "combined_radius_m":c.combined_radius_m
+                                        }))
                                     })
+                                }).collect();
+                                serde_json::json!({
+                                    "initial_progress_m":here, "trajectory":probe.trajectory,
+                                    "planning_diagnostics":probe.diagnostics, "attempts":attempts
                                 })
-                                .collect();
-                            evidence = Some(serde_json::json!({
-                                "initial_progress_m":here, "trajectory":probe.trajectory,
-                                "planning_diagnostics":probe.diagnostics, "attempts":attempts
-                            }));
+                            };
+                            let mut original = describe(planner.inspect_stopping_proposals(ego, route, objects));
+                            // Only a clone changes geometry policy. All current scene,
+                            // speed, road, side-commitment and stop checks remain active.
+                            let mut recovery = planner.clone();
+                            recovery.point_reference_recovery = true;
+                            original["point_reference_recovery_probe"] = describe(
+                                recovery.inspect_stopping_proposals(ego, route, objects));
+                            original["geometry_comparison"] = serde_json::json!({
+                                "local_route_geometry":planner.local_route_geometry,
+                                "original_point_reference_recovery":planner.point_reference_recovery,
+                                "probe_point_reference_recovery":true,
+                                "policy_changed":!planner.point_reference_recovery,
+                                "ego":ego, "route":route, "predictions":objects,
+                                "closed_loop":false
+                            });
+                            let scaled: Vec<_> = [0.5, 1., 2.].into_iter().map(|scale| {
+                                let candidate = planner.inspect_stopping_proposals_with_join_scale(
+                                    ego, route, objects, scale).expect("healthy stationary probe");
+                                serde_json::json!({"scale":scale, "probe":describe(candidate)})
+                            }).collect();
+                            original["join_scale_probes"] = serde_json::json!(scaled);
+                            let densities: Vec<_> = [16, 64].into_iter().map(|samples| {
+                                let candidate = planner.inspect_stopping_proposals_with_samples(
+                                    ego, route, objects, samples).expect("healthy stationary probe");
+                                serde_json::json!({"samples":samples, "probe":describe(candidate)})
+                            }).collect();
+                            original["stop_density_probes"] = serde_json::json!(densities);
+                            evidence = Some(original);
                         },
                     )?
                 } else {

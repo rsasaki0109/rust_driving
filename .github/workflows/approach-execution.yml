@@ -1,0 +1,50 @@
+name: Checked approach execution traces
+on:
+  push:
+    branches: [feat/approach-execution-trace]
+    paths:
+      - scripts/inspect_approach_execution.py
+      - scripts/test_approach_execution.py
+      - .github/workflows/approach-execution.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify interval boundaries and censored observations
+        run: python scripts/test_approach_execution.py
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '12650721879'
+          run-id: '40319988642'
+          github-token: ${{ github.token }}
+          path: retained-small-approaches
+          merge-multiple: true
+      - name: Inspect the original paired recordings
+        run: python scripts/inspect_approach_execution.py --evidence retained-small-approaches --output artifacts/approach-execution/report.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: approach-execution
+          path: artifacts/approach-execution
+      - run: rustup toolchain install 1.90.0 --profile minimal --component rustfmt --component clippy
+      - name: Required workspace checks
+        run: bash scripts/check.sh
+      - name: Retain validated read-only inspection
+        env:
+          ANALYSIS_SOURCE: ${{ github.sha }}
+        run: |
+          mkdir -p assets/approach-execution
+          cp artifacts/approach-execution/report.json "assets/approach-execution/$ANALYSIS_SOURCE.json"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/approach-execution
+          git commit -m 'Retain checked-approach execution traces'
+          git push --force-with-lease="refs/heads/feat/approach-execution-trace:$ANALYSIS_SOURCE" origin HEAD:refs/heads/feat/approach-execution-trace

@@ -60,8 +60,12 @@ pub(super) fn profile(
     limits: &Limits<'_>,
     proposed_stop: f64,
     search: bool,
+    samples: usize,
     mut clear: impl FnMut(&[TrajectoryPoint]) -> bool,
 ) -> Option<(Vec<TrajectoryPoint>, bool)> {
+    if ![16, 64].contains(&samples) {
+        return None;
+    }
     if let Some(path) = speed::profile(geometry, initial_speed, limits, Some(proposed_stop))
         && clear(&path)
     {
@@ -95,8 +99,8 @@ pub(super) fn profile(
             limits.cruise
         },
     };
-    for index in 0..if upper == minimum { 1 } else { 16 } {
-        let stop = upper + (minimum - upper) * index as f64 / 15.0;
+    for index in 0..if upper == minimum { 1 } else { samples } {
+        let stop = upper + (minimum - upper) * index as f64 / (samples - 1) as f64;
         if let Some(path) = speed::profile(geometry, initial_speed, &fallback, Some(stop))
             && clear(&path)
         {
@@ -191,7 +195,7 @@ mod tests {
         };
         let nominal = speed::profile(&line(), 8., &limits(), None).unwrap();
         assert!(!clear(&nominal));
-        assert!(profile(&line(), 8., &limits(), 10., true, clear).is_none());
+        assert!(profile(&line(), 8., &limits(), 10., true, 16, clear).is_none());
         let path = later_profile(&line(), 8., &limits(), 10., clear).unwrap();
         assert!(path.last().unwrap().position.x > 12.8);
         for pair in path.windows(2) {
@@ -281,6 +285,45 @@ mod tests {
     }
 
     #[test]
+    fn dense_search_visits_short_stops_without_changing_profile_or_hold_rules() {
+        let geometry = line();
+        let run = |samples| {
+            let mut endpoints = vec![];
+            let result = profile(&geometry, 0.01, &limits(), 30., true, samples, |path| {
+                let last = path.last().unwrap();
+                let before = path[path.len() - 2];
+                assert_eq!(last.position, before.position);
+                assert_eq!(last.speed, 0.);
+                assert!(last.time - before.time >= 8. - 1e-9);
+                for pair in path.windows(2) {
+                    let dt = pair[1].time - pair[0].time;
+                    assert!(dt > 0.);
+                    let a = (pair[1].speed - pair[0].speed) / dt;
+                    assert!((-2.5 - 1e-8..=2. + 1e-8).contains(&a));
+                }
+                endpoints.push(last.position.x);
+                false
+            });
+            assert!(result.is_none());
+            endpoints
+        };
+        let ordinary = run(16);
+        let dense = run(64);
+        assert_eq!(ordinary.len(), 17);
+        assert_eq!(dense.len(), 65);
+        assert_eq!(ordinary.first(), dense.first());
+        assert_eq!(ordinary.last(), dense.last());
+        assert!(!ordinary.iter().any(|s| (0.5..1.).contains(s)));
+        assert!(dense.iter().any(|s| (0.5..1.).contains(s)));
+        assert!(
+            profile(&geometry, 0., &limits(), 30., true, 63, |_| panic!(
+                "unsupported search size"
+            ))
+            .is_none()
+        );
+    }
+
+    #[test]
     fn exhaustive_rejection_cannot_exceed_seventeen_complete_sweeps() {
         let geometry: Vec<_> = (0..=80).map(|i| Vec2::new(i as f64 * 0.5, 0.)).collect();
         let limits = Limits {
@@ -292,7 +335,7 @@ mod tests {
         };
         let mut calls = 0;
         assert!(
-            profile(&geometry, 2., &limits, 30., true, |_| {
+            profile(&geometry, 2., &limits, 30., true, 16, |_| {
                 calls += 1;
                 false
             })

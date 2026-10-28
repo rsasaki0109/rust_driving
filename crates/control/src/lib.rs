@@ -39,6 +39,29 @@ impl PurePursuit {
 }
 impl Controller for PurePursuit {
     fn control(&mut self, ego: EgoState, path: &Trajectory, dt: f64) -> ControlCommand {
+        self.control_inner(ego, path, dt, false)
+    }
+}
+impl PurePursuit {
+    /// Experimental continuation control: use the lowest planned acceleration
+    /// over the complete command hold interval, not only its first segment.
+    /// This anticipates braking inside a tick; it is not a tracking certificate.
+    pub fn control_with_sample_hold(
+        &mut self,
+        ego: EgoState,
+        path: &Trajectory,
+        dt: f64,
+    ) -> ControlCommand {
+        self.control_inner(ego, path, dt, true)
+    }
+
+    fn control_inner(
+        &mut self,
+        ego: EgoState,
+        path: &Trajectory,
+        dt: f64,
+        sample_hold: bool,
+    ) -> ControlCommand {
         if path.mode == DrivingMode::Emergency
             || path.points.is_empty()
             || path.points[0].time != 0.0
@@ -122,7 +145,17 @@ impl Controller for PurePursuit {
             {
                 return self.emergency_command();
             }
-            let feedforward = (next.speed - initial.speed) / duration;
+            let mut feedforward = (next.speed - initial.speed) / duration;
+            if sample_hold {
+                for pair in path.points.windows(2).take_while(|pair| pair[0].time < dt) {
+                    let acceleration =
+                        (pair[1].speed - pair[0].speed) / (pair[1].time - pair[0].time);
+                    if !acceleration.is_finite() {
+                        return self.emergency_command();
+                    }
+                    feedforward = feedforward.min(acceleration);
+                }
+            }
             let error = initial.speed - ego.speed;
             let integral = self.integral + error * dt;
             let proportional = 1.5 * error;
@@ -396,6 +429,77 @@ mod tests {
         assert_eq!(command.steering, 0.0);
         assert!(command.finite());
     }
+    fn short_acceleration_then_stop(switch_time: f64) -> Trajectory {
+        let peak = 1. + 2. * switch_time;
+        let turn_x = switch_time + switch_time * switch_time;
+        let stop_time = switch_time + peak / 2.5;
+        let stop_x = turn_x + peak * peak / 5.;
+        Trajectory {
+            points: [
+                (0., 0., 1.),
+                (switch_time, turn_x, peak),
+                (stop_time, stop_x, 0.),
+                (stop_time + 8., stop_x, 0.),
+            ]
+            .into_iter()
+            .map(|(time, x, speed)| rustdriving_core::TrajectoryPoint {
+                position: rustdriving_core::Vec2::new(x, 0.),
+                time,
+                speed,
+            })
+            .collect(),
+            mode: DrivingMode::Yield,
+            lateral_target: 0.,
+        }
+    }
+
+    #[test]
+    fn sample_hold_anticipates_braking_after_a_sub_tick_acceleration() {
+        let path = short_acceleration_then_stop(0.01);
+        let ego = EgoState {
+            speed: 1.,
+            ..EgoState::default()
+        };
+        let ordinary = PurePursuit::default().control(ego, &path, 0.05);
+        let held = PurePursuit::default().control_with_sample_hold(ego, &path, 0.05);
+        assert!((ordinary.acceleration - 2.).abs() < 1e-12);
+        assert!((held.acceleration + 2.5).abs() < 1e-12);
+        // Integrate both constant commands independently. The original command
+        // overruns the scheduled state after the 10 ms acceleration segment.
+        let planned_speed = 1.02 - 2.5 * 0.04;
+        let planned_distance = 0.0101 + 1.02 * 0.04 - 1.25 * 0.04_f64.powi(2);
+        assert!(1. + ordinary.acceleration * 0.05 > planned_speed);
+        assert!(1. + held.acceleration * 0.05 <= planned_speed);
+        assert!(0.05 + 0.5 * held.acceleration * 0.05_f64.powi(2) <= planned_distance);
+    }
+
+    #[test]
+    fn sample_hold_keeps_acceleration_before_switch_and_rejects_bad_clocks() {
+        let ego = EgoState {
+            speed: 1.,
+            ..EgoState::default()
+        };
+        let path = short_acceleration_then_stop(0.05);
+        let command = PurePursuit::default().control_with_sample_hold(ego, &path, 0.05);
+        assert!((command.acceleration - 2.).abs() < 1e-12);
+        for dt in [0., -0.1, f64::NAN] {
+            assert_eq!(
+                PurePursuit::default()
+                    .control_with_sample_hold(ego, &path, dt)
+                    .acceleration,
+                -6.
+            );
+        }
+        let mut invalid = path;
+        invalid.points[2].time = invalid.points[1].time;
+        assert_eq!(
+            PurePursuit::default()
+                .control_with_sample_hold(ego, &invalid, 0.05)
+                .acceleration,
+            -6.
+        );
+    }
+
     fn profile(initial: f64, next: f64, duration: f64) -> Trajectory {
         Trajectory {
             points: vec![
